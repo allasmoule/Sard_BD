@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin Panel — SARD BD Enrollments</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--green:#013e37;--butter:#ffefb3;--butter-light:#fffaed;--gray-bg:#f7f8fa;--border:#e2e5ea;}
+    body{font-family:'Inter',sans-serif;background:var(--gray-bg);margin:0;}
+
+    /* ── Login Screen ── */
+    #loginScreen{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--green) 0%,#025a50 100%);
+    }
+    .login-card{
+      background:#fff;border-radius:18px;padding:44px 40px;
+      box-shadow:0 20px 60px rgba(0,0,0,.25);width:100%;max-width:380px;text-align:center;
+    }
+    .login-logo{
+      width:64px;height:64px;background:var(--green);border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 18px;font-size:1.8rem;color:var(--butter);
+    }
+    .login-card h4{font-size:1.2rem;font-weight:900;color:var(--green);margin-bottom:4px;}
+    .login-card p{font-size:.8rem;color:#6c757d;margin-bottom:24px;}
+    .login-card input{
+      border:1.5px solid var(--border);border-radius:10px;
+      font-size:.88rem;padding:11px 14px;width:100%;margin-bottom:12px;outline:none;
+      transition:border-color .2s;
+    }
+    .login-card input:focus{border-color:var(--green);}
+    .login-btn{
+      width:100%;padding:12px;font-size:.9rem;font-weight:800;
+      background:var(--green);color:#fff;border:none;border-radius:10px;cursor:pointer;
+      transition:background .2s;
+    }
+    .login-btn:hover{background:#025a50;}
+    .login-error{
+      background:#fff5f5;border:1px solid #fc8181;color:#c53030;
+      border-radius:8px;padding:8px 14px;font-size:.78rem;margin-top:10px;display:none;
+    }
+
+    /* ── Admin Layout ── */
+    #adminScreen{display:none;}
+    .admin-nav{
+      background:var(--green);padding:14px 24px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .admin-nav .brand{color:#fff;font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:10px;}
+    .admin-nav .brand span{background:var(--butter);color:var(--green);padding:2px 10px;border-radius:20px;font-size:.72rem;}
+    .admin-actions{display:flex;align-items:center;gap:10px;}
+    .btn-nav{
+      display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;
+      padding:7px 16px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;
+    }
+    .btn-export{background:var(--butter);color:var(--green);}
+    .btn-export:hover{background:#f0e07a;}
+    .btn-logout{background:rgba(255,255,255,.15);color:#fff;}
+    .btn-logout:hover{background:rgba(255,255,255,.25);}
+
+    .admin-main{padding:28px 24px;}
+
+    /* ── Stats Row ── */
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px;}
+    .stat-card{
+      background:#fff;border-radius:12px;padding:18px 20px;
+      box-shadow:0 2px 12px rgba(1,62,55,.06);
+    }
+    .stat-card .stat-val{font-size:1.9rem;font-weight:900;color:var(--green);}
+    .stat-card .stat-lbl{font-size:.75rem;color:#6c757d;margin-top:2px;}
+    .stat-card .stat-icon{font-size:1.4rem;color:var(--green);opacity:.35;float:right;margin-top:-32px;}
+
+    /* ── Filter Bar ── */
+    .filter-bar{
+      background:#fff;border-radius:12px;padding:16px 18px;
+      box-shadow:0 2px 12px rgba(1,62,55,.06);margin-bottom:18px;
+      display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    }
+    .filter-bar input,.filter-bar select{
+      border:1.5px solid var(--border);border-radius:8px;
+      font-size:.8rem;padding:8px 12px;outline:none;transition:border-color .2s;
+    }
+    .filter-bar input:focus,.filter-bar select:focus{border-color:var(--green);}
+    .filter-bar input{flex:1;min-width:200px;}
+    .btn-clear{
+      padding:8px 16px;font-size:.78rem;font-weight:600;
+      background:var(--gray-bg);border:1.5px solid var(--border);border-radius:8px;cursor:pointer;
+    }
+
+    /* ── Table ── */
+    .table-wrap{
+      background:#fff;border-radius:14px;
+      box-shadow:0 2px 14px rgba(1,62,55,.07);overflow:hidden;
+    }
+    .table-head-bar{
+      padding:16px 20px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .table-head-bar h6{font-size:.88rem;font-weight:800;color:var(--green);margin:0;}
+    .table-count{font-size:.75rem;color:#6c757d;}
+    .tbl{width:100%;border-collapse:collapse;font-size:.78rem;}
+    .tbl thead th{
+      background:var(--gray-bg);padding:10px 14px;font-size:.72rem;
+      font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.5px;
+      border-bottom:2px solid var(--border);white-space:nowrap;
+    }
+    .tbl tbody td{padding:11px 14px;border-bottom:1px solid #f1f3f5;vertical-align:middle;}
+    .tbl tbody tr:last-child td{border-bottom:none;}
+    .tbl tbody tr:hover td{background:#f8fffe;}
+    .order-id-cell{font-family:monospace;font-size:.72rem;color:var(--green);font-weight:700;}
+    .course-cell{font-weight:600;color:#2d3748;max-width:160px;}
+    .price-cell{font-weight:800;color:var(--green);}
+    .status-badge{
+      display:inline-flex;align-items:center;gap:4px;font-size:.65rem;font-weight:700;
+      padding:3px 9px;border-radius:10px;
+    }
+    .status-pending{background:#fff7e6;color:#d97706;}
+    .status-confirmed{background:#e6fff5;color:#059669;}
+    .status-cancelled{background:#fff5f5;color:#dc2626;}
+    .no-data{text-align:center;padding:48px;color:#9ca3af;}
+    .no-data i{font-size:2.5rem;display:block;margin-bottom:10px;}
+
+    /* ── Delete btn ── */
+    .btn-del{
+      background:none;border:none;color:#e53e3e;cursor:pointer;
+      font-size:.8rem;padding:4px 6px;border-radius:6px;transition:background .15s;
+    }
+    .btn-del:hover{background:#fff5f5;}
+
+    /* ── Mobile responsive ── */
+    @media(max-width:768px){
+      .admin-main{padding:16px;}
+      .tbl thead th:nth-child(5),.tbl tbody td:nth-child(5),
+      .tbl thead th:nth-child(6),.tbl tbody td:nth-child(6){display:none;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ── -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo"><i class="bi bi-shield-lock-fill"></i></div>
+    <h4>Admin Panel</h4>
+    <p>SARD BD — Enrollment Management</p>
+    <input type="password" id="passInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="login-btn" onclick="doLogin()"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+    <div class="login-error" id="loginErr"><i class="bi bi-exclamation-triangle-fill"></i> Incorrect password</div>
+  </div>
+</div>
+
+<!-- ── ADMIN SCREEN ── -->
+<div id="adminScreen">
+
+  <!-- Nav -->
+  <div class="admin-nav">
+    <div class="brand">
+      <i class="bi bi-grid-fill"></i> SARD BD Admin
+      <span>Enrollments</span>
+    </div>
+    <div class="admin-actions">
+      <button class="btn-nav btn-export" onclick="exportCSV()"><i class="bi bi-download"></i> Export CSV</button>
+      <button class="btn-nav btn-logout" onclick="doLogout()"><i class="bi bi-box-arrow-right"></i> Logout</button>
+    </div>
+  </div>
+
+  <div class="admin-main">
+
+    <!-- Stats -->
+    <div class="stats-row" id="statsRow">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- Filter -->
+    <div class="filter-bar">
+      <input type="text" id="searchInput" placeholder="🔍  Search by name, phone, course..." oninput="renderTable()"/>
+      <select id="statusFilter" onchange="renderTable()">
+        <option value="">All Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+      <button class="btn-clear" onclick="clearFilters()"><i class="bi bi-x-circle"></i> Clear</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <div class="table-head-bar">
+        <h6><i class="bi bi-list-check me-2"></i>Enrollment Orders</h6>
+        <span class="table-count" id="tableCount">—</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="tbl" id="enrollTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Order ID</th>
+              <th>Course</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Price</th>
+              <th>Education</th>
+              <th>Reference</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ── Password ── */
+var ADMIN_PASS = 'sardbd2025'; // Change this password
+
+function doLogin(){
+  var p = document.getElementById('passInput').value;
+  if(p === ADMIN_PASS){
+    sessionStorage.setItem('sardAdmin','1');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('adminScreen').style.display='block';
+    renderAll();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    document.getElementById('passInput').value='';
+    document.getElementById('passInput').focus();
+  }
+}
+function doLogout(){
+  sessionStorage.removeItem('sardAdmin');
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('adminScreen').style.display='none';
+  document.getElementById('passInput').value='';
+}
+// Auto-login if session active
+if(sessionStorage.getItem('sardAdmin')==='1'){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('adminScreen').style.display='block';
+}
+
+/* ── Data ── */
+function getOrders(){
+  return JSON.parse(localStorage.getItem('sardEnrollments') || '[]');
+}
+function saveOrders(orders){
+  localStorage.setItem('sardEnrollments', JSON.stringify(orders));
+}
+
+/* ── Stats ── */
+function renderStats(){
+  var orders = getOrders();
+  var total = orders.length;
+  var totalRev = orders.reduce(function(s,o){return s+(o.price||0);},0);
+  var pending = orders.filter(function(o){return o.status==='Pending';}).length;
+  var confirmed = orders.filter(function(o){return o.status==='Confirmed';}).length;
+
+  document.getElementById('statsRow').innerHTML =
+    statCard(total,'Total Enrollments','bi-people-fill') +
+    statCard('৳ '+totalRev.toLocaleString(),'Total Revenue','bi-cash-stack') +
+    statCard(pending,'Pending','bi-hourglass-split') +
+    statCard(confirmed,'Confirmed','bi-check-circle-fill');
+}
+function statCard(val,lbl,icon){
+  return '<div class="stat-card"><div class="stat-val">'+val+'</div><div class="stat-lbl">'+lbl+'</div><i class="bi '+icon+' stat-icon"></i></div>';
+}
+
+/* ── Table ── */
+function renderTable(){
+  var orders = getOrders();
+  var search = document.getElementById('searchInput').value.toLowerCase();
+  var statusF = document.getElementById('statusFilter').value;
+
+  var filtered = orders.filter(function(o){
+    var matchSearch = !search ||
+      (o.name||'').toLowerCase().includes(search) ||
+      (o.phone||'').includes(search) ||
+      (o.courseName||'').toLowerCase().includes(search) ||
+      (o.orderId||'').toLowerCase().includes(search);
+    var matchStatus = !statusF || o.status===statusF;
+    return matchSearch && matchStatus;
+  });
+
+  // Sort newest first
+  filtered.sort(function(a,b){ return new Date(b.date)-new Date(a.date); });
+
+  document.getElementById('tableCount').textContent = filtered.length + ' record(s)';
+
+  if(!filtered.length){
+    document.getElementById('tableBody').innerHTML =
+      '<tr><td colspan="11"><div class="no-data"><i class="bi bi-inbox"></i>No enrollments found</div></td></tr>';
+    return;
+  }
+
+  var html = filtered.map(function(o, i){
+    var d = new Date(o.date);
+    var dateStr = d.toLocaleDateString('en-BD',{day:'2-digit',month:'short',year:'numeric'})+' '+
+                  d.toLocaleTimeString('en-BD',{hour:'2-digit',minute:'2-digit'});
+    var statusClass = o.status==='Confirmed'?'status-confirmed':o.status==='Cancelled'?'status-cancelled':'status-pending';
+    var statusIcon = o.status==='Confirmed'?'bi-check-circle-fill':o.status==='Cancelled'?'bi-x-circle-fill':'bi-hourglass-split';
+    // Find original index for deletion
+    var origIdx = getOrders().findIndex(function(x){return x.orderId===o.orderId;});
+    return '<tr>'+
+      '<td style="color:#9ca3af;">'+(i+1)+'</td>'+
+      '<td class="order-id-cell">'+o.orderId+'</td>'+
+      '<td class="course-cell" title="'+o.courseName+'">'+truncate(o.courseName,22)+'</td>'+
+      '<td style="font-weight:600;">'+escHtml(o.name)+'</td>'+
+      '<td>'+escHtml(o.phone)+'</td>'+
+      '<td class="price-cell">৳ '+(o.price||0).toLocaleString()+'</td>'+
+      '<td style="color:#6c757d;">'+(o.education||'—')+'</td>'+
+      '<td style="color:#6c757d;">'+(o.reference?escHtml(o.reference):'—')+'</td>'+
+      '<td style="color:#9ca3af;white-space:nowrap;">'+dateStr+'</td>'+
+      '<td>'+
+        '<select style="border:1.5px solid var(--border);border-radius:6px;font-size:.7rem;padding:3px 6px;outline:none;" '+
+        'onchange="changeStatus(\''+o.orderId+'\',this.value)">'+
+        '<option value="Pending"'+(o.status==='Pending'?' selected':'')+'>Pending</option>'+
+        '<option value="Confirmed"'+(o.status==='Confirmed'?' selected':'')+'>Confirmed</option>'+
+        '<option value="Cancelled"'+(o.status==='Cancelled'?' selected':'')+'>Cancelled</option>'+
+        '</select>'+
+      '</td>'+
+      '<td><button class="btn-del" onclick="deleteOrder(\''+o.orderId+'\')" title="Delete"><i class="bi bi-trash3"></i></button></td>'+
+    '</tr>';
+  }).join('');
+  document.getElementById('tableBody').innerHTML = html;
+}
+
+function renderAll(){
+  if(sessionStorage.getItem('sardAdmin')!=='1') return;
+  renderStats();
+  renderTable();
+}
+
+/* ── Actions ── */
+function changeStatus(orderId, newStatus){
+  var orders = getOrders();
+  orders.forEach(function(o){if(o.orderId===orderId) o.status=newStatus;});
+  saveOrders(orders);
+  renderStats();
+}
+
+function deleteOrder(orderId){
+  if(!confirm('Delete this order? This cannot be undone.')) return;
+  var orders = getOrders().filter(function(o){return o.orderId!==orderId;});
+  saveOrders(orders);
+  renderAll();
+}
+
+function clearFilters(){
+  document.getElementById('searchInput').value='';
+  document.getElementById('statusFilter').value='';
+  renderTable();
+}
+
+/* ── CSV Export ── */
+function exportCSV(){
+  var orders = getOrders();
+  if(!orders.length){alert('No data to export.');return;}
+  var header = ['Order ID','Course','Price','Name','Phone','Education','Reference','Date','Status'];
+  var rows = orders.map(function(o){
+    return [
+      o.orderId, '"'+o.courseName+'"', o.price, '"'+o.name+'"', o.phone,
+      o.education||'', '"'+(o.reference||'')+'"',
+      new Date(o.date).toLocaleString(), o.status
+    ].join(',');
+  });
+  var csv = header.join(',')+'\n'+rows.join('\n');
+  var blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href=url; a.download='sard-enrollments-'+Date.now()+'.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ── Helpers ── */
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function truncate(s,n){ return s&&s.length>n?s.slice(0,n)+'…':s; }
+
+// Init if already logged in
+if(sessionStorage.getItem('sardAdmin')==='1') renderAll();
+// Auto-refresh every 30s
+setInterval(function(){ if(sessionStorage.getItem('sardAdmin')==='1') renderAll(); }, 30000);
+</script>
+</body>
+</html>

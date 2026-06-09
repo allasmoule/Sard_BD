@@ -219,107 +219,492 @@
   </div>
 </section>
 
-<!-- PROGRAMS GRID -->
-<section style="padding:60px 0;background:var(--gray-bg);">
+<!-- STYLE: COURSE CARDS -->
+<style>
+  /* Filter tabs */
+  .course-filter-wrap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+  .cf-btn{background:#fff;border:1.5px solid var(--border);color:var(--text-muted);font-size:0.78rem;font-weight:600;padding:7px 16px;border-radius:20px;cursor:pointer;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:6px;}
+  .cf-btn:hover{border-color:var(--green);color:var(--green);}
+  .cf-btn.active{background:var(--green);border-color:var(--green);color:var(--butter);}
+
+  /* Course card */
+  .course-card{
+    background:#fff;border-radius:12px;overflow:hidden;
+    border:1.5px solid var(--border);transition:all 0.25s;
+    cursor:pointer;height:100%;display:flex;flex-direction:column;
+  }
+  .course-card:hover{box-shadow:0 8px 36px rgba(1,62,55,0.13);transform:translateY(-4px);border-color:var(--green);}
+
+  /* Thumbnail */
+  .cc-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,var(--green) 0%,#025a50 100%);}
+  .cc-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
+  .course-card:hover .cc-thumb img{transform:scale(1.05);}
+  .cc-thumb .thumb-icon{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.6rem;color:rgba(255,239,179,0.25);}
+  .cc-duration{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.72);color:#fff;font-size:0.68rem;font-weight:700;padding:3px 8px;border-radius:5px;display:flex;align-items:center;gap:4px;}
+  .cc-badge{position:absolute;top:8px;left:8px;font-size:0.6rem;font-weight:900;padding:3px 9px;border-radius:10px;text-transform:uppercase;letter-spacing:0.4px;}
+  .badge-popular{background:#e65100;color:#fff;}
+  .badge-new{background:#1b5e20;color:#fff;}
+  .badge-featured{background:var(--butter);color:var(--green);}
+
+  /* Body */
+  .cc-body{padding:14px 16px 12px;flex:1;display:flex;flex-direction:column;}
+  .cc-cat{font-size:0.62rem;font-weight:800;letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px;}
+  .cat-research{color:#1565c0;}
+  .cat-data{color:#6a1b9a;}
+  .cat-writing{color:#2e7d32;}
+  .cat-management{color:#e65100;}
+  .cat-special{color:#c62828;}
+  .cc-title{color:var(--green);font-weight:800;font-size:0.9rem;line-height:1.35;margin-bottom:6px;flex:1;}
+  .cc-desc{color:var(--text-muted);font-size:0.76rem;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px;}
+
+  /* Footer */
+  .cc-footer{border-top:1px solid var(--border);padding-top:10px;display:flex;align-items:center;justify-content:space-between;}
+  .cc-instructor{font-size:0.72rem;color:var(--text-muted);}
+  .cc-instructor strong{color:var(--text);font-weight:600;}
+  .cc-rating{display:flex;align-items:center;gap:4px;}
+  .cc-stars{color:#f59e0b;font-size:0.75rem;letter-spacing:-1px;}
+  .cc-rnum{font-size:0.7rem;color:var(--text-muted);}
+  .cc-bookmark{width:28px;height:28px;border:1.5px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--text-muted);cursor:pointer;transition:all 0.2s;flex-shrink:0;}
+  .cc-bookmark:hover,.cc-bookmark.saved{background:var(--green);border-color:var(--green);color:var(--butter);}
+
+  /* Card price row */
+  .cc-price-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px;}
+  .cc-price{font-size:1.15rem;font-weight:900;color:var(--green);display:flex;align-items:baseline;gap:4px;}
+  .cc-price small{font-size:0.65rem;font-weight:600;color:var(--text-muted);}
+  .cc-cert-tag{background:var(--butter-light);color:var(--green);font-size:0.6rem;font-weight:800;padding:3px 8px;border-radius:10px;border:1px solid rgba(1,62,55,.12);}
+
+  /* Card 2-button actions */
+  .cc-actions{display:grid;grid-template-columns:1fr 1.15fr;gap:8px;padding:0 12px 14px;}
+  .cc-btn-more{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 10px;font-size:0.76rem;font-weight:700;color:var(--green);background:var(--gray-bg);border:1.5px solid var(--border);text-decoration:none;border-radius:8px;transition:all .2s;}
+  .cc-btn-more:hover{background:var(--green);color:var(--butter);border-color:var(--green);}
+  .cc-btn-enroll{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 10px;font-size:0.76rem;font-weight:800;color:#fff;background:var(--green);text-decoration:none;border-radius:8px;transition:all .2s;border:1.5px solid var(--green);}
+  .cc-btn-enroll:hover{background:#025a50;color:var(--butter);border-color:#025a50;}
+
+  /* Global reveal btn */
+  .btn-reveal-more{background:#fff;border:2px solid var(--green);color:var(--green);font-weight:700;font-size:0.88rem;padding:11px 30px;border-radius:8px;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
+  .btn-reveal-more:hover{background:var(--green);color:var(--butter);}
+
+  /* Gallery view more btn */
+  .btn-view-more{background:#fff;border:2px solid var(--green);color:var(--green);font-weight:700;font-size:0.88rem;padding:11px 30px;border-radius:8px;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;}
+  .btn-view-more:hover{background:var(--green);color:var(--butter);}
+</style>
+
+<!-- COURSES SECTION -->
+<section style="padding:60px 0 68px;background:var(--gray-bg);">
   <div class="container">
-    <div class="text-center mb-5">
-      <div class="sec-label"><span class="en-text">Our Programs</span><span class="bn-text">আমাদের কার্যক্রম</span></div>
+    <div class="text-center mb-4">
+      <div class="sec-label"><span class="en-text">Explore Courses</span><span class="bn-text">কোর্স অন্বেষণ করুন</span></div>
       <div class="divider mx-auto"></div>
-      <h2 class="sec-title"><span class="en-text">Training Program Areas</span><span class="bn-text">প্রশিক্ষণ কার্যক্রমের ক্ষেত্র</span></h2>
-      <p class="sec-desc mx-auto" style="max-width:580px">
-        <span class="en-text">SARD BD designs and implements structured training programs targeting a broad range of healthcare and research professionals.</span>
-        <span class="bn-text">SARD BD বিস্তৃত পরিসরের স্বাস্থ্যসেবা ও গবেষণা পেশাদারদের লক্ষ্য করে কাঠামোগত প্রশিক্ষণ কার্যক্রম পরিচালনা করে।</span>
-      </p>
+      <h2 class="sec-title"><span class="en-text">Our Training Courses</span><span class="bn-text">আমাদের প্রশিক্ষণ কোর্সসমূহ</span></h2>
+      <p class="sec-desc mx-auto" style="max-width:560px"><span class="en-text">27 structured courses across research methods, data analysis, scientific writing, management, and field-based programs.</span><span class="bn-text">গবেষণা পদ্ধতি, ডেটা বিশ্লেষণ, বৈজ্ঞানিক লেখা, ব্যবস্থাপনা এবং ফিল্ড প্রোগ্রামে ২৭টি কাঠামোগত কোর্স।</span></p>
     </div>
-    <div class="row g-4">
 
-      <div class="col-lg-4 col-md-6">
-        <div class="prog-card">
-          <div class="prog-icon"><i class="bi bi-graph-up-arrow"></i></div>
-          <div class="prog-num">01</div>
-          <h5 class="prog-title"><span class="en-text">Public Health Research Training</span><span class="bn-text">জনস্বাস্থ্য গবেষণা প্রশিক্ষণ</span></h5>
-          <p class="prog-desc"><span class="en-text">Research methodology, study design, epidemiology and biostatistics, data collection (digital & paper), software analysis (SPSS, R, STATA), scientific writing, and grant proposal development.</span><span class="bn-text">গবেষণা পদ্ধতি, স্টাডি ডিজাইন, মহামারীবিদ্যা ও বায়োস্ট্যাটিস্টিক্স, ডেটা সংগ্রহ, সফটওয়্যার বিশ্লেষণ এবং বৈজ্ঞানিক লেখা।</span></p>
-          <div class="prog-tags">
-            <span class="prog-tag">SPSS / R / STATA</span>
-            <span class="prog-tag">Study Design</span>
-            <span class="prog-tag">Grant Writing</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="prog-card">
-          <div class="prog-icon"><i class="bi bi-heart-pulse"></i></div>
-          <div class="prog-num">02</div>
-          <h5 class="prog-title"><span class="en-text">Clinical & Paramedical Training</span><span class="bn-text">ক্লিনিক্যাল ও প্যারামেডিক্যাল প্রশিক্ষণ</span></h5>
-          <p class="prog-desc"><span class="en-text">Standard treatment protocols, infection prevention and control (IPC), rational use of medicines, emergency care and triage, diagnostic and laboratory best practices.</span><span class="bn-text">মানক চিকিৎসা প্রোটোকল, সংক্রমণ প্রতিরোধ ও নিয়ন্ত্রণ, ওষুধের যুক্তিসঙ্গত ব্যবহার এবং জরুরি পরিচর্যা প্রশিক্ষণ।</span></p>
-          <div class="prog-tags">
-            <span class="prog-tag">Doctors & Nurses</span>
-            <span class="prog-tag">IPC</span>
-            <span class="prog-tag">Emergency Care</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="prog-card">
-          <div class="prog-icon"><i class="bi bi-people-fill"></i></div>
-          <div class="prog-num">03</div>
-          <h5 class="prog-title"><span class="en-text">Health Education & Community Awareness</span><span class="bn-text">স্বাস্থ্য শিক্ষা ও সচেতনতা</span></h5>
-          <p class="prog-desc"><span class="en-text">Participatory training on hygiene and sanitation, nutrition and food safety, environmental health risks (arsenic, air pollution), preventive health behaviors, gender and health equity.</span><span class="bn-text">স্বাস্থ্যবিধি, পুষ্টি, পরিবেশগত স্বাস্থ্য ঝুঁকি, প্রতিরোধমূলক আচরণ এবং লিঙ্গ ও স্বাস্থ্য সমতা।</span></p>
-          <div class="prog-tags">
-            <span class="prog-tag">Community</span>
-            <span class="prog-tag">Participatory</span>
-            <span class="prog-tag">Environmental Health</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="prog-card">
-          <div class="prog-icon"><i class="bi bi-phone"></i></div>
-          <div class="prog-num">04</div>
-          <h5 class="prog-title"><span class="en-text">Digital Health & Health Information Systems</span><span class="bn-text">ডিজিটাল স্বাস্থ্য ও HIS</span></h5>
-          <p class="prog-desc"><span class="en-text">Electronic medical records (EMR), health data reporting and dashboards, mobile health (m-Health) tools, monitoring and evaluation (M&E) systems, AI applications in health research.</span><span class="bn-text">ইলেকট্রনিক মেডিক্যাল রেকর্ড, মোবাইল হেলথ টুলস, মনিটরিং ও মূল্যায়ন সিস্টেম এবং স্বাস্থ্য গবেষণায় কৃত্রিম বুদ্ধিমত্তার প্রয়োগ।</span></p>
-          <div class="prog-tags">
-            <span class="prog-tag">EMR</span>
-            <span class="prog-tag">m-Health</span>
-            <span class="prog-tag">AI in Health</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="prog-card">
-          <div class="prog-icon"><i class="bi bi-shield-check"></i></div>
-          <div class="prog-num">05</div>
-          <h5 class="prog-title"><span class="en-text">Training of Trainers (ToT)</span><span class="bn-text">প্রশিক্ষকদের প্রশিক্ষণ (ToT)</span></h5>
-          <p class="prog-desc"><span class="en-text">SARD develops master trainers through ToT programs to ensure sustainability and scalability of interventions. These trainers further cascade knowledge to communities and institutions.</span><span class="bn-text">SARD মাস্টার ট্রেইনার তৈরি করে যারা সম্প্রদায় ও প্রতিষ্ঠানে জ্ঞান প্রসারিত করেন, টেকসইতা নিশ্চিত করেন।</span></p>
-          <div class="prog-tags">
-            <span class="prog-tag">Master Trainers</span>
-            <span class="prog-tag">Sustainability</span>
-            <span class="prog-tag">Cascade Training</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6">
-        <div class="prog-card">
-          <div class="prog-icon"><i class="bi bi-file-earmark-text"></i></div>
-          <div class="prog-num">06</div>
-          <h5 class="prog-title"><span class="en-text">Scientific Writing & Publication</span><span class="bn-text">বৈজ্ঞানিক লেখা ও প্রকাশনা</span></h5>
-          <p class="prog-desc"><span class="en-text">Hands-on training on manuscript preparation, abstract writing, responding to peer reviewer comments, journal submission, and grant proposal writing in NIH, JICA, and WHO formats.</span><span class="bn-text">পাণ্ডুলিপি প্রস্তুতি, বিমূর্ততা লেখা, পিয়ার রিভিউ মন্তব্যের জবাব, জার্নাল জমা এবং অনুদান প্রস্তাব লেখা।</span></p>
-          <div class="prog-tags">
-            <span class="prog-tag">Manuscript</span>
-            <span class="prog-tag">Peer Review</span>
-            <span class="prog-tag">Grant Proposals</span>
-          </div>
-        </div>
-      </div>
-
+    <!-- Filter tabs -->
+    <div class="course-filter-wrap">
+      <button class="cf-btn active" onclick="filterCourse('all',this)"><i class="bi bi-grid-3x3-gap-fill"></i> All (27)</button>
+      <button class="cf-btn" onclick="filterCourse('research',this)"><i class="bi bi-search"></i> Research Methods</button>
+      <button class="cf-btn" onclick="filterCourse('data',this)"><i class="bi bi-bar-chart-fill"></i> Data Analysis</button>
+      <button class="cf-btn" onclick="filterCourse('writing',this)"><i class="bi bi-file-earmark-text-fill"></i> Writing & Publication</button>
+      <button class="cf-btn" onclick="filterCourse('management',this)"><i class="bi bi-briefcase-fill"></i> Management</button>
+      <button class="cf-btn" onclick="filterCourse('special',this)"><i class="bi bi-star-fill"></i> Special Programs</button>
     </div>
+
+    <!-- Course Grid — rendered by JS -->
+    <div class="row g-4" id="courseGrid"></div>
+
+    <!-- Reveal More Cards -->
+    <div class="text-center mt-4" id="viewMoreWrap">
+      <button class="btn-reveal-more" onclick="showAllCourses(this)">
+        <i class="bi bi-grid-fill"></i>
+        <span class="en-text">View All 27 Courses</span>
+        <span class="bn-text">সকল ২৭টি কোর্স দেখুন</span>
+      </button>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="row g-3 mt-5">
+      <div class="col-6 col-md-3">
+        <div style="background:#fff;border-radius:10px;padding:18px 16px;text-align:center;border:1.5px solid var(--border);">
+          <div style="font-size:1.7rem;font-weight:900;color:var(--green);">27</div>
+          <div style="font-size:0.74rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;"><span class="en-text">Total Courses</span><span class="bn-text">মোট কোর্স</span></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:#fff;border-radius:10px;padding:18px 16px;text-align:center;border:1.5px solid var(--border);">
+          <div style="font-size:1.7rem;font-weight:900;color:var(--green);">6</div>
+          <div style="font-size:0.74rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;"><span class="en-text">Categories</span><span class="bn-text">বিভাগ</span></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:#fff;border-radius:10px;padding:18px 16px;text-align:center;border:1.5px solid var(--border);">
+          <div style="font-size:1.7rem;font-weight:900;color:var(--green);">Expert</div>
+          <div style="font-size:0.74rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;"><span class="en-text">Instructors</span><span class="bn-text">প্রশিক্ষক</span></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div style="background:#fff;border-radius:10px;padding:18px 16px;text-align:center;border:1.5px solid var(--border);">
+          <div style="font-size:1.7rem;font-weight:900;color:var(--green);">Cert.</div>
+          <div style="font-size:0.74rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;"><span class="en-text">Certificate</span><span class="bn-text">সার্টিফিকেট</span></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<!-- COURSE CARD JAVASCRIPT -->
+<script src="js/courses-data.js"></script>
+<script>
+// COURSES loaded from js/courses-data.js above
+var _REMOVE = [
+  // ── RESEARCH METHODS ─────────────────────────────────────────────────
+  { cat:'research', catLabel:'Research Methods', catClass:'cat-research', icon:'bi-search',
+    title:'Introduction to Research & Identifying the Research Problem',
+    titleBn:'গবেষণার ভূমিকা ও সমস্যা চিহ্নিতকরণ',
+    desc:'Foundations of scientific inquiry, problem formulation, objectives, and research questions.',
+    descBn:'বৈজ্ঞানিক অনুসন্ধানের ভিত্তি, সমস্যা প্রণয়ন, উদ্দেশ্য ও গবেষণা প্রশ্ন নির্ধারণ।',
+    learn:['Understand the scientific method','Identify a researchable problem','Write SMART objectives','Formulate research questions','Distinguish types of research','Conduct a gap analysis'],
+    learnBn:['বৈজ্ঞানিক পদ্ধতি বোঝা','গবেষণাযোগ্য সমস্যা চিহ্নিত করা','SMART উদ্দেশ্য লেখা','গবেষণা প্রশ্ন প্রণয়ন','গবেষণার ধরন পার্থক্য করা','গ্যাপ বিশ্লেষণ করা'],
+    duration:'1 Day', badge:'popular', rating:'4.9', enrolled:'320+', color:'#1565c0' },
+
+  { cat:'research', catLabel:'Research Methods', catClass:'cat-research', icon:'bi-journals',
+    title:'Literature Review & Its Importance in Research',
+    titleBn:'সাহিত্য পর্যালোচনা ও গবেষণায় গুরুত্ব',
+    desc:'Systematic search strategies, critical appraisal, citation management, and synthesizing evidence.',
+    descBn:'সুশৃঙ্খল অনুসন্ধান কৌশল, সমালোচনামূলক মূল্যায়ন এবং প্রমাণ সংশ্লেষণ।',
+    learn:['Search PubMed, Google Scholar, Cochrane','Use PRISMA flowchart','Critically appraise articles','Manage citations (Mendeley/Zotero)','Synthesize evidence from multiple sources','Write a structured literature review'],
+    learnBn:['PubMed ও Google Scholar সার্চ','PRISMA ফ্লোচার্ট ব্যবহার','আর্টিকেল সমালোচনামূলকভাবে মূল্যায়ন','সাইটেশন ম্যানেজমেন্ট (Mendeley/Zotero)','একাধিক উৎস থেকে প্রমাণ সংশ্লেষণ','কাঠামোগত সাহিত্য পর্যালোচনা লেখা'],
+    duration:'1 Day', badge:'', rating:'4.8', enrolled:'280+', color:'#1565c0' },
+
+  { cat:'research', catLabel:'Research Methods', catClass:'cat-research', icon:'bi-diagram-3',
+    title:'Research Design',
+    titleBn:'গবেষণা নকশা',
+    desc:'Exploratory, descriptive, experimental & observational study designs — choosing the right framework.',
+    descBn:'এক্সপ্লোরেটরি, বর্ণনামূলক, পরীক্ষামূলক ও পর্যবেক্ষণমূলক স্টাডি ডিজাইন।',
+    learn:['Differentiate study designs (RCT, cohort, case-control)','Select appropriate design for your question','Understand internal & external validity','Design a cross-sectional study','Prepare a study protocol','Control for confounding'],
+    learnBn:['স্টাডি ডিজাইন পার্থক্য (RCT, cohort, case-control)','প্রশ্ন অনুযায়ী সঠিক ডিজাইন নির্বাচন','অভ্যন্তরীণ ও বাহ্যিক বৈধতা বোঝা','ক্রস-সেকশনাল স্টাডি ডিজাইন','স্টাডি প্রোটোকল প্রস্তুতি','কনফাউন্ডিং নিয়ন্ত্রণ'],
+    duration:'1 Day', badge:'', rating:'4.7', enrolled:'260+', color:'#1565c0' },
+
+  { cat:'research', catLabel:'Research Methods', catClass:'cat-research', icon:'bi-people',
+    title:'Sampling & Sample Size Determination',
+    titleBn:'নমুনায়ন ও নমুনা আকার নির্ধারণ',
+    desc:'Probability and non-probability sampling, power analysis, and sample size calculators.',
+    descBn:'সম্ভাবনাভিত্তিক ও অ-সম্ভাবনাভিত্তিক নমুনায়ন এবং পাওয়ার বিশ্লেষণ।',
+    learn:['Random, stratified, cluster, systematic sampling','Purposive and snowball sampling','Calculate sample size (n formula)','Use G*Power software','Understand sampling bias & error','Prepare sampling frame'],
+    learnBn:['র‍্যান্ডম, স্তরীভূত, ক্লাস্টার নমুনায়ন','পার্পোসিভ ও স্নোবল নমুনায়ন','নমুনা আকার গণনা','G*Power সফটওয়্যার ব্যবহার','স্যাম্পলিং বায়াস ও ত্রুটি বোঝা','স্যাম্পলিং ফ্রেম তৈরি'],
+    duration:'1 Day', badge:'', rating:'4.8', enrolled:'240+', color:'#1565c0' },
+
+  { cat:'research', catLabel:'Research Methods', catClass:'cat-research', icon:'bi-clipboard2-data',
+    title:'Data Collection Methods',
+    titleBn:'তথ্য সংগ্রহ পদ্ধতি',
+    desc:'Survey design, interviews, focus groups, observation, and digital data collection tools.',
+    descBn:'সমীক্ষা ডিজাইন, সাক্ষাৎকার, ফোকাস গ্রুপ এবং ডিজিটাল ডেটা সংগ্রহ।',
+    learn:['Design a questionnaire (open/closed)','Conduct structured interviews','Facilitate focus group discussions','Use KoBoToolbox / ODK for digital collection','Observe and record field data','Pilot test a data collection tool'],
+    learnBn:['প্রশ্নমালা ডিজাইন (খোলা/বন্ধ)','কাঠামোগত সাক্ষাৎকার পরিচালনা','ফোকাস গ্রুপ আলোচনা সহায়তা','KoBoToolbox / ODK ব্যবহার','ফিল্ড ডেটা পর্যবেক্ষণ ও রেকর্ড','ডেটা সংগ্রহ টুল পাইলট টেস্ট'],
+    duration:'1 Day', badge:'', rating:'4.7', enrolled:'250+', color:'#1565c0' },
+
+  { cat:'research', catLabel:'Research Methods', catClass:'cat-research', icon:'bi-rulers',
+    title:'Measurement & Scaling',
+    titleBn:'পরিমাপ ও স্কেলিং',
+    desc:'Validity, reliability, Likert scales, index construction, and operationalizing variables.',
+    descBn:'বৈধতা, নির্ভরযোগ্যতা, লিকার্ট স্কেল এবং ভেরিয়েবল অপারেশনালাইজেশন।',
+    learn:['Understand levels of measurement','Construct Likert & semantic differential scales','Test content, construct, criterion validity','Calculate Cronbach alpha for reliability','Operationalize abstract concepts','Build composite indices'],
+    learnBn:['পরিমাপের স্তর বোঝা','লিকার্ট ও সিম্যান্টিক স্কেল তৈরি','বিষয়বস্তু, কনস্ট্রাক্ট, মানদণ্ড বৈধতা পরীক্ষা','ক্রোনবাক আলফা গণনা','বিমূর্ত ধারণা অপারেশনালাইজ করা','যৌগিক সূচক তৈরি'],
+    duration:'Half Day', badge:'', rating:'4.6', enrolled:'190+', color:'#1565c0' },
+
+  { cat:'research', catLabel:'Research Methods', catClass:'cat-research', icon:'bi-question-diamond',
+    title:'Hypothesis',
+    titleBn:'অনুকল্প',
+    desc:'Formulating null and alternative hypotheses, significance levels, and Type I/II errors.',
+    descBn:'শূন্য ও বিকল্প অনুকল্প প্রণয়ন, উল্লেখযোগ্যতা স্তর এবং টাইপ I/II ত্রুটি।',
+    learn:['Write null (H₀) and alternative (H₁) hypotheses','Understand p-value and significance levels','Distinguish Type I and Type II errors','Choose one-tailed vs two-tailed tests','Link hypothesis to study objectives','Interpret statistical test results'],
+    learnBn:['H₀ এবং H₁ অনুকল্প লেখা','p-value ও উল্লেখযোগ্যতা স্তর বোঝা','টাইপ I ও II ত্রুটি পার্থক্য করা','এক-পুচ্ছ বনাম দ্বি-পুচ্ছ পরীক্ষা নির্বাচন','অনুকল্পকে উদ্দেশ্যের সাথে সংযুক্ত করা','পরিসংখ্যান পরীক্ষার ফলাফল ব্যাখ্যা'],
+    duration:'Half Day', badge:'', rating:'4.7', enrolled:'210+', color:'#1565c0' },
+
+  // ── DATA ANALYSIS ─────────────────────────────────────────────────────
+  { cat:'data', catLabel:'Data Analysis', catClass:'cat-data', icon:'bi-bar-chart-steps',
+    title:'Data Processing & Analysis using SPSS',
+    titleBn:'SPSS দিয়ে ডেটা প্রক্রিয়াকরণ ও বিশ্লেষণ',
+    desc:'Data entry, cleaning, descriptive statistics, t-tests, ANOVA, regression in SPSS.',
+    descBn:'ডেটা এন্ট্রি, ক্লিনিং, বর্ণনামূলক পরিসংখ্যান, t-test, ANOVA এবং রিগ্রেশন।',
+    learn:['Navigate SPSS interface & data view','Enter and clean data','Run descriptive statistics & frequencies','Perform t-tests, chi-square, ANOVA','Conduct linear & logistic regression','Interpret output tables & export results'],
+    learnBn:['SPSS ইন্টারফেস নেভিগেট করা','ডেটা এন্ট্রি ও ক্লিনিং','বর্ণনামূলক পরিসংখ্যান ও ফ্রিকোয়েন্সি','t-test, chi-square, ANOVA চালানো','লিনিয়ার ও লজিস্টিক রিগ্রেশন','আউটপুট ব্যাখ্যা ও ফলাফল রপ্তানি'],
+    duration:'2 Days', badge:'popular', rating:'4.9', enrolled:'410+', color:'#6a1b9a' },
+
+  { cat:'data', catLabel:'Data Analysis', catClass:'cat-data', icon:'bi-code-square',
+    title:'Data Processing & Analysis using R',
+    titleBn:'R দিয়ে ডেটা প্রক্রিয়াকরণ ও বিশ্লেষণ',
+    desc:'R programming, tidyverse, ggplot2 visualization, and statistical modelling in R.',
+    descBn:'R প্রোগ্রামিং, tidyverse, ggplot2 ভিজ্যুয়ালাইজেশন এবং পরিসংখ্যান মডেলিং।',
+    learn:['Install R & RStudio','Write basic R scripts','Manipulate data with tidyverse (dplyr/tidyr)','Create visualizations with ggplot2','Run statistical tests in R','Generate reproducible reports (R Markdown)'],
+    learnBn:['R ও RStudio ইনস্টল করা','মৌলিক R স্ক্রিপ্ট লেখা','tidyverse দিয়ে ডেটা ম্যানিপুলেশন','ggplot2 দিয়ে ভিজ্যুয়ালাইজেশন','R-এ পরিসংখ্যান পরীক্ষা চালানো','R Markdown দিয়ে রিপোর্ট তৈরি'],
+    duration:'2 Days', badge:'new', rating:'4.8', enrolled:'290+', color:'#6a1b9a' },
+
+  { cat:'data', catLabel:'Data Analysis', catClass:'cat-data', icon:'bi-cpu',
+    title:'Data Processing & Analysis using Stata',
+    titleBn:'Stata দিয়ে ডেটা প্রক্রিয়াকরণ ও বিশ্লেষণ',
+    desc:'Stata commands, data management, regression analysis, and panel data modelling.',
+    descBn:'Stata কমান্ড, ডেটা ম্যানেজমেন্ট, রিগ্রেশন এবং প্যানেল ডেটা মডেলিং।',
+    learn:['Navigate Stata do-files & command line','Import & manage datasets','Run tabulations & summary statistics','Perform regression (OLS, logit, probit)','Analyse panel and longitudinal data','Write Stata do-files for reproducibility'],
+    learnBn:['Stata do-file ও কমান্ড লাইন ব্যবহার','ডেটাসেট ইম্পোর্ট ও ম্যানেজ করা','ট্যাবুলেশন ও সারসংক্ষেপ পরিসংখ্যান','রিগ্রেশন (OLS, logit, probit) চালানো','প্যানেল ও দীর্ঘমেয়াদী ডেটা বিশ্লেষণ','পুনরুৎপাদনযোগ্যতার জন্য do-file লেখা'],
+    duration:'2 Days', badge:'', rating:'4.7', enrolled:'200+', color:'#6a1b9a' },
+
+  { cat:'data', catLabel:'Data Analysis', catClass:'cat-data', icon:'bi-graph-up',
+    title:'Data Presentation',
+    titleBn:'তথ্য উপস্থাপনা',
+    desc:'Tables, charts, infographics, and effective scientific data visualization techniques.',
+    descBn:'টেবিল, চার্ট, ইনফোগ্রাফিক এবং বৈজ্ঞানিক ডেটা ভিজ্যুয়ালাইজেশন কৌশল।',
+    learn:['Design APA/Vancouver-style tables','Choose the right chart type for your data','Create bar, line, scatter, pie charts','Build infographics with Canva/PowerPoint','Follow journal figure formatting guidelines','Present data in conference slides'],
+    learnBn:['APA/Vancouver স্টাইল টেবিল ডিজাইন','ডেটার জন্য সঠিক চার্ট নির্বাচন','বার, লাইন, স্ক্যাটার, পাই চার্ট তৈরি','Canva/PowerPoint দিয়ে ইনফোগ্রাফিক','জার্নাল ফিগার ফরম্যাটিং নির্দেশিকা','কনফারেন্স স্লাইডে ডেটা উপস্থাপনা'],
+    duration:'1 Day', badge:'', rating:'4.7', enrolled:'230+', color:'#6a1b9a' },
+
+  // ── WRITING & PUBLICATION ─────────────────────────────────────────────
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-shield-check',
+    title:'Research Ethics',
+    titleBn:'গবেষণা নৈতিকতা',
+    desc:'Informed consent, confidentiality, IRB processes, plagiarism, and research integrity.',
+    descBn:'অবহিত সম্মতি, গোপনীয়তা, IRB প্রক্রিয়া, প্ল্যাজিয়ারিজম এবং গবেষণা অখণ্ডতা।',
+    learn:['Understand Belmont Report principles','Obtain informed consent','Submit to Institutional Review Board (IRB)','Protect participant confidentiality','Avoid plagiarism (use Turnitin/iThenticate)','Understand authorship and conflict of interest'],
+    learnBn:['বেলমন্ট রিপোর্ট নীতি বোঝা','অবহিত সম্মতি প্রাপ্তি','IRB-এ জমা দেওয়া','অংশগ্রহণকারীর গোপনীয়তা রক্ষা','প্ল্যাজিয়ারিজম এড়ানো','লেখকত্ব ও স্বার্থের দ্বন্দ্ব বোঝা'],
+    duration:'1 Day', badge:'', rating:'4.8', enrolled:'280+', color:'#2e7d32' },
+
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-file-earmark-check',
+    title:'Report Writing',
+    titleBn:'রিপোর্ট লেখা',
+    desc:'Structure of research reports, executive summaries, technical writing, and donor report formats.',
+    descBn:'গবেষণা রিপোর্টের কাঠামো, এক্সিকিউটিভ সারসংক্ষেপ এবং ডোনার রিপোর্ট ফরম্যাট।',
+    learn:['Structure an academic/technical report','Write a concise executive summary','Use active voice in scientific writing','Format WHO, UNICEF, USAID donor reports','Cite sources in Vancouver/APA style','Review and edit for clarity and conciseness'],
+    learnBn:['একাডেমিক/প্রযুক্তিগত রিপোর্টের কাঠামো','সংক্ষিপ্ত এক্সিকিউটিভ সারসংক্ষেপ লেখা','বৈজ্ঞানিক লেখায় সক্রিয় কণ্ঠস্বর ব্যবহার','WHO, UNICEF, USAID ডোনার রিপোর্ট ফরম্যাট','ভ্যাঙ্কুভার/APA স্টাইলে উদ্ধৃতি','স্পষ্টতার জন্য পর্যালোচনা ও সম্পাদনা'],
+    duration:'1 Day', badge:'', rating:'4.6', enrolled:'220+', color:'#2e7d32' },
+
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-journal-text',
+    title:'Qualitative & Quantitative Research',
+    titleBn:'গুণগত ও পরিমাণগত গবেষণা',
+    desc:'Paradigm differences, mixed-methods designs, thematic analysis, and triangulation.',
+    descBn:'প্যারাডাইম পার্থক্য, মিশ্র পদ্ধতি ডিজাইন, থিম্যাটিক বিশ্লেষণ এবং ট্রায়াঙ্গুলেশন।',
+    learn:['Distinguish positivist vs interpretivist paradigms','Design a mixed-methods study','Conduct thematic analysis of qualitative data','Perform content and narrative analysis','Ensure rigor: credibility, transferability','Triangulate data from multiple sources'],
+    learnBn:['পজিটিভিস্ট বনাম ইন্টারপ্রিটিভিস্ট প্যারাডাইম','মিশ্র পদ্ধতি স্টাডি ডিজাইন','গুণগত ডেটার থিম্যাটিক বিশ্লেষণ','বিষয়বস্তু ও ন্যারেটিভ বিশ্লেষণ','বিশ্বাসযোগ্যতা ও স্থানান্তরযোগ্যতা নিশ্চিত করা','একাধিক উৎস থেকে ডেটা ট্রায়াঙ্গুলেশন'],
+    duration:'1 Day', badge:'', rating:'4.7', enrolled:'250+', color:'#2e7d32' },
+
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-file-earmark-medical',
+    title:'Protocol Writing (Thesis or Dissertation)',
+    titleBn:'প্রোটোকল লেখা (থিসিস বা ডিসার্টেশন)',
+    desc:'Writing research proposals, ethical clearance applications, and academic protocols.',
+    descBn:'গবেষণা প্রস্তাব, নৈতিক অনুমোদন আবেদন এবং একাডেমিক প্রোটোকল লেখা।',
+    learn:['Write a full research protocol from scratch','Develop study objectives and hypotheses','Prepare methodology and data management plan','Write IRB/ethical clearance application','Format references and appendices','Defend your protocol before a panel'],
+    learnBn:['শূন্য থেকে পূর্ণ গবেষণা প্রোটোকল লেখা','উদ্দেশ্য ও অনুকল্প তৈরি','পদ্ধতি ও ডেটা ম্যানেজমেন্ট পরিকল্পনা','IRB/নৈতিক অনুমোদন আবেদন লেখা','রেফারেন্স ও পরিশিষ্ট ফরম্যাট করা','প্যানেলের সামনে প্রোটোকল রক্ষা করা'],
+    duration:'2 Days', badge:'popular', rating:'4.9', enrolled:'370+', color:'#2e7d32' },
+
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-award',
+    title:'Research Grant Writing',
+    titleBn:'গবেষণা অনুদান লেখা',
+    desc:'NIH, WHO, and JICA grant formats, budget preparation, and winning proposal strategies.',
+    descBn:'NIH, WHO এবং JICA অনুদান ফরম্যাট, বাজেট প্রস্তুতি এবং সফল প্রস্তাব কৌশল।',
+    learn:['Understand NIH, WHO, JICA grant structures','Write a compelling specific aims page','Develop a realistic budget & justification','Frame your significance & innovation','Write preliminary data sections','Avoid common grant rejection pitfalls'],
+    learnBn:['NIH, WHO, JICA অনুদানের কাঠামো বোঝা','আকর্ষণীয় specific aims পেজ লেখা','বাস্তবসম্মত বাজেট ও যুক্তি তৈরি','তাৎপর্য ও উদ্ভাবন তুলে ধরা','প্রাথমিক ডেটা অধ্যায় লেখা','সাধারণ প্রত্যাখ্যানের কারণ এড়ানো'],
+    duration:'2 Days', badge:'featured', rating:'4.9', enrolled:'310+', color:'#2e7d32' },
+
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-newspaper',
+    title:'How to Write a Journal Article',
+    titleBn:'জার্নাল আর্টিকেল কীভাবে লিখবেন',
+    desc:'IMRAD structure, title and abstract crafting, cover letter, submission, and revision strategy.',
+    descBn:'IMRAD কাঠামো, শিরোনাম ও বিমূর্ততা, কভার লেটার, জমা ও সংশোধন কৌশল।',
+    learn:['Apply IMRAD (Intro-Methods-Results-Discussion)','Write a title and structured abstract','Select the right journal (scope, impact factor)','Write a professional cover letter','Respond to peer reviewer comments','Navigate manuscript management systems (e.g., ScholarOne)'],
+    learnBn:['IMRAD কাঠামো প্রয়োগ','শিরোনাম ও কাঠামোগত বিমূর্ততা লেখা','সঠিক জার্নাল নির্বাচন','পেশাদার কভার লেটার লেখা','পিয়ার রিভিউয়ার মন্তব্যের জবাব দেওয়া','ম্যানাস্ক্রিপ্ট ম্যানেজমেন্ট সিস্টেম ব্যবহার'],
+    duration:'1 Day', badge:'popular', rating:'4.9', enrolled:'420+', color:'#2e7d32' },
+
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-pencil-square',
+    title:'Manuscript Writing',
+    titleBn:'পাণ্ডুলিপি লেখা',
+    desc:'Hands-on manuscript preparation from raw data to submission-ready draft.',
+    descBn:'কাঁচা ডেটা থেকে জমা দেওয়ার উপযোগী খসড়া পর্যন্ত পাণ্ডুলিপি প্রস্তুতি।',
+    learn:['Convert a thesis chapter into a manuscript','Write each section (Intro, Methods, Results, Discussion)','Follow journal author guidelines strictly','Use reporting checklists (CONSORT, STROBE, PRISMA)','Format references with a reference manager','Prepare supplementary materials & figures'],
+    learnBn:['থিসিস অধ্যায়কে পাণ্ডুলিপিতে রূপান্তর','প্রতিটি অধ্যায় (Intro, Methods, Results, Discussion) লেখা','জার্নালের লেখক নির্দেশিকা অনুসরণ','রিপোর্টিং চেকলিস্ট ব্যবহার','রেফারেন্স ম্যানেজার দিয়ে রেফারেন্স ফরম্যাট','সাপ্লিমেন্টারি উপকরণ প্রস্তুতি'],
+    duration:'2 Days', badge:'', rating:'4.8', enrolled:'350+', color:'#2e7d32' },
+
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-easel2',
+    title:'Poster Presentation',
+    titleBn:'পোস্টার উপস্থাপনা',
+    desc:'Designing research posters, key message framing, conference presentation skills.',
+    descBn:'গবেষণা পোস্টার ডিজাইন, মূল বার্তা তৈরি এবং কনফারেন্স উপস্থাপনা দক্ষতা।',
+    learn:['Design an A0/A1 research poster','Apply visual hierarchy and white space','Summarize findings in a 3-minute pitch','Use colour effectively for scientific posters','Prepare for Q&A at poster sessions','Create a digital/ePoster version'],
+    learnBn:['A0/A1 গবেষণা পোস্টার ডিজাইন','ভিজ্যুয়াল হায়ারার্কি ও সাদা জায়গার ব্যবহার','৩ মিনিটের পিচে ফলাফল সারসংক্ষেপ','বৈজ্ঞানিক পোস্টারের জন্য রঙের ব্যবহার','পোস্টার সেশনে প্রশ্নের জন্য প্রস্তুতি','ডিজিটাল/ePoster সংস্করণ তৈরি'],
+    duration:'Half Day', badge:'', rating:'4.6', enrolled:'180+', color:'#2e7d32' },
+
+  { cat:'writing', catLabel:'Writing & Publication', catClass:'cat-writing', icon:'bi-virus',
+    title:'Basic Concepts of Epidemiology',
+    titleBn:'মহামারীবিদ্যার মৌলিক ধারণা',
+    desc:'Disease burden measures, outbreak investigation, epidemiological study types, and surveillance.',
+    descBn:'রোগের বোঝা পরিমাপ, প্রাদুর্ভাব তদন্ত, মহামারীবিদ্যামূলক স্টাডি ধরন।',
+    learn:['Calculate incidence, prevalence, mortality rates','Understand epidemic curves and outbreak investigation','Describe screening tests (sensitivity, specificity)','Distinguish descriptive and analytical epidemiology','Interpret odds ratios and relative risks','Use epidemiological evidence in public health decisions'],
+    learnBn:['ইনসিডেন্স, প্রিভালেন্স, মৃত্যুহার গণনা','মহামারী বক্ররেখা ও প্রাদুর্ভাব তদন্ত','স্ক্রিনিং পরীক্ষা বোঝা (সংবেদনশীলতা, নির্দিষ্টতা)','বর্ণনামূলক ও বিশ্লেষণাত্মক মহামারীবিদ্যা','অডস রেশিও ও আপেক্ষিক ঝুঁকি ব্যাখ্যা','জনস্বাস্থ্য সিদ্ধান্তে মহামারীবিদ্যার প্রমাণ ব্যবহার'],
+    duration:'1 Day', badge:'', rating:'4.7', enrolled:'270+', color:'#2e7d32' },
+
+  // ── MANAGEMENT ────────────────────────────────────────────────────────
+  { cat:'management', catLabel:'Management', catClass:'cat-management', icon:'bi-kanban',
+    title:'Project Management',
+    titleBn:'প্রকল্প ব্যবস্থাপনা',
+    desc:'Project lifecycle, Gantt charts, risk management, logical framework, and team coordination.',
+    descBn:'প্রকল্পের জীবনচক্র, গ্যান্ট চার্ট, ঝুঁকি ব্যবস্থাপনা এবং লজিক্যাল ফ্রেমওয়ার্ক।',
+    learn:['Understand project lifecycle (Initiation to Closure)','Build a logical framework (LogFrame)','Create and manage a Gantt chart','Identify, assess and mitigate project risks','Coordinate and lead project teams','Write project progress reports'],
+    learnBn:['প্রকল্পের জীবনচক্র বোঝা','লজিক্যাল ফ্রেমওয়ার্ক (LogFrame) তৈরি','গ্যান্ট চার্ট তৈরি ও ব্যবস্থাপনা','প্রকল্প ঝুঁকি চিহ্নিত ও প্রশমন','প্রকল্প দল সমন্বয়','প্রকল্পের অগ্রগতি প্রতিবেদন লেখা'],
+    duration:'2 Days', badge:'', rating:'4.7', enrolled:'230+', color:'#e65100' },
+
+  { cat:'management', catLabel:'Management', catClass:'cat-management', icon:'bi-cash-coin',
+    title:'Financial Management',
+    titleBn:'আর্থিক ব্যবস্থাপনা',
+    desc:'Budget planning, financial reporting, NGO compliance, donor fund management.',
+    descBn:'বাজেট পরিকল্পনা, আর্থিক প্রতিবেদন, NGO সম্মতি এবং ডোনার ফান্ড ব্যবস্থাপনা।',
+    learn:['Prepare and manage a project budget','Track expenditures against budget lines','Produce financial reports for donors','Ensure NGO Bureau compliance in Bangladesh','Manage petty cash and procurement','Understand financial auditing requirements'],
+    learnBn:['প্রকল্পের বাজেট প্রস্তুত ও ব্যবস্থাপনা','বাজেট লাইনের বিপরীতে ব্যয় ট্র্যাক করা','ডোনারদের জন্য আর্থিক প্রতিবেদন','বাংলাদেশ NGO ব্যুরো সম্মতি নিশ্চিত করা','পেটি ক্যাশ ও প্রকিউরমেন্ট ব্যবস্থাপনা','আর্থিক অডিটিং বোঝা'],
+    duration:'1 Day', badge:'', rating:'4.6', enrolled:'190+', color:'#e65100' },
+
+  { cat:'management', catLabel:'Management', catClass:'cat-management', icon:'bi-clipboard2-pulse',
+    title:'Monitoring & Evaluation (M&E)',
+    titleBn:'মনিটরিং ও মূল্যায়ন (M&E)',
+    desc:'M&E frameworks, indicators, data collection for results, and impact assessment.',
+    descBn:'M&E ফ্রেমওয়ার্ক, সূচক, ফলাফলের জন্য তথ্য সংগ্রহ এবং প্রভাব মূল্যায়ন।',
+    learn:['Develop an M&E plan and results framework','Select SMART indicators (output, outcome, impact)','Design data collection tools for M&E','Conduct process and outcome evaluations','Use DHIS2 / KoBoToolbox for M&E data','Write evaluation reports for donors'],
+    learnBn:['M&E পরিকল্পনা ও ফলাফল কাঠামো তৈরি','SMART সূচক নির্বাচন','M&E-এর জন্য ডেটা সংগ্রহ টুল ডিজাইন','প্রক্রিয়া ও ফলাফল মূল্যায়ন','DHIS2 / KoBoToolbox ব্যবহার','ডোনারদের জন্য মূল্যায়ন রিপোর্ট লেখা'],
+    duration:'2 Days', badge:'featured', rating:'4.8', enrolled:'260+', color:'#e65100' },
+
+  { cat:'management', catLabel:'Management', catClass:'cat-management', icon:'bi-building',
+    title:'DPP Preparation',
+    titleBn:'DPP প্রস্তুতি',
+    desc:'Development Project Proforma — Bangladesh government project proposal format and standards.',
+    descBn:'ডেভেলপমেন্ট প্রজেক্ট প্রোফর্মা — বাংলাদেশ সরকারের প্রকল্প প্রস্তাব ফরম্যাট।',
+    learn:['Understand DPP structure and ECNEC approval process','Fill in DPP sections: objectives, activities, budget','Prepare PCR (Project Completion Report)','Work with IMED monitoring framework','Link DPP to SDGs and Bangladesh 8th Five-Year Plan','Navigate government procurement rules (PPR 2008)'],
+    learnBn:['DPP কাঠামো ও ECNEC অনুমোদন প্রক্রিয়া','DPP অধ্যায় পূরণ: উদ্দেশ্য, কার্যক্রম, বাজেট','PCR (প্রকল্প সম্পূর্ণতা রিপোর্ট) প্রস্তুতি','IMED মনিটরিং ফ্রেমওয়ার্কের সাথে কাজ','DPP-কে SDG ও ৮ম পঞ্চবার্ষিক পরিকল্পনার সাথে সংযুক্ত করা','সরকারি প্রকিউরমেন্ট বিধি (PPR 2008) নেভিগেট'],
+    duration:'2 Days', badge:'new', rating:'4.8', enrolled:'170+', color:'#e65100' },
+
+  { cat:'management', catLabel:'Management', catClass:'cat-management', icon:'bi-people-fill',
+    title:'Stakeholder Mapping & Cost-Benefit Analysis',
+    titleBn:'স্টেকহোল্ডার ম্যাপিং ও খরচ-সুবিধা বিশ্লেষণ',
+    desc:'Identifying stakeholders, power-interest matrix, economic analysis, and policy advocacy.',
+    descBn:'স্টেকহোল্ডার চিহ্নিতকরণ, পাওয়ার-ইন্টারেস্ট ম্যাট্রিক্স এবং অর্থনৈতিক বিশ্লেষণ।',
+    learn:['Map stakeholders using power-interest grid','Develop stakeholder engagement strategies','Conduct cost-benefit and cost-effectiveness analysis','Calculate Net Present Value (NPV) for projects','Use stakeholder analysis in policy advocacy','Present findings to decision-makers'],
+    learnBn:['পাওয়ার-ইন্টারেস্ট গ্রিড দিয়ে স্টেকহোল্ডার ম্যাপিং','স্টেকহোল্ডার সম্পৃক্ততার কৌশল তৈরি','খরচ-সুবিধা ও খরচ-কার্যকারিতা বিশ্লেষণ','প্রকল্পের জন্য NPV গণনা','নীতি পরামর্শে স্টেকহোল্ডার বিশ্লেষণ','সিদ্ধান্তকর্তাদের কাছে ফলাফল উপস্থাপনা'],
+    duration:'1 Day', badge:'', rating:'4.7', enrolled:'200+', color:'#e65100' },
+
+  // ── SPECIAL PROGRAMS ─────────────────────────────────────────────────
+  { cat:'special', catLabel:'Special Programs', catClass:'cat-special', icon:'bi-mortarboard',
+    title:'Research Boot Camp for Grade 11 & 12 Students',
+    titleBn:'একাদশ ও দ্বাদশ শ্রেণির জন্য রিসার্চ বুট ক্যাম্প',
+    desc:'Extracurricular research literacy program — critical thinking, basic statistics, and mini-project.',
+    descBn:'পাঠ্যক্রম বহির্ভূত গবেষণা সাক্ষরতা কার্যক্রম — সমালোচনামূলক চিন্তা ও মিনি-প্রকল্প।',
+    learn:['Understand what research is and why it matters','Ask good research questions','Collect simple survey data from peers','Analyse data with basic statistics','Create a poster or infographic of findings','Present research confidently in public'],
+    learnBn:['গবেষণা কী এবং কেন গুরুত্বপূর্ণ তা বোঝা','ভালো গবেষণা প্রশ্ন জিজ্ঞাসা করা','সহপাঠীদের কাছ থেকে সমীক্ষা ডেটা সংগ্রহ','মৌলিক পরিসংখ্যান দিয়ে ডেটা বিশ্লেষণ','ফলাফলের পোস্টার বা ইনফোগ্রাফিক তৈরি','জনসমক্ষে আত্মবিশ্বাসের সাথে গবেষণা উপস্থাপনা'],
+    duration:'3 Days', badge:'featured', rating:'4.9', enrolled:'150+', color:'#c62828' },
+
+  { cat:'special', catLabel:'Special Programs', catClass:'cat-special', icon:'bi-geo-alt',
+    title:'Field-Based Training (Day or Residential)',
+    titleBn:'ফিল্ড ভিত্তিক প্রশিক্ষণ (দিবা বা আবাসিক)',
+    desc:'Immersive hands-on field training combining data collection, community engagement, and applied research.',
+    descBn:'ডেটা সংগ্রহ, কমিউনিটি সম্পৃক্ততা এবং প্রায়োগিক গবেষণার সমন্বিত ফিল্ড প্রশিক্ষণ।',
+    learn:['Conduct community health assessments in the field','Interview community members using structured tools','Observe and document field conditions','Enter and clean real field data same day','Work in a multidisciplinary team setting','Present field findings to local stakeholders'],
+    learnBn:['মাঠে কমিউনিটি স্বাস্থ্য মূল্যায়ন','কাঠামোগত টুল দিয়ে কমিউনিটি সদস্যদের সাক্ষাৎকার','মাঠের পরিস্থিতি পর্যবেক্ষণ ও নথিভুক্ত','একই দিনে প্রকৃত ফিল্ড ডেটা এন্ট্রি ও ক্লিনিং','বহুবিভাগীয় দলে কাজ','স্থানীয় স্টেকহোল্ডারদের কাছে ফিল্ড ফলাফল উপস্থাপনা'],
+    duration:'1–5 Days', badge:'popular', rating:'5.0', enrolled:'200+', color:'#c62828' },
+]; // _REMOVE placeholder — actual data is in js/courses-data.js
+
+const VISIBLE_INIT = 9;
+let currentFilter = 'all';
+let showAll = false;
+
+function starsHtml(r) {
+  const f=Math.floor(parseFloat(r)); let h='';
+  for(let i=0;i<f;i++) h+='★';
+  if(parseFloat(r)%1>=0.5) h+='½';
+  return h;
+}
+
+function fmtPrice(p){ return '৳ '+p.toLocaleString('en-BD'); }
+
+function buildCard(c) {
+  const isBn = document.body.classList.contains('bn');
+  const realIdx = COURSES.indexOf(c);
+  const badgeHtml = c.badge ? `<span class="cc-badge badge-${c.badge}">${c.badge==='popular'?'🔥 Popular':c.badge==='new'?'✦ New':'⭐ Featured'}</span>` : '';
+  const priceLabel = isBn ? 'কোর্স ফি' : 'Course Fee';
+  return `
+    <div class="col-lg-4 col-md-6 course-item" data-cat="${c.cat}">
+      <div class="course-card">
+        <div class="cc-thumb" style="background:linear-gradient(135deg,${c.color}dd 0%,${c.color}66 100%);">
+          <div class="thumb-icon"><i class="bi ${c.icon}"></i></div>
+          ${badgeHtml}
+          <span class="cc-duration"><i class="bi bi-clock"></i> ${c.duration}</span>
+        </div>
+        <div class="cc-body">
+          <div class="cc-cat ${c.catClass}">${c.catLabel}</div>
+          <div class="cc-title">${isBn ? c.titleBn : c.title}</div>
+          <div class="cc-desc">${isBn ? c.descBn : c.desc}</div>
+          <div class="cc-footer">
+            <div class="cc-instructor"><span class="en-text">By </span><span class="bn-text">প্রশিক্ষক: </span><strong>SARD BD</strong></div>
+            <div style="display:flex;align-items:center;gap:5px;">
+              <span style="color:#f59e0b;font-size:0.72rem;">${starsHtml(c.rating)}</span>
+              <span style="font-size:0.68rem;color:var(--text-muted);">${c.rating}</span>
+              <div class="cc-bookmark" onclick="toggleBookmark(event,this)"><i class="bi bi-bookmark"></i></div>
+            </div>
+          </div>
+        </div>
+        <!-- Price row -->
+        <div class="cc-price-row">
+          <div class="cc-price"><i class="bi bi-tag-fill" style="font-size:0.8rem;color:var(--green);margin-right:2px;"></i>${fmtPrice(c.price)}<small>/${priceLabel}</small></div>
+          <span class="cc-cert-tag"><i class="bi bi-award-fill"></i> <span class="en-text">Cert.</span><span class="bn-text">সার্টি.</span></span>
+        </div>
+        <!-- Buttons -->
+        <div class="cc-actions">
+          <a href="course.html?id=${realIdx}" class="cc-btn-more">
+            <i class="bi bi-eye-fill"></i>
+            <span class="en-text">View Details</span><span class="bn-text">বিস্তারিত</span>
+          </a>
+          <a href="enroll.html?id=${realIdx}" class="cc-btn-enroll">
+            <i class="bi bi-cart-fill"></i>
+            <span class="en-text">Enroll — ${fmtPrice(c.price)}</span><span class="bn-text">ভর্তি — ${fmtPrice(c.price)}</span>
+          </a>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderCourses() {
+  const grid = document.getElementById('courseGrid');
+  if(!grid) return;
+  const filtered = currentFilter === 'all' ? COURSES : COURSES.filter(c => c.cat === currentFilter);
+  const toShow = showAll ? filtered : filtered.slice(0, VISIBLE_INIT);
+  grid.innerHTML = toShow.map(c => buildCard(c)).join('');
+  const wrap = document.getElementById('viewMoreWrap');
+  if(!wrap) return;
+  if(filtered.length <= VISIBLE_INIT || showAll) {
+    wrap.style.display = 'none';
+  } else {
+    wrap.style.display = 'block';
+    const btn = wrap.querySelector('.btn-reveal-more');
+    if(btn) {
+      btn.querySelector('.en-text').textContent = `View All ${filtered.length} Courses`;
+      btn.querySelector('.bn-text').textContent = `সকল ${filtered.length}টি কোর্স দেখুন`;
+    }
+  }
+}
+
+function filterCourse(cat, btn) {
+  currentFilter = cat; showAll = false;
+  document.querySelectorAll('.cf-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderCourses();
+}
+
+function showAllCourses() { showAll = true; renderCourses(); }
+
+function toggleBookmark(evt, el) {
+  evt.stopPropagation();
+  el.classList.toggle('saved');
+  el.innerHTML = el.classList.contains('saved')
+    ? '<i class="bi bi-bookmark-fill"></i>'
+    : '<i class="bi bi-bookmark"></i>';
+}
+
+document.addEventListener('DOMContentLoaded', renderCourses);
+document.addEventListener('langChange', renderCourses);
+</script>
 
 <!-- GALLERY -->
 <section style="padding:44px 0 48px;background:var(--gray-bg);">
@@ -626,7 +1011,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  function setLang(l){document.body.classList.toggle('bn',l==='bn');document.getElementById('btn-en').classList.toggle('active',l==='en');document.getElementById('btn-bn').classList.toggle('active',l==='bn');localStorage.setItem('sardbd_lang',l);}
+  function setLang(l){document.body.classList.toggle('bn',l==='bn');document.getElementById('btn-en').classList.toggle('active',l==='en');document.getElementById('btn-bn').classList.toggle('active',l==='bn');localStorage.setItem('sardbd_lang',l);document.dispatchEvent(new Event('langChange'));}
   (function(){var s=localStorage.getItem('sardbd_lang');if(s)setLang(s);})();
 
   function openVideo(url, title) {

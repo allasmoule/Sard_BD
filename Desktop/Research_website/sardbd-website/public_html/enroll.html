@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Enroll — SARD BD Training</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    :root{
+      --green:#013e37;--butter:#ffefb3;--butter-light:#fffaed;
+      --gray-bg:#f7f8fa;--border:#e2e5ea;--text-muted:#6c757d;
+    }
+    body{font-family:'Inter',sans-serif;background:var(--gray-bg);}
+    body.bn{font-family:'Hind Siliguri',sans-serif;}
+    .en-text,.bn-text{display:none;}
+    body:not(.bn) .en-text{display:inline;}
+    body.bn .bn-text{display:inline;}
+
+    /* ── Hero Banner ── */
+    .enroll-hero{
+      background:linear-gradient(135deg,var(--green) 0%,#025a50 60%,#037a6b 100%);
+      padding:56px 0 44px;color:#fff;position:relative;overflow:hidden;
+    }
+    .enroll-hero::before{
+      content:'';position:absolute;inset:0;
+      background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+      color:var(--butter);font-size:.72rem;font-weight:700;
+      padding:5px 14px;border-radius:20px;margin-bottom:14px;
+    }
+    .hero-title{font-size:clamp(1.35rem,3vw,2rem);font-weight:900;line-height:1.25;margin-bottom:8px;}
+    .hero-sub{font-size:.9rem;opacity:.82;}
+    .price-chip{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--butter);color:var(--green);
+      font-size:1.45rem;font-weight:900;
+      padding:10px 24px;border-radius:12px;margin-top:16px;
+    }
+    .price-chip small{font-size:.7rem;font-weight:600;opacity:.7;}
+
+    /* ── Course Info Strip ── */
+    .course-strip{
+      background:#fff;border-bottom:1px solid var(--border);
+      padding:14px 0;
+    }
+    .strip-item{
+      display:flex;align-items:center;gap:7px;font-size:.78rem;color:var(--text-muted);
+    }
+    .strip-item i{color:var(--green);font-size:.9rem;}
+    .strip-item strong{color:#2d3748;font-weight:700;}
+
+    /* ── Form Card ── */
+    .form-section{padding:48px 0 64px;}
+    .enroll-card{
+      background:#fff;border-radius:18px;
+      box-shadow:0 4px 32px rgba(1,62,55,.08);
+      overflow:hidden;
+    }
+    .card-head{
+      background:linear-gradient(90deg,var(--butter-light),#fff);
+      padding:24px 28px 20px;border-bottom:1px solid var(--border);
+    }
+    .card-head h4{font-size:1.1rem;font-weight:800;color:var(--green);margin:0;}
+    .card-head p{font-size:.8rem;color:var(--text-muted);margin:4px 0 0;}
+    .card-body-inner{padding:28px;}
+
+    /* ── Field Styles ── */
+    .field-group{margin-bottom:22px;}
+    .field-group label{
+      display:flex;align-items:center;gap:6px;
+      font-size:.8rem;font-weight:700;color:#2d3748;margin-bottom:7px;
+    }
+    .field-group label i{color:var(--green);}
+    .req-star{color:#e53e3e;margin-left:2px;}
+    .optional-badge{
+      display:inline-block;font-size:.62rem;font-weight:600;
+      background:var(--butter-light);color:var(--green);
+      padding:1px 7px;border-radius:8px;border:1px solid rgba(1,62,55,.12);
+      margin-left:6px;vertical-align:middle;
+    }
+    .form-control{
+      border:1.5px solid var(--border);border-radius:10px;
+      font-size:.88rem;padding:11px 14px;transition:all .2s;
+    }
+    .form-control:focus{
+      border-color:var(--green);box-shadow:0 0 0 3px rgba(1,62,55,.1);
+    }
+    .field-hint{font-size:.72rem;color:var(--text-muted);margin-top:4px;}
+    .field-error{font-size:.72rem;color:#e53e3e;margin-top:4px;display:none;}
+
+    /* ── Submit Button ── */
+    .btn-submit{
+      width:100%;padding:14px;font-size:.95rem;font-weight:800;
+      background:var(--green);color:#fff;border:none;border-radius:12px;
+      cursor:pointer;transition:all .2s;
+      display:flex;align-items:center;justify-content:center;gap:10px;
+    }
+    .btn-submit:hover{background:#025a50;transform:translateY(-1px);box-shadow:0 6px 20px rgba(1,62,55,.25);}
+    .btn-submit:active{transform:translateY(0);}
+    .btn-submit.loading{opacity:.7;pointer-events:none;}
+
+    /* ── Sidebar ── */
+    .sidebar-card{
+      background:#fff;border-radius:14px;
+      box-shadow:0 2px 18px rgba(1,62,55,.07);
+      overflow:hidden;margin-bottom:20px;
+    }
+    .sidebar-head{
+      background:var(--green);color:#fff;
+      padding:14px 18px;font-size:.82rem;font-weight:700;
+    }
+    .sidebar-body{padding:16px 18px;}
+    .sb-row{
+      display:flex;align-items:flex-start;gap:10px;
+      padding:8px 0;border-bottom:1px solid var(--border);font-size:.8rem;
+    }
+    .sb-row:last-child{border-bottom:none;}
+    .sb-row i{color:var(--green);font-size:.9rem;margin-top:1px;flex-shrink:0;}
+    .sb-row span{color:#4a5568;line-height:1.45;}
+
+    /* ── Success State ── */
+    .success-card{
+      background:#fff;border-radius:18px;
+      box-shadow:0 4px 32px rgba(1,62,55,.08);
+      text-align:center;padding:56px 40px;
+      display:none;
+    }
+    .success-icon{
+      width:80px;height:80px;background:linear-gradient(135deg,var(--green),#025a50);
+      border-radius:50%;display:flex;align-items:center;justify-content:center;
+      margin:0 auto 22px;font-size:2rem;color:#fff;
+    }
+    .success-card h3{font-size:1.5rem;font-weight:900;color:var(--green);margin-bottom:8px;}
+    .success-card p{font-size:.88rem;color:var(--text-muted);max-width:380px;margin:0 auto 24px;}
+    .order-id-box{
+      background:var(--butter-light);border:1px solid rgba(1,62,55,.15);
+      border-radius:10px;padding:12px 24px;display:inline-block;
+      font-size:.82rem;color:var(--green);font-weight:700;margin-bottom:24px;
+    }
+    .btn-back{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--green);color:#fff;font-size:.84rem;font-weight:700;
+      padding:11px 28px;border-radius:10px;text-decoration:none;transition:all .2s;
+    }
+    .btn-back:hover{background:#025a50;color:var(--butter);}
+
+    /* ── Trust badges ── */
+    .trust-row{
+      display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;
+    }
+    .trust-item{
+      display:flex;align-items:center;gap:5px;font-size:.72rem;
+      color:var(--text-muted);background:var(--gray-bg);
+      padding:5px 12px;border-radius:20px;
+    }
+    .trust-item i{color:var(--green);}
+  </style>
+</head>
+<body>
+
+<!-- Navbar placeholder (same as other pages) -->
+<nav class="navbar navbar-expand-lg" style="background:var(--green);padding:12px 0;" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 text-white fw-bold" href="index.html">
+      <img src="images/logo.png" alt="SARD BD" height="36" onerror="this.style.display='none'"/>
+      SARD BD
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <a href="training.html" class="text-white text-decoration-none" style="font-size:.84rem;opacity:.85;">
+        <i class="bi bi-arrow-left"></i> <span class="en-text">Back to Courses</span><span class="bn-text">কোর্সে ফিরুন</span>
+      </a>
+      <button class="btn btn-sm btn-outline-light" onclick="toggleLang()" style="font-size:.72rem;padding:4px 12px;">
+        <span class="en-text">বাং</span><span class="bn-text">EN</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="enroll-hero" id="enrollHero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <div class="hero-badge"><i class="bi bi-mortarboard-fill"></i> <span class="en-text">Course Enrollment</span><span class="bn-text">কোর্স ভর্তি</span></div>
+        <div class="hero-title" id="heroTitle">Loading...</div>
+        <div class="hero-sub" id="heroSub"></div>
+        <div class="price-chip" id="heroPrice">
+          <i class="bi bi-tag-fill"></i>
+          <span id="heroPriceVal">—</span>
+          <small>/ <span class="en-text">Course Fee</span><span class="bn-text">কোর্স ফি</span></small>
+        </div>
+      </div>
+      <div class="col-lg-4 text-end d-none d-lg-block">
+        <div style="font-size:6rem;opacity:.2;" id="heroIcon"><i class="bi bi-mortarboard-fill"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Course Strip -->
+<div class="course-strip">
+  <div class="container">
+    <div class="row g-3">
+      <div class="col-auto"><div class="strip-item"><i class="bi bi-clock"></i><span><strong id="stripDuration">—</strong> <span class="en-text">Duration</span><span class="bn-text">মেয়াদ</span></span></div></div>
+      <div class="col-auto"><div class="strip-item"><i class="bi bi-award"></i><span class="en-text"><strong>Certificate</strong> Included</span><span class="bn-text"><strong>সার্টিফিকেট</strong> অন্তর্ভুক্ত</span></span></div></div>
+      <div class="col-auto"><div class="strip-item"><i class="bi bi-people-fill"></i><span><strong id="stripEnrolled">—</strong> <span class="en-text">already enrolled</span><span class="bn-text">জন ভর্তি হয়েছেন</span></span></div></div>
+      <div class="col-auto"><div class="strip-item"><i class="bi bi-star-fill" style="color:#f59e0b!important;"></i><strong id="stripRating">—</strong></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Form Section -->
+<section class="form-section">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Main Form -->
+      <div class="col-lg-8">
+
+        <!-- Enrollment Form Card -->
+        <div class="enroll-card" id="formCard">
+          <div class="card-head">
+            <h4><i class="bi bi-pencil-square me-2"></i><span class="en-text">Enrollment Form</span><span class="bn-text">ভর্তি ফর্ম</span></h4>
+            <p><span class="en-text">Fill in your details to reserve your seat. Fields marked with * are required.</span><span class="bn-text">আপনার তথ্য পূরণ করুন। * চিহ্নিত তথ্য অবশ্যই দিতে হবে।</span></p>
+          </div>
+          <div class="card-body-inner">
+            <form id="enrollForm" novalidate>
+
+              <!-- Name -->
+              <div class="field-group">
+                <label for="fieldName">
+                  <i class="bi bi-person-fill"></i>
+                  <span class="en-text">Full Name</span><span class="bn-text">পূর্ণ নাম</span>
+                  <span class="req-star">*</span>
+                </label>
+                <input type="text" class="form-control" id="fieldName" placeholder="Enter your full name / আপনার পূর্ণ নাম লিখুন" required/>
+                <div class="field-error" id="errName"><i class="bi bi-exclamation-circle"></i> <span class="en-text">Name is required</span><span class="bn-text">নাম প্রদান করুন</span></div>
+              </div>
+
+              <!-- Phone -->
+              <div class="field-group">
+                <label for="fieldPhone">
+                  <i class="bi bi-telephone-fill"></i>
+                  <span class="en-text">Phone Number</span><span class="bn-text">মোবাইল নম্বর</span>
+                  <span class="req-star">*</span>
+                </label>
+                <input type="tel" class="form-control" id="fieldPhone" placeholder="01XXXXXXXXX" required/>
+                <div class="field-hint"><i class="bi bi-info-circle"></i> <span class="en-text">We'll contact you on this number to confirm enrollment.</span><span class="bn-text">এই নম্বরে যোগাযোগ করে ভর্তি নিশ্চিত করা হবে।</span></div>
+                <div class="field-error" id="errPhone"><i class="bi bi-exclamation-circle"></i> <span class="en-text">Valid phone number is required</span><span class="bn-text">সঠিক মোবাইল নম্বর দিন</span></div>
+              </div>
+
+              <!-- Education -->
+              <div class="field-group">
+                <label for="fieldEdu">
+                  <i class="bi bi-book-fill"></i>
+                  <span class="en-text">Educational Qualification</span><span class="bn-text">শিক্ষাগত যোগ্যতা</span>
+                  <span class="optional-badge"><span class="en-text">Optional</span><span class="bn-text">ঐচ্ছিক</span></span>
+                </label>
+                <select class="form-control" id="fieldEdu">
+                  <option value="">— <span>Select / নির্বাচন করুন</span> —</option>
+                  <option value="SSC">SSC / সেকেন্ডারি</option>
+                  <option value="HSC">HSC / উচ্চ মাধ্যমিক</option>
+                  <option value="Bachelor">Bachelor's / স্নাতক</option>
+                  <option value="Master">Master's / স্নাতকোত্তর</option>
+                  <option value="PhD">PhD / পিএইচডি</option>
+                  <option value="Other">Other / অন্যান্য</option>
+                </select>
+              </div>
+
+              <!-- Reference -->
+              <div class="field-group">
+                <label for="fieldRef">
+                  <i class="bi bi-people-fill"></i>
+                  <span class="en-text">Reference / How did you hear about us?</span><span class="bn-text">রেফারেন্স / কীভাবে জানলেন?</span>
+                  <span class="optional-badge"><span class="en-text">Optional</span><span class="bn-text">ঐচ্ছিক</span></span>
+                </label>
+                <input type="text" class="form-control" id="fieldRef" placeholder="e.g. Facebook, Friend, Google..."/>
+              </div>
+
+              <!-- Trust badges -->
+              <div class="trust-row">
+                <div class="trust-item"><i class="bi bi-shield-lock-fill"></i> <span class="en-text">Your data is safe</span><span class="bn-text">তথ্য সুরক্ষিত</span></div>
+                <div class="trust-item"><i class="bi bi-award-fill"></i> <span class="en-text">Certificate guaranteed</span><span class="bn-text">সার্টিফিকেট নিশ্চিত</span></div>
+                <div class="trust-item"><i class="bi bi-headset"></i> <span class="en-text">24h support</span><span class="bn-text">সহায়তা পাবেন</span></div>
+              </div>
+
+              <!-- Submit -->
+              <div class="mt-4">
+                <button type="submit" class="btn-submit" id="submitBtn">
+                  <i class="bi bi-check-circle-fill"></i>
+                  <span class="en-text">Confirm Enrollment</span><span class="bn-text">ভর্তি নিশ্চিত করুন</span>
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- Success Card -->
+        <div class="success-card enroll-card" id="successCard">
+          <div class="success-icon"><i class="bi bi-check-lg"></i></div>
+          <h3><span class="en-text">Enrollment Successful!</span><span class="bn-text">ভর্তি সম্পন্ন হয়েছে!</span></h3>
+          <p><span class="en-text">Thank you for enrolling. Our team will contact you shortly to confirm your seat and provide payment details.</span><span class="bn-text">ভর্তির জন্য ধন্যবাদ। আমাদের টিম শীঘ্রই আপনার সাথে যোগাযোগ করবে।</span></p>
+          <div class="order-id-box" id="orderIdBox">
+            <i class="bi bi-receipt"></i> <span class="en-text">Order ID:</span><span class="bn-text">অর্ডার আইডি:</span> <strong id="displayOrderId">—</strong>
+          </div>
+          <br/>
+          <a href="training.html" class="btn-back">
+            <i class="bi bi-arrow-left"></i>
+            <span class="en-text">Back to Courses</span><span class="bn-text">কোর্সে ফিরুন</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+
+        <!-- Course Summary -->
+        <div class="sidebar-card">
+          <div class="sidebar-head"><i class="bi bi-bookmark-fill me-2"></i><span class="en-text">Course Summary</span><span class="bn-text">কোর্স সারসংক্ষেপ</span></div>
+          <div class="sidebar-body">
+            <div class="sb-row">
+              <i class="bi bi-mortarboard-fill"></i>
+              <span id="sbCourseName" style="font-weight:700;color:#2d3748;">—</span>
+            </div>
+            <div class="sb-row">
+              <i class="bi bi-tag-fill"></i>
+              <span><span class="en-text">Fee:</span><span class="bn-text">ফি:</span> <strong id="sbPrice" style="color:var(--green);">—</strong></span>
+            </div>
+            <div class="sb-row">
+              <i class="bi bi-clock-fill"></i>
+              <span><span class="en-text">Duration:</span><span class="bn-text">মেয়াদ:</span> <strong id="sbDuration">—</strong></span>
+            </div>
+            <div class="sb-row">
+              <i class="bi bi-building"></i>
+              <span><span class="en-text">Organizer:</span><span class="bn-text">আয়োজক:</span> <strong>SARD BD</strong></span>
+            </div>
+            <div class="sb-row">
+              <i class="bi bi-award-fill"></i>
+              <span><span class="en-text">Certificate upon completion</span><span class="bn-text">সম্পন্নের পর সার্টিফিকেট</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Info -->
+        <div class="sidebar-card">
+          <div class="sidebar-head"><i class="bi bi-credit-card-fill me-2"></i><span class="en-text">Payment Info</span><span class="bn-text">পেমেন্ট তথ্য</span></div>
+          <div class="sidebar-body">
+            <div class="sb-row"><i class="bi bi-phone-fill"></i><span><span class="en-text">After enrollment confirmation, pay via:</span><span class="bn-text">ভর্তি নিশ্চিতের পর পেমেন্ট:</span></span></div>
+            <div class="sb-row"><i class="bi bi-wallet2"></i><span><strong>bKash / Nagad</strong> <span class="en-text">or Bank Transfer</span><span class="bn-text">বা ব্যাংক ট্রান্সফার</span></span></div>
+            <div class="sb-row"><i class="bi bi-headset"></i><span><span class="en-text">Call us:</span><span class="bn-text">ফোন করুন:</span> <strong>+880 1963-851090</strong></span></div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="sidebar-card">
+          <div class="sidebar-head"><i class="bi bi-question-circle-fill me-2"></i><span class="en-text">Need Help?</span><span class="bn-text">সাহায্য দরকার?</span></div>
+          <div class="sidebar-body">
+            <div class="sb-row"><i class="bi bi-envelope-fill"></i><span>hemeunus@gmail.com</span></div>
+            <div class="sb-row"><i class="bi bi-telephone-fill"></i><span>+880 1963-851090</span></div>
+            <div class="sb-row"><i class="bi bi-geo-alt-fill"></i><span><span class="en-text">House #184, Road #02, Mohakhali DOHS, Dhaka</span><span class="bn-text">বাড়ি #১৮৪, রোড #০২, মহাখালী ডিওএইচএস, ঢাকা</span></span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer minimal -->
+<footer style="background:var(--green);color:rgba(255,255,255,.7);text-align:center;padding:18px;font-size:.78rem;">
+  © 2025 SARD BD — Society for Applied Research & Development, Bangladesh
+</footer>
+
+<script src="js/courses-data.js"></script>
+<script>
+/* ── Language ── */
+function toggleLang(){
+  const isBn=document.body.classList.toggle('bn');
+  localStorage.setItem('sardLang',isBn?'bn':'en');
+  renderPage();
+}
+(function(){
+  if(localStorage.getItem('sardLang')==='bn') document.body.classList.add('bn');
+})();
+
+/* ── Get course from URL ── */
+var courseId = (new URLSearchParams(window.location.search)).get('id');
+var course = null;
+if(courseId !== null && COURSES[parseInt(courseId)]){
+  course = COURSES[parseInt(courseId)];
+}
+
+/* ── Render hero + sidebar ── */
+function renderPage(){
+  if(!course){
+    document.getElementById('heroTitle').textContent='Course not found';
+    return;
+  }
+  var isBn=document.body.classList.contains('bn');
+  var name = isBn ? course.titleBn : course.title;
+  var priceStr = '৳ '+course.price.toLocaleString('en-BD');
+
+  document.title = 'Enroll — '+ (isBn?course.titleBn:course.title) +' | SARD BD';
+  document.getElementById('heroTitle').textContent = name;
+  document.getElementById('heroSub').textContent = isBn ? course.descBn : course.desc;
+  document.getElementById('heroPriceVal').textContent = priceStr;
+  document.getElementById('heroIcon').innerHTML='<i class="bi '+course.icon+'"></i>';
+  document.getElementById('stripDuration').textContent = course.duration;
+  document.getElementById('stripEnrolled').textContent = course.enrolled;
+  document.getElementById('stripRating').textContent = course.rating + ' ★';
+  document.getElementById('sbCourseName').textContent = name;
+  document.getElementById('sbPrice').textContent = priceStr;
+  document.getElementById('sbDuration').textContent = course.duration;
+  // Hero color
+  document.querySelector('.enroll-hero').style.background =
+    'linear-gradient(135deg,'+course.color+'ee 0%,'+course.color+'cc 60%,'+course.color+'aa 100%)';
+}
+renderPage();
+
+/* ── Form submit ── */
+document.getElementById('enrollForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var name = document.getElementById('fieldName').value.trim();
+  var phone = document.getElementById('fieldPhone').value.trim();
+  var edu = document.getElementById('fieldEdu').value;
+  var ref = document.getElementById('fieldRef').value.trim();
+
+  // Validate
+  var valid=true;
+  document.getElementById('errName').style.display='none';
+  document.getElementById('errPhone').style.display='none';
+
+  if(!name){
+    document.getElementById('errName').style.display='block';
+    document.getElementById('fieldName').focus();
+    valid=false;
+  }
+  if(!phone || phone.replace(/\D/g,'').length < 10){
+    document.getElementById('errPhone').style.display='block';
+    if(valid) document.getElementById('fieldPhone').focus();
+    valid=false;
+  }
+  if(!valid) return;
+
+  // Loading state
+  var btn=document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  btn.innerHTML='<i class="bi bi-hourglass-split"></i> <span>Processing...</span>';
+
+  // Build order
+  var orderId = 'SARD-'+Date.now().toString(36).toUpperCase();
+  var order = {
+    orderId: orderId,
+    courseId: parseInt(courseId),
+    courseName: course.title,
+    courseNameBn: course.titleBn,
+    price: course.price,
+    name: name,
+    phone: phone,
+    education: edu || '',
+    reference: ref || '',
+    date: new Date().toISOString(),
+    status: 'Pending'
+  };
+
+  // Save to localStorage
+  var orders = JSON.parse(localStorage.getItem('sardEnrollments') || '[]');
+  orders.push(order);
+  localStorage.setItem('sardEnrollments', JSON.stringify(orders));
+
+  // Show success after brief delay
+  setTimeout(function(){
+    document.getElementById('formCard').style.display='none';
+    document.getElementById('successCard').style.display='block';
+    document.getElementById('displayOrderId').textContent = orderId;
+    window.scrollTo({top:0,behavior:'smooth'});
+  }, 600);
+});
+</script>
+</body>
+</html>
