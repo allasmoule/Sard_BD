@@ -93,15 +93,19 @@
       box-shadow: 0 2px 16px rgba(1,62,55,0.3);
       padding: 0;
     }
-    .navbar-main .navbar-brand {
-      color: var(--butter) !important;
-      font-weight: 800; font-size: 1.1rem;
-      padding: 12px 0; line-height: 1.2;
+    .navbar-main .navbar-brand { padding: 8px 0; text-decoration: none; }
+    .logo-wrap { display:flex; align-items:center; gap:11px; }
+    .logo-icon {
+      width:40px; height:40px; background:var(--butter); color:var(--green);
+      border-radius:9px; font-size:1.25rem; font-weight:900; letter-spacing:-1px;
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+      box-shadow: 0 2px 8px rgba(0,0,0,.25);
+      font-family:'Inter',sans-serif;
     }
-    .navbar-main .navbar-brand span {
-      display: block; color: rgba(255,255,255,0.6);
-      font-size: 0.72rem; font-weight: 400;
-    }
+    .logo-text { display:flex; flex-direction:column; line-height:1; }
+    .logo-main { color:#fff; font-size:.95rem; font-weight:800; letter-spacing:.6px; }
+    .logo-main .logo-bd { color:var(--butter); }
+    .logo-sub { color:rgba(255,255,255,.48); font-size:.58rem; font-weight:400; letter-spacing:.2px; margin-top:3px; }
     .navbar-main .nav-link {
       color: rgba(255,255,255,0.82) !important;
       font-weight: 500; font-size: 0.88rem;
@@ -531,9 +535,15 @@
 <!-- ══ NAVBAR ══════════════════════════════════════════════════════ -->
 <nav class="navbar navbar-main navbar-expand-lg">
   <div class="container">
-    <a class="navbar-brand" href="#">
-      <span class="en-text">SARD BD</span><span class="bn-text">সার্ড বিডি</span>
-      <span><span class="en-text">Society for Applied Research & Development</span><span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট</span></span>
+    <a class="navbar-brand" href="index.html">
+      <div class="logo-wrap">
+        <div class="logo-icon">S</div>
+        <div class="logo-text">
+          <span class="logo-main">SARD <span class="logo-bd">BD</span></span>
+          <span class="logo-sub en-text">Society for Applied Research &amp; Development</span>
+          <span class="logo-sub bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট</span>
+        </div>
+      </div>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
       <span class="navbar-toggler-icon"></span>
@@ -557,7 +567,7 @@
         </li>
         <li class="nav-item"><a class="nav-link" href="team.html"><span class="en-text">Team</span><span class="bn-text">দল</span></a></li>
         <li class="nav-item"><a class="nav-link" href="training.html"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="#news"><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="news.html"><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
         <li class="nav-item"><a class="nav-link" href="contact.html"><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
         <li class="nav-item ms-lg-2 d-flex gap-2">
           <button class="btn-lang active" id="btn-en" onclick="setLang('en')">EN</button>
@@ -1060,7 +1070,7 @@
         <div class="divider"></div>
         <h2 class="sec-title mb-0"><span class="en-text">News & Bulletin</span><span class="bn-text">সংবাদ ও বুলেটিন</span></h2>
       </div>
-      <a href="#" class="btn-green-outline d-none d-md-flex"><span class="en-text">All News</span><span class="bn-text">সব সংবাদ</span><i class="bi bi-arrow-right"></i></a>
+      <a href="news.html" class="btn-green-outline d-none d-md-flex"><span class="en-text">All News</span><span class="bn-text">সব সংবাদ</span><i class="bi bi-arrow-right"></i></a>
     </div>
     <div class="row g-4">
       <div class="col-md-4"><div class="news-card">
@@ -1070,7 +1080,7 @@
           <div class="news-date"><i class="bi bi-calendar3"></i> June 1, 2026</div>
           <h5><span class="en-text">SARD Publishes New Study on Arsenic Exposure in Araihazar</span><span class="bn-text">আড়াইহাজারে আর্সেনিক এক্সপোজার নিয়ে নতুন গবেষণা</span></h5>
           <p><span class="en-text">A new population-based study examines long-term health outcomes from arsenic exposure in groundwater.</span><span class="bn-text">ভূগর্ভস্থ পানিতে আর্সেনিকের দীর্ঘমেয়াদী স্বাস্থ্যগত প্রভাব নিয়ে গবেষণা।</span></p>
-          <a href="#" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
+          <a href="news.html" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
         </div>
       </div></div>
       <div class="col-md-4"><div class="news-card">
@@ -1080,7 +1090,7 @@
           <div class="news-date"><i class="bi bi-calendar3"></i> May 15, 2026</div>
           <h5><span class="en-text">JARD Vol. 1, Issue 1 Now Available — Call for Submissions</span><span class="bn-text">JARD খণ্ড ১, সংখ্যা ১ প্রকাশিত — পাণ্ডুলিপি আহ্বান</span></h5>
           <p><span class="en-text">The inaugural issue of JARD is now available. Authors invited to submit for December 2026 issue.</span><span class="bn-text">JARD-এর প্রথম সংখ্যা প্রকাশিত। ডিসেম্বর ২০২৬ সংখ্যার জন্য পাণ্ডুলিপি আমন্ত্রিত।</span></p>
-          <a href="#" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
+          <a href="news.html" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
         </div>
       </div></div>
       <div class="col-md-4"><div class="news-card">
@@ -1090,7 +1100,7 @@
           <div class="news-date"><i class="bi bi-calendar3"></i> April 20, 2026</div>
           <h5><span class="en-text">10-Day Research Boot Camp Successfully Completed in Dhaka</span><span class="bn-text">ঢাকায় ১০ দিনের রিসার্চ বুট ক্যাম্প সম্পন্ন</span></h5>
           <p><span class="en-text">24 healthcare professionals completed SARD's intensive residential research boot camp with manuscript preparation.</span><span class="bn-text">২৪ জন স্বাস্থ্যসেবা পেশাদার সফলভাবে বুট ক্যাম্প সম্পন্ন করেছেন।</span></p>
-          <a href="#" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
+          <a href="news.html" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
         </div>
       </div></div>
     </div>
@@ -1217,7 +1227,7 @@
           <li><a href="about.html"><i class="bi bi-chevron-right"></i><span class="en-text">About SARD</span><span class="bn-text">সম্পর্কে</span></a></li>
           <li><a href="team.html"><i class="bi bi-chevron-right"></i><span class="en-text">Research Team</span><span class="bn-text">গবেষণা দল</span></a></li>
           <li><a href="training.html"><i class="bi bi-chevron-right"></i><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
-          <li><a href="#news"><i class="bi bi-chevron-right"></i><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+          <li><a href="news.html"><i class="bi bi-chevron-right"></i><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
           <li><a href="contact.html"><i class="bi bi-chevron-right"></i><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
         </ul>
       </div>

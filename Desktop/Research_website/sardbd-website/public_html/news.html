@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>News & Bulletin — SARD BD</title>
+  <meta name="description" content="Latest news, research updates, and bulletins from Society for Applied Research and Development Bangladesh (SARD BD)."/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --green:#013e37;--green-light:#025a50;--green-dark:#012a25;
+      --butter:#ffefb3;--butter-light:#fffaed;
+      --gray-bg:#f7f8fa;--text:#1a1a1a;--text-muted:#6c757d;
+      --border:#e5e7eb;--radius:12px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter','Hind Siliguri',sans-serif;color:var(--text);background:#fff;}
+    body.bn{font-family:'Hind Siliguri','Inter',sans-serif;}
+    body.bn .en-text{display:none!important;}
+    body:not(.bn) .bn-text{display:none!important;}
+
+    /* NAVBAR */
+    .navbar-main{background:var(--green);position:sticky;top:0;z-index:1000;box-shadow:0 2px 16px rgba(1,62,55,0.3);padding:0;}
+    .navbar-main .navbar-brand{color:var(--butter)!important;font-weight:800;font-size:1.1rem;padding:12px 0;line-height:1.2;}
+    .navbar-main .navbar-brand span{display:block;color:rgba(255,255,255,0.6);font-size:0.72rem;font-weight:400;}
+    .navbar-main .nav-link{color:rgba(255,255,255,0.82)!important;font-weight:500;font-size:0.88rem;padding:20px 13px!important;transition:color 0.2s;position:relative;}
+    .navbar-main .nav-link:hover,.navbar-main .nav-link.active{color:var(--butter)!important;}
+    .navbar-main .nav-link.active::after{content:'';position:absolute;bottom:0;left:13px;right:13px;height:3px;background:var(--butter);border-radius:2px 2px 0 0;}
+    .navbar-main .dropdown-menu{background:var(--green-dark);border:none;border-top:3px solid var(--butter);border-radius:0 0 10px 10px;min-width:210px;}
+    .navbar-main .dropdown-item{color:rgba(255,255,255,0.8);font-size:0.85rem;padding:9px 18px;}
+    .navbar-main .dropdown-item:hover{background:var(--green-light);color:var(--butter);}
+    .btn-lang{background:transparent;border:1.5px solid rgba(255,255,255,0.35);color:rgba(255,255,255,0.8);font-size:0.78rem;font-weight:700;padding:5px 13px;border-radius:20px;cursor:pointer;transition:all 0.2s;}
+    .btn-lang.active,.btn-lang:hover{background:var(--butter);border-color:var(--butter);color:var(--green);}
+    .navbar-toggler{border:1.5px solid rgba(255,255,255,0.4);padding:5px 10px;}
+    .navbar-toggler-icon{filter:invert(1);}
+
+    /* PAGE HERO */
+    .page-hero{background:linear-gradient(120deg,var(--green) 0%,#025a50 60%,#036b60 100%);padding:50px 0 44px;position:relative;overflow:hidden;}
+    .page-hero::before{content:'';position:absolute;top:-40px;right:-60px;width:280px;height:280px;background:rgba(255,239,179,0.06);border-radius:50%;}
+    .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:44px;background:#f7f8fa;clip-path:ellipse(55% 100% at 50% 100%);}
+    .page-hero .breadcrumb-item a{color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.82rem;}
+    .page-hero .breadcrumb-item.active{color:var(--butter);font-size:0.82rem;}
+    .page-hero .breadcrumb-item+.breadcrumb-item::before{color:rgba(255,255,255,0.3);}
+    .page-hero h1{color:#fff;font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:800;margin-bottom:8px;}
+    .page-hero h1 em{color:var(--butter);font-style:normal;}
+    .page-hero p{color:rgba(255,255,255,0.62);font-size:0.92rem;max-width:520px;}
+
+    /* FILTER BAR */
+    .filter-bar{background:var(--gray-bg);border-bottom:1px solid var(--border);padding:14px 0;}
+    .filter-btn{background:#fff;border:1.5px solid var(--border);color:var(--text-muted);font-size:0.78rem;font-weight:600;padding:6px 14px;border-radius:20px;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+    .filter-btn:hover{border-color:var(--green);color:var(--green);}
+    .filter-btn.active{background:var(--green);border-color:var(--green);color:var(--butter);}
+    .search-box{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:6px 14px 6px 36px;font-size:0.82rem;color:var(--text);width:200px;transition:border-color 0.2s;}
+    .search-box:focus{outline:none;border-color:var(--green);}
+    .search-wrap{position:relative;}
+    .search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.85rem;}
+
+    /* FEATURED NEWS (big card) */
+    .featured-card{
+      background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
+      overflow:hidden;cursor:pointer;transition:all 0.25s;height:100%;
+    }
+    .featured-card:hover{border-color:var(--green);box-shadow:0 8px 40px rgba(1,62,55,0.12);transform:translateY(-4px);}
+    .featured-img{width:100%;aspect-ratio:16/9;object-fit:cover;background:linear-gradient(135deg,var(--green),#025a50);display:flex;align-items:center;justify-content:center;}
+    .featured-img img{width:100%;height:100%;object-fit:cover;}
+    .featured-img .img-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:3rem;color:rgba(255,239,179,0.3);}
+    .featured-body{padding:20px 22px;}
+    .news-cat{display:inline-block;font-size:0.62rem;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:10px;margin-bottom:8px;}
+    .cat-research{background:#e8f5e9;color:#1b5e20;}
+    .cat-journal{background:var(--butter-light);color:var(--green);}
+    .cat-training{background:#e3f2fd;color:#0d47a1;}
+    .cat-event{background:#fce4ec;color:#880e4f;}
+    .cat-bulletin{background:#fff8e1;color:#e65100;}
+    .cat-award{background:#f3e5f5;color:#4a148c;}
+    .featured-title{color:var(--green);font-weight:800;font-size:1.05rem;line-height:1.35;margin-bottom:8px;}
+    .featured-excerpt{color:var(--text-muted);font-size:0.82rem;line-height:1.7;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+    .news-meta{display:flex;align-items:center;gap:14px;font-size:0.75rem;color:var(--text-muted);}
+    .news-meta i{color:var(--green);}
+
+    /* SMALL NEWS CARD */
+    .news-card{
+      background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
+      overflow:hidden;cursor:pointer;transition:all 0.25s;height:100%;display:flex;flex-direction:column;
+    }
+    .news-card:hover{border-color:var(--green);box-shadow:0 4px 24px rgba(1,62,55,0.1);transform:translateY(-3px);}
+    .news-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:linear-gradient(135deg,var(--green),#025a50);overflow:hidden;position:relative;flex-shrink:0;}
+    .news-thumb img{width:100%;height:100%;object-fit:cover;}
+    .news-thumb .thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;color:rgba(255,239,179,0.25);}
+    .has-video-badge{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.65);color:#fff;font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:5px;display:flex;align-items:center;gap:4px;}
+    .news-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;}
+    .news-title{color:var(--green);font-weight:700;font-size:0.88rem;line-height:1.35;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;}
+    .news-excerpt{color:var(--text-muted);font-size:0.78rem;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px;}
+    .news-footer{display:flex;align-items:center;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-top:auto;padding-top:8px;border-top:1px solid var(--border);}
+    .read-more-badge{color:var(--green);font-weight:700;font-size:0.72rem;display:flex;align-items:center;gap:3px;}
+
+    /* SECTION TITLE */
+    .sec-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+    .sec-title{font-size:1.1rem;font-weight:800;color:var(--green);}
+    .sec-title span{display:inline-block;width:32px;height:4px;background:var(--butter);border-radius:2px;margin-right:10px;vertical-align:middle;}
+
+    /* ==============  NEWS MODAL  ============== */
+    .news-modal-bg{
+      position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;
+      display:none;align-items:flex-start;justify-content:center;
+      padding:20px 16px;overflow-y:auto;backdrop-filter:blur(4px);
+    }
+    .news-modal-bg.open{display:flex;}
+    .news-modal{
+      background:#fff;border-radius:16px;width:100%;max-width:820px;
+      margin:auto;overflow:hidden;position:relative;
+      box-shadow:0 24px 80px rgba(0,0,0,0.35);
+      animation:modalIn 0.28s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modalIn{from{opacity:0;transform:scale(0.92) translateY(20px);}to{opacity:1;transform:scale(1) translateY(0);}}
+
+    /* Modal close */
+    .modal-close{
+      position:absolute;top:14px;right:14px;z-index:10;
+      width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.45);
+      border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+      color:#fff;font-size:1rem;transition:background 0.2s;
+    }
+    .modal-close:hover{background:rgba(0,0,0,0.7);}
+
+    /* Modal media */
+    .modal-media{position:relative;background:#000;max-height:420px;overflow:hidden;}
+    .modal-media img{width:100%;max-height:420px;object-fit:cover;display:block;}
+    .modal-media .media-placeholder{width:100%;height:260px;background:linear-gradient(135deg,var(--green),#025a50);display:flex;align-items:center;justify-content:center;font-size:4rem;color:rgba(255,239,179,0.2);}
+    /* Video inside modal */
+    .modal-video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;}
+    .modal-video-wrap video,.modal-video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;}
+    /* Gallery strip */
+    .modal-gallery{display:flex;gap:8px;padding:10px 22px;background:#f0f0f0;overflow-x:auto;scrollbar-width:thin;}
+    .modal-gallery img{height:64px;width:auto;min-width:64px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:border-color 0.2s;flex-shrink:0;}
+    .modal-gallery img.active-thumb{border-color:var(--green);}
+    .modal-gallery img:hover{border-color:var(--green);}
+
+    /* Modal body */
+    .modal-body-inner{padding:22px 26px 28px;}
+    .modal-cat-date{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .modal-title{color:var(--green);font-weight:900;font-size:clamp(1.1rem,2.5vw,1.5rem);line-height:1.3;margin-bottom:10px;}
+    .modal-meta{display:flex;flex-wrap:wrap;gap:16px;font-size:0.78rem;color:var(--text-muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+    .modal-meta i{color:var(--green);}
+    .modal-content-text p{font-size:0.88rem;line-height:1.85;color:#333;margin-bottom:12px;}
+    .modal-content-text p:last-child{margin-bottom:0;}
+    .modal-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);}
+    .modal-tag{background:var(--gray-bg);color:var(--text-muted);font-size:0.7rem;font-weight:600;padding:3px 10px;border-radius:10px;}
+    .modal-share{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+    .modal-share span{font-size:0.75rem;color:var(--text-muted);font-weight:600;}
+    .share-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:0.9rem;cursor:pointer;transition:all 0.2s;text-decoration:none;color:var(--text-muted);}
+    .share-btn:hover{background:var(--green);border-color:var(--green);color:var(--butter);}
+
+    /* PAGINATION */
+    .pag-btn{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:0.83rem;font-weight:700;cursor:pointer;transition:all 0.2s;color:var(--text-muted);text-decoration:none;}
+    .pag-btn:hover,.pag-btn.active{background:var(--green);border-color:var(--green);color:var(--butter);}
+
+    /* Buttons */
+    .btn-green{background:var(--green);color:var(--butter);font-weight:700;font-size:0.88rem;padding:11px 22px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.2s;border:none;}
+    .btn-green:hover{background:var(--green-light);color:var(--butter);}
+
+    /* Footer */
+    footer{background:var(--green-dark);padding:40px 0 0;}
+    .foot-brand{color:var(--butter);font-weight:800;font-size:1rem;margin-bottom:5px;}
+    .foot-desc{color:rgba(255,255,255,0.4);font-size:0.8rem;line-height:1.7;max-width:260px;margin-bottom:14px;}
+    footer h6{color:var(--butter);font-weight:700;font-size:0.76rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+    footer ul{list-style:none;padding:0;margin:0;}
+    footer ul li{margin-bottom:7px;}
+    footer ul li a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.81rem;transition:color 0.2s;display:flex;align-items:center;gap:6px;}
+    footer ul li a:hover{color:var(--butter);}
+    .foot-bottom{background:rgba(0,0,0,0.25);padding:13px 0;margin-top:36px;}
+    .foot-bottom p{margin:0;font-size:0.76rem;color:rgba(255,255,255,0.3);}
+    .foot-bottom a{color:var(--butter);text-decoration:none;}
+    .wa-float{position:fixed;bottom:26px;right:26px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,0.45);z-index:999;transition:all 0.25s;}
+    .wa-float:hover{transform:scale(1.12);color:#fff;}
+
+    /* No scroll when modal open */
+    body.modal-open-custom{overflow:hidden;}
+
+    @media(max-width:576px){.modal-body-inner{padding:16px 16px 20px;}.news-modal{border-radius:12px;}}
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-main navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">SARD BD <span>Society for Applied Research & Development</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html"><span class="en-text">Home</span><span class="bn-text">হোম</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html"><span class="en-text">About</span><span class="bn-text">সম্পর্কে</span></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><span class="en-text">Journal</span><span class="bn-text">জার্নাল</span></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="journal.html"><i class="bi bi-journal-text me-2"></i>Journal Overview</a></li>
+            <li><a class="dropdown-item" href="editorial-board.html"><i class="bi bi-people me-2"></i>Editorial Board</a></li>
+            <li><a class="dropdown-item" href="author-guidelines.html"><i class="bi bi-file-text me-2"></i>Author Guidelines</a></li>
+            <li><a class="dropdown-item" href="journal.html?tab=archive"><i class="bi bi-archive me-2"></i>Archive</a></li>
+            <li><hr class="dropdown-divider" style="border-color:rgba(255,255,255,0.1)"></li>
+            <li><a class="dropdown-item" href="journal.html?tab=submit"><i class="bi bi-upload me-2"></i>Submit Manuscript</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="team.html"><span class="en-text">Team</span><span class="bn-text">দল</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="training.html"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
+        <li class="nav-item"><a class="nav-link active" href="news.html"><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html"><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
+        <li class="nav-item ms-lg-2 d-flex gap-2">
+          <button class="btn-lang active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="btn-lang" id="btn-bn" onclick="setLang('bn')">বাং</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container position-relative" style="z-index:1">
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="index.html"><i class="bi bi-house me-1"></i>Home</a></li>
+        <li class="breadcrumb-item active"><span class="en-text">News & Bulletin</span><span class="bn-text">সংবাদ ও বুলেটিন</span></li>
+      </ol>
+    </nav>
+    <h1><span class="en-text">News & <em>Bulletin</em></span><span class="bn-text">সংবাদ ও <em>বুলেটিন</em></span></h1>
+    <p><span class="en-text">Latest updates, research highlights, events and announcements from SARD BD.</span><span class="bn-text">SARD BD-এর সর্বশেষ আপডেট, গবেষণা সংবাদ, ইভেন্ট এবং ঘোষণা।</span></p>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="container">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <button class="filter-btn active" onclick="filterNews('all',this)"><span class="en-text">All</span><span class="bn-text">সব</span></button>
+      <button class="filter-btn" onclick="filterNews('research',this)"><span class="en-text">Research</span><span class="bn-text">গবেষণা</span></button>
+      <button class="filter-btn" onclick="filterNews('journal',this)"><span class="en-text">Journal</span><span class="bn-text">জার্নাল</span></button>
+      <button class="filter-btn" onclick="filterNews('training',this)"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></button>
+      <button class="filter-btn" onclick="filterNews('event',this)"><span class="en-text">Events</span><span class="bn-text">ইভেন্ট</span></button>
+      <button class="filter-btn" onclick="filterNews('bulletin',this)"><span class="en-text">Bulletin</span><span class="bn-text">বুলেটিন</span></button>
+      <div class="search-wrap ms-auto">
+        <i class="bi bi-search"></i>
+        <input type="text" class="search-box" placeholder="Search news..." oninput="searchNews(this.value)"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div style="background:var(--gray-bg);padding:40px 0 60px;">
+  <div class="container">
+
+    <!-- FEATURED -->
+    <div class="sec-title-row mb-4">
+      <div class="sec-title"><span></span><span class="en-text">Featured</span><span class="bn-text">বিশেষ সংবাদ</span></div>
+    </div>
+    <div class="row g-4 mb-5" id="featured-row">
+      <!-- Featured card 1 -->
+      <div class="col-lg-7 news-item" data-cat="research">
+        <div class="featured-card" onclick="openNews(0)">
+          <div class="featured-img" style="height:260px;overflow:hidden;position:relative;">
+            <img src="uploads/news/research-field.jpg" alt="Field Research" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><i class=\'bi bi-journal-richtext\'></i></div>'"/>
+          </div>
+          <div class="featured-body">
+            <span class="news-cat cat-research"><span class="en-text">Research</span><span class="bn-text">গবেষণা</span></span>
+            <div class="featured-title"><span class="en-text">SARD BD Launches New Community Health Study in Araihazar, Narayanganj</span><span class="bn-text">আড়াইহাজার, নারায়ণগঞ্জে নতুন কমিউনিটি স্বাস্থ্য গবেষণা শুরু করল SARD BD</span></div>
+            <div class="featured-excerpt"><span class="en-text">SARD BD has initiated a comprehensive community health assessment study in Araihazar, Narayanganj. The study aims to evaluate maternal and child health outcomes, nutritional status, and access to healthcare services among rural populations. Data collection involves household surveys, anthropometric measurements, and qualitative interviews with community health workers.</span><span class="bn-text">SARD BD আড়াইহাজার, নারায়ণগঞ্জে একটি ব্যাপক কমিউনিটি স্বাস্থ্য মূল্যায়ন গবেষণা শুরু করেছে। গবেষণায় মাতৃ ও শিশু স্বাস্থ্য, পুষ্টি পরিস্থিতি এবং গ্রামীণ জনগোষ্ঠীর স্বাস্থ্যসেবায় প্রবেশাধিকার মূল্যায়ন করা হবে।</span></div>
+            <div class="news-meta">
+              <span><i class="bi bi-calendar3"></i> June 1, 2026</span>
+              <span><i class="bi bi-person"></i> SARD BD Research Team</span>
+              <span><i class="bi bi-clock"></i> <span class="en-text">4 min read</span><span class="bn-text">৪ মিনিট</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Featured card 2 -->
+      <div class="col-lg-5 news-item" data-cat="journal">
+        <div class="featured-card" onclick="openNews(1)">
+          <div class="featured-img" style="height:260px;overflow:hidden;position:relative;">
+            <img src="uploads/news/journal-launch.jpg" alt="JARD Launch" onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><i class=\'bi bi-journal-bookmark\'></i></div>'"/>
+          </div>
+          <div class="featured-body">
+            <span class="news-cat cat-journal"><span class="en-text">Journal</span><span class="bn-text">জার্নাল</span></span>
+            <div class="featured-title"><span class="en-text">JARD Vol.1 Issue 1 (June 2026) — Official Launch</span><span class="bn-text">JARD ভলিউম ১ সংখ্যা ১ (জুন ২০২৬) — আনুষ্ঠানিক প্রকাশনা</span></div>
+            <div class="featured-excerpt"><span class="en-text">We are pleased to announce the official launch of Volume 1, Issue 1 of the Bangladesh Journal of Applied Research & Development (JARD). This inaugural issue features six peer-reviewed articles spanning community health, epidemiology, and public health nutrition.</span><span class="bn-text">বাংলাদেশ জার্নাল অব অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট (JARD)-এর প্রথম সংখ্যা প্রকাশিত হয়েছে। প্রথম সংখ্যায় ছয়টি পিয়ার-রিভিউড আর্টিকেল রয়েছে।</span></div>
+            <div class="news-meta">
+              <span><i class="bi bi-calendar3"></i> June 5, 2026</span>
+              <span><i class="bi bi-clock"></i> <span class="en-text">3 min read</span><span class="bn-text">৩ মিনিট</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALL NEWS GRID -->
+    <div class="sec-title-row mb-4">
+      <div class="sec-title"><span></span><span class="en-text">All News</span><span class="bn-text">সব সংবাদ</span></div>
+      <span style="font-size:0.78rem;color:var(--text-muted)" id="news-count">6 stories</span>
+    </div>
+
+    <div class="row g-4" id="news-grid">
+
+      <!-- Card 3 -->
+      <div class="col-sm-6 col-lg-4 news-item" data-cat="training">
+        <div class="news-card" onclick="openNews(2)">
+          <div class="news-thumb">
+            <img src="uploads/news/training-workshop.jpg" alt="Training" onerror="this.src='';this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><i class=\'bi bi-mortarboard\'></i></div>'"/>
+            <span class="has-video-badge"><i class="bi bi-play-circle-fill"></i> Video</span>
+          </div>
+          <div class="news-body">
+            <span class="news-cat cat-training"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></span>
+            <div class="news-title"><span class="en-text">Research Methodology Boot Camp — July 2026 Registration Open</span><span class="bn-text">রিসার্চ মেথডোলজি বুট ক্যাম্প — জুলাই ২০২৬ নিবন্ধন শুরু</span></div>
+            <div class="news-excerpt"><span class="en-text">SARD BD is now accepting registrations for its flagship 7-Day Research Methodology Boot Camp. Learn SPSS, STATA, KoBoToolbox, and qualitative data analysis.</span><span class="bn-text">SARD BD-এর ৭-দিনের গবেষণা পদ্ধতি বুট ক্যাম্পের নিবন্ধন শুরু হয়েছে।</span></div>
+            <div class="news-footer">
+              <span><i class="bi bi-calendar3 me-1"></i>May 28, 2026</span>
+              <span class="read-more-badge"><span class="en-text">Read</span><span class="bn-text">পড়ুন</span> <i class="bi bi-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="col-sm-6 col-lg-4 news-item" data-cat="event">
+        <div class="news-card" onclick="openNews(3)">
+          <div class="news-thumb">
+            <img src="uploads/news/workshop-event.jpg" alt="Workshop" onerror="this.src='';this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><i class=\'bi bi-calendar-event\'></i></div>'"/>
+          </div>
+          <div class="news-body">
+            <span class="news-cat cat-event"><span class="en-text">Event</span><span class="bn-text">ইভেন্ট</span></span>
+            <div class="news-title"><span class="en-text">International Symposium on Public Health Research in Bangladesh</span><span class="bn-text">বাংলাদেশে পাবলিক হেলথ রিসার্চ বিষয়ক আন্তর্জাতিক সিম্পোজিয়াম</span></div>
+            <div class="news-excerpt"><span class="en-text">SARD BD co-hosts a two-day international symposium bringing together researchers from 12 countries to discuss emerging public health challenges in South Asia.</span><span class="bn-text">SARD BD ১২টি দেশের গবেষকদের নিয়ে দুই দিনের আন্তর্জাতিক সিম্পোজিয়াম আয়োজন করছে।</span></div>
+            <div class="news-footer">
+              <span><i class="bi bi-calendar3 me-1"></i>May 15, 2026</span>
+              <span class="read-more-badge"><span class="en-text">Read</span><span class="bn-text">পড়ুন</span> <i class="bi bi-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="col-sm-6 col-lg-4 news-item" data-cat="bulletin">
+        <div class="news-card" onclick="openNews(4)">
+          <div class="news-thumb">
+            <img src="uploads/news/bulletin-cover.jpg" alt="Bulletin" onerror="this.src='';this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><i class=\'bi bi-newspaper\'></i></div>'"/>
+          </div>
+          <div class="news-body">
+            <span class="news-cat cat-bulletin"><span class="en-text">Bulletin</span><span class="bn-text">বুলেটিন</span></span>
+            <div class="news-title"><span class="en-text">SARD BD Research Bulletin — Q2 2026 Edition Published</span><span class="bn-text">SARD BD গবেষণা বুলেটিন — Q2 2026 সংখ্যা প্রকাশিত</span></div>
+            <div class="news-excerpt"><span class="en-text">The latest quarterly bulletin summarizes ongoing field studies, data collection milestones, and capacity building activities across all four SARD BD offices.</span><span class="bn-text">সর্বশেষ ত্রৈমাসিক বুলেটিনে চলমান ফিল্ড স্টাডি এবং সক্ষমতা বৃদ্ধির কার্যক্রম সংক্ষেপ করা হয়েছে।</span></div>
+            <div class="news-footer">
+              <span><i class="bi bi-calendar3 me-1"></i>Apr 30, 2026</span>
+              <span class="read-more-badge"><span class="en-text">Read</span><span class="bn-text">পড়ুন</span> <i class="bi bi-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="col-sm-6 col-lg-4 news-item" data-cat="research">
+        <div class="news-card" onclick="openNews(5)">
+          <div class="news-thumb">
+            <img src="uploads/news/nutrition-study.jpg" alt="Nutrition" onerror="this.src='';this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><i class=\'bi bi-heart-pulse\'></i></div>'"/>
+            <span class="has-video-badge"><i class="bi bi-play-circle-fill"></i> Video</span>
+          </div>
+          <div class="news-body">
+            <span class="news-cat cat-research"><span class="en-text">Research</span><span class="bn-text">গবেষণা</span></span>
+            <div class="news-title"><span class="en-text">New Study Reveals Malnutrition Trends in Rural Noakhali</span><span class="bn-text">নোয়াখালীর গ্রামীণ এলাকায় অপুষ্টির চিত্র প্রকাশ করল নতুন গবেষণা</span></div>
+            <div class="news-excerpt"><span class="en-text">Findings from SARD BD's longitudinal nutrition study in Noakhali district show a 23% reduction in wasting among children under 5 following community-based interventions.</span><span class="bn-text">নোয়াখালীতে SARD BD-এর দীর্ঘমেয়াদী পুষ্টি গবেষণায় কমিউনিটি হস্তক্ষেপের পর পাঁচ বছরের কম বয়সী শিশুদের মধ্যে ওয়াস্টিং ২৩% কমেছে।</span></div>
+            <div class="news-footer">
+              <span><i class="bi bi-calendar3 me-1"></i>Apr 12, 2026</span>
+              <span class="read-more-badge"><span class="en-text">Read</span><span class="bn-text">পড়ুন</span> <i class="bi bi-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="col-sm-6 col-lg-4 news-item" data-cat="award">
+        <div class="news-card" onclick="openNews(6)">
+          <div class="news-thumb">
+            <img src="uploads/news/award.jpg" alt="Award" onerror="this.src='';this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><i class=\'bi bi-trophy\'></i></div>'"/>
+          </div>
+          <div class="news-body">
+            <span class="news-cat cat-award"><span class="en-text">Award</span><span class="bn-text">পুরস্কার</span></span>
+            <div class="news-title"><span class="en-text">SARD BD Receives Recognition for Community Health Innovation</span><span class="bn-text">কমিউনিটি স্বাস্থ্য উদ্ভাবনে স্বীকৃতি পেল SARD BD</span></div>
+            <div class="news-excerpt"><span class="en-text">SARD BD has been recognized for its innovative community-based health research approach at a national public health conference in Dhaka.</span><span class="bn-text">ঢাকায় জাতীয় পাবলিক হেলথ কনফারেন্সে উদ্ভাবনী কমিউনিটি গবেষণার জন্য SARD BD স্বীকৃতি পেয়েছে।</span></div>
+            <div class="news-footer">
+              <span><i class="bi bi-calendar3 me-1"></i>Mar 22, 2026</span>
+              <span class="read-more-badge"><span class="en-text">Read</span><span class="bn-text">পড়ুন</span> <i class="bi bi-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="col-sm-6 col-lg-4 news-item" data-cat="training">
+        <div class="news-card" onclick="openNews(7)">
+          <div class="news-thumb">
+            <img src="uploads/news/gis-training.jpg" alt="GIS Training" onerror="this.src='';this.parentElement.innerHTML='<div class=\'thumb-placeholder\'><i class=\'bi bi-map\'></i></div>'"/>
+          </div>
+          <div class="news-body">
+            <span class="news-cat cat-training"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></span>
+            <div class="news-title"><span class="en-text">GIS & Spatial Analysis Workshop Completed in Dhaka HQ</span><span class="bn-text">ঢাকা সদর দফতরে GIS ও স্থানিক বিশ্লেষণ কর্মশালা সম্পন্ন</span></div>
+            <div class="news-excerpt"><span class="en-text">25 health researchers and professionals completed the three-day intensive GIS and spatial data analysis workshop conducted by SARD BD's capacity building team.</span><span class="bn-text">SARD BD-এর সক্ষমতা বৃদ্ধি দলের পরিচালনায় তিন দিনের GIS ও স্থানিক ডেটা বিশ্লেষণ কর্মশালা সম্পন্ন হয়েছে।</span></div>
+            <div class="news-footer">
+              <span><i class="bi bi-calendar3 me-1"></i>Mar 5, 2026</span>
+              <span class="read-more-badge"><span class="en-text">Read</span><span class="bn-text">পড়ুন</span> <i class="bi bi-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /news-grid -->
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center gap-2 mt-5">
+      <a href="#" class="pag-btn"><i class="bi bi-chevron-left"></i></a>
+      <a href="#" class="pag-btn active">1</a>
+      <a href="#" class="pag-btn">2</a>
+      <a href="#" class="pag-btn">3</a>
+      <a href="#" class="pag-btn"><i class="bi bi-chevron-right"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================  NEWS MODAL  ================== -->
+<div class="news-modal-bg" id="newsModal" onclick="closeOnBg(event)">
+  <div class="news-modal" id="newsModalInner">
+    <button class="modal-close" onclick="closeNews()"><i class="bi bi-x-lg"></i></button>
+
+    <!-- Media area -->
+    <div class="modal-media" id="modalMedia"></div>
+
+    <!-- Gallery strip (shown when multiple images) -->
+    <div class="modal-gallery d-none" id="modalGallery"></div>
+
+    <!-- Body -->
+    <div class="modal-body-inner">
+      <div class="modal-cat-date">
+        <span class="news-cat" id="modalCat"></span>
+        <span style="font-size:0.75rem;color:var(--text-muted)"><i class="bi bi-calendar3 me-1"></i><span id="modalDate"></span></span>
+      </div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-content-text" id="modalContent"></div>
+      <div class="modal-tags" id="modalTags"></div>
+      <div class="modal-share">
+        <span class="en-text">Share:</span><span class="bn-text">শেয়ার করুন:</span>
+        <a class="share-btn" title="Facebook"><i class="bi bi-facebook"></i></a>
+        <a class="share-btn" title="Twitter/X"><i class="bi bi-twitter-x"></i></a>
+        <a class="share-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a class="share-btn" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href);this.innerHTML='<i class=\'bi bi-check-lg\'></i>';setTimeout(()=>this.innerHTML='<i class=\'bi bi-link-45deg\'></i>',1500)"><i class="bi bi-link-45deg"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="foot-brand">SARD BD</div>
+        <p class="foot-desc">Society for Applied Research and Development Bangladesh · www.sardbd.info</p>
+        <div style="color:rgba(255,255,255,0.45);font-size:0.8rem;line-height:1.9">
+          <div><i class="bi bi-envelope me-2" style="color:var(--butter)"></i>hemeunus@gmail.com</div>
+          <div><i class="bi bi-telephone me-2" style="color:var(--butter)"></i>+880 1963-851090</div>
+          <div><i class="bi bi-geo-alt me-2" style="color:var(--butter)"></i>House #184, Road 02, Mohakhali DOHS, Dhaka</div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h6>SARD BD</h6>
+        <ul>
+          <li><a href="index.html"><i class="bi bi-chevron-right"></i>Home</a></li>
+          <li><a href="about.html"><i class="bi bi-chevron-right"></i>About</a></li>
+          <li><a href="team.html"><i class="bi bi-chevron-right"></i>Team</a></li>
+          <li><a href="training.html"><i class="bi bi-chevron-right"></i>Training</a></li>
+          <li><a href="contact.html"><i class="bi bi-chevron-right"></i>Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h6>JARD</h6>
+        <ul>
+          <li><a href="journal.html"><i class="bi bi-chevron-right"></i>Current Issue</a></li>
+          <li><a href="editorial-board.html"><i class="bi bi-chevron-right"></i>Editorial Board</a></li>
+          <li><a href="author-guidelines.html"><i class="bi bi-chevron-right"></i>Author Guidelines</a></li>
+          <li><a href="journal.html?tab=submit"><i class="bi bi-chevron-right"></i>Submit</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom mt-4">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+      <p>© 2026 <a href="index.html">SARD BD</a>. All rights reserved.</p>
+      <p>Publisher of <a href="journal.html">JARD</a> · www.sardbd.info</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/8801963851090" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* =====================  NEWS DATA  ===================== */
+const NEWS = [
+  {
+    id: 0,
+    cat: 'research', catLabel: 'Research', catClass: 'cat-research',
+    date: 'June 1, 2026',
+    author: 'SARD BD Research Team',
+    readTime: '4 min read',
+    titleEn: 'SARD BD Launches New Community Health Study in Araihazar, Narayanganj',
+    titleBn: 'আড়াইহাজার, নারায়ণগঞ্জে নতুন কমিউনিটি স্বাস্থ্য গবেষণা শুরু করল SARD BD',
+    images: ['uploads/news/research-field.jpg','uploads/news/research-field2.jpg'],
+    video: null,
+    contentEn: `<p>SARD BD has initiated a comprehensive community health assessment study in Araihazar, Narayanganj. The study aims to evaluate maternal and child health outcomes, nutritional status, and access to healthcare services among rural populations in the Narayanganj district.</p>
+<p>Data collection involves structured household surveys using KoBoToolbox, anthropometric measurements of children under five, and qualitative interviews with community health workers (CHWs) and mothers of young children.</p>
+<p>The research team comprises six trained data collectors and two supervisors who are currently conducting field operations across 14 unions in Araihazar upazila. The baseline survey is expected to be completed by August 2026, with preliminary findings presented at the JARD Annual Conference in December 2026.</p>
+<p>This study is part of SARD BD's broader commitment to generating evidence for community-based health interventions in peri-urban and rural Bangladesh.</p>`,
+    contentBn: `<p>SARD BD আড়াইহাজার, নারায়ণগঞ্জে একটি ব্যাপক কমিউনিটি স্বাস্থ্য মূল্যায়ন গবেষণা শুরু করেছে। গবেষণায় নারায়ণগঞ্জ জেলার গ্রামীণ জনগোষ্ঠীর মধ্যে মাতৃ ও শিশু স্বাস্থ্য ফলাফল, পুষ্টি পরিস্থিতি এবং স্বাস্থ্যসেবায় প্রবেশাধিকার মূল্যায়ন করা হবে।</p>
+<p>তথ্য সংগ্রহে KoBoToolbox ব্যবহার করে কাঠামোগত পারিবারিক সমীক্ষা, পাঁচ বছরের কম বয়সী শিশুদের নৃতাত্ত্বিক পরিমাপ এবং কমিউনিটি স্বাস্থ্য কর্মীদের সাথে গুণগত সাক্ষাৎকার অন্তর্ভুক্ত রয়েছে।</p>
+<p>গবেষণা দলে ছয়জন প্রশিক্ষিত তথ্য সংগ্রাহক এবং দুইজন সুপারভাইজার রয়েছেন। বেসলাইন সমীক্ষা আগস্ট ২০২৬-এর মধ্যে সম্পন্ন হবে বলে আশা করা হচ্ছে।</p>`,
+    tags: ['Community Health','Araihazar','MCH','Field Research','KoBoToolbox']
+  },
+  {
+    id: 1,
+    cat: 'journal', catLabel: 'Journal', catClass: 'cat-journal',
+    date: 'June 5, 2026',
+    author: 'JARD Editorial Office',
+    readTime: '3 min read',
+    titleEn: 'JARD Vol.1 Issue 1 (June 2026) — Official Launch',
+    titleBn: 'JARD ভলিউম ১ সংখ্যা ১ (জুন ২০২৬) — আনুষ্ঠানিক প্রকাশনা',
+    images: ['uploads/news/journal-launch.jpg'],
+    video: null,
+    contentEn: `<p>We are pleased to announce the official launch of <strong>Volume 1, Issue 1 of the Bangladesh Journal of Applied Research & Development (JARD)</strong>. This inaugural issue represents a milestone for applied research in Bangladesh.</p>
+<p>The June 2026 issue features six peer-reviewed articles spanning community health, epidemiology, maternal and child nutrition, and public health systems research. Each manuscript underwent a rigorous double-blind peer review process before acceptance.</p>
+<p>JARD is published biannually (June and December) by SARD BD. The journal accepts original research articles, review articles, case reports, short communications, and letters to the editor. Article Processing Charge (APC) is USD 50, payable only after acceptance.</p>
+<p>Authors wishing to submit manuscripts for the <strong>December 2026 issue</strong> should submit by October 31, 2026 at <a href="mailto:hemeunus@gmail.com" style="color:var(--green)">hemeunus@gmail.com</a>.</p>`,
+    contentBn: `<p>বাংলাদেশ জার্নাল অব অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট (JARD)-এর প্রথম সংখ্যা (জুন ২০২৬) আনুষ্ঠানিকভাবে প্রকাশিত হয়েছে।</p>
+<p>প্রথম সংখ্যায় কমিউনিটি স্বাস্থ্য, মহামারীবিদ্যা, মাতৃ ও শিশু পুষ্টি বিষয়ে ছয়টি পিয়ার-রিভিউড আর্টিকেল রয়েছে। প্রতিটি পাণ্ডুলিপি কঠোর ডাবল-ব্লাইন্ড পিয়ার রিভিউ প্রক্রিয়ার মধ্য দিয়ে গেছে।</p>
+<p>ডিসেম্বর ২০২৬ সংখ্যায় পাণ্ডুলিপি জমার শেষ তারিখ ৩১ অক্টোবর ২০২৬।</p>`,
+    tags: ['JARD','Open Access','Peer Review','Vol.1 Issue 1','Launch']
+  },
+  {
+    id: 2,
+    cat: 'training', catLabel: 'Training', catClass: 'cat-training',
+    date: 'May 28, 2026',
+    author: 'SARD BD Training Unit',
+    readTime: '3 min read',
+    titleEn: 'Research Methodology Boot Camp — July 2026 Registration Open',
+    titleBn: 'রিসার্চ মেথডোলজি বুট ক্যাম্প — জুলাই ২০২৬ নিবন্ধন শুরু',
+    images: ['uploads/news/training-workshop.jpg'],
+    video: 'uploads/videos/bootcamp-promo.mp4',
+    contentEn: `<p>SARD BD is now accepting registrations for its flagship <strong>7-Day Research Methodology Boot Camp</strong> scheduled for July 14–20, 2026 at Dhaka HQ.</p>
+<p>This intensive programme covers quantitative and qualitative research methods, statistical analysis using SPSS and STATA, field data collection with KoBoToolbox, Geographic Information System (GIS) mapping, and academic writing for peer-reviewed publication.</p>
+<p><strong>Who should apply:</strong> Graduate students, public health professionals, NGO researchers, and government health officers seeking structured research training.</p>
+<p><strong>Investment:</strong> BDT 12,000 (includes training materials, certificate, and lunch). Limited seats — 30 participants only.</p>
+<p>Register by June 30, 2026 at <a href="mailto:hemeunus@gmail.com" style="color:var(--green)">hemeunus@gmail.com</a> or call +880 1963-851090.</p>`,
+    contentBn: `<p>SARD BD-এর ফ্ল্যাগশিপ <strong>৭-দিনের রিসার্চ মেথডোলজি বুট ক্যাম্পের</strong> জন্য নিবন্ধন শুরু হয়েছে। কার্যক্রমটি জুলাই ১৪–২০, ২০২৬ তারিখে ঢাকা সদর দফতরে অনুষ্ঠিত হবে।</p>
+<p>এই নিবিড় প্রোগ্রামে পরিমাণগত ও গুণগত গবেষণা পদ্ধতি, SPSS ও STATA দিয়ে পরিসংখ্যান বিশ্লেষণ, KoBoToolbox, GIS ম্যাপিং এবং একাডেমিক লেখালেখি অন্তর্ভুক্ত রয়েছে।</p>
+<p><strong>ফি:</strong> BDT ১২,০০০ (প্রশিক্ষণ উপকরণ, সার্টিফিকেট ও দুপুরের খাবার সহ)। আসন মাত্র ৩০টি।</p>`,
+    tags: ['Boot Camp','Training','SPSS','KoBoToolbox','GIS','Research Methods']
+  },
+  {
+    id: 3,
+    cat: 'event', catLabel: 'Event', catClass: 'cat-event',
+    date: 'May 15, 2026',
+    author: 'SARD BD Events Team',
+    readTime: '3 min read',
+    titleEn: 'International Symposium on Public Health Research in Bangladesh',
+    titleBn: 'বাংলাদেশে পাবলিক হেলথ রিসার্চ বিষয়ক আন্তর্জাতিক সিম্পোজিয়াম',
+    images: ['uploads/news/workshop-event.jpg'],
+    video: null,
+    contentEn: `<p>SARD BD co-hosted a two-day <strong>International Symposium on Public Health Research in Bangladesh</strong> on May 10–11, 2026 at BRAC Centre Inn, Dhaka.</p>
+<p>The event brought together over 120 researchers, academics, and public health practitioners from 12 countries to present and discuss emerging public health challenges in South Asia, with a particular focus on Bangladesh's progress toward achieving the Sustainable Development Goals (SDGs).</p>
+<p>Key sessions covered non-communicable diseases, food security and nutrition, maternal and child health, digital health innovations, and health systems strengthening. SARD BD's research team presented three original studies during the plenary sessions.</p>
+<p>Proceedings from the symposium will be published in JARD's December 2026 issue.</p>`,
+    contentBn: `<p>SARD BD মে ১০–১১, ২০২৬ তারিখে ঢাকার BRAC Centre Inn-এ দুই দিনব্যাপী <strong>আন্তর্জাতিক পাবলিক হেলথ রিসার্চ সিম্পোজিয়াম</strong> সহ-আয়োজন করেছে।</p>
+<p>১২টি দেশের ১২০ জনেরও বেশি গবেষক, একাডেমিক ও পাবলিক হেলথ পেশাদার দক্ষিণ এশিয়ার উদীয়মান স্বাস্থ্য চ্যালেঞ্জ নিয়ে আলোচনা করেছেন।</p>
+<p>সিম্পোজিয়ামের প্রকাশনা JARD-এর ডিসেম্বর ২০২৬ সংখ্যায় প্রকাশিত হবে।</p>`,
+    tags: ['Symposium','International','SDG','Public Health','Dhaka']
+  },
+  {
+    id: 4,
+    cat: 'bulletin', catLabel: 'Bulletin', catClass: 'cat-bulletin',
+    date: 'April 30, 2026',
+    author: 'SARD BD Communications',
+    readTime: '2 min read',
+    titleEn: 'SARD BD Research Bulletin — Q2 2026 Edition Published',
+    titleBn: 'SARD BD গবেষণা বুলেটিন — Q2 2026 সংখ্যা প্রকাশিত',
+    images: ['uploads/news/bulletin-cover.jpg'],
+    video: null,
+    contentEn: `<p>The <strong>Q2 2026 SARD BD Research Bulletin</strong> has been published and is now available for download. This edition covers activities from January to March 2026 across all four SARD BD field offices.</p>
+<p><strong>Highlights include:</strong></p>
+<p>• Completion of baseline data collection in Araihazar (n=450 households)<br>• Launch of GIS-based disease mapping pilot in Sonargaon<br>• KoBoToolbox training for 18 community health workers in Noakhali<br>• Preparation and submission of 4 manuscripts to JARD and other journals<br>• Capacity building sessions attended by 65 health professionals</p>
+<p>The bulletin is available to download from the SARD BD website or by contacting the editorial office.</p>`,
+    contentBn: `<p><strong>SARD BD Q2 2026 গবেষণা বুলেটিন</strong> প্রকাশিত হয়েছে। এই সংখ্যায় জানুয়ারি থেকে মার্চ ২০২৬ পর্যন্ত চারটি ফিল্ড অফিসের কার্যক্রম অন্তর্ভুক্ত রয়েছে।</p>
+<p>বুলেটিনে আড়াইহাজারে বেসলাইন তথ্য সংগ্রহ, সোনারগাঁওয়ে GIS-ভিত্তিক রোগ ম্যাপিং পাইলট এবং নোয়াখালীতে KoBoToolbox প্রশিক্ষণের বিস্তারিত রয়েছে।</p>`,
+    tags: ['Bulletin','Q2 2026','Field Update','Capacity Building']
+  },
+  {
+    id: 5,
+    cat: 'research', catLabel: 'Research', catClass: 'cat-research',
+    date: 'April 12, 2026',
+    author: 'SARD BD Nutrition Team',
+    readTime: '5 min read',
+    titleEn: 'New Study Reveals Malnutrition Trends in Rural Noakhali',
+    titleBn: 'নোয়াখালীর গ্রামীণ এলাকায় অপুষ্টির চিত্র প্রকাশ করল নতুন গবেষণা',
+    images: ['uploads/news/nutrition-study.jpg'],
+    video: 'uploads/videos/nutrition-field.mp4',
+    contentEn: `<p>Findings from SARD BD's two-year longitudinal nutrition study in Noakhali district show significant improvements in child nutritional status following community-based interventions.</p>
+<p>Key findings include: a <strong>23% reduction in wasting</strong> among children under 5; a <strong>17% improvement</strong> in stunting prevalence; and increased dietary diversity scores in 68% of households in the intervention areas.</p>
+<p>The study involved 620 mother–child pairs across 8 unions in Chakril, Noakhali. Data were collected at baseline, 6-month, and 24-month time points using standardised WHO anthropometric protocols and 24-hour dietary recall methods.</p>
+<p>Dr. H.E.M. Mahbubul Eunus, Executive Editor of JARD and lead investigator, stated: "These results demonstrate the effectiveness of integrated community-based nutrition programmes combining supplementary feeding, maternal education, and WASH interventions."</p>
+<p>The full study report will be submitted to JARD and an international nutrition journal for peer review by July 2026.</p>`,
+    contentBn: `<p>SARD BD-এর নোয়াখালী জেলায় দুই বছরের দীর্ঘমেয়াদী পুষ্টি গবেষণার ফলাফলে শিশু পুষ্টি পরিস্থিতিতে উল্লেখযোগ্য উন্নতি দেখা গেছে।</p>
+<p>মূল ফলাফল: পাঁচ বছরের কম বয়সী শিশুদের মধ্যে ওয়াস্টিং <strong>২৩% হ্রাস</strong>; স্টান্টিং প্রকোপে <strong>১৭% উন্নতি</strong>; এবং হস্তক্ষেপ এলাকার ৬৮% পরিবারে খাদ্য বৈচিত্র্য স্কোর বৃদ্ধি।</p>
+<p>গবেষণায় নোয়াখালীর চাখিলে ৮টি ইউনিয়ন জুড়ে ৬২০টি মা-শিশু জুটি অন্তর্ভুক্ত ছিল।</p>`,
+    tags: ['Nutrition','Noakhali','Child Health','Stunting','Wasting','Longitudinal Study']
+  },
+  {
+    id: 6,
+    cat: 'award', catLabel: 'Award', catClass: 'cat-award',
+    date: 'March 22, 2026',
+    author: 'SARD BD Communications',
+    readTime: '2 min read',
+    titleEn: 'SARD BD Receives Recognition for Community Health Innovation',
+    titleBn: 'কমিউনিটি স্বাস্থ্য উদ্ভাবনে স্বীকৃতি পেল SARD BD',
+    images: ['uploads/news/award.jpg'],
+    video: null,
+    contentEn: `<p>SARD BD has received recognition for its innovative approach to community-based health research at the <strong>National Public Health Conference 2026</strong> held on March 18, 2026 in Dhaka.</p>
+<p>The organisation was acknowledged for its integration of digital data collection tools, community health worker engagement, and multi-sectoral collaboration in conducting field research in hard-to-reach areas of Bangladesh.</p>
+<p>Dr. Syed Muhammad Baqui Billah, Editor-in-Chief of JARD, accepted the recognition on behalf of SARD BD and dedicated it to the field research teams working in Araihazar, Sonargaon, and Noakhali.</p>`,
+    contentBn: `<p>SARD BD মার্চ ১৮, ২০২৬ তারিখে ঢাকায় অনুষ্ঠিত <strong>জাতীয় পাবলিক হেলথ কনফারেন্স ২০২৬</strong>-এ স্বীকৃতি পেয়েছে।</p>
+<p>ডিজিটাল তথ্য সংগ্রহ সরঞ্জামের একীভূতকরণ, কমিউনিটি স্বাস্থ্য কর্মী সম্পৃক্ততা এবং বহু-খাত সহযোগিতার জন্য সংস্থাটিকে স্বীকৃত করা হয়েছে।</p>`,
+    tags: ['Award','Recognition','Community Health','Innovation']
+  },
+  {
+    id: 7,
+    cat: 'training', catLabel: 'Training', catClass: 'cat-training',
+    date: 'March 5, 2026',
+    author: 'SARD BD Training Unit',
+    readTime: '2 min read',
+    titleEn: 'GIS & Spatial Analysis Workshop Completed in Dhaka HQ',
+    titleBn: 'ঢাকা সদর দফতরে GIS ও স্থানিক বিশ্লেষণ কর্মশালা সম্পন্ন',
+    images: ['uploads/news/gis-training.jpg'],
+    video: null,
+    contentEn: `<p>Twenty-five health researchers and public health professionals successfully completed the <strong>3-Day Intensive GIS and Spatial Data Analysis Workshop</strong> conducted by SARD BD's capacity building team on March 1–3, 2026 at Dhaka HQ.</p>
+<p>Participants learned to create disease burden maps, plot health facility catchment areas, analyse DHIS2 data spatially, and produce publication-quality maps using QGIS and ArcGIS.</p>
+<p>Participants came from government health departments, national NGOs, and research institutions across Bangladesh. Each received a certificate of completion from SARD BD.</p>`,
+    contentBn: `<p>পঁচিশজন স্বাস্থ্য গবেষক এবং পেশাদার মার্চ ১–৩, ২০২৬ তারিখে ঢাকা সদর দফতরে অনুষ্ঠিত <strong>৩-দিনের GIS ও স্থানিক তথ্য বিশ্লেষণ কর্মশালা</strong> সফলভাবে সম্পন্ন করেছেন।</p>
+<p>অংশগ্রহণকারীরা QGIS এবং ArcGIS ব্যবহার করে রোগের বোঝার মানচিত্র, স্বাস্থ্য সুবিধার ক্যাচমেন্ট এলাকা বিশ্লেষণ শিখেছেন।</p>`,
+    tags: ['GIS','QGIS','ArcGIS','Spatial Analysis','Workshop','Training']
+  }
+];
+
+/* =====================  MODAL LOGIC  ===================== */
+function openNews(idx) {
+  const n = NEWS[idx];
+  const isBn = document.body.classList.contains('bn');
+
+  // Media
+  const mediaDiv = document.getElementById('modalMedia');
+  const galleryDiv = document.getElementById('modalGallery');
+
+  if (n.video) {
+    mediaDiv.innerHTML = `<div class="modal-video-wrap"><video controls poster="${n.images[0]||''}"><source src="${n.video}" type="video/mp4"/>Your browser does not support video.</video></div>`;
+    galleryDiv.classList.add('d-none');
+  } else if (n.images && n.images.length > 0) {
+    mediaDiv.innerHTML = `<img src="${n.images[0]}" alt="${isBn ? n.titleBn : n.titleEn}" onerror="this.parentElement.innerHTML='<div class=\\'media-placeholder\\'><i class=\\'bi bi-image\\'></i></div>'"/>`;
+    if (n.images.length > 1) {
+      galleryDiv.classList.remove('d-none');
+      galleryDiv.innerHTML = n.images.map((src,i) =>
+        `<img src="${src}" class="${i===0?'active-thumb':''}" onclick="switchModalImg(this,'${src}')" alt="img"/>`
+      ).join('');
+    } else {
+      galleryDiv.classList.add('d-none');
+    }
+  } else {
+    mediaDiv.innerHTML = `<div class="media-placeholder"><i class="bi bi-newspaper"></i></div>`;
+    galleryDiv.classList.add('d-none');
+  }
+
+  // Cat
+  document.getElementById('modalCat').className = 'news-cat ' + n.catClass;
+  document.getElementById('modalCat').textContent = n.catLabel;
+  document.getElementById('modalDate').textContent = n.date;
+
+  // Title
+  document.getElementById('modalTitle').textContent = isBn ? n.titleBn : n.titleEn;
+
+  // Meta
+  document.getElementById('modalMeta').innerHTML = `
+    <span><i class="bi bi-person me-1"></i>${n.author}</span>
+    <span><i class="bi bi-clock me-1"></i>${n.readTime}</span>
+    <span><i class="bi bi-tag me-1"></i>${n.catLabel}</span>`;
+
+  // Content
+  document.getElementById('modalContent').innerHTML = isBn ? n.contentBn : n.contentEn;
+
+  // Tags
+  document.getElementById('modalTags').innerHTML = n.tags.map(t=>`<span class="modal-tag">${t}</span>`).join('');
+
+  // Open
+  document.getElementById('newsModal').classList.add('open');
+  document.body.classList.add('modal-open-custom');
+}
+
+function switchModalImg(el, src) {
+  document.querySelectorAll('.modal-gallery img').forEach(i=>i.classList.remove('active-thumb'));
+  el.classList.add('active-thumb');
+  const mediaImg = document.querySelector('#modalMedia img');
+  if (mediaImg) mediaImg.src = src;
+}
+
+function closeNews() {
+  document.getElementById('newsModal').classList.remove('open');
+  document.body.classList.remove('modal-open-custom');
+}
+
+function closeOnBg(e) {
+  if (e.target === document.getElementById('newsModal')) closeNews();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNews(); });
+
+/* =====================  FILTER  ===================== */
+function filterNews(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const items = document.querySelectorAll('.news-item');
+  let count = 0;
+  items.forEach(item => {
+    const show = cat==='all' || item.dataset.cat===cat;
+    item.style.display = show ? '' : 'none';
+    if (show) count++;
+  });
+  document.getElementById('news-count').textContent = count + ' stories';
+}
+
+function searchNews(val) {
+  const q = val.toLowerCase().trim();
+  const items = document.querySelectorAll('.news-item');
+  let count = 0;
+  items.forEach(item => {
+    const text = item.innerText.toLowerCase();
+    const show = !q || text.includes(q);
+    item.style.display = show ? '' : 'none';
+    if (show) count++;
+  });
+  document.getElementById('news-count').textContent = count + ' stories';
+}
+
+/* =====================  LANG  ===================== */
+function setLang(lang) {
+  document.body.classList.toggle('bn', lang==='bn');
+  document.documentElement.lang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang==='en');
+  document.getElementById('btn-bn').classList.toggle('active', lang==='bn');
+  localStorage.setItem('sardbd_lang', lang);
+}
+if (localStorage.getItem('sardbd_lang') === 'bn') setLang('bn');
+</script>
+</body>
+</html>
