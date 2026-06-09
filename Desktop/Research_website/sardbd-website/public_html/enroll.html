@@ -381,108 +381,135 @@
 
 <script src="js/courses-data.js"></script>
 <script>
-/* ── Language ── */
+/* ── Language (sync with site) ── */
 function toggleLang(){
-  const isBn=document.body.classList.toggle('bn');
-  localStorage.setItem('sardLang',isBn?'bn':'en');
+  var isBn = document.body.classList.toggle('bn');
+  localStorage.setItem('sardbd_lang', isBn?'bn':'en');
   renderPage();
 }
 (function(){
-  if(localStorage.getItem('sardLang')==='bn') document.body.classList.add('bn');
+  var lang = localStorage.getItem('sardbd_lang') || localStorage.getItem('sardLang');
+  if(lang === 'bn') document.body.classList.add('bn');
 })();
 
-/* ── Get course from URL ── */
-var courseId = (new URLSearchParams(window.location.search)).get('id');
+/* ── Get course safely from URL ── */
+var courseId = null;
 var course = null;
-if(courseId !== null && COURSES[parseInt(courseId)]){
-  course = COURSES[parseInt(courseId)];
-}
+try {
+  var _raw = (new URLSearchParams(window.location.search)).get('id');
+  var _idx = parseInt(_raw);
+  // Accept id=0 through 26; typeof COURSES check guards against script load failure
+  if(typeof COURSES !== 'undefined' && !isNaN(_idx) && _idx >= 0 && COURSES[_idx]) {
+    courseId = _idx;
+    course = COURSES[_idx];
+    // Ensure price is attached (fallback if IIFE didn't run)
+    if(typeof course.price === 'undefined') course.price = 2500;
+  }
+} catch(e) { console.error('enroll.html course load error:', e); }
 
 /* ── Render hero + sidebar ── */
 function renderPage(){
   if(!course){
-    document.getElementById('heroTitle').textContent='Course not found';
+    // Show friendly error + back button
+    document.getElementById('heroTitle').textContent = '⚠ Course Not Found';
+    document.getElementById('heroSub').textContent = 'Please go back and select a course.';
+    document.getElementById('heroPriceVal').textContent = '—';
+    document.getElementById('formCard').innerHTML =
+      '<div style="text-align:center;padding:48px 24px;">'
+      +'<div style="font-size:3rem;margin-bottom:16px;">😕</div>'
+      +'<h4 style="color:var(--green);font-weight:800;">No course selected</h4>'
+      +'<p style="color:var(--text-muted);font-size:.88rem;margin-bottom:24px;">Please return to the Training page and click "Enroll Now" on a course.</p>'
+      +'<a href="training.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;font-weight:700;padding:12px 28px;border-radius:10px;text-decoration:none;">← Back to Courses</a>'
+      +'</div>';
     return;
   }
-  var isBn=document.body.classList.contains('bn');
+  var isBn = document.body.classList.contains('bn');
   var name = isBn ? course.titleBn : course.title;
-  var priceStr = '৳ '+course.price.toLocaleString('en-BD');
+  var priceStr = '৳ ' + course.price.toLocaleString('en-BD');
 
-  document.title = 'Enroll — '+ (isBn?course.titleBn:course.title) +' | SARD BD';
+  document.title = 'Enroll — ' + name + ' | SARD BD';
   document.getElementById('heroTitle').textContent = name;
   document.getElementById('heroSub').textContent = isBn ? course.descBn : course.desc;
   document.getElementById('heroPriceVal').textContent = priceStr;
-  document.getElementById('heroIcon').innerHTML='<i class="bi '+course.icon+'"></i>';
+  document.getElementById('heroIcon').innerHTML = '<i class="bi ' + course.icon + '"></i>';
   document.getElementById('stripDuration').textContent = course.duration;
   document.getElementById('stripEnrolled').textContent = course.enrolled;
   document.getElementById('stripRating').textContent = course.rating + ' ★';
   document.getElementById('sbCourseName').textContent = name;
   document.getElementById('sbPrice').textContent = priceStr;
   document.getElementById('sbDuration').textContent = course.duration;
-  // Hero color
   document.querySelector('.enroll-hero').style.background =
-    'linear-gradient(135deg,'+course.color+'ee 0%,'+course.color+'cc 60%,'+course.color+'aa 100%)';
+    'linear-gradient(135deg,' + course.color + 'ee 0%,' + course.color + 'cc 60%,' + course.color + 'aa 100%)';
 }
-renderPage();
+
+/* Run on DOM ready */
+document.addEventListener('DOMContentLoaded', renderPage);
 
 /* ── Form submit ── */
-document.getElementById('enrollForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  var name = document.getElementById('fieldName').value.trim();
-  var phone = document.getElementById('fieldPhone').value.trim();
-  var edu = document.getElementById('fieldEdu').value;
-  var ref = document.getElementById('fieldRef').value.trim();
+document.addEventListener('DOMContentLoaded', function(){
+  var form = document.getElementById('enrollForm');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!course) return;
+    var name = document.getElementById('fieldName').value.trim();
+    var phone = document.getElementById('fieldPhone').value.trim();
+    var edu  = document.getElementById('fieldEdu').value;
+    var ref  = document.getElementById('fieldRef').value.trim();
 
-  // Validate
-  var valid=true;
-  document.getElementById('errName').style.display='none';
-  document.getElementById('errPhone').style.display='none';
+    // Validate
+    var valid = true;
+    document.getElementById('errName').style.display = 'none';
+    document.getElementById('errPhone').style.display = 'none';
 
-  if(!name){
-    document.getElementById('errName').style.display='block';
-    document.getElementById('fieldName').focus();
-    valid=false;
-  }
-  if(!phone || phone.replace(/\D/g,'').length < 10){
-    document.getElementById('errPhone').style.display='block';
-    if(valid) document.getElementById('fieldPhone').focus();
-    valid=false;
-  }
-  if(!valid) return;
+    if(!name){
+      document.getElementById('errName').style.display = 'block';
+      document.getElementById('fieldName').focus();
+      valid = false;
+    }
+    if(!phone || phone.replace(/\D/g,'').length < 10){
+      document.getElementById('errPhone').style.display = 'block';
+      if(valid) document.getElementById('fieldPhone').focus();
+      valid = false;
+    }
+    if(!valid) return;
 
-  // Loading state
-  var btn=document.getElementById('submitBtn');
-  btn.classList.add('loading');
-  btn.innerHTML='<i class="bi bi-hourglass-split"></i> <span>Processing...</span>';
+    // Loading
+    var btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.innerHTML = '<i class="bi bi-hourglass-split"></i> <span>Processing...</span>';
 
-  // Build order
-  var orderId = 'SARD-'+Date.now().toString(36).toUpperCase();
-  var order = {
-    orderId: orderId,
-    courseId: parseInt(courseId),
-    courseName: course.title,
-    courseNameBn: course.titleBn,
-    price: course.price,
-    name: name,
-    phone: phone,
-    education: edu || '',
-    reference: ref || '',
-    date: new Date().toISOString(),
-    status: 'Pending'
-  };
+    // Build order object
+    var orderId = 'SARD-' + Date.now().toString(36).toUpperCase();
+    var order = {
+      orderId: orderId,
+      courseId: courseId,
+      courseName: course.title,
+      courseNameBn: course.titleBn,
+      price: course.price,
+      name: name,
+      phone: phone,
+      education: edu || '',
+      reference: ref || '',
+      date: new Date().toISOString(),
+      status: 'Pending'
+    };
 
-  // Save to localStorage
-  var orders = JSON.parse(localStorage.getItem('sardEnrollments') || '[]');
-  orders.push(order);
-  localStorage.setItem('sardEnrollments', JSON.stringify(orders));
+    // Save
+    try {
+      var orders = JSON.parse(localStorage.getItem('sardEnrollments') || '[]');
+      orders.push(order);
+      localStorage.setItem('sardEnrollments', JSON.stringify(orders));
+    } catch(err){ console.error('Save error:', err); }
 
-  // Show success after brief delay
-  setTimeout(function(){
-    document.getElementById('formCard').style.display='none';
-    document.getElementById('successCard').style.display='block';
-    document.getElementById('displayOrderId').textContent = orderId;
-    window.scrollTo({top:0,behavior:'smooth'});
-  }, 600);
+    // Success
+    setTimeout(function(){
+      document.getElementById('formCard').style.display = 'none';
+      document.getElementById('successCard').style.display = 'block';
+      document.getElementById('displayOrderId').textContent = orderId;
+      window.scrollTo({top:0, behavior:'smooth'});
+    }, 600);
+  });
 });
 </script>
 </body>

@@ -616,9 +616,9 @@ function starsHtml(r) {
 
 function fmtPrice(p){ return '৳ '+p.toLocaleString('en-BD'); }
 
-function buildCard(c) {
+function buildCard(c, realIdx) {
   const isBn = document.body.classList.contains('bn');
-  const realIdx = COURSES.indexOf(c);
+  // realIdx passed directly — no indexOf needed
   const badgeHtml = c.badge ? `<span class="cc-badge badge-${c.badge}">${c.badge==='popular'?'🔥 Popular':c.badge==='new'?'✦ New':'⭐ Featured'}</span>` : '';
   const priceLabel = isBn ? 'কোর্স ফি' : 'Course Fee';
   return `
@@ -667,7 +667,7 @@ function renderCourses() {
   if(!grid) return;
   const filtered = currentFilter === 'all' ? COURSES : COURSES.filter(c => c.cat === currentFilter);
   const toShow = showAll ? filtered : filtered.slice(0, VISIBLE_INIT);
-  grid.innerHTML = toShow.map(c => buildCard(c)).join('');
+  grid.innerHTML = toShow.map(c => buildCard(c, COURSES.indexOf(c))).join('');
   const wrap = document.getElementById('viewMoreWrap');
   if(!wrap) return;
   if(filtered.length <= VISIBLE_INIT || showAll) {
@@ -716,30 +716,30 @@ document.addEventListener('langChange', renderCourses);
       <a href="gallery.html" class="btn-view-more"><i class="bi bi-grid-3x3-gap"></i><span class="en-text">View More</span><span class="bn-text">আরো দেখুন</span></a>
     </div>
 
-    <!-- Grid: 1 photo (left, tall) + 3 videos (right, smaller) -->
-    <div class="row g-2">
+    <!-- Grid: Big photo left + 3 large videos right -->
+    <div class="row g-3">
 
-      <!-- Photo — spans 2 rows on desktop -->
-      <div class="col-lg-5 col-md-6">
-        <div class="gl-item" style="height:220px;">
-          <div class="gl-ph" style="height:220px;"><i class="bi bi-camera"></i></div>
+      <!-- Photo — tall left column -->
+      <div class="col-lg-5">
+        <div class="gl-item" style="height:100%;min-height:320px;">
+          <div class="gl-ph" style="height:100%;min-height:320px;"><i class="bi bi-camera" style="font-size:3rem;"></i></div>
           <div class="gl-overlay">
             <div>
               <div class="gl-tag"><i class="bi bi-camera"></i> Photo</div>
-              <div class="gl-label"><span class="en-text">Field Training — Araihazar, 2025</span><span class="bn-text">ফিল্ড প্রশিক্ষণ — আড়াইহাজার, ২০২৫</span></div>
+              <div class="gl-label" style="font-size:.78rem;"><span class="en-text">Field Training — Araihazar, 2025</span><span class="bn-text">ফিল্ড প্রশিক্ষণ — আড়াইহাজার, ২০২৫</span></div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 3 Videos — right column, stacked as 2+1 -->
-      <div class="col-lg-7 col-md-6">
-        <div class="row g-2">
+      <!-- 3 Videos — right column -->
+      <div class="col-lg-7">
+        <div class="row g-3 h-100">
 
           <!-- Video 1 -->
-          <div class="col-6">
-            <div class="gl-item" style="height:104px;" onclick="openVideo('https://www.youtube.com/embed/gXej7VxBpYU','Research Methodology Workshop — Dhaka, 2025')">
-              <div class="gl-ph" style="height:104px;"><i class="bi bi-camera-video"></i></div>
+          <div class="col-md-6">
+            <div class="gl-item" style="height:150px;" onclick="openVideo('https://www.youtube.com/embed/gXej7VxBpYU','Research Methodology Workshop — Dhaka, 2025')">
+              <div class="gl-ph" style="height:150px;"><i class="bi bi-camera-video" style="font-size:2rem;"></i></div>
               <div class="play-ring"><i class="bi bi-play-fill"></i></div>
               <div class="gl-overlay">
                 <div>
@@ -751,9 +751,9 @@ document.addEventListener('langChange', renderCourses);
           </div>
 
           <!-- Video 2 -->
-          <div class="col-6">
-            <div class="gl-item" style="height:104px;" onclick="openVideo('https://www.youtube.com/embed/yaqe9Ls6yXM','Residential Boot Camp Highlights — Noakhali, 2025')">
-              <div class="gl-ph" style="height:104px;"><i class="bi bi-camera-video"></i></div>
+          <div class="col-md-6">
+            <div class="gl-item" style="height:150px;" onclick="openVideo('https://www.youtube.com/embed/yaqe9Ls6yXM','Residential Boot Camp Highlights — Noakhali, 2025')">
+              <div class="gl-ph" style="height:150px;"><i class="bi bi-camera-video" style="font-size:2rem;"></i></div>
               <div class="play-ring"><i class="bi bi-play-fill"></i></div>
               <div class="gl-overlay">
                 <div>
@@ -764,15 +764,15 @@ document.addEventListener('langChange', renderCourses);
             </div>
           </div>
 
-          <!-- Video 3 — full width below -->
+          <!-- Video 3 — full width, taller -->
           <div class="col-12">
-            <div class="gl-item" style="height:104px;" onclick="openVideo('https://www.youtube.com/embed/OB-QDMnQNDs','Community Health Training — Sonargaon, 2024')">
-              <div class="gl-ph" style="height:104px;"><i class="bi bi-camera-video"></i></div>
-              <div class="play-ring"><i class="bi bi-play-fill"></i></div>
+            <div class="gl-item" style="height:158px;" onclick="openVideo('https://www.youtube.com/embed/OB-QDMnQNDs','Community Health Training — Sonargaon, 2024')">
+              <div class="gl-ph" style="height:158px;"><i class="bi bi-camera-video" style="font-size:2.5rem;"></i></div>
+              <div class="play-ring" style="width:48px;height:48px;font-size:1.1rem;"><i class="bi bi-play-fill"></i></div>
               <div class="gl-overlay">
                 <div>
                   <div class="gl-tag"><i class="bi bi-play-fill"></i> Video</div>
-                  <div class="gl-label"><span class="en-text">Community Health Training — Sonargaon, 2024</span><span class="bn-text">কমিউনিটি প্রশিক্ষণ — সোনারগাঁও, ২০২৪</span></div>
+                  <div class="gl-label" style="font-size:.78rem;"><span class="en-text">Community Health Training — Sonargaon, 2024</span><span class="bn-text">কমিউনিটি প্রশিক্ষণ — সোনারগাঁও, ২০২৪</span></div>
                 </div>
               </div>
             </div>
