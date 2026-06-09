@@ -385,16 +385,16 @@
     }
     .tc-btn-more {
       display: flex; align-items: center; justify-content: center; gap: 4px;
-      padding: 8px 6px; font-size: .7rem; font-weight: 700; color: var(--green);
+      padding: 8px 10px; font-size: .72rem; font-weight: 700; color: var(--green);
       background: var(--gray-bg); border: 1.5px solid var(--border);
-      border-radius: 7px; text-decoration: none; transition: all .2s;
+      border-radius: 7px; text-decoration: none; transition: all .2s; white-space: nowrap;
     }
     .tc-btn-more:hover { background: var(--green); color: var(--butter); border-color: var(--green); }
     .tc-btn-enroll {
       display: flex; align-items: center; justify-content: center; gap: 4px;
-      padding: 8px 6px; font-size: .7rem; font-weight: 800; color: #fff;
+      padding: 8px 8px; font-size: .67rem; font-weight: 800; color: #fff;
       background: var(--green); border: 1.5px solid var(--green);
-      border-radius: 7px; text-decoration: none; transition: all .2s;
+      border-radius: 7px; text-decoration: none; transition: all .2s; white-space: nowrap;
     }
     .tc-btn-enroll:hover { background: #025a50; border-color: #025a50; color: var(--butter); }
 
@@ -1356,9 +1356,9 @@ function buildHomeCard(idx){
   var desc = isBn ? c.descBn : c.desc;
   var priceStr = '৳ '+c.price.toLocaleString('en-BD');
   var badgeHtml = c.badge ? '<span class="tc-badge">🔥 Popular</span>' : '';
-  var num = String(HOME_COURSE_IDS.indexOf(idx)+1).padStart(2,'0');
+  // Use div+onclick for card (not nested <a>), buttons are proper links
   return '<div class="col-md-6">'
-    +'<a href="course.html?id='+idx+'" class="training-card d-block" onclick="event.stopPropagation();">'
+    +'<div class="training-card" onclick="location.href=\'course.html?id='+idx+'\'">'
     +'<div class="tc-thumb" style="background:linear-gradient(135deg,'+c.color+'dd,'+c.color+'88);">'
     +'<i class="bi '+c.icon+'"></i>'+badgeHtml
     +'</div>'
@@ -1375,17 +1375,17 @@ function buildHomeCard(idx){
     +'<span class="tc-price">'+priceStr+'</span>'
     +'<span class="tc-dur"><i class="bi bi-clock"></i> '+c.duration+'</span>'
     +'</div>'
-    +'<div class="tc-actions">'
-    +'<a href="course.html?id='+idx+'" class="tc-btn-more" onclick="event.stopPropagation();">'
+    +'<div class="tc-actions" onclick="event.stopPropagation();">'
+    +'<a href="course.html?id='+idx+'" class="tc-btn-more">'
     +'<i class="bi bi-eye-fill"></i>'
-    +'<span class="en-text">View Details</span><span class="bn-text">বিস্তারিত</span>'
+    +'<span class="en-text">Details</span><span class="bn-text">বিস্তারিত</span>'
     +'</a>'
-    +'<a href="enroll.html?id='+idx+'" class="tc-btn-enroll" onclick="event.stopPropagation();">'
+    +'<a href="enroll.html?id='+idx+'" class="tc-btn-enroll">'
     +'<i class="bi bi-cart-fill"></i>'
-    +'<span class="en-text">Enroll Now</span><span class="bn-text">ভর্তি হন</span>'
+    +'<span class="en-text">Enroll — '+priceStr+'</span><span class="bn-text">ভর্তি — '+priceStr+'</span>'
     +'</a>'
     +'</div>'
-    +'</a>'
+    +'</div>'
     +'</div>';
 }
 
