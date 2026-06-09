@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Training Programs — SARD BD</title>
+  <meta name="description" content="SARD BD training programs — Public Health Research, Clinical, Digital Health, Boot Camps and more. Capacity building for researchers, clinicians, and community workers in Bangladesh."/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--green:#013e37;--green-light:#025a50;--green-dark:#012a25;--butter:#ffefb3;--butter-light:#fffaed;--gray-bg:#f7f8fa;--text:#1a1a1a;--text-muted:#6c757d;--border:#e5e7eb;--radius:12px;--shadow:0 2px 20px rgba(0,0,0,0.08);--shadow-md:0 4px 32px rgba(0,0,0,0.12);}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter','Hind Siliguri',sans-serif;color:var(--text);background:#fff;}
+    body.bn{font-family:'Hind Siliguri','Inter',sans-serif;}
+    body.bn .en-text{display:none!important;}
+    body:not(.bn) .bn-text{display:none!important;}
+
+    /* NAVBAR */
+    .navbar-main{background:var(--green);position:sticky;top:0;z-index:1000;box-shadow:0 2px 16px rgba(1,62,55,0.3);padding:0;}
+    .navbar-main .navbar-brand{color:#fff;font-weight:800;font-size:1.15rem;line-height:1.1;padding:12px 0;text-decoration:none;display:flex;flex-direction:column;}
+    .navbar-main .navbar-brand span{font-size:0.65rem;font-weight:400;opacity:.65;}
+    .navbar-main .nav-link{color:rgba(255,255,255,.82)!important;font-size:.83rem;font-weight:500;padding:20px 13px!important;position:relative;transition:color .2s;}
+    .navbar-main .nav-link:hover,.navbar-main .nav-link.active{color:var(--butter)!important;}
+    .navbar-main .nav-link.active::after{content:'';position:absolute;bottom:0;left:13px;right:13px;height:3px;background:var(--butter);border-radius:2px 2px 0 0;}
+    .navbar-main .dropdown-menu{background:var(--green-dark);border:none;border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.25);min-width:220px;margin-top:0;}
+    .navbar-main .dropdown-item{color:rgba(255,255,255,.8);font-size:.82rem;padding:9px 16px;transition:all .15s;}
+    .navbar-main .dropdown-item:hover{background:rgba(255,255,255,.08);color:var(--butter);}
+    .navbar-main .navbar-toggler{border-color:rgba(255,255,255,.3);padding:6px 10px;}
+    .navbar-main .navbar-toggler-icon{filter:invert(1);}
+    .btn-lang{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);border-radius:6px;font-size:.72rem;font-weight:600;padding:4px 10px;cursor:pointer;transition:all .2s;}
+    .btn-lang.active,.btn-lang:hover{background:var(--butter);color:var(--green);border-color:var(--butter);}
+
+    /* HERO */
+    .hero{background:linear-gradient(120deg,var(--green) 0%,#025a50 55%,#036b60 100%);padding:60px 0 0;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;top:-40px;right:-80px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.04);}
+    .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:56px;background:#fff;clip-path:ellipse(55% 100% at 50% 100%);}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:var(--butter);font-size:.76rem;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:18px;}
+    .hero h1{color:#fff;font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.15;margin-bottom:14px;}
+    .hero h1 em{color:var(--butter);font-style:normal;}
+    .hero-sub{color:rgba(255,255,255,.7);font-size:.96rem;line-height:1.75;max-width:520px;margin-bottom:28px;}
+    .hero-stats{display:flex;flex-wrap:wrap;gap:20px;padding-bottom:64px;}
+    .hstat{text-align:center;}
+    .hstat-n{font-size:1.7rem;font-weight:800;color:var(--butter);}
+    .hstat-l{font-size:.72rem;color:rgba(255,255,255,.6);margin-top:2px;}
+
+    /* COMMON */
+    .sec-label{display:inline-block;background:var(--butter);color:var(--green);font-size:.7rem;font-weight:800;padding:4px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;}
+    .divider{width:48px;height:4px;background:linear-gradient(90deg,var(--green),var(--green-light));border-radius:2px;margin-bottom:16px;}
+    .sec-title{font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:800;color:var(--green);line-height:1.2;margin-bottom:12px;}
+    .sec-desc{color:var(--text-muted);font-size:.95rem;line-height:1.75;}
+
+    /* PROGRAM CARD */
+    .prog-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;height:100%;transition:all .25s;position:relative;overflow:hidden;}
+    .prog-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--green-light));opacity:0;transition:.25s;}
+    .prog-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:var(--green-light);}
+    .prog-card:hover::before{opacity:1;}
+    .prog-num{font-size:1.6rem;font-weight:900;color:var(--butter);line-height:1;margin-bottom:6px;}
+    .prog-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--green),var(--green-light));display:flex;align-items:center;justify-content:center;color:var(--butter);font-size:1rem;margin-bottom:10px;}
+    .prog-title{color:var(--green);font-weight:800;font-size:.9rem;margin-bottom:7px;line-height:1.3;}
+    .prog-desc{color:var(--text-muted);font-size:.78rem;line-height:1.6;margin-bottom:10px;}
+    .prog-tags{display:flex;flex-wrap:wrap;gap:4px;}
+    .prog-tag{background:var(--butter-light);color:var(--green);font-size:.6rem;font-weight:600;padding:2px 8px;border-radius:20px;border:1px solid rgba(1,62,55,.1);}
+    /* GALLERY */
+    .gl-item{position:relative;border-radius:10px;overflow:hidden;cursor:pointer;background:var(--green-dark);}
+    .gl-item .gl-bg{width:100%;height:100%;object-fit:cover;display:block;}
+    .gl-item .gl-ph{width:100%;height:100%;background:linear-gradient(135deg,#012a25,#025a50);display:flex;align-items:center;justify-content:center;}
+    .gl-item .gl-ph i{font-size:1.6rem;color:rgba(255,255,255,.25);}
+    .gl-item .gl-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(1,32,28,.75) 0%,transparent 55%);display:flex;align-items:flex-end;padding:10px 12px;transition:.2s;}
+    .gl-item:hover .gl-overlay{background:linear-gradient(to top,rgba(1,32,28,.88) 0%,rgba(1,32,28,.1) 100%);}
+    .gl-item .gl-label{color:#fff;font-size:.68rem;font-weight:700;line-height:1.4;}
+    .gl-item .gl-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(255,239,179,.15);border:1px solid rgba(255,239,179,.3);color:var(--butter);font-size:.58rem;font-weight:700;padding:2px 7px;border-radius:8px;margin-bottom:4px;}
+    .gl-item .play-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;transition:.2s;}
+    .gl-item .play-ring i{color:#fff;font-size:.9rem;margin-left:2px;}
+    .gl-item:hover .play-ring{background:var(--green);border-color:var(--green);transform:translate(-50%,-50%) scale(1.1);}
+    .btn-view-more{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--green);border:2px solid var(--green);font-weight:700;font-size:.82rem;padding:9px 22px;border-radius:8px;text-decoration:none;transition:.2s;}
+    .btn-view-more:hover{background:var(--green);color:#fff;}
+    /* VIDEO MODAL */
+    .vid-modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;}
+    .vid-modal-backdrop.open{display:flex;}
+    .vid-modal-box{position:relative;width:90%;max-width:820px;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.7);}
+    .vid-modal-box iframe{width:100%;aspect-ratio:16/9;border:none;display:block;}
+    .vid-modal-close{position:absolute;top:10px;right:12px;z-index:10;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.1rem;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;backdrop-filter:blur(4px);}
+    .vid-modal-close:hover{background:rgba(255,255,255,.3);}
+    .vid-modal-title{background:var(--green);color:var(--butter);font-size:.78rem;font-weight:700;padding:10px 16px;}
+
+    /* BOOTCAMP */
+    .bc-section{background:var(--green-dark);border-radius:var(--radius);overflow:hidden;}
+    .bc-header{background:rgba(255,255,255,.06);padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.1);}
+    .bc-header h3{color:var(--butter);font-weight:800;font-size:1.3rem;margin-bottom:4px;}
+    .bc-header p{color:rgba(255,255,255,.6);font-size:.85rem;}
+    .bc-track{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.07);}
+    .bc-track:last-of-type{border-bottom:none;}
+    .bc-day-col{background:var(--green);padding:20px 24px;display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:90px;}
+    .bc-day-num{font-size:2rem;font-weight:900;color:var(--butter);line-height:1;}
+    .bc-day-label{font-size:.7rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.5px;}
+    .bc-content{padding:20px 24px;flex:1;}
+    .bc-content h6{color:#fff;font-weight:700;font-size:.9rem;margin-bottom:8px;}
+    .bc-content ul{margin:0;padding-left:16px;}
+    .bc-content ul li{color:rgba(255,255,255,.65);font-size:.82rem;margin-bottom:4px;}
+    .bc-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,239,179,.15);border:1px solid rgba(255,239,179,.25);color:var(--butter);font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-top:10px;}
+
+    /* OUTCOME */
+    .outcome-card{background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:var(--radius);padding:28px;color:#fff;height:100%;}
+    .outcome-card h5{color:var(--butter);font-weight:800;margin-bottom:14px;}
+    .outcome-card ul{list-style:none;padding:0;margin:0;}
+    .outcome-card ul li{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:rgba(255,255,255,.85);margin-bottom:10px;}
+    .outcome-card ul li i{color:var(--butter);flex-shrink:0;margin-top:2px;}
+
+    /* WHO ATTENDS */
+    .target-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;}
+    .target-card{background:var(--butter-light);border:1.5px solid rgba(1,62,55,.12);border-radius:var(--radius);padding:20px 16px;text-align:center;transition:.2s;}
+    .target-card:hover{background:var(--butter);border-color:var(--green);}
+    .target-card i{font-size:1.8rem;color:var(--green);margin-bottom:10px;display:block;}
+    .target-card span{font-size:.8rem;font-weight:700;color:var(--green);}
+
+    /* CTA */
+    .cta-sec{background:linear-gradient(120deg,var(--green-dark),var(--green-light));padding:64px 0;}
+
+    /* BUTTONS */
+    .btn-green{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;border:2px solid var(--green);border-radius:8px;padding:11px 24px;font-size:.875rem;font-weight:700;text-decoration:none;transition:all .2s;}
+    .btn-green:hover{background:var(--green-light);border-color:var(--green-light);color:#fff;}
+    .btn-butter{display:inline-flex;align-items:center;gap:8px;background:var(--butter);color:var(--green);border:2px solid var(--butter);border-radius:8px;padding:11px 24px;font-size:.875rem;font-weight:700;text-decoration:none;transition:all .2s;}
+    .btn-butter:hover{background:#ffe88a;border-color:#ffe88a;color:var(--green);}
+    .btn-outline-white{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.4);border-radius:8px;padding:11px 24px;font-size:.875rem;font-weight:700;text-decoration:none;transition:all .2s;}
+    .btn-outline-white:hover{border-color:var(--butter);color:var(--butter);}
+
+    /* FOOTER */
+    footer{background:var(--green-dark);color:rgba(255,255,255,.65);padding:56px 0 0;}
+    footer h6{color:var(--butter);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+    footer ul{list-style:none;padding:0;margin:0;}
+    footer ul li{margin-bottom:8px;}
+    footer ul li a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.82rem;display:flex;align-items:center;gap:6px;transition:color .2s;}
+    footer ul li a:hover{color:var(--butter);}
+    .foot-brand{font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:10px;}
+    .foot-desc{font-size:.82rem;line-height:1.7;margin-bottom:16px;}
+    .foot-contact p{font-size:.82rem;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+    .foot-contact i{color:var(--butter);}
+    .foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;}
+    .foot-bottom p{font-size:.78rem;margin:0;}
+    .foot-bottom a{color:var(--butter);text-decoration:none;}
+    .wa-float{position:fixed;bottom:26px;right:26px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,.45);z-index:999;transition:all .25s;}
+    .wa-float:hover{transform:scale(1.1);color:#fff;}
+    @media(max-width:768px){.bc-track{flex-direction:column;}.bc-day-col{flex-direction:row;gap:12px;min-width:auto;padding:14px 20px;}.bc-day-num{font-size:1.4rem;}.hero{padding:40px 0 0;}}
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-main navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <span class="en-text">SARD BD</span><span class="bn-text">সার্ড বিডি</span>
+      <span><span class="en-text">Society for Applied Research & Development</span><span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html"><span class="en-text">Home</span><span class="bn-text">হোম</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html"><span class="en-text">About</span><span class="bn-text">সম্পর্কে</span></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><span class="en-text">Journal</span><span class="bn-text">জার্নাল</span></a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="journal.html"><i class="bi bi-journal-text me-2"></i><span class="en-text">Journal Overview</span><span class="bn-text">পরিচিতি</span></a></li>
+            <li><a class="dropdown-item" href="editorial-board.html"><i class="bi bi-people me-2"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a></li>
+            <li><a class="dropdown-item" href="author-guidelines.html"><i class="bi bi-file-text me-2"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span></a></li>
+            <li><a class="dropdown-item" href="journal.html#archive"><i class="bi bi-archive me-2"></i><span class="en-text">Archive</span><span class="bn-text">আর্কাইভ</span></a></li>
+            <li><hr class="dropdown-divider" style="border-color:rgba(255,255,255,.1)"></li>
+            <li><a class="dropdown-item" href="journal.html#submit"><i class="bi bi-upload me-2"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="team.html"><span class="en-text">Team</span><span class="bn-text">দল</span></a></li>
+        <li class="nav-item"><a class="nav-link active" href="training.html"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#news"><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html"><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
+        <li class="nav-item ms-lg-2 d-flex gap-2">
+          <button class="btn-lang active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="btn-lang" id="btn-bn" onclick="setLang('bn')">বাং</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container position-relative" style="z-index:1">
+    <div class="hero-badge"><i class="bi bi-mortarboard-fill"></i><span class="en-text">Capacity Building Programs</span><span class="bn-text">সক্ষমতা বৃদ্ধি কার্যক্রম</span></div>
+    <h1><span class="en-text">Training <em>Programs</em></span><span class="bn-text">প্রশিক্ষণ <em>কার্যক্রম</em></span></h1>
+    <p class="hero-sub">
+      <span class="en-text">Structured capacity building programs for students, healthcare providers, researchers, and community workers across Bangladesh — from boot camps to specialized professional training.</span>
+      <span class="bn-text">শিক্ষার্থী, স্বাস্থ্যসেবা প্রদানকারী, গবেষক ও কমিউনিটি কর্মীদের জন্য বাংলাদেশজুড়ে কাঠামোগত সক্ষমতা বৃদ্ধির কার্যক্রম।</span>
+    </p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n">7+</div><div class="hstat-l"><span class="en-text">Program Types</span><span class="bn-text">প্রোগ্রামের ধরন</span></div></div>
+      <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l"><span class="en-text">Boot Camp Levels</span><span class="bn-text">বুট ক্যাম্প স্তর</span></div></div>
+      <div class="hstat"><div class="hstat-n">10</div><div class="hstat-l"><span class="en-text">Days (Max Camp)</span><span class="bn-text">দিন (সর্বোচ্চ)</span></div></div>
+      <div class="hstat"><div class="hstat-n">4</div><div class="hstat-l"><span class="en-text">Target Groups</span><span class="bn-text">লক্ষ্য দল</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO ATTENDS -->
+<section style="padding:60px 0;background:#fff;">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-label"><span class="en-text">Who Should Attend</span><span class="bn-text">কারা অংশগ্রহণ করবেন</span></div>
+      <div class="divider mx-auto"></div>
+      <h2 class="sec-title"><span class="en-text">Programs Designed For</span><span class="bn-text">যাদের জন্য ডিজাইন করা হয়েছে</span></h2>
+    </div>
+    <div class="target-grid">
+      <div class="target-card"><i class="bi bi-person-badge"></i><span><span class="en-text">Undergraduate Students</span><span class="bn-text">স্নাতক শিক্ষার্থী</span></span></div>
+      <div class="target-card"><i class="bi bi-mortarboard"></i><span><span class="en-text">Graduate Researchers</span><span class="bn-text">স্নাতকোত্তর গবেষক</span></span></div>
+      <div class="target-card"><i class="bi bi-hospital"></i><span><span class="en-text">Healthcare Providers</span><span class="bn-text">স্বাস্থ্যসেবা প্রদানকারী</span></span></div>
+      <div class="target-card"><i class="bi bi-people"></i><span><span class="en-text">Community Workers</span><span class="bn-text">কমিউনিটি কর্মী</span></span></div>
+      <div class="target-card"><i class="bi bi-person-check"></i><span><span class="en-text">NGO Professionals</span><span class="bn-text">এনজিও পেশাদার</span></span></div>
+      <div class="target-card"><i class="bi bi-clipboard2-pulse"></i><span><span class="en-text">Public Health Officers</span><span class="bn-text">জনস্বাস্থ্য কর্মকর্তা</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS GRID -->
+<section style="padding:60px 0;background:var(--gray-bg);">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-label"><span class="en-text">Our Programs</span><span class="bn-text">আমাদের কার্যক্রম</span></div>
+      <div class="divider mx-auto"></div>
+      <h2 class="sec-title"><span class="en-text">Training Program Areas</span><span class="bn-text">প্রশিক্ষণ কার্যক্রমের ক্ষেত্র</span></h2>
+      <p class="sec-desc mx-auto" style="max-width:580px">
+        <span class="en-text">SARD BD designs and implements structured training programs targeting a broad range of healthcare and research professionals.</span>
+        <span class="bn-text">SARD BD বিস্তৃত পরিসরের স্বাস্থ্যসেবা ও গবেষণা পেশাদারদের লক্ষ্য করে কাঠামোগত প্রশিক্ষণ কার্যক্রম পরিচালনা করে।</span>
+      </p>
+    </div>
+    <div class="row g-4">
+
+      <div class="col-lg-4 col-md-6">
+        <div class="prog-card">
+          <div class="prog-icon"><i class="bi bi-graph-up-arrow"></i></div>
+          <div class="prog-num">01</div>
+          <h5 class="prog-title"><span class="en-text">Public Health Research Training</span><span class="bn-text">জনস্বাস্থ্য গবেষণা প্রশিক্ষণ</span></h5>
+          <p class="prog-desc"><span class="en-text">Research methodology, study design, epidemiology and biostatistics, data collection (digital & paper), software analysis (SPSS, R, STATA), scientific writing, and grant proposal development.</span><span class="bn-text">গবেষণা পদ্ধতি, স্টাডি ডিজাইন, মহামারীবিদ্যা ও বায়োস্ট্যাটিস্টিক্স, ডেটা সংগ্রহ, সফটওয়্যার বিশ্লেষণ এবং বৈজ্ঞানিক লেখা।</span></p>
+          <div class="prog-tags">
+            <span class="prog-tag">SPSS / R / STATA</span>
+            <span class="prog-tag">Study Design</span>
+            <span class="prog-tag">Grant Writing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="prog-card">
+          <div class="prog-icon"><i class="bi bi-heart-pulse"></i></div>
+          <div class="prog-num">02</div>
+          <h5 class="prog-title"><span class="en-text">Clinical & Paramedical Training</span><span class="bn-text">ক্লিনিক্যাল ও প্যারামেডিক্যাল প্রশিক্ষণ</span></h5>
+          <p class="prog-desc"><span class="en-text">Standard treatment protocols, infection prevention and control (IPC), rational use of medicines, emergency care and triage, diagnostic and laboratory best practices.</span><span class="bn-text">মানক চিকিৎসা প্রোটোকল, সংক্রমণ প্রতিরোধ ও নিয়ন্ত্রণ, ওষুধের যুক্তিসঙ্গত ব্যবহার এবং জরুরি পরিচর্যা প্রশিক্ষণ।</span></p>
+          <div class="prog-tags">
+            <span class="prog-tag">Doctors & Nurses</span>
+            <span class="prog-tag">IPC</span>
+            <span class="prog-tag">Emergency Care</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="prog-card">
+          <div class="prog-icon"><i class="bi bi-people-fill"></i></div>
+          <div class="prog-num">03</div>
+          <h5 class="prog-title"><span class="en-text">Health Education & Community Awareness</span><span class="bn-text">স্বাস্থ্য শিক্ষা ও সচেতনতা</span></h5>
+          <p class="prog-desc"><span class="en-text">Participatory training on hygiene and sanitation, nutrition and food safety, environmental health risks (arsenic, air pollution), preventive health behaviors, gender and health equity.</span><span class="bn-text">স্বাস্থ্যবিধি, পুষ্টি, পরিবেশগত স্বাস্থ্য ঝুঁকি, প্রতিরোধমূলক আচরণ এবং লিঙ্গ ও স্বাস্থ্য সমতা।</span></p>
+          <div class="prog-tags">
+            <span class="prog-tag">Community</span>
+            <span class="prog-tag">Participatory</span>
+            <span class="prog-tag">Environmental Health</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="prog-card">
+          <div class="prog-icon"><i class="bi bi-phone"></i></div>
+          <div class="prog-num">04</div>
+          <h5 class="prog-title"><span class="en-text">Digital Health & Health Information Systems</span><span class="bn-text">ডিজিটাল স্বাস্থ্য ও HIS</span></h5>
+          <p class="prog-desc"><span class="en-text">Electronic medical records (EMR), health data reporting and dashboards, mobile health (m-Health) tools, monitoring and evaluation (M&E) systems, AI applications in health research.</span><span class="bn-text">ইলেকট্রনিক মেডিক্যাল রেকর্ড, মোবাইল হেলথ টুলস, মনিটরিং ও মূল্যায়ন সিস্টেম এবং স্বাস্থ্য গবেষণায় কৃত্রিম বুদ্ধিমত্তার প্রয়োগ।</span></p>
+          <div class="prog-tags">
+            <span class="prog-tag">EMR</span>
+            <span class="prog-tag">m-Health</span>
+            <span class="prog-tag">AI in Health</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="prog-card">
+          <div class="prog-icon"><i class="bi bi-shield-check"></i></div>
+          <div class="prog-num">05</div>
+          <h5 class="prog-title"><span class="en-text">Training of Trainers (ToT)</span><span class="bn-text">প্রশিক্ষকদের প্রশিক্ষণ (ToT)</span></h5>
+          <p class="prog-desc"><span class="en-text">SARD develops master trainers through ToT programs to ensure sustainability and scalability of interventions. These trainers further cascade knowledge to communities and institutions.</span><span class="bn-text">SARD মাস্টার ট্রেইনার তৈরি করে যারা সম্প্রদায় ও প্রতিষ্ঠানে জ্ঞান প্রসারিত করেন, টেকসইতা নিশ্চিত করেন।</span></p>
+          <div class="prog-tags">
+            <span class="prog-tag">Master Trainers</span>
+            <span class="prog-tag">Sustainability</span>
+            <span class="prog-tag">Cascade Training</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="prog-card">
+          <div class="prog-icon"><i class="bi bi-file-earmark-text"></i></div>
+          <div class="prog-num">06</div>
+          <h5 class="prog-title"><span class="en-text">Scientific Writing & Publication</span><span class="bn-text">বৈজ্ঞানিক লেখা ও প্রকাশনা</span></h5>
+          <p class="prog-desc"><span class="en-text">Hands-on training on manuscript preparation, abstract writing, responding to peer reviewer comments, journal submission, and grant proposal writing in NIH, JICA, and WHO formats.</span><span class="bn-text">পাণ্ডুলিপি প্রস্তুতি, বিমূর্ততা লেখা, পিয়ার রিভিউ মন্তব্যের জবাব, জার্নাল জমা এবং অনুদান প্রস্তাব লেখা।</span></p>
+          <div class="prog-tags">
+            <span class="prog-tag">Manuscript</span>
+            <span class="prog-tag">Peer Review</span>
+            <span class="prog-tag">Grant Proposals</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section style="padding:44px 0 48px;background:var(--gray-bg);">
+  <div class="container">
+
+    <!-- Header — compact, inline -->
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
+      <div>
+        <div class="sec-label" style="margin-bottom:4px;"><i class="bi bi-images me-1"></i><span class="en-text">Media</span><span class="bn-text">মিডিয়া</span></div>
+        <h3 style="font-size:1.25rem;font-weight:800;color:var(--green);margin:0;"><span class="en-text">Training Gallery</span><span class="bn-text">প্রশিক্ষণ গ্যালারি</span></h3>
+      </div>
+      <a href="gallery.html" class="btn-view-more"><i class="bi bi-grid-3x3-gap"></i><span class="en-text">View More</span><span class="bn-text">আরো দেখুন</span></a>
+    </div>
+
+    <!-- Grid: 1 photo (left, tall) + 3 videos (right, smaller) -->
+    <div class="row g-2">
+
+      <!-- Photo — spans 2 rows on desktop -->
+      <div class="col-lg-5 col-md-6">
+        <div class="gl-item" style="height:220px;">
+          <div class="gl-ph" style="height:220px;"><i class="bi bi-camera"></i></div>
+          <div class="gl-overlay">
+            <div>
+              <div class="gl-tag"><i class="bi bi-camera"></i> Photo</div>
+              <div class="gl-label"><span class="en-text">Field Training — Araihazar, 2025</span><span class="bn-text">ফিল্ড প্রশিক্ষণ — আড়াইহাজার, ২০২৫</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Videos — right column, stacked as 2+1 -->
+      <div class="col-lg-7 col-md-6">
+        <div class="row g-2">
+
+          <!-- Video 1 -->
+          <div class="col-6">
+            <div class="gl-item" style="height:104px;" onclick="openVideo('https://www.youtube.com/embed/gXej7VxBpYU','Research Methodology Workshop — Dhaka, 2025')">
+              <div class="gl-ph" style="height:104px;"><i class="bi bi-camera-video"></i></div>
+              <div class="play-ring"><i class="bi bi-play-fill"></i></div>
+              <div class="gl-overlay">
+                <div>
+                  <div class="gl-tag"><i class="bi bi-play-fill"></i> Video</div>
+                  <div class="gl-label"><span class="en-text">Research Workshop — Dhaka, 2025</span><span class="bn-text">ওয়ার্কশপ — ঢাকা, ২০২৫</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 2 -->
+          <div class="col-6">
+            <div class="gl-item" style="height:104px;" onclick="openVideo('https://www.youtube.com/embed/yaqe9Ls6yXM','Residential Boot Camp Highlights — Noakhali, 2025')">
+              <div class="gl-ph" style="height:104px;"><i class="bi bi-camera-video"></i></div>
+              <div class="play-ring"><i class="bi bi-play-fill"></i></div>
+              <div class="gl-overlay">
+                <div>
+                  <div class="gl-tag"><i class="bi bi-play-fill"></i> Video</div>
+                  <div class="gl-label"><span class="en-text">Boot Camp — Noakhali, 2025</span><span class="bn-text">বুট ক্যাম্প — নোয়াখালী, ২০২৫</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 3 — full width below -->
+          <div class="col-12">
+            <div class="gl-item" style="height:104px;" onclick="openVideo('https://www.youtube.com/embed/OB-QDMnQNDs','Community Health Training — Sonargaon, 2024')">
+              <div class="gl-ph" style="height:104px;"><i class="bi bi-camera-video"></i></div>
+              <div class="play-ring"><i class="bi bi-play-fill"></i></div>
+              <div class="gl-overlay">
+                <div>
+                  <div class="gl-tag"><i class="bi bi-play-fill"></i> Video</div>
+                  <div class="gl-label"><span class="en-text">Community Health Training — Sonargaon, 2024</span><span class="bn-text">কমিউনিটি প্রশিক্ষণ — সোনারগাঁও, ২০২৪</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESIDENTIAL BOOT CAMP -->
+<section id="bootcamp" style="padding:72px 0;background:#fff;">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-5">
+        <div class="sec-label"><i class="bi bi-lightning-charge-fill me-1"></i><span class="en-text">Flagship Program</span><span class="bn-text">ফ্ল্যাগশিপ প্রোগ্রাম</span></div>
+        <div class="divider"></div>
+        <h2 class="sec-title"><span class="en-text">Residential Research Boot Camp</span><span class="bn-text">রেসিডেন্শিয়াল রিসার্চ বুট ক্যাম্প</span></h2>
+        <p class="sec-desc mb-4">
+          <span class="en-text">An intensive, hands-on training program designed to build practical research skills among healthcare professionals and early-career researchers. Three progressive levels — 3, 7, and 10 days.</span>
+          <span class="bn-text">স্বাস্থ্যসেবা পেশাদার ও প্রথম দিকের গবেষকদের মধ্যে ব্যবহারিক গবেষণা দক্ষতা বৃদ্ধির জন্য একটি নিবিড় হাতে-কলমে প্রশিক্ষণ।</span>
+        </p>
+        <div class="row g-3 mb-4">
+          <div class="col-4">
+            <div style="background:var(--butter-light);border:1.5px solid rgba(1,62,55,.12);border-radius:10px;padding:16px 12px;text-align:center;">
+              <div style="font-size:1.6rem;font-weight:900;color:var(--green);">3</div>
+              <div style="font-size:.7rem;color:var(--text-muted);font-weight:600;"><span class="en-text">Day</span><span class="bn-text">দিন</span></div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div style="background:var(--butter-light);border:1.5px solid rgba(1,62,55,.12);border-radius:10px;padding:16px 12px;text-align:center;">
+              <div style="font-size:1.6rem;font-weight:900;color:var(--green);">7</div>
+              <div style="font-size:.7rem;color:var(--text-muted);font-weight:600;"><span class="en-text">Day</span><span class="bn-text">দিন</span></div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div style="background:var(--butter);border:1.5px solid var(--green);border-radius:10px;padding:16px 12px;text-align:center;">
+              <div style="font-size:1.6rem;font-weight:900;color:var(--green);">10</div>
+              <div style="font-size:.7rem;color:var(--green);font-weight:700;"><span class="en-text">Day</span><span class="bn-text">দিন</span></div>
+            </div>
+          </div>
+        </div>
+        <a href="contact.html" class="btn-green"><i class="bi bi-envelope"></i><span class="en-text">Enquire About Boot Camp</span><span class="bn-text">বুট ক্যাম্পে আগ্রহ জানান</span></a>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="bc-section">
+          <div class="bc-header">
+            <h3><i class="bi bi-lightning-charge me-2"></i><span class="en-text">Residential Boot Camp Tracks</span><span class="bn-text">রেসিডেন্শিয়াল বুট ক্যাম্প ট্র্যাক</span></h3>
+            <p><span class="en-text">Progressive curriculum — each level builds on the previous</span><span class="bn-text">প্রতিটি স্তর পূর্ববর্তীর উপর ভিত্তি করে গড়ে ওঠে</span></p>
+          </div>
+
+          <div class="bc-track">
+            <div class="bc-day-col">
+              <div class="bc-day-num">3</div>
+              <div class="bc-day-label"><span class="en-text">Days</span><span class="bn-text">দিন</span></div>
+            </div>
+            <div class="bc-content">
+              <h6><span class="en-text">Foundation Level</span><span class="bn-text">মৌলিক স্তর</span></h6>
+              <ul>
+                <li><span class="en-text">Introduction to research methods</span><span class="bn-text">গবেষণা পদ্ধতির পরিচিতি</span></li>
+                <li><span class="en-text">Epidemiology basics</span><span class="bn-text">মহামারীবিদ্যার মৌলিক বিষয়</span></li>
+                <li><span class="en-text">Questionnaire development</span><span class="bn-text">প্রশ্নমালা তৈরি</span></li>
+                <li><span class="en-text">Concept note & report writing</span><span class="bn-text">কনসেপ্ট নোট ও প্রতিবেদন লেখা</span></li>
+              </ul>
+              <div class="bc-badge"><i class="bi bi-award"></i><span class="en-text">Output: Concept Note</span><span class="bn-text">আউটপুট: কনসেপ্ট নোট</span></div>
+            </div>
+          </div>
+
+          <div class="bc-track">
+            <div class="bc-day-col">
+              <div class="bc-day-num">7</div>
+              <div class="bc-day-label"><span class="en-text">Days</span><span class="bn-text">দিন</span></div>
+            </div>
+            <div class="bc-content">
+              <h6><span class="en-text">Intermediate Level</span><span class="bn-text">মধ্যবর্তী স্তর</span></h6>
+              <ul>
+                <li><span class="en-text">Comprehensive study design</span><span class="bn-text">পূর্ণ স্টাডি ডিজাইন</span></li>
+                <li><span class="en-text">Data collection methods</span><span class="bn-text">ডেটা সংগ্রহ পদ্ধতি</span></li>
+                <li><span class="en-text">Data entry & cleaning</span><span class="bn-text">ডেটা এন্ট্রি ও পরিশোধন</span></li>
+                <li><span class="en-text">Protocol development</span><span class="bn-text">প্রোটোকল তৈরি</span></li>
+              </ul>
+              <div class="bc-badge"><i class="bi bi-award"></i><span class="en-text">Output: Poster Presentation</span><span class="bn-text">আউটপুট: পোস্টার উপস্থাপনা</span></div>
+            </div>
+          </div>
+
+          <div class="bc-track">
+            <div class="bc-day-col" style="background:#025a50;">
+              <div class="bc-day-num">10</div>
+              <div class="bc-day-label"><span class="en-text">Days</span><span class="bn-text">দিন</span></div>
+            </div>
+            <div class="bc-content">
+              <h6><span class="en-text">Advanced Level</span><span class="bn-text">উন্নত স্তর</span></h6>
+              <ul>
+                <li><span class="en-text">Advanced data analysis (SPSS, R, STATA)</span><span class="bn-text">উন্নত ডেটা বিশ্লেষণ</span></li>
+                <li><span class="en-text">Scientific writing & peer review</span><span class="bn-text">বৈজ্ঞানিক লেখা ও পিয়ার রিভিউ</span></li>
+                <li><span class="en-text">Manuscript preparation</span><span class="bn-text">পাণ্ডুলিপি প্রস্তুতি</span></li>
+                <li><span class="en-text">Grant proposal development (NIH/WHO formats)</span><span class="bn-text">অনুদান প্রস্তাব তৈরি</span></li>
+              </ul>
+              <div class="bc-badge" style="background:rgba(255,239,179,.25);border-color:rgba(255,239,179,.4);"><i class="bi bi-award-fill"></i><span class="en-text">Output: Manuscript / Grant Proposal</span><span class="bn-text">আউটপুট: পাণ্ডুলিপি / অনুদান প্রস্তাব</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section style="padding:64px 0;background:var(--gray-bg);">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-label"><span class="en-text">Training Outcomes</span><span class="bn-text">প্রশিক্ষণের ফলাফল</span></div>
+      <div class="divider mx-auto"></div>
+      <h2 class="sec-title"><span class="en-text">What Participants Achieve</span><span class="bn-text">অংশগ্রহণকারীরা কী অর্জন করেন</span></h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="outcome-card">
+          <h5><i class="bi bi-trophy me-2"></i><span class="en-text">Research Competency</span><span class="bn-text">গবেষণা দক্ষতা</span></h5>
+          <ul>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">Develop a research concept or protocol ready for submission</span><span class="bn-text">জমা দেওয়ার জন্য প্রস্তুত গবেষণা ধারণা বা প্রোটোকল তৈরি</span></span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">Practical data analysis skills in SPSS, R, or STATA</span><span class="bn-text">SPSS, R বা STATA-তে ব্যবহারিক ডেটা বিশ্লেষণ দক্ষতা</span></span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">Draft manuscript ready for peer review</span><span class="bn-text">পিয়ার রিভিউর জন্য প্রস্তুত খসড়া পাণ্ডুলিপি</span></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="outcome-card" style="background:linear-gradient(135deg,#025a50,#036b60);">
+          <h5><i class="bi bi-people me-2"></i><span class="en-text">Network & Mentorship</span><span class="bn-text">নেটওয়ার্ক ও মেন্টরশিপ</span></h5>
+          <ul>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">Connect with public health researchers across Bangladesh</span><span class="bn-text">বাংলাদেশের জনস্বাস্থ্য গবেষকদের সাথে যোগাযোগ</span></span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">Access to SARD BD's mentorship network</span><span class="bn-text">SARD BD-এর মেন্টরশিপ নেটওয়ার্কে অ্যাক্সেস</span></span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">Continued support after training completion</span><span class="bn-text">প্রশিক্ষণ সম্পন্নের পরেও অব্যাহত সহায়তা</span></span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="outcome-card" style="background:linear-gradient(135deg,var(--green-dark),var(--green));">
+          <h5><i class="bi bi-journal-bookmark me-2"></i><span class="en-text">Publication Support</span><span class="bn-text">প্রকাশনা সহায়তা</span></h5>
+          <ul>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">Guidance on journal selection and submission</span><span class="bn-text">জার্নাল নির্বাচন ও জমার নির্দেশনা</span></span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">SARD supports manuscript revision and resubmission</span><span class="bn-text">SARD পাণ্ডুলিপি সংশোধন ও পুনরায় জমায় সহায়তা করে</span></span></li>
+            <li><i class="bi bi-check-circle-fill"></i><span><span class="en-text">Priority consideration for JARD publication</span><span class="bn-text">JARD-এ প্রকাশনায় অগ্রাধিকার বিবেচনা</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="container text-center">
+    <h2 style="color:var(--butter);font-weight:800;font-size:clamp(1.5rem,3vw,2rem);margin-bottom:10px">
+      <span class="en-text">Ready to Build Your Research Skills?</span>
+      <span class="bn-text">গবেষণা দক্ষতা বৃদ্ধি করতে প্রস্তুত?</span>
+    </h2>
+    <p style="color:rgba(255,255,255,.65);font-size:.96rem;max-width:480px;margin:0 auto 28px">
+      <span class="en-text">Contact SARD BD to register for an upcoming training program or boot camp, or to arrange a customized training for your institution.</span>
+      <span class="bn-text">আগামী প্রশিক্ষণ কার্যক্রম বা বুট ক্যাম্পে নিবন্ধন করতে বা আপনার প্রতিষ্ঠানের জন্য কাস্টমাইজড প্রশিক্ষণের ব্যবস্থা করতে SARD BD-এর সাথে যোগাযোগ করুন।</span>
+    </p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="contact.html" class="btn-butter"><i class="bi bi-envelope-fill"></i><span class="en-text">Register Interest</span><span class="bn-text">আগ্রহ নিবন্ধন করুন</span></a>
+      <a href="about.html" class="btn-outline-white"><i class="bi bi-building"></i><span class="en-text">About SARD BD</span><span class="bn-text">SARD BD সম্পর্কে</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="foot-brand">SARD BD</div>
+        <p class="foot-desc"><span class="en-text">Society for Applied Research and Development — A not-for-profit public health organization based in Bangladesh.</span><span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট — বাংলাদেশ-ভিত্তিক একটি অলাভজনক জনস্বাস্থ্য সংগঠন।</span></p>
+        <div class="foot-contact">
+          <p><i class="bi bi-envelope"></i> hemeunus@gmail.com</p>
+          <p><i class="bi bi-telephone"></i> +880 1963-851090</p>
+          <p><i class="bi bi-geo-alt"></i> House #184, Road #02, Mohakhali DOHS, Dhaka</p>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <h6><span class="en-text">Organization</span><span class="bn-text">সংগঠন</span></h6>
+        <ul>
+          <li><a href="about.html"><i class="bi bi-chevron-right"></i><span class="en-text">About SARD</span><span class="bn-text">সম্পর্কে</span></a></li>
+          <li><a href="team.html"><i class="bi bi-chevron-right"></i><span class="en-text">Our Team</span><span class="bn-text">আমাদের দল</span></a></li>
+          <li><a href="training.html"><i class="bi bi-chevron-right"></i><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
+          <li><a href="index.html#news"><i class="bi bi-chevron-right"></i><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+          <li><a href="contact.html"><i class="bi bi-chevron-right"></i><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <h6>Journal (JARD)</h6>
+        <ul>
+          <li><a href="journal.html"><i class="bi bi-chevron-right"></i><span class="en-text">Journal Overview</span><span class="bn-text">পরিচিতি</span></a></li>
+          <li><a href="editorial-board.html"><i class="bi bi-chevron-right"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a></li>
+          <li><a href="author-guidelines.html"><i class="bi bi-chevron-right"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span></a></li>
+          <li><a href="journal.html#submit"><i class="bi bi-chevron-right"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <h6><span class="en-text">Field Offices</span><span class="bn-text">ফিল্ড অফিস</span></h6>
+        <ul>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Araihazar, Narayanganj</a></li>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Sonargaon, Narayanganj</a></li>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Chakhil, Noakhali</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom mt-5">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p>© 2026 <a href="index.html">SARD BD</a>. <span class="en-text">All rights reserved.</span><span class="bn-text">সর্বস্বত্ব সংরক্ষিত।</span></p>
+      <p style="color:rgba(255,255,255,.35);font-size:.72rem;"><span class="en-text">Designed &amp; Developed by</span><span class="bn-text">ডিজাইন ও ডেভেলপমেন্ট:</span> <a href="https://botbari.com" target="_blank" rel="noopener" style="color:var(--butter);font-weight:600;text-decoration:none;">Botbari.com</a></p>
+      <p><span class="en-text">Publisher of</span><span class="bn-text">প্রকাশক:</span> <a href="journal.html">JARD</a> · www.sardbd.info</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/8801963851090" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
+
+<!-- VIDEO MODAL -->
+<div class="vid-modal-backdrop" id="vidModal" onclick="closeVideoModal(event)">
+  <div class="vid-modal-box">
+    <button class="vid-modal-close" onclick="closeVideo()"><i class="bi bi-x-lg"></i></button>
+    <div class="vid-modal-title" id="vidTitle"></div>
+    <iframe id="vidFrame" src="" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function setLang(l){document.body.classList.toggle('bn',l==='bn');document.getElementById('btn-en').classList.toggle('active',l==='en');document.getElementById('btn-bn').classList.toggle('active',l==='bn');localStorage.setItem('sardbd_lang',l);}
+  (function(){var s=localStorage.getItem('sardbd_lang');if(s)setLang(s);})();
+
+  function openVideo(url, title) {
+    document.getElementById('vidFrame').src = url + '?autoplay=1&rel=0';
+    document.getElementById('vidTitle').textContent = title || '';
+    document.getElementById('vidModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVideo() {
+    document.getElementById('vidFrame').src = '';
+    document.getElementById('vidModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeVideoModal(e) {
+    if (e.target === document.getElementById('vidModal')) closeVideo();
+  }
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeVideo(); });
+</script>
+</body>
+</html>

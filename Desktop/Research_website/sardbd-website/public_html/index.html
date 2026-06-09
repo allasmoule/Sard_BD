@@ -1,0 +1,1312 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SARD BD — Society for Applied Research and Development Bangladesh</title>
+  <meta name="description" content="SARD BD — Society for Applied Research and Development, Bangladesh. Advancing public health through evidence-based research, training, and publication of JARD journal."/>
+  <meta name="keywords"    content="SARD BD, public health Bangladesh, applied research Bangladesh, JARD journal, epidemiology, community health, NGO Bangladesh, health research"/>
+  <meta name="author"      content="SARD BD"/>
+  <meta name="robots"      content="index, follow"/>
+  <link  rel="canonical"   href="https://sardbd.org/"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website"/>
+  <meta property="og:site_name"   content="SARD BD"/>
+  <meta property="og:title"       content="SARD BD — Society for Applied Research and Development Bangladesh"/>
+  <meta property="og:description" content="Advancing public health through evidence-based research, capacity building, and open-access publication of JARD in Bangladesh."/>
+  <meta property="og:url"         content="https://sardbd.org/"/>
+  <meta property="og:image"       content="https://sardbd.org/assets/og-home.png"/>
+  <meta property="og:locale"      content="en_BD"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@SARDBD"/>
+  <meta name="twitter:title"       content="SARD BD — Society for Applied Research and Development Bangladesh"/>
+  <meta name="twitter:description" content="Advancing public health through evidence-based research and open-access publication. Publisher of JARD journal."/>
+  <meta name="twitter:image"       content="https://sardbd.org/assets/og-home.png"/>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://sardbd.org/#organization",
+      "name": "SARD BD",
+      "legalName": "Society for Applied Research and Development Bangladesh",
+      "url": "https://sardbd.org",
+      "logo": { "@type": "ImageObject", "url": "https://sardbd.org/assets/logo.png" },
+      "description": "SARD BD is a non-profit research organization in Bangladesh dedicated to applied public health research, capacity building, and evidence-based community development.",
+      "email": "hemeunus@gmail.com",
+      "address": { "@type": "PostalAddress", "addressCountry": "BD", "addressLocality": "Dhaka" },
+      "sameAs": [
+        "https://www.facebook.com/sardbd",
+        "https://www.linkedin.com/company/sardbd",
+        "https://www.youtube.com/@sardbd"
+      ],
+      "knowsAbout": ["Public Health","Epidemiology","Environmental Health","Community Development","Bangladesh"]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://sardbd.org/#website",
+      "name": "SARD BD",
+      "url": "https://sardbd.org",
+      "publisher": { "@id": "https://sardbd.org/#organization" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": { "@type": "EntryPoint", "urlTemplate": "https://sardbd.org/journal.html?search={search_term_string}" },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green:        #013e37;
+      --green-light:  #025a50;
+      --green-dark:   #012a25;
+      --butter:       #ffefb3;
+      --butter-light: #fffaed;
+      --butter-dark:  #f0d800;
+      --white:        #ffffff;
+      --gray-bg:      #f7f8fa;
+      --text:         #1a1a1a;
+      --text-muted:   #6c757d;
+      --border:       #e5e7eb;
+      --shadow:       0 2px 20px rgba(0,0,0,0.08);
+      --shadow-md:    0 4px 32px rgba(0,0,0,0.12);
+      --radius:       12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter','Hind Siliguri',sans-serif; color: var(--text); background: #fff; }
+    body.bn { font-family: 'Hind Siliguri','Inter',sans-serif; }
+
+    /* ══ NAVBAR ════════════════════════════════ */
+    .navbar-main {
+      background: var(--green);
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 16px rgba(1,62,55,0.3);
+      padding: 0;
+    }
+    .navbar-main .navbar-brand {
+      color: var(--butter) !important;
+      font-weight: 800; font-size: 1.1rem;
+      padding: 12px 0; line-height: 1.2;
+    }
+    .navbar-main .navbar-brand span {
+      display: block; color: rgba(255,255,255,0.6);
+      font-size: 0.72rem; font-weight: 400;
+    }
+    .navbar-main .nav-link {
+      color: rgba(255,255,255,0.82) !important;
+      font-weight: 500; font-size: 0.88rem;
+      padding: 20px 13px !important;
+      transition: color 0.2s; position: relative;
+    }
+    .navbar-main .nav-link:hover,
+    .navbar-main .nav-link.active { color: var(--butter) !important; }
+    .navbar-main .nav-link.active::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 13px; right: 13px;
+      height: 3px; background: var(--butter);
+      border-radius: 2px 2px 0 0;
+    }
+    .navbar-main .dropdown-menu {
+      background: var(--green-dark); border: none;
+      border-top: 3px solid var(--butter);
+      border-radius: 0 0 10px 10px; min-width: 210px;
+    }
+    .navbar-main .dropdown-item {
+      color: rgba(255,255,255,0.8); font-size: 0.85rem; padding: 9px 18px;
+    }
+    .navbar-main .dropdown-item:hover { background: var(--green-light); color: var(--butter); }
+    .btn-lang {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.8); font-size: 0.78rem; font-weight: 700;
+      padding: 5px 13px; border-radius: 20px; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-lang.active, .btn-lang:hover {
+      background: var(--butter); border-color: var(--butter); color: var(--green);
+    }
+    .navbar-toggler { border: 1.5px solid rgba(255,255,255,0.4); padding: 5px 10px; }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    /* ══ HERO — shorter, less green ════════════ */
+    .hero {
+      background: linear-gradient(120deg, var(--green) 0%, #025a50 55%, #036b60 100%);
+      padding: 70px 0 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+      background: #fff;
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,239,179,0.15);
+      border: 1px solid rgba(255,239,179,0.3);
+      color: var(--butter); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 30px; margin-bottom: 18px;
+    }
+    .hero h1 {
+      color: #fff; font-size: clamp(2rem,4vw,3rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 14px;
+    }
+    .hero h1 em { color: var(--butter); font-style: normal; }
+    .hero .hero-sub {
+      color: rgba(255,255,255,0.72); font-size: 1rem;
+      line-height: 1.7; margin-bottom: 28px; max-width: 500px;
+    }
+    .btn-primary-main {
+      background: var(--butter); color: var(--green);
+      font-weight: 700; font-size: 0.92rem;
+      padding: 13px 26px; border-radius: 8px; border: none;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.22s; box-shadow: 0 4px 18px rgba(255,239,179,0.3);
+    }
+    .btn-primary-main:hover {
+      background: #f5e070; color: var(--green);
+      transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,239,179,0.4);
+    }
+    .btn-outline-main {
+      background: transparent; color: #fff;
+      font-weight: 600; font-size: 0.92rem;
+      padding: 12px 26px; border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.22s;
+    }
+    .btn-outline-main:hover { border-color: var(--butter); color: var(--butter); }
+
+    /* Hero stat pills */
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .hero-stat {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; padding: 12px 18px; text-align: center; min-width: 100px;
+    }
+    .hero-stat .n { color: var(--butter); font-size: 1.5rem; font-weight: 800; line-height: 1; }
+    .hero-stat .l { color: rgba(255,255,255,0.65); font-size: 0.7rem; margin-top: 3px; }
+
+    /* ══ JOURNAL PREVIEW CARD — White, Clear ═══ */
+    .journal-hero-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+    .jhc-header {
+      background: var(--green);
+      padding: 18px 22px 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .jhc-logo {
+      width: 42px; height: 42px;
+      background: var(--butter); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.8rem; color: var(--green); flex-shrink: 0;
+    }
+    .jhc-header .jh-name { color: var(--butter); font-weight: 700; font-size: 0.95rem; }
+    .jhc-header .jh-abbr { color: rgba(255,255,255,0.6); font-size: 0.75rem; }
+    .jhc-body { padding: 20px 22px; }
+    .jhc-issue-box {
+      background: var(--butter-light);
+      border: 1px solid #e8e0a0;
+      border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+    }
+    .jhc-issue-box .iss-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 4px;
+    }
+    .jhc-issue-box .iss-title {
+      color: #1a1a1a; font-weight: 700; font-size: 0.88rem; margin-bottom: 4px;
+    }
+    .jhc-issue-box .iss-meta {
+      color: var(--text-muted); font-size: 0.75rem;
+    }
+    .jhc-metrics {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px; margin-bottom: 16px;
+    }
+    .jhc-metric {
+      background: var(--gray-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 8px; text-align: center;
+    }
+    .jhc-metric .mv { color: var(--green); font-weight: 800; font-size: 1rem; }
+    .jhc-metric .ml { color: var(--text-muted); font-size: 0.68rem; margin-top: 2px; }
+    .jhc-info { list-style: none; padding: 0; margin: 0 0 16px; }
+    .jhc-info li {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+    .jhc-info li:last-child { border-bottom: none; }
+    .jhc-info li .ik { color: var(--text-muted); }
+    .jhc-info li .iv { color: var(--green); font-weight: 600; }
+    .btn-submit-hero {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%;
+      background: var(--green); color: var(--butter);
+      font-weight: 700; font-size: 0.875rem;
+      padding: 12px; border-radius: 8px;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-submit-hero:hover { background: var(--green-light); color: var(--butter); }
+
+    /* ══ SECTION COMMON ════════════════════════ */
+    section { padding: 72px 0; }
+    .sec-bg-gray { background: var(--gray-bg); }
+    .sec-bg-butter { background: var(--butter-light); }
+    .sec-bg-green { background: var(--green); }
+
+    .sec-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 6px;
+    }
+    .sec-label.light { color: var(--butter); }
+    .divider { width: 44px; height: 4px; background: var(--butter); border-radius: 2px; margin-bottom: 14px; }
+    .divider.green-d { background: var(--green); }
+    .sec-title { font-size: clamp(1.6rem,3vw,2.1rem); font-weight: 800; color: var(--green); line-height: 1.2; margin-bottom: 10px; }
+    .sec-title.light { color: #fff; }
+    .sec-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; max-width: 560px; }
+    .sec-desc.light { color: rgba(255,255,255,0.65); }
+
+    /* ══ FOCUS CARDS ════════════════════════════ */
+    .focus-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 16px 16px; height: 100%;
+      transition: all 0.25s; display:flex; align-items:flex-start; gap:12px;
+    }
+    .focus-card:hover {
+      border-color: var(--green); transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+    .focus-icon {
+      width: 38px; height: 38px; border-radius: 9px; flex-shrink:0;
+      background: var(--butter-light); color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: all 0.25s;
+    }
+    .focus-card:hover .focus-icon { background: var(--green); color: var(--butter); }
+    .focus-card h5 { color: var(--green); font-weight: 700; font-size: 0.84rem; margin-bottom: 4px; }
+    .focus-card p { color: var(--text-muted); font-size: 0.76rem; line-height: 1.55; margin: 0; }
+
+    /* ══ JOURNAL SECTION (body) ══════════════════ */
+    .journal-info-card {
+      background: #fff; border-radius: var(--radius);
+      box-shadow: var(--shadow); border: 1.5px solid var(--border); overflow: hidden;
+    }
+    .jic-head { background: var(--green); padding: 20px 24px; }
+    .jic-head .jn { color: var(--butter); font-weight: 800; font-size: 1.05rem; }
+    .jic-head .jf { color: rgba(255,255,255,0.65); font-size: 0.78rem; margin-top: 2px; }
+    .jic-body { padding: 22px 24px; }
+    .jbadges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .jbadge {
+      background: var(--butter-light); color: var(--green);
+      border: 1px solid #e0d890; font-size: 0.74rem; font-weight: 600;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .jinfo-list { list-style: none; padding: 0; margin: 0 0 18px; }
+    .jinfo-list li {
+      display: flex; justify-content: space-between;
+      padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 0.86rem;
+    }
+    .jinfo-list li:last-child { border-bottom: none; }
+    .jinfo-list .lk { color: var(--text-muted); }
+    .jinfo-list .lv { color: var(--green); font-weight: 600; }
+    .btn-green {
+      background: var(--green); color: var(--butter);
+      font-weight: 700; font-size: 0.86rem;
+      padding: 10px 20px; border-radius: 8px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 7px;
+      transition: all 0.2s; border: none;
+    }
+    .btn-green:hover { background: var(--green-light); color: var(--butter); transform: translateY(-1px); }
+    .btn-green-outline {
+      background: transparent; color: var(--green);
+      font-weight: 600; font-size: 0.86rem;
+      padding: 10px 20px; border-radius: 8px;
+      border: 1.5px solid var(--green);
+      text-decoration: none; display: inline-flex; align-items: center; gap: 7px;
+      transition: all 0.2s;
+    }
+    .btn-green-outline:hover { background: var(--green); color: var(--butter); }
+
+    /* ══ TRAINING ════════════════════════════════ */
+    .training-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 22px; height: 100%; transition: all 0.25s;
+    }
+    .training-card:hover { border-color: var(--green); box-shadow: var(--shadow); transform: translateY(-3px); }
+    .t-num {
+      background: var(--butter); color: var(--green);
+      font-weight: 800; font-size: 0.78rem;
+      width: 30px; height: 30px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+    }
+    .training-card h5 { color: var(--green); font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; }
+    .training-card p { color: var(--text-muted); font-size: 0.83rem; line-height: 1.65; margin: 0; }
+
+    .bootcamp-box {
+      background: var(--green); border-radius: var(--radius); overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .bc-header { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .bc-header h6 { color: var(--butter); font-weight: 700; margin: 0; font-size: 0.9rem; }
+    .bc-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: background 0.2s;
+    }
+    .bc-row:last-child { border-bottom: none; }
+    .bc-row:hover { background: rgba(255,255,255,0.05); }
+    .bc-day {
+      background: var(--butter); color: var(--green);
+      font-weight: 800; font-size: 0.72rem;
+      padding: 4px 10px; border-radius: 6px; min-width: 55px; text-align: center;
+    }
+    .bc-topics { color: rgba(255,255,255,0.75); font-size: 0.82rem; flex: 1; }
+    .bc-out { color: var(--butter); font-size: 0.75rem; font-weight: 600; min-width: 90px; text-align: right; }
+
+    /* ══ NEWS CARDS ══════════════════════════════ */
+    .news-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; height: 100%; transition: all 0.25s;
+    }
+    .news-card:hover { border-color: var(--green); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .news-thumb {
+      height: 160px;
+      background: linear-gradient(135deg, var(--green) 0%, #025a50 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 2.5rem;
+    }
+    .news-body { padding: 18px 20px; }
+    .news-badge {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--green);
+      background: var(--butter-light); padding: 3px 10px; border-radius: 20px;
+      display: inline-block; margin-bottom: 10px;
+    }
+    .news-date { color: var(--text-muted); font-size: 0.74rem; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+    .news-card h5 { color: var(--text); font-weight: 700; font-size: 0.9rem; line-height: 1.45; margin-bottom: 8px; }
+    .news-card p { color: var(--text-muted); font-size: 0.82rem; line-height: 1.6; margin-bottom: 14px; }
+    .read-more { color: var(--green); font-weight: 600; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+    .read-more:hover { color: var(--green-light); }
+
+    /* ══ VIDEO SECTION ════════════════════════════ */
+    .video-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; transition: all 0.25s; cursor: pointer;
+    }
+    .video-card:hover { border-color: var(--green); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .video-thumb {
+      position: relative; padding-top: 56.25%; background: #000; overflow: hidden;
+    }
+    .video-thumb iframe, .video-thumb video {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+    }
+    .video-thumb .play-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(1,62,55,0.75) 0%, rgba(2,90,80,0.55) 100%);
+      display: flex; align-items: center; justify-content: center; transition: all 0.25s;
+    }
+    .video-thumb .play-overlay .play-btn {
+      width: 52px; height: 52px; background: var(--butter); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: var(--green); transition: all 0.25s;
+    }
+    .video-card:hover .play-overlay { background: rgba(1,62,55,0.5); }
+    .video-card:hover .play-btn { transform: scale(1.1); box-shadow: 0 4px 20px rgba(255,239,179,0.5); }
+    .video-thumb .v-duration {
+      position: absolute; bottom: 8px; right: 10px;
+      background: rgba(0,0,0,0.7); color: #fff; font-size: 0.72rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .video-thumb .v-type-badge {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--butter); color: var(--green);
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 5px;
+    }
+    .video-body { padding: 14px 16px 16px; }
+    .video-body h6 { color: var(--text); font-weight: 700; font-size: 0.88rem; line-height: 1.4; margin-bottom: 6px; }
+    .video-body .v-meta { color: var(--text-muted); font-size: 0.75rem; display: flex; align-items: center; gap: 10px; }
+    .video-body .v-meta i { font-size: 0.8rem; }
+
+    /* Modal */
+    .video-modal-bg {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+      z-index: 2000; align-items: center; justify-content: center; padding: 20px;
+    }
+    .video-modal-bg.show { display: flex; }
+    .video-modal-inner { position: relative; width: 100%; max-width: 820px; }
+    .video-modal-inner .ratio { border-radius: 10px; overflow: hidden; }
+    .video-modal-close {
+      position: absolute; top: -42px; right: 0;
+      background: rgba(255,255,255,0.15); border: none; color: #fff;
+      font-size: 1.3rem; width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+    }
+    .video-modal-close:hover { background: rgba(255,255,255,0.3); }
+
+    /* ══ OFFICES (green bg) ══════════════════════ */
+    .office-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 14px 15px; transition: all 0.25s;
+    }
+    .office-card:hover { background: rgba(255,239,179,0.1); border-color: rgba(255,239,179,0.25); }
+    .off-icon {
+      width: 32px; height: 32px; background: rgba(255,239,179,0.15);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; color: var(--butter); margin-bottom: 9px; flex-shrink: 0;
+    }
+    .office-card .otype { color: var(--butter); font-size: 0.62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+    .office-card h5 { color: #fff; font-weight: 700; font-size: 0.85rem; margin-bottom: 4px; }
+    .office-card p { color: rgba(255,255,255,0.45); font-size: 0.75rem; line-height: 1.5; margin: 0; }
+    .contact-item { display: flex; align-items: center; gap: 10px; }
+    .contact-icon { width: 34px; height: 34px; background: rgba(255,239,179,0.12); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--butter); font-size: 0.9rem; flex-shrink: 0; }
+    .contact-label { color: rgba(255,255,255,0.45); font-size: 0.68rem; }
+    .contact-val { color: var(--butter); font-weight: 600; font-size: 0.82rem; text-decoration: none; }
+    .contact-val:hover { color: #fff; }
+
+    /* ══ CTA ════════════════════════════════════ */
+    .cta-sec {
+      background: linear-gradient(135deg, var(--green) 0%, #025a50 100%);
+      padding: 64px 0; position: relative; overflow: hidden;
+    }
+    .cta-sec::before {
+      content: ''; position: absolute; top: -50px; right: -50px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: rgba(255,239,179,0.05);
+    }
+
+    /* ══ FOOTER ═════════════════════════════════ */
+    footer { background: var(--green-dark); padding: 52px 0 0; }
+    .foot-brand { color: var(--butter); font-weight: 800; font-size: 1.05rem; margin-bottom: 6px; }
+    .foot-desc { color: rgba(255,255,255,0.45); font-size: 0.82rem; line-height: 1.7; max-width: 270px; margin-bottom: 18px; }
+    .foot-contact p { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; }
+    .foot-contact p i { color: var(--butter); margin-top: 2px; }
+    footer h6 { color: var(--butter); font-weight: 700; font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+    footer ul { list-style: none; padding: 0; margin: 0; }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+    footer ul li a:hover { color: var(--butter); }
+    .foot-bottom { background: rgba(0,0,0,0.25); padding: 15px 0; margin-top: 40px; }
+    .foot-bottom p { margin: 0; font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .foot-bottom a { color: var(--butter); text-decoration: none; }
+
+    /* ══ WHATSAPP ════════════════════════════════ */
+    .wa-float {
+      position: fixed; bottom: 26px; right: 26px;
+      width: 52px; height: 52px; background: #25D366;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; color: #fff; text-decoration: none;
+      box-shadow: 0 4px 18px rgba(37,211,102,0.45); z-index: 999; transition: all 0.25s;
+    }
+    .wa-float:hover { transform: scale(1.12); color: #fff; }
+
+    /* ══ LANGUAGE ════════════════════════════════ */
+    body.bn .en-text { display: none !important; }
+    body:not(.bn) .bn-text { display: none !important; }
+
+    /* ══ RESPONSIVE ══════════════════════════════ */
+    @media(max-width:768px){
+      .hero { padding: 50px 0 40px; }
+      section { padding: 50px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══════════════════════════════════════════════════════ -->
+<nav class="navbar navbar-main navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      <span class="en-text">SARD BD</span><span class="bn-text">সার্ড বিডি</span>
+      <span><span class="en-text">Society for Applied Research & Development</span><span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link active" href="#"><span class="en-text">Home</span><span class="bn-text">হোম</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html"><span class="en-text">About</span><span class="bn-text">সম্পর্কে</span></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            <span class="en-text">Journal</span><span class="bn-text">জার্নাল</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="journal.html"><i class="bi bi-journal-text me-2"></i><span class="en-text">Journal Overview</span><span class="bn-text">পরিচিতি</span></a></li>
+            <li><a class="dropdown-item" href="editorial-board.html"><i class="bi bi-people me-2"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a></li>
+            <li><a class="dropdown-item" href="author-guidelines.html"><i class="bi bi-file-text me-2"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span></a></li>
+            <li><a class="dropdown-item" href="journal.html#archive"><i class="bi bi-archive me-2"></i><span class="en-text">Archive</span><span class="bn-text">আর্কাইভ</span></a></li>
+            <li><hr class="dropdown-divider" style="border-color:rgba(255,255,255,0.1)"></li>
+            <li><a class="dropdown-item" href="journal.html#submit"><i class="bi bi-upload me-2"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="team.html"><span class="en-text">Team</span><span class="bn-text">দল</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="training.html"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="#news"><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html"><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
+        <li class="nav-item ms-lg-2 d-flex gap-2">
+          <button class="btn-lang active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="btn-lang" id="btn-bn" onclick="setLang('bn')">বাং</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <!-- Left -->
+      <div class="col-lg-6">
+        <div class="hero-badge">
+          🇧🇩 <span class="en-text">Bangladesh · Public Health Research</span><span class="bn-text">বাংলাদেশ · জনস্বাস্থ্য গবেষণা</span>
+        </div>
+        <h1>
+          <span class="en-text">Society for <em>Applied Research</em> and Development</span>
+          <span class="bn-text">সোসাইটি ফর <em>অ্যাপ্লায়েড রিসার্চ</em> অ্যান্ড ডেভেলপমেন্ট</span>
+        </h1>
+        <p class="hero-sub">
+          <span class="en-text">Advancing public health outcomes in Bangladesh through evidence-based research, community programs, and capacity building.</span>
+          <span class="bn-text">গবেষণা, কমিউনিটি প্রোগ্রাম ও সক্ষমতা বৃদ্ধির মাধ্যমে বাংলাদেশে জনস্বাস্থ্যের উন্নয়ন।</span>
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="journal.html" class="btn-primary-main">
+            <i class="bi bi-journal-text"></i>
+            <span class="en-text">Explore Journal (JARD)</span><span class="bn-text">জার্নাল দেখুন</span>
+          </a>
+          <a href="about.html" class="btn-outline-main">
+            <span class="en-text">About SARD</span><span class="bn-text">আমাদের সম্পর্কে</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="n">3+</div><div class="l"><span class="en-text">Years Active</span><span class="bn-text">বছর সক্রিয়</span></div></div>
+          <div class="hero-stat"><div class="n">4</div><div class="l"><span class="en-text">Field Offices</span><span class="bn-text">ফিল্ড অফিস</span></div></div>
+          <div class="hero-stat"><div class="n">6+</div><div class="l"><span class="en-text">Researchers</span><span class="bn-text">গবেষক</span></div></div>
+          <div class="hero-stat"><div class="n">2×</div><div class="l"><span class="en-text">Journal/Year</span><span class="bn-text">জার্নাল/বছর</span></div></div>
+        </div>
+      </div>
+
+      <!-- Right — Journal Card WHITE & CLEAR -->
+      <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
+        <div class="journal-hero-card">
+          <!-- Card Header -->
+          <div class="jhc-header">
+            <div class="jhc-logo">JARD</div>
+            <div>
+              <div class="jh-name">Bangladesh Journal of Applied Research & Development</div>
+              <div class="jh-abbr">Published by SARD BD · www.sardbd.info</div>
+            </div>
+          </div>
+          <!-- Card Body -->
+          <div class="jhc-body">
+            <!-- Current Issue Box -->
+            <div class="jhc-issue-box">
+              <div class="iss-label">📚 <span class="en-text">Current Issue</span><span class="bn-text">সর্বশেষ সংখ্যা</span></div>
+              <div class="iss-title">Vol. 1, Issue 1 — June 2026</div>
+              <div class="iss-meta"><span class="en-text">Biannual · Peer-Reviewed · English</span><span class="bn-text">দ্বিবার্ষিক · পিয়ার-রিভিউড · ইংরেজি</span></div>
+            </div>
+            <!-- Metrics -->
+            <div class="jhc-metrics">
+              <div class="jhc-metric">
+                <div class="mv">USD 50</div>
+                <div class="ml">APC</div>
+              </div>
+              <div class="jhc-metric">
+                <div class="mv">4–6 wk</div>
+                <div class="ml"><span class="en-text">Review</span><span class="bn-text">রিভিউ</span></div>
+              </div>
+              <div class="jhc-metric">
+                <div class="mv">D-Blind</div>
+                <div class="ml"><span class="en-text">Review Type</span><span class="bn-text">ধরন</span></div>
+              </div>
+            </div>
+            <!-- Info List -->
+            <ul class="jhc-info">
+              <li>
+                <span class="ik"><span class="en-text">Publisher</span><span class="bn-text">প্রকাশক</span></span>
+                <span class="iv">SARD BD</span>
+              </li>
+              <li>
+                <span class="ik"><span class="en-text">Frequency</span><span class="bn-text">প্রকাশনা</span></span>
+                <span class="iv"><span class="en-text">Biannual</span><span class="bn-text">দ্বিবার্ষিক</span></span>
+              </li>
+              <li>
+                <span class="ik"><span class="en-text">Submission</span><span class="bn-text">যোগাযোগ</span></span>
+                <span class="iv" style="font-size:0.78rem">hemeunus@gmail.com</span>
+              </li>
+            </ul>
+            <!-- Submit Button -->
+            <a href="journal.html#submit" class="btn-submit-hero">
+              <i class="bi bi-upload"></i>
+              <span class="en-text">Submit Manuscript</span><span class="bn-text">পাণ্ডুলিপি জমা দিন</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOCUS AREAS (white bg) ═══════════════════════════════════════ -->
+<section id="focus">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-label"><span class="en-text">What We Do</span><span class="bn-text">আমরা যা করি</span></div>
+      <div class="divider mx-auto"></div>
+      <h2 class="sec-title"><span class="en-text">Key Focus Areas</span><span class="bn-text">মূল কার্যক্ষেত্র</span></h2>
+      <p class="sec-desc mx-auto">
+        <span class="en-text">SARD works across six critical areas of public health to improve lives in underserved communities across Bangladesh.</span>
+        <span class="bn-text">SARD বাংলাদেশের সুবিধাবঞ্চিত জনগোষ্ঠীর জীবনমান উন্নয়নে ছয়টি জনস্বাস্থ্য ক্ষেত্রে কাজ করে।</span>
+      </p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4"><div class="focus-card">
+        <div class="focus-icon"><i class="bi bi-heart-pulse"></i></div>
+        <h5><span class="en-text">Community Health & Primary Care</span><span class="bn-text">কমিউনিটি স্বাস্থ্য ও প্রাথমিক পরিচর্যা</span></h5>
+        <p><span class="en-text">Strengthening community-based health programs and primary care delivery in rural and underserved areas.</span><span class="bn-text">গ্রামীণ ও সুবিধাবঞ্চিত এলাকায় কমিউনিটি স্বাস্থ্য কার্যক্রম শক্তিশালী করা।</span></p>
+      </div></div>
+      <div class="col-md-6 col-lg-4"><div class="focus-card">
+        <div class="focus-icon"><i class="bi bi-person-hearts"></i></div>
+        <h5><span class="en-text">Maternal, Child & Reproductive Health</span><span class="bn-text">মাতৃ, শিশু ও প্রজনন স্বাস্থ্য</span></h5>
+        <p><span class="en-text">Improving maternal and child health outcomes through evidence-based interventions and community programs.</span><span class="bn-text">প্রমাণ-ভিত্তিক হস্তক্ষেপের মাধ্যমে মাতৃ ও শিশু স্বাস্থ্যের উন্নতি।</span></p>
+      </div></div>
+      <div class="col-md-6 col-lg-4"><div class="focus-card">
+        <div class="focus-icon"><i class="bi bi-activity"></i></div>
+        <h5><span class="en-text">Non-Communicable Diseases (NCDs)</span><span class="bn-text">অসংক্রামক রোগ (এনসিডি)</span></h5>
+        <p><span class="en-text">Addressing the growing burden of diabetes, hypertension, and other NCDs through prevention and control.</span><span class="bn-text">ডায়াবেটিস, উচ্চ রক্তচাপসহ অন্যান্য এনসিডি প্রতিরোধে কাজ।</span></p>
+      </div></div>
+      <div class="col-md-6 col-lg-4"><div class="focus-card">
+        <div class="focus-icon"><i class="bi bi-droplet"></i></div>
+        <h5><span class="en-text">Environmental & Occupational Health</span><span class="bn-text">পরিবেশ ও পেশাগত স্বাস্থ্য</span></h5>
+        <p><span class="en-text">Researching arsenic contamination, air pollution, and other environmental health risks in Bangladesh.</span><span class="bn-text">আর্সেনিক দূষণ, বায়ু দূষণসহ পরিবেশগত স্বাস্থ্য ঝুঁকি নিয়ে গবেষণা।</span></p>
+      </div></div>
+      <div class="col-md-6 col-lg-4"><div class="focus-card">
+        <div class="focus-icon"><i class="bi bi-hospital"></i></div>
+        <h5><span class="en-text">Health Systems Strengthening</span><span class="bn-text">স্বাস্থ্য ব্যবস্থা শক্তিশালীকরণ</span></h5>
+        <p><span class="en-text">Building capacity of health systems to deliver equitable, quality care across communities.</span><span class="bn-text">সম্প্রদায়জুড়ে সুষম ও মানসম্পন্ন সেবা নিশ্চিত করতে স্বাস্থ্য ব্যবস্থার সক্ষমতা বৃদ্ধি।</span></p>
+      </div></div>
+      <div class="col-md-6 col-lg-4"><div class="focus-card">
+        <div class="focus-icon"><i class="bi bi-mortarboard"></i></div>
+        <h5><span class="en-text">Public Health Research & Training</span><span class="bn-text">জনস্বাস্থ্য গবেষণা ও প্রশিক্ষণ</span></h5>
+        <p><span class="en-text">Conducting applied research and building capacity through structured training programs and boot camps.</span><span class="bn-text">ফলিত গবেষণা পরিচালনা এবং কাঠামোগত প্রশিক্ষণের মাধ্যমে সক্ষমতা বৃদ্ধি।</span></p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ JOURNAL SECTION (gray bg) ════════════════════════════════════ -->
+<section id="journal" class="sec-bg-gray">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-5">
+        <div class="sec-label"><span class="en-text">Our Publication</span><span class="bn-text">আমাদের প্রকাশনা</span></div>
+        <div class="divider"></div>
+        <h2 class="sec-title"><span class="en-text">Bangladesh Journal of Applied Research & Development</span><span class="bn-text">বাংলাদেশ জার্নাল অব অ্যাপ্লায়েড রিসার্চ</span></h2>
+        <p class="sec-desc mb-4">
+          <span class="en-text">An international, peer-reviewed scientific journal published biannually by SARD BD. Open to national and international authors working in public health, epidemiology, environmental health, and development studies.</span>
+          <span class="bn-text">SARD BD কর্তৃক প্রকাশিত আন্তর্জাতিক, পিয়ার-রিভিউড বৈজ্ঞানিক জার্নাল। দেশী ও বিদেশী লেখকদের জন্য উন্মুক্ত।</span>
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="journal.html#submit" class="btn-green"><i class="bi bi-upload"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a>
+          <a href="journal.html#archive" class="btn-green-outline"><i class="bi bi-archive"></i><span class="en-text">View Archive</span><span class="bn-text">আর্কাইভ</span></a>
+        </div>
+      </div>
+      <div class="col-lg-6 offset-lg-1">
+        <div class="journal-info-card">
+          <!-- Header: clean text only -->
+          <div class="jic-head">
+            <div class="jn">JARD</div>
+            <div class="jf">Bangladesh Journal of Applied Research &amp; Development</div>
+          </div>
+          <!-- Body: info list + cover image on the right -->
+          <div class="jic-body" style="position:relative;">
+            <!-- Journal cover — floated right inside body -->
+            <div style="float:right;margin:0 0 14px 20px;flex-shrink:0;width:140px;height:196px;background:linear-gradient(160deg,#fff5c2 0%,#ffe580 45%,#e6c300 100%);border-radius:5px;box-shadow:3px 5px 18px rgba(0,0,0,.22);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:0 7px 9px;overflow:hidden;position:relative;">
+              <!-- top green band -->
+              <div style="width:100%;background:var(--green);text-align:center;padding:5px 4px;margin:0 -7px;width:calc(100% + 14px);">
+                <span style="color:var(--butter);font-size:.6rem;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;">OPEN ACCESS</span>
+              </div>
+              <!-- JARD name -->
+              <div style="text-align:center;margin-top:4px;">
+                <div style="font-size:1.6rem;font-weight:900;color:var(--green);letter-spacing:-1px;line-height:1;">JARD</div>
+                <div style="font-size:.5rem;color:var(--green-dark);font-weight:600;line-height:1.4;margin-top:6px;">Bangladesh Journal of<br>Applied Research &amp;<br>Development</div>
+              </div>
+              <!-- bottom info -->
+              <div style="text-align:center;border-top:1px solid rgba(1,62,55,.2);padding-top:6px;width:100%;">
+                <div style="font-size:.55rem;font-weight:800;color:var(--green-dark);line-height:1.5;">Vol. 1 · Issue 1<br>June 2026</div>
+                <div style="font-size:.48rem;color:#555;margin-top:2px;font-weight:500;">Published by SARD BD</div>
+              </div>
+            </div>
+            <div class="jbadges">
+              <span class="jbadge"><i class="bi bi-check-circle me-1"></i><span class="en-text">Peer Reviewed</span><span class="bn-text">পিয়ার রিভিউড</span></span>
+              <span class="jbadge"><i class="bi bi-translate me-1"></i>English</span>
+              <span class="jbadge"><i class="bi bi-globe me-1"></i><span class="en-text">International</span><span class="bn-text">আন্তর্জাতিক</span></span>
+            </div>
+            <ul class="jinfo-list">
+              <li><span class="lk"><span class="en-text">Publisher</span><span class="bn-text">প্রকাশক</span></span><span class="lv">SARD BD</span></li>
+              <li><span class="lk"><span class="en-text">Frequency</span><span class="bn-text">প্রকাশনা</span></span><span class="lv"><span class="en-text">Biannual (2 issues/year)</span><span class="bn-text">দ্বিবার্ষিক</span></span></li>
+              <li><span class="lk"><span class="en-text">Review Type</span><span class="bn-text">রিভিউ ধরন</span></span><span class="lv">Double-Blind</span></li>
+              <li><span class="lk">APC</span><span class="lv">USD 50 <span style="color:var(--text-muted);font-weight:400;font-size:0.75rem">(<span class="en-text">after acceptance</span><span class="bn-text">গৃহীত হওয়ার পরে</span>)</span></span></li>
+              <li><span class="lk">Email</span><span class="lv" style="font-size:0.8rem">hemeunus@gmail.com</span></li>
+            </ul>
+            <div class="d-flex gap-2 flex-wrap" style="clear:both;">
+              <a href="author-guidelines.html" class="btn-green" style="font-size:0.82rem;padding:9px 16px"><i class="bi bi-file-text"></i><span class="en-text">Guidelines</span><span class="bn-text">নির্দেশিকা</span></a>
+              <a href="editorial-board.html" class="btn-green-outline" style="font-size:0.82rem;padding:9px 16px"><i class="bi bi-people"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VIDEO SECTION (gray bg) ══════════════════════════════════════ -->
+<section class="sec-bg-gray" id="videos">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <div class="sec-label"><span class="en-text">Media & Resources</span><span class="bn-text">মিডিয়া ও রিসোর্স</span></div>
+        <div class="divider"></div>
+        <h2 class="sec-title mb-0"><span class="en-text">Videos & Lectures</span><span class="bn-text">ভিডিও ও লেকচার</span></h2>
+      </div>
+      <button class="btn-green-outline d-none d-md-flex" id="btn-view-more" onclick="showAllVideos()">
+        <span class="en-text">View More</span><span class="bn-text">আরও দেখুন</span>
+        <i class="bi bi-chevron-down ms-1"></i>
+      </button>
+    </div>
+
+    <!-- First 4 videos always visible -->
+    <div class="row g-4" id="videos-main">
+      <!-- Video 1 -->
+      <div class="col-md-6 col-lg-3 video-item">
+        <div class="video-card" onclick="openVideo('uploads/videos/video1.mp4','Research Methodology Lecture — SARD Boot Camp')">
+          <div class="video-thumb" style="background: linear-gradient(135deg,#013e37,#025a50)">
+            <span class="v-type-badge">Lecture</span>
+            <div class="play-overlay"><div class="play-btn"><i class="bi bi-play-fill"></i></div></div>
+            <span class="v-duration">45:20</span>
+          </div>
+          <div class="video-body">
+            <h6><span class="en-text">Research Methodology — Boot Camp Session 1</span><span class="bn-text">গবেষণা পদ্ধতি — বুট ক্যাম্প সেশন ১</span></h6>
+            <div class="v-meta"><i class="bi bi-calendar3"></i> June 2026 &nbsp;·&nbsp; <i class="bi bi-play-circle"></i> SARD BD</div>
+          </div>
+        </div>
+      </div>
+      <!-- Video 2 -->
+      <div class="col-md-6 col-lg-3 video-item">
+        <div class="video-card" onclick="openVideo('uploads/videos/video2.mp4','Epidemiology & Study Design — SARD Lecture')">
+          <div class="video-thumb" style="background: linear-gradient(135deg,#025a50,#036b60)">
+            <span class="v-type-badge">Training</span>
+            <div class="play-overlay"><div class="play-btn"><i class="bi bi-play-fill"></i></div></div>
+            <span class="v-duration">38:15</span>
+          </div>
+          <div class="video-body">
+            <h6><span class="en-text">Epidemiology & Study Design Basics</span><span class="bn-text">মহামারীবিদ্যা ও স্টাডি ডিজাইন</span></h6>
+            <div class="v-meta"><i class="bi bi-calendar3"></i> May 2026 &nbsp;·&nbsp; <i class="bi bi-play-circle"></i> SARD BD</div>
+          </div>
+        </div>
+      </div>
+      <!-- Video 3 -->
+      <div class="col-md-6 col-lg-3 video-item">
+        <div class="video-card" onclick="openVideo('uploads/videos/video3.mp4','SPSS Data Analysis — Hands-on Session')">
+          <div class="video-thumb" style="background: linear-gradient(135deg,#036b60,#013e37)">
+            <span class="v-type-badge">Workshop</span>
+            <div class="play-overlay"><div class="play-btn"><i class="bi bi-play-fill"></i></div></div>
+            <span class="v-duration">1:02:30</span>
+          </div>
+          <div class="video-body">
+            <h6><span class="en-text">SPSS Data Analysis — Hands-on Workshop</span><span class="bn-text">SPSS ডেটা বিশ্লেষণ — হ্যান্ডস-অন ওয়ার্কশপ</span></h6>
+            <div class="v-meta"><i class="bi bi-calendar3"></i> April 2026 &nbsp;·&nbsp; <i class="bi bi-play-circle"></i> SARD BD</div>
+          </div>
+        </div>
+      </div>
+      <!-- Video 4 -->
+      <div class="col-md-6 col-lg-3 video-item">
+        <div class="video-card" onclick="openVideo('uploads/videos/video4.mp4','Scientific Writing & Manuscript Preparation')">
+          <div class="video-thumb" style="background: linear-gradient(135deg,#012a25,#013e37)">
+            <span class="v-type-badge">Lecture</span>
+            <div class="play-overlay"><div class="play-btn"><i class="bi bi-play-fill"></i></div></div>
+            <span class="v-duration">52:45</span>
+          </div>
+          <div class="video-body">
+            <h6><span class="en-text">Scientific Writing & Manuscript Preparation</span><span class="bn-text">বৈজ্ঞানিক লেখা ও পাণ্ডুলিপি প্রস্তুতি</span></h6>
+            <div class="v-meta"><i class="bi bi-calendar3"></i> March 2026 &nbsp;·&nbsp; <i class="bi bi-play-circle"></i> SARD BD</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden extra videos (shown on View More) -->
+    <div class="row g-4 mt-0" id="videos-extra" style="display:none!important">
+      <div class="col-md-6 col-lg-3 video-item">
+        <div class="video-card" onclick="openVideo('uploads/videos/video5.mp4','Qualitative Research Methods')">
+          <div class="video-thumb" style="background: linear-gradient(135deg,#013e37,#025a50)">
+            <span class="v-type-badge">Training</span>
+            <div class="play-overlay"><div class="play-btn"><i class="bi bi-play-fill"></i></div></div>
+            <span class="v-duration">44:10</span>
+          </div>
+          <div class="video-body">
+            <h6><span class="en-text">Qualitative Research Methods — FGD & KII</span><span class="bn-text">গুণগত গবেষণা পদ্ধতি — FGD ও KII</span></h6>
+            <div class="v-meta"><i class="bi bi-calendar3"></i> February 2026 &nbsp;·&nbsp; <i class="bi bi-play-circle"></i> SARD BD</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 video-item">
+        <div class="video-card" onclick="openVideo('uploads/videos/video6.mp4','Grant Writing Workshop')">
+          <div class="video-thumb" style="background: linear-gradient(135deg,#025a50,#036b60)">
+            <span class="v-type-badge">Workshop</span>
+            <div class="play-overlay"><div class="play-btn"><i class="bi bi-play-fill"></i></div></div>
+            <span class="v-duration">56:00</span>
+          </div>
+          <div class="video-body">
+            <h6><span class="en-text">Grant Writing & Research Proposal Workshop</span><span class="bn-text">গ্রান্ট রাইটিং ও রিসার্চ প্রপোজাল</span></h6>
+            <div class="v-meta"><i class="bi bi-calendar3"></i> January 2026 &nbsp;·&nbsp; <i class="bi bi-play-circle"></i> SARD BD</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 video-item">
+        <div class="video-card" onclick="openVideo('uploads/videos/video7.mp4','Community Health Intervention')">
+          <div class="video-thumb" style="background: linear-gradient(135deg,#036b60,#013e37)">
+            <span class="v-type-badge">Seminar</span>
+            <div class="play-overlay"><div class="play-btn"><i class="bi bi-play-fill"></i></div></div>
+            <span class="v-duration">30:55</span>
+          </div>
+          <div class="video-body">
+            <h6><span class="en-text">Community Health Intervention Seminar</span><span class="bn-text">কমিউনিটি স্বাস্থ্য হস্তক্ষেপ সেমিনার</span></h6>
+            <div class="v-meta"><i class="bi bi-calendar3"></i> December 2025 &nbsp;·&nbsp; <i class="bi bi-play-circle"></i> SARD BD</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 video-item">
+        <div class="video-card" onclick="openVideo('uploads/videos/video8.mp4','NCD Prevention Research')">
+          <div class="video-thumb" style="background: linear-gradient(135deg,#012a25,#025a50)">
+            <span class="v-type-badge">Lecture</span>
+            <div class="play-overlay"><div class="play-btn"><i class="bi bi-play-fill"></i></div></div>
+            <span class="v-duration">41:30</span>
+          </div>
+          <div class="video-body">
+            <h6><span class="en-text">NCD Prevention Research — Diabetes & Hypertension</span><span class="bn-text">এনসিডি প্রতিরোধ গবেষণা — ডায়াবেটিস</span></h6>
+            <div class="v-meta"><i class="bi bi-calendar3"></i> November 2025 &nbsp;·&nbsp; <i class="bi bi-play-circle"></i> SARD BD</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile view more -->
+    <div class="text-center mt-4 d-md-none">
+      <button class="btn-green-outline" onclick="showAllVideos()">
+        <span class="en-text">View More Videos</span><span class="bn-text">আরও ভিডিও দেখুন</span>
+        <i class="bi bi-chevron-down ms-1"></i>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Video Modal -->
+<div class="video-modal-bg" id="videoModal" onclick="closeVideoOnBg(event)">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" onclick="closeVideo()"><i class="bi bi-x"></i></button>
+    <div class="ratio ratio-16x9">
+      <video id="modalVideo" controls style="border-radius:10px;background:#000"></video>
+    </div>
+    <p id="modalTitle" style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin-top:10px;text-align:center"></p>
+  </div>
+</div>
+
+<!-- ══ TRAINING (white bg) ══════════════════════════════════════════ -->
+<section id="training">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="sec-label"><span class="en-text">Capacity Building</span><span class="bn-text">সক্ষমতা বৃদ্ধি</span></div>
+        <div class="divider"></div>
+        <h2 class="sec-title"><span class="en-text">Training Programs</span><span class="bn-text">প্রশিক্ষণ কার্যক্রম</span></h2>
+        <p class="sec-desc mb-4">
+          <span class="en-text">Structured training programs for students, healthcare providers, researchers, and community workers across Bangladesh.</span>
+          <span class="bn-text">শিক্ষার্থী, স্বাস্থ্যসেবা প্রদানকারী, গবেষক ও কমিউনিটি কর্মীদের জন্য প্রশিক্ষণ।</span>
+        </p>
+        <a href="training.html" class="btn-green mb-4"><span class="en-text">View All Programs</span><span class="bn-text">সব প্রোগ্রাম</span><i class="bi bi-arrow-right"></i></a>
+
+        <div class="bootcamp-box">
+          <div class="bc-header">
+            <h6><i class="bi bi-lightning-charge me-2"></i><span class="en-text">Residential Boot Camp</span><span class="bn-text">রেসিডেন্শিয়াল বুট ক্যাম্প</span></h6>
+          </div>
+          <div class="bc-row">
+            <span class="bc-day">3 <span class="en-text">Day</span><span class="bn-text">দিন</span></span>
+            <span class="bc-topics"><span class="en-text">Research methods, Questionnaire, Concept note</span><span class="bn-text">গবেষণা পদ্ধতি, প্রশ্নমালা</span></span>
+            <span class="bc-out"><span class="en-text">Concept Note</span><span class="bn-text">কনসেপ্ট নোট</span></span>
+          </div>
+          <div class="bc-row">
+            <span class="bc-day">7 <span class="en-text">Day</span><span class="bn-text">দিন</span></span>
+            <span class="bc-topics"><span class="en-text">Study design, Data collection, Protocol</span><span class="bn-text">স্টাডি ডিজাইন, ডেটা সংগ্রহ</span></span>
+            <span class="bc-out"><span class="en-text">Poster</span><span class="bn-text">পোস্টার</span></span>
+          </div>
+          <div class="bc-row">
+            <span class="bc-day">10 <span class="en-text">Day</span><span class="bn-text">দিন</span></span>
+            <span class="bc-topics"><span class="en-text">Data analysis, Scientific writing, Manuscript</span><span class="bn-text">ডেটা বিশ্লেষণ, বৈজ্ঞানিক লেখা</span></span>
+            <span class="bc-out"><span class="en-text">Manuscript</span><span class="bn-text">পাণ্ডুলিপি</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <div class="row g-4">
+          <div class="col-md-6"><div class="training-card">
+            <div class="t-num">01</div>
+            <h5><span class="en-text">Public Health Research Training</span><span class="bn-text">জনস্বাস্থ্য গবেষণা প্রশিক্ষণ</span></h5>
+            <p><span class="en-text">Research methodology, epidemiology, biostatistics, data analysis (SPSS, R, STATA), scientific writing, grant proposals.</span><span class="bn-text">গবেষণা পদ্ধতি, মহামারীবিদ্যা, ডেটা বিশ্লেষণ ও বৈজ্ঞানিক লেখা।</span></p>
+          </div></div>
+          <div class="col-md-6"><div class="training-card">
+            <div class="t-num">02</div>
+            <h5><span class="en-text">Clinical & Paramedical Training</span><span class="bn-text">ক্লিনিক্যাল ও প্যারামেডিক্যাল</span></h5>
+            <p><span class="en-text">Standard treatment protocols, infection prevention, rational use of medicines, emergency care and diagnostics.</span><span class="bn-text">চিকিৎসা প্রোটোকল, সংক্রমণ প্রতিরোধ ও জরুরি পরিচর্যা প্রশিক্ষণ।</span></p>
+          </div></div>
+          <div class="col-md-6"><div class="training-card">
+            <div class="t-num">03</div>
+            <h5><span class="en-text">Health Education & Community</span><span class="bn-text">স্বাস্থ্য শিক্ষা ও সচেতনতা</span></h5>
+            <p><span class="en-text">Hygiene, nutrition, environmental health risks (arsenic, air pollution), preventive behaviors, gender and health equity.</span><span class="bn-text">স্বাস্থ্যবিধি, পুষ্টি, পরিবেশগত ঝুঁকি ও প্রতিরোধমূলক আচরণ।</span></p>
+          </div></div>
+          <div class="col-md-6"><div class="training-card">
+            <div class="t-num">04</div>
+            <h5><span class="en-text">Digital Health & HIS</span><span class="bn-text">ডিজিটাল স্বাস্থ্য প্রশিক্ষণ</span></h5>
+            <p><span class="en-text">Electronic medical records, mobile health tools, monitoring & evaluation systems, AI in health research.</span><span class="bn-text">ইএমআর, এমহেলথ, মনিটরিং সিস্টেম ও স্বাস্থ্যে কৃত্রিম বুদ্ধিমত্তার ব্যবহার।</span></p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INDEXED IN / TRUST STRIP ══════════════════════════════════════ -->
+<section style="background:#fff;padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <div style="display:flex;align-items:center;gap:40px;">
+      <!-- Label -->
+      <div style="flex-shrink:0;border-right:2px solid var(--border);padding-right:36px;min-width:130px;">
+        <div style="font-size:.95rem;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:5px;"><span class="en-text">Indexed In</span><span class="bn-text">ইন্ডেক্সড</span></div>
+        <div style="font-size:.9rem;font-weight:700;color:var(--green);"><span class="en-text">&amp; Members</span><span class="bn-text">ও সদস্য</span></div>
+      </div>
+      <!-- Scrolling logos -->
+      <div style="overflow:hidden;flex:1;position:relative;">
+        <div style="position:absolute;left:0;top:0;bottom:0;width:36px;background:linear-gradient(to right,#fff,transparent);z-index:2;pointer-events:none;"></div>
+        <div style="position:absolute;right:0;top:0;bottom:0;width:36px;background:linear-gradient(to left,#fff,transparent);z-index:2;pointer-events:none;"></div>
+        <div class="trust-track">
+          <!-- Set 1 -->
+          <div class="trust-logo" title="NLM / PubMed">
+            <div style="background:#1a1a1a;color:#fff;font-size:1.1rem;font-weight:900;padding:10px 18px;border-radius:7px;display:flex;align-items:center;gap:9px;white-space:nowrap;">
+              <span style="background:#fff;color:#1a1a1a;font-weight:900;font-size:1.15rem;padding:3px 9px;border-radius:5px;">NIH</span>
+              <span style="font-size:1rem;">NLM</span>
+            </div>
+          </div>
+          <div class="trust-logo" title="BanglaJOL"><span style="font-size:2rem;font-weight:900;color:#e63946;letter-spacing:-1px;">J<span style="color:#457b9d;">O</span>L</span></div>
+          <div class="trust-logo" title="DOAJ"><span style="font-size:1.3rem;font-weight:900;color:#e07b39;border:3px solid #e07b39;padding:7px 15px;border-radius:6px;">DOAJ</span></div>
+          <div class="trust-logo" title="IMSEAR"><span style="font-size:1.1rem;font-weight:800;color:#1a6b8a;border:2.5px solid #1a6b8a;padding:7px 13px;border-radius:6px;white-space:nowrap;">IMSEAR</span></div>
+          <div class="trust-logo" title="DRJI"><span style="font-size:1.2rem;font-weight:900;color:#4a4a8a;border:3px solid #4a4a8a;padding:7px 15px;border-radius:6px;">DRJI</span></div>
+          <div class="trust-logo" title="ROAD"><span style="font-size:1.2rem;font-weight:900;color:#c0392b;border:3px solid #c0392b;padding:7px 15px;border-radius:6px;letter-spacing:1px;">ROAD</span></div>
+          <div class="trust-logo" title="ICMJE"><span style="font-size:1.2rem;font-weight:900;color:#2c7a4b;border:3px solid #2c7a4b;padding:7px 16px;border-radius:6px;">ICMJE</span></div>
+          <div class="trust-logo" title="WAME"><span style="font-size:1.2rem;font-weight:900;color:#1a6b8a;border:3px solid #1a6b8a;padding:7px 15px;border-radius:6px;">WAME</span></div>
+          <div class="trust-logo" title="Globethics"><span style="font-size:1.2rem;font-weight:900;color:#fff;background:#2563eb;padding:8px 18px;border-radius:6px;">Globethics</span></div>
+          <div class="trust-logo" title="Free Medical Journals"><span style="font-size:.92rem;font-weight:800;color:#fff;background:#c0392b;padding:8px 14px;border-radius:6px;text-align:center;white-space:nowrap;">Free Medical<br>Journals</span></div>
+          <!-- Set 2 duplicate for seamless loop -->
+          <div class="trust-logo" title="NLM / PubMed">
+            <div style="background:#1a1a1a;color:#fff;font-size:1.1rem;font-weight:900;padding:10px 18px;border-radius:7px;display:flex;align-items:center;gap:9px;white-space:nowrap;">
+              <span style="background:#fff;color:#1a1a1a;font-weight:900;font-size:1.15rem;padding:3px 9px;border-radius:5px;">NIH</span>
+              <span style="font-size:1rem;">NLM</span>
+            </div>
+          </div>
+          <div class="trust-logo" title="BanglaJOL"><span style="font-size:2rem;font-weight:900;color:#e63946;letter-spacing:-1px;">J<span style="color:#457b9d;">O</span>L</span></div>
+          <div class="trust-logo" title="DOAJ"><span style="font-size:1.3rem;font-weight:900;color:#e07b39;border:3px solid #e07b39;padding:7px 15px;border-radius:6px;">DOAJ</span></div>
+          <div class="trust-logo" title="IMSEAR"><span style="font-size:1.1rem;font-weight:800;color:#1a6b8a;border:2.5px solid #1a6b8a;padding:7px 13px;border-radius:6px;white-space:nowrap;">IMSEAR</span></div>
+          <div class="trust-logo" title="DRJI"><span style="font-size:1.2rem;font-weight:900;color:#4a4a8a;border:3px solid #4a4a8a;padding:7px 15px;border-radius:6px;">DRJI</span></div>
+          <div class="trust-logo" title="ROAD"><span style="font-size:1.2rem;font-weight:900;color:#c0392b;border:3px solid #c0392b;padding:7px 15px;border-radius:6px;letter-spacing:1px;">ROAD</span></div>
+          <div class="trust-logo" title="ICMJE"><span style="font-size:1.2rem;font-weight:900;color:#2c7a4b;border:3px solid #2c7a4b;padding:7px 16px;border-radius:6px;">ICMJE</span></div>
+          <div class="trust-logo" title="WAME"><span style="font-size:1.2rem;font-weight:900;color:#1a6b8a;border:3px solid #1a6b8a;padding:7px 15px;border-radius:6px;">WAME</span></div>
+          <div class="trust-logo" title="Globethics"><span style="font-size:1.2rem;font-weight:900;color:#fff;background:#2563eb;padding:8px 18px;border-radius:6px;">Globethics</span></div>
+          <div class="trust-logo" title="Free Medical Journals"><span style="font-size:.92rem;font-weight:800;color:#fff;background:#c0392b;padding:8px 14px;border-radius:6px;text-align:center;white-space:nowrap;">Free Medical<br>Journals</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .trust-track{display:flex;align-items:center;gap:60px;width:max-content;animation:trustScroll 36s linear infinite;}
+  .trust-track:hover{animation-play-state:paused;}
+  .trust-logo{display:flex;align-items:center;justify-content:center;filter:grayscale(25%);opacity:.85;transition:.2s;cursor:default;}
+  .trust-logo:hover{filter:grayscale(0%);opacity:1;transform:scale(1.1);}
+  @keyframes trustScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+</style>
+
+<!-- ══ NEWS (gray bg) ════════════════════════════════════════════════ -->
+<section id="news" class="sec-bg-gray">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <div class="sec-label"><span class="en-text">Latest Updates</span><span class="bn-text">সর্বশেষ আপডেট</span></div>
+        <div class="divider"></div>
+        <h2 class="sec-title mb-0"><span class="en-text">News & Bulletin</span><span class="bn-text">সংবাদ ও বুলেটিন</span></h2>
+      </div>
+      <a href="#" class="btn-green-outline d-none d-md-flex"><span class="en-text">All News</span><span class="bn-text">সব সংবাদ</span><i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4"><div class="news-card">
+        <div class="news-thumb">🔬</div>
+        <div class="news-body">
+          <span class="news-badge">Research</span>
+          <div class="news-date"><i class="bi bi-calendar3"></i> June 1, 2026</div>
+          <h5><span class="en-text">SARD Publishes New Study on Arsenic Exposure in Araihazar</span><span class="bn-text">আড়াইহাজারে আর্সেনিক এক্সপোজার নিয়ে নতুন গবেষণা</span></h5>
+          <p><span class="en-text">A new population-based study examines long-term health outcomes from arsenic exposure in groundwater.</span><span class="bn-text">ভূগর্ভস্থ পানিতে আর্সেনিকের দীর্ঘমেয়াদী স্বাস্থ্যগত প্রভাব নিয়ে গবেষণা।</span></p>
+          <a href="#" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div></div>
+      <div class="col-md-4"><div class="news-card">
+        <div class="news-thumb">📚</div>
+        <div class="news-body">
+          <span class="news-badge">Journal</span>
+          <div class="news-date"><i class="bi bi-calendar3"></i> May 15, 2026</div>
+          <h5><span class="en-text">JARD Vol. 1, Issue 1 Now Available — Call for Submissions</span><span class="bn-text">JARD খণ্ড ১, সংখ্যা ১ প্রকাশিত — পাণ্ডুলিপি আহ্বান</span></h5>
+          <p><span class="en-text">The inaugural issue of JARD is now available. Authors invited to submit for December 2026 issue.</span><span class="bn-text">JARD-এর প্রথম সংখ্যা প্রকাশিত। ডিসেম্বর ২০২৬ সংখ্যার জন্য পাণ্ডুলিপি আমন্ত্রিত।</span></p>
+          <a href="#" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div></div>
+      <div class="col-md-4"><div class="news-card">
+        <div class="news-thumb">🎓</div>
+        <div class="news-body">
+          <span class="news-badge">Training</span>
+          <div class="news-date"><i class="bi bi-calendar3"></i> April 20, 2026</div>
+          <h5><span class="en-text">10-Day Research Boot Camp Successfully Completed in Dhaka</span><span class="bn-text">ঢাকায় ১০ দিনের রিসার্চ বুট ক্যাম্প সম্পন্ন</span></h5>
+          <p><span class="en-text">24 healthcare professionals completed SARD's intensive residential research boot camp with manuscript preparation.</span><span class="bn-text">২৪ জন স্বাস্থ্যসেবা পেশাদার সফলভাবে বুট ক্যাম্প সম্পন্ন করেছেন।</span></p>
+          <a href="#" class="read-more"><span class="en-text">Read More</span><span class="bn-text">আরও পড়ুন</span> <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OFFICES (green bg) ════════════════════════════════════════════ -->
+<section class="sec-bg-green" id="offices" style="padding:44px 0">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+      <div>
+        <div class="sec-label light" style="margin-bottom:4px"><span class="en-text">Where We Work</span><span class="bn-text">আমরা যেখানে কাজ করি</span></div>
+        <h2 class="sec-title light mb-0" style="font-size:1.35rem"><span class="en-text">Our Offices</span><span class="bn-text">আমাদের অফিস</span></h2>
+      </div>
+      <a href="#" class="btn-outline-main" style="font-size:0.82rem;padding:8px 18px">
+        <i class="bi bi-map"></i><span class="en-text">All Locations</span><span class="bn-text">সব অফিস</span>
+      </a>
+    </div>
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3"><div class="office-card">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="off-icon"><i class="bi bi-building"></i></div>
+          <div>
+            <div class="otype"><span class="en-text">Head Office</span><span class="bn-text">প্রধান কার্যালয়</span></div>
+            <h5 class="mb-0">Dhaka</h5>
+          </div>
+        </div>
+        <p>Mohakhali DOHS, Dhaka</p>
+      </div></div>
+      <div class="col-6 col-md-3"><div class="office-card">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="off-icon"><i class="bi bi-geo-alt"></i></div>
+          <div>
+            <div class="otype"><span class="en-text">Field Office</span><span class="bn-text">ফিল্ড অফিস</span></div>
+            <h5 class="mb-0">Araihazar</h5>
+          </div>
+        </div>
+        <p>Narayanganj District</p>
+      </div></div>
+      <div class="col-6 col-md-3"><div class="office-card">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="off-icon"><i class="bi bi-geo-alt"></i></div>
+          <div>
+            <div class="otype"><span class="en-text">Field Office</span><span class="bn-text">ফিল্ড অফিস</span></div>
+            <h5 class="mb-0">Sonargaon</h5>
+          </div>
+        </div>
+        <p>Narayanganj District</p>
+      </div></div>
+      <div class="col-6 col-md-3"><div class="office-card">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <div class="off-icon"><i class="bi bi-geo-alt"></i></div>
+          <div>
+            <div class="otype"><span class="en-text">Field Office</span><span class="bn-text">ফিল্ড অফিস</span></div>
+            <h5 class="mb-0">Noakhali</h5>
+          </div>
+        </div>
+        <p>Chakhil, Noakhali</p>
+      </div></div>
+    </div>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4"><div class="contact-item">
+        <div class="contact-icon"><i class="bi bi-envelope"></i></div>
+        <div>
+          <div class="contact-label">Email</div>
+          <a href="mailto:hemeunus@gmail.com" class="contact-val">hemeunus@gmail.com</a>
+        </div>
+      </div></div>
+      <div class="col-md-4"><div class="contact-item">
+        <div class="contact-icon"><i class="bi bi-telephone"></i></div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <a href="tel:+8801963851090" class="contact-val">+880 1963-851090</a>
+        </div>
+      </div></div>
+      <div class="col-md-4"><div class="contact-item">
+        <div class="contact-icon"><i class="bi bi-globe"></i></div>
+        <div>
+          <div class="contact-label">Website</div>
+          <span class="contact-val">www.sardbd.info</span>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA ════════════════════════════════════════════════════════════ -->
+<section class="cta-sec">
+  <div class="container text-center position-relative" style="z-index:1">
+    <h2 style="color:var(--butter);font-weight:800;font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:12px">
+      <span class="en-text">Ready to Submit Your Research?</span>
+      <span class="bn-text">গবেষণা জমা দিতে প্রস্তুত?</span>
+    </h2>
+    <p style="color:rgba(255,255,255,0.65);font-size:0.97rem;max-width:480px;margin:0 auto 28px">
+      <span class="en-text">JARD welcomes original research, review articles, case reports, and more from national and international authors.</span>
+      <span class="bn-text">JARD দেশী-বিদেশী লেখকদের মৌলিক গবেষণা, রিভিউ আর্টিকেল ও কেস রিপোর্ট স্বাগত জানায়।</span>
+    </p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="journal.html#submit" class="btn-primary-main"><i class="bi bi-upload"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">পাণ্ডুলিপি জমা দিন</span></a>
+      <a href="author-guidelines.html" class="btn-outline-main"><i class="bi bi-file-text"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ═════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="foot-brand">SARD BD</div>
+        <p class="foot-desc">
+          <span class="en-text">Society for Applied Research and Development — A not-for-profit public health organization based in Bangladesh.</span>
+          <span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট — বাংলাদেশ-ভিত্তিক একটি অলাভজনক জনস্বাস্থ্য সংগঠন।</span>
+        </p>
+        <div class="foot-contact">
+          <p><i class="bi bi-envelope"></i> hemeunus@gmail.com</p>
+          <p><i class="bi bi-telephone"></i> +880 1963-851090</p>
+          <p><i class="bi bi-geo-alt"></i> House #184, Road #02, Mohakhali DOHS, Dhaka</p>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <h6><span class="en-text">Organization</span><span class="bn-text">সংগঠন</span></h6>
+        <ul>
+          <li><a href="about.html"><i class="bi bi-chevron-right"></i><span class="en-text">About SARD</span><span class="bn-text">সম্পর্কে</span></a></li>
+          <li><a href="team.html"><i class="bi bi-chevron-right"></i><span class="en-text">Research Team</span><span class="bn-text">গবেষণা দল</span></a></li>
+          <li><a href="training.html"><i class="bi bi-chevron-right"></i><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
+          <li><a href="#news"><i class="bi bi-chevron-right"></i><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+          <li><a href="contact.html"><i class="bi bi-chevron-right"></i><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <h6>Journal (JARD)</h6>
+        <ul>
+          <li><a href="journal.html"><i class="bi bi-chevron-right"></i><span class="en-text">Journal Overview</span><span class="bn-text">পরিচিতি</span></a></li>
+          <li><a href="editorial-board.html"><i class="bi bi-chevron-right"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a></li>
+          <li><a href="author-guidelines.html"><i class="bi bi-chevron-right"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span></a></li>
+          <li><a href="journal.html#submit"><i class="bi bi-chevron-right"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a></li>
+          <li><a href="journal.html#archive"><i class="bi bi-chevron-right"></i><span class="en-text">Archive</span><span class="bn-text">আর্কাইভ</span></a></li>
+          <li><a href="journal.html"><i class="bi bi-chevron-right"></i><span class="en-text">Indexing</span><span class="bn-text">ইন্ডেক্সিং</span></a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <h6><span class="en-text">Field Offices</span><span class="bn-text">ফিল্ড অফিস</span></h6>
+        <ul>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Araihazar, Narayanganj</a></li>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Sonargaon, Narayanganj</a></li>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Chakhil, Noakhali</a></li>
+        </ul>
+        <h6 class="mt-4"><span class="en-text">Follow Us</span><span class="bn-text">আমাদের অনুসরণ করুন</span></h6>
+        <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+          <a href="#" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:1.1rem;text-decoration:none;transition:.2s;" onmouseover="this.style.background='#1877f2';this.style.borderColor='#1877f2';this.style.color='#fff';" onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.15)';this.style.color='rgba(255,255,255,.7)';"><i class="bi bi-facebook"></i></a>
+          <a href="#" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:1.1rem;text-decoration:none;transition:.2s;" onmouseover="this.style.background='linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)';this.style.background='#e1306c';this.style.borderColor='#e1306c';this.style.color='#fff';" onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.15)';this.style.color='rgba(255,255,255,.7)';"><i class="bi bi-instagram"></i></a>
+          <a href="#" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:1.1rem;text-decoration:none;transition:.2s;" onmouseover="this.style.background='#0077b5';this.style.borderColor='#0077b5';this.style.color='#fff';" onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.15)';this.style.color='rgba(255,255,255,.7)';"><i class="bi bi-linkedin"></i></a>
+          <a href="#" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:1.1rem;text-decoration:none;transition:.2s;" onmouseover="this.style.background='#ff0000';this.style.borderColor='#ff0000';this.style.color='#fff';" onmouseout="this.style.background='rgba(255,255,255,.08)';this.style.borderColor='rgba(255,255,255,.15)';this.style.color='rgba(255,255,255,.7)';"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom mt-5">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p>© 2026 <a href="#">SARD BD</a>. <span class="en-text">All rights reserved.</span><span class="bn-text">সর্বস্বত্ব সংরক্ষিত।</span></p>
+      <p style="color:rgba(255,255,255,.35);font-size:.72rem;"><span class="en-text">Designed &amp; Developed by</span><span class="bn-text">ডিজাইন ও ডেভেলপমেন্ট:</span> <a href="https://botbari.com" target="_blank" rel="noopener" style="color:var(--butter);font-weight:600;text-decoration:none;">Botbari.com</a></p>
+      <p><span class="en-text">Publisher of</span><span class="bn-text">প্রকাশক:</span> <a href="#">JARD</a> · www.sardbd.info</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/8801963851090" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  /* ── Video section ── */
+  var videosExpanded = false;
+  function showAllVideos() {
+    var extra = document.getElementById('videos-extra');
+    var btn   = document.getElementById('btn-view-more');
+    if (!videosExpanded) {
+      extra.style.cssText = '';          // remove display:none!important
+      extra.classList.add('row','g-4','mt-0');
+      if (btn) { btn.innerHTML = '<span class="en-text">Show Less</span><span class="bn-text">কম দেখুন</span> <i class="bi bi-chevron-up ms-1"></i>'; }
+      videosExpanded = true;
+    } else {
+      extra.style.cssText = 'display:none!important';
+      if (btn) { btn.innerHTML = '<span class="en-text">View More</span><span class="bn-text">আরও দেখুন</span> <i class="bi bi-chevron-down ms-1"></i>'; }
+      videosExpanded = false;
+    }
+  }
+  function openVideo(src, title) {
+    var modal = document.getElementById('videoModal');
+    var vid   = document.getElementById('modalVideo');
+    var ttl   = document.getElementById('modalTitle');
+    vid.src = src;
+    ttl.textContent = title;
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVideo() {
+    var modal = document.getElementById('videoModal');
+    var vid   = document.getElementById('modalVideo');
+    vid.pause(); vid.src = '';
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  function closeVideoOnBg(e) { if (e.target === document.getElementById('videoModal')) closeVideo(); }
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeVideo(); });
+
+  function setLang(lang) {
+    document.body.classList.toggle('bn', lang === 'bn');
+    document.documentElement.lang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-bn').classList.toggle('active', lang === 'bn');
+    localStorage.setItem('sardbd_lang', lang);
+  }
+  const saved = localStorage.getItem('sardbd_lang');
+  if (saved === 'bn') setLang('bn');
+</script>
+</body>
+</html>

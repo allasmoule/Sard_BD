@@ -1,0 +1,841 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About SARD BD — Society for Applied Research and Development Bangladesh</title>
+  <meta name="description" content="Learn about SARD BD — our vision, mission, and research capacity in public health in Bangladesh. Publisher of JARD, open-access peer-reviewed journal."/>
+  <meta name="keywords"    content="about SARD BD, SARD Bangladesh, public health organization Bangladesh, research NGO, JARD publisher"/>
+  <meta name="author"      content="SARD BD"/>
+  <meta name="robots"      content="index, follow"/>
+  <link  rel="canonical"   href="https://sardbd.org/about.html"/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:site_name"   content="SARD BD"/>
+  <meta property="og:title"       content="About SARD BD — Society for Applied Research and Development Bangladesh"/>
+  <meta property="og:description" content="SARD BD is a non-profit research organization dedicated to applied public health research, capacity building, and evidence-based community development in Bangladesh."/>
+  <meta property="og:url"         content="https://sardbd.org/about.html"/>
+  <meta property="og:image"       content="https://sardbd.org/assets/og-home.png"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About SARD BD",
+    "url": "https://sardbd.org/about.html",
+    "description": "About page for SARD BD — Society for Applied Research and Development Bangladesh.",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",  "item": "https://sardbd.org/" },
+        { "@type": "ListItem", "position": 2, "name": "About", "item": "https://sardbd.org/about.html" }
+      ]
+    },
+    "mainEntity": { "@id": "https://sardbd.org/#organization" }
+  }
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=rind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green:        #013e37;
+      --green-light:  #025a50;
+      --green-dark:   #012a25;
+      --butter:       #ffefb3;
+      --butter-light: #fffaed;
+      --white:        #ffffff;
+      --gray-bg:      #f7f8fa;
+      --text:         #1a1a1a;
+      --text-muted:   #6c757d;
+      --border:       #e5e7eb;
+      --shadow:       0 2px 20px rgba(0,0,0,0.08);
+      --shadow-md:    0 4px 32px rgba(0,0,0,0.12);
+      --radius:       12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter','Hind Siliguri',sans-serif; color: var(--text); background: #fff; }
+    body.bn { font-family: 'Hind Siliguri','Inter',sans-serif; }
+    body.bn .en-text { display: none !important; }
+    body:not(.bn) .bn-text { display: none !important; }
+
+    /* ── NAVBAR ─────────────────────────────── */
+    .navbar-main {
+      background: var(--green); position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 16px rgba(1,62,55,0.3); padding: 0;
+    }
+    .navbar-main .navbar-brand {
+      color: var(--butter) !important; font-weight: 800; font-size: 1.1rem;
+      padding: 12px 0; line-height: 1.2;
+    }
+    .navbar-main .navbar-brand span { display: block; color: rgba(255,255,255,0.6); font-size: 0.72rem; font-weight: 400; }
+    .navbar-main .nav-link { color: rgba(255,255,255,0.82) !important; font-weight: 500; font-size: 0.88rem; padding: 20px 13px !important; transition: color 0.2s; position: relative; }
+    .navbar-main .nav-link:hover, .navbar-main .nav-link.active { color: var(--butter) !important; }
+    .navbar-main .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 13px; right: 13px; height: 3px; background: var(--butter); border-radius: 2px 2px 0 0; }
+    .navbar-main .dropdown-menu { background: var(--green-dark); border: none; border-top: 3px solid var(--butter); border-radius: 0 0 10px 10px; min-width: 210px; }
+    .navbar-main .dropdown-item { color: rgba(255,255,255,0.8); font-size: 0.85rem; padding: 9px 18px; }
+    .navbar-main .dropdown-item:hover { background: var(--green-light); color: var(--butter); }
+    .btn-lang { background: transparent; border: 1.5px solid rgba(255,255,255,0.35); color: rgba(255,255,255,0.8); font-size: 0.78rem; font-weight: 700; padding: 5px 13px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
+    .btn-lang.active, .btn-lang:hover { background: var(--butter); border-color: var(--butter); color: var(--green); }
+    .navbar-toggler { border: 1.5px solid rgba(255,255,255,0.4); padding: 5px 10px; }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    /* ── PAGE HERO ────────────────────────────── */
+    .page-hero {
+      background: linear-gradient(120deg, var(--green) 0%, #025a50 60%, #036b60 100%);
+      padding: 60px 0 52px; position: relative; overflow: hidden;
+    }
+    .page-hero::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50px;
+      background: #fff; clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .page-hero .breadcrumb { margin-bottom: 14px; }
+    .page-hero .breadcrumb-item a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.82rem; }
+    .page-hero .breadcrumb-item a:hover { color: var(--butter); }
+    .page-hero .breadcrumb-item.active { color: var(--butter); font-size: 0.82rem; }
+    .page-hero .breadcrumb-item + .breadcrumb-item::before { color: rgba(255,255,255,0.3); }
+    .page-hero h1 { color: #fff; font-size: clamp(1.9rem,4vw,2.7rem); font-weight: 800; line-height: 1.15; margin-bottom: 10px; }
+    .page-hero h1 em { color: var(--butter); font-style: normal; }
+    .page-hero p { color: rgba(255,255,255,0.65); font-size: 1rem; max-width: 580px; line-height: 1.7; }
+
+    /* ── COMMON SECTION ──────────────────────── */
+    section { padding: 68px 0; }
+    .sec-bg-gray  { background: var(--gray-bg); }
+    .sec-bg-butter{ background: var(--butter-light); }
+    .sec-bg-green { background: var(--green); }
+
+    .sec-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
+    .sec-label.light { color: var(--butter); }
+    .divider { width: 44px; height: 4px; background: var(--butter); border-radius: 2px; margin-bottom: 14px; }
+    .sec-title { font-size: clamp(1.5rem,3vw,2rem); font-weight: 800; color: var(--green); line-height: 1.2; margin-bottom: 10px; }
+    .sec-title.light { color: #fff; }
+    .sec-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.75; }
+
+    /* ── OVERVIEW STATS ──────────────────────── */
+    .stat-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 16px 14px;
+      display: flex; align-items: center; gap: 12px;
+      transition: all 0.25s;
+    }
+    .stat-card:hover { border-color: var(--green); box-shadow: var(--shadow); transform: translateY(-2px); }
+    .stat-card .si { font-size: 1.5rem; flex-shrink: 0; line-height: 1; }
+    .stat-card .sn { color: var(--green); font-size: 1.5rem; font-weight: 900; line-height: 1; margin-bottom: 2px; }
+    .stat-card .sl { color: var(--text-muted); font-size: 0.74rem; line-height: 1.35; }
+
+    /* ── VISION / MISSION ────────────────────── */
+    .vm-wrap { position: relative; border-radius: 16px; overflow: hidden; }
+    .vm-vision-new {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 60%, var(--green-light) 100%);
+      padding: 40px 36px; position: relative; overflow: hidden;
+    }
+    .vm-vision-new::before {
+      content: '🔭'; position: absolute; right: 24px; top: 24px;
+      font-size: 5rem; opacity: .08; line-height: 1;
+    }
+    .vm-vision-new .vm-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,239,179,.15); border: 1px solid rgba(255,239,179,.3); color: var(--butter); font-size: .65rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 16px; }
+    .vm-vision-new h3 { color: #fff; font-size: 1.35rem; font-weight: 800; margin-bottom: 14px; }
+    .vm-vision-new p { color: rgba(255,255,255,.78); font-size: .9rem; line-height: 1.8; margin: 0; }
+
+    .vm-mission-new {
+      background: #fff; border: 1.5px solid var(--border);
+      padding: 40px 36px; position: relative; overflow: hidden;
+    }
+    .vm-mission-new::before {
+      content: '🎯'; position: absolute; right: 24px; top: 24px;
+      font-size: 5rem; opacity: .06; line-height: 1;
+    }
+    .vm-mission-new .vm-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--butter-light); border: 1px solid #e0d890; color: var(--green); font-size: .65rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 16px; }
+    .vm-mission-new h3 { color: var(--green); font-size: 1.35rem; font-weight: 800; margin-bottom: 18px; }
+
+    /* mission points redesign */
+    .mission-list { list-style: none; padding: 0; margin: 0; }
+    .mission-list li { display: flex; align-items: flex-start; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+    .mission-list li:last-child { border-bottom: none; }
+    .ml-num { background: var(--green); color: var(--butter); font-weight: 900; font-size: 0.65rem; min-width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .ml-text { color: var(--text); font-size: 0.85rem; line-height: 1.6; }
+    .ml-text strong { color: var(--green); font-weight: 700; display: block; margin-bottom: 1px; font-size: .82rem; }
+
+    /* ── MISSION POINTS ──────────────────────── */
+    .mission-list { list-style: none; padding: 0; margin: 0; }
+    .mission-list li {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+    }
+    .mission-list li:last-child { border-bottom: none; }
+    .ml-num {
+      background: var(--green); color: var(--butter);
+      font-weight: 900; font-size: 0.72rem;
+      min-width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    .ml-text { color: var(--text); font-size: 0.88rem; line-height: 1.65; }
+    .ml-text strong { color: var(--green); font-weight: 700; display: block; margin-bottom: 2px; }
+
+    /* ── CORE Approach ───────────────────────── */
+    .approach-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 24px 20px; height: 100%; transition: all 0.25s;
+    }
+    .approach-card:hover { border-color: var(--green); box-shadow: var(--shadow); transform: translateY(-3px); }
+    .approach-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--butter-light); color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 14px; transition: all 0.25s;
+    }
+    .approach-card:hover .approach-icon { background: var(--green); color: var(--butter); }
+    .approach-card r5 { color: var(--green); font-weight: 700; font-size: 0.92rem; margin-bottom: 8px; }
+    .approach-card p { color: var(--text-muted); font-size: 0.83rem; line-height: 1.65; margin: 0; }
+
+    /* ── Research CAPACITY ───────────────────── */
+    .capacity-list { list-style: none; padding: 0; margin: 0; }
+    .capacity-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem;
+    }
+    .capacity-list li:last-child { border-bottom: none; }
+    .capacity-list li i { color: var(--green); margin-top: 2px; flex-shrink: 0; font-size: 1rem; }
+    .capacity-list li span { color: var(--text); line-height: 1.6; }
+    .capacity-list li span strong { color: var(--green); font-weight: 700; }
+
+    .expertise-badge {
+      display: inline-block;
+      background: var(--butter-light); color: var(--green);
+      border: 1px solid #e0d890; font-size: 0.78rem; font-weight: 600;
+      padding: 5px 14px; border-radius: 20px; margin: 4px;
+    }
+
+    /* ── REGISTRATION BOX ─────────────────────── */
+    .reg-box {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); padding: 28px 24px;
+    }
+    .reg-box .reg-item { display: flex; gap: 14px; align-items: flex-start; padding: 11px 0; border-bottom: 1px solid var(--border); }
+    .reg-box .reg-item:last-child { border-bottom: none; }
+    .reg-icon { width: 36px; height: 36px; background: var(--butter-light); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 0.95rem; flex-shrink: 0; }
+    .reg-label { color: var(--text-muted); font-size: 0.72rem; }
+    .reg-value { color: var(--green); font-weight: 700; font-size: 0.88rem; }
+
+    /* ── TIMELINE ────────────────────────────── */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 10px; top: 0; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .tl-item { position: relative; margin-bottom: 28px; }
+    .tl-dot {
+      position: absolute; left: -27px; top: 4px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--butter); border: 3px solid var(--green);
+    }
+    .tl-year { font-size: 0.72rem; font-weight: 800; color: var(--green); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 3px; }
+    .tl-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .tl-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── CTA ─────────────────────────────────── */
+    .cta-sec { background: linear-gradient(135deg, var(--green) 0%, #025a50 100%); padding: 60px 0; }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer { background: var(--green-dark); padding: 52px 0 0; }
+    .foot-brand { color: var(--butter); font-weight: 800; font-size: 1.05rem; margin-bottom: 6px; }
+    .foot-desc { color: rgba(255,255,255,0.45); font-size: 0.82rem; line-height: 1.7; max-width: 270px; margin-bottom: 18px; }
+    .foot-contact p { color: rgba(255,255,255,0.5); font-size: 0.82rem; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; }
+    .foot-contact p i { color: var(--butter); margin-top: 2px; }
+    footer r6 { color: var(--butter); font-weight: 700; font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+    footer ul { list-style: none; padding: 0; margin: 0; }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+    footer ul li a:hover { color: var(--butter); }
+    .foot-bottom { background: rgba(0,0,0,0.25); padding: 15px 0; margin-top: 40px; }
+    .foot-bottom p { margin: 0; font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .foot-bottom a { color: var(--butter); text-decoration: none; }
+
+    .btn-green { background: var(--green); color: var(--butter); font-weight: 700; font-size: 0.88rem; padding: 11px 22px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; border: none; }
+    .btn-green:hover { background: var(--green-light); color: var(--butter); transform: translateY(-2px); }
+    .btn-butter { background: var(--butter); color: var(--green); font-weight: 700; font-size: 0.88rem; padding: 11px 22px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; border: none; box-shadow: 0 4px 16px rgba(255,239,179,0.3); }
+    .btn-butter:hover { background: #f5e070; color: var(--green); transform: translateY(-2px); }
+    .btn-outline-white { background: transparent; color: #fff; font-weight: 600; font-size: 0.88rem; padding: 10px 22px; border-radius: 8px; border: 1.5px solid rgba(255,255,255,0.4); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+    .btn-outline-white:hover { border-color: var(--butter); color: var(--butter); }
+
+    .wa-float { position: fixed; bottom: 26px; right: 26px; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; text-decoration: none; box-shadow: 0 4px 18px rgba(37,211,102,0.45); z-index: 999; transition: all 0.25s; }
+    .wa-float:hover { transform: scale(1.12); color: #fff; }
+
+    @media(max-width:768px){ .page-hero { padding: 44px 0 38px; } section { padding: 48px 0; } }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══════════════════════════════════════════════════════ -->
+<nav class="navbar navbar-main navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      SARD BD
+      <span><span class="en-text">Society for Applied Research & Development</span><span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html"><span class="en-text">Home</span><span class="bn-text">হোম</span></a></li>
+        <li class="nav-item"><a class="nav-link active" href="about.html"><span class="en-text">About</span><span class="bn-text">সম্পর্কে</span></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            <span class="en-text">Journal</span><span class="bn-text">জার্নাল</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="journal.html"><i class="bi bi-journal-text me-2"></i><span class="en-text">Journal Overview</span><span class="bn-text">পরিচিতি</span></a></li>
+            <li><a class="dropdown-item" href="editorial-board.html"><i class="bi bi-people me-2"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a></li>
+            <li><a class="dropdown-item" href="author-guidelines.html"><i class="bi bi-file-text me-2"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span></a></li>
+            <li><a class="dropdown-item" href="journal.html#archive"><i class="bi bi-Archive me-2"></i><span class="en-text">Archive</span><span class="bn-text">আর্কাইভ</span></a></li>
+            <li><hr class="dropdown-divider" style="border-color:rgba(255,255,255,0.1)"></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-upload me-2"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="team.html"><span class="en-text">Team</span><span class="bn-text">দল</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="training.html"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#news"><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html"><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
+        <li class="nav-item ms-lg-2 d-flex gap-2">
+          <button class="btn-lang active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="btn-lang" id="btn-bn" onclick="setLang('bn')">বাং</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ PAGE HERO ═══════════════════════════════════════════════════ -->
+<div class="page-hero">
+  <div class="container position-relative" style="z-index:1">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html"><i class="bi bi-house me-1"></i><span class="en-text">Home</span><span class="bn-text">হোম</span></a></li>
+        <li class="breadcrumb-item active"><span class="en-text">About SARD</span><span class="bn-text">সম্পর্কে</span></li>
+      </ol>
+    </nav>
+    <h1>
+      <span class="en-text">About <em>SARD BD</em></span>
+      <span class="bn-text"><em>সার্ড বিডি</em> সম্পর্কে</span>
+    </h1>
+    <p>
+      <span class="en-text">Society for Applied Research and Development — a not-for-profit Public Health Organization committed to improving lives in Bangladesh through evidence-based research, training, and community programs.</span>
+      <span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট — প্রমাণ-ভিত্তিক গবেষণা, প্রশিক্ষণ ও কমিউনিটি কার্যক্রমের মাধ্যমে বাংলাদেশে জীবনমান উন্নয়নে নিবেদিত একটি অলাভজনক সংগঠন।</span>
+    </p>
+  </div>
+</div>
+
+<!-- ══ OVERVIEW STATS (write) ══════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <div class="row g-4 mb-5">
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="si">🏛️</div>
+          <div><div class="sn">2021</div><div class="sl"><span class="en-text">Year Established</span><span class="bn-text">প্রতিষ্ঠার বছর</span></div></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="si">📍</div>
+          <div><div class="sn">4</div><div class="sl"><span class="en-text">Offices Across Bangladesh</span><span class="bn-text">অফিস সমূহ</span></div></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="si">👨‍🔬</div>
+          <div><div class="sn">6+</div><div class="sl"><span class="en-text">Researchers & Faculty</span><span class="bn-text">গবেষক ও শিক্ষক</span></div></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-card">
+          <div class="si">📰</div>
+          <div><div class="sn">1</div><div class="sl"><span class="en-text">Peer-Reviewed Journal (JARD)</span><span class="bn-text">পিয়ার-রিভিউড জার্নাল</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intro Text -->
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6">
+        <div class="sec-label"><span class="en-text">Who We Are</span><span class="bn-text">আমরা কারা</span></div>
+        <div class="divider"></div>
+        <h2 class="sec-title"><span class="en-text">A Research-Driven Public Health Organization</span><span class="bn-text">গবেষণা-চালিত জনস্বাস্থ্য সংগঠন</span></h2>
+        <p class="sec-desc mb-3">
+          <span class="en-text">The Society for Applied Research and Development (SARD BD) is a not-for-profit organization based in Dhaka, Bangladesh. Founded with the aim of bridging the gap between academic research and community-level health outcomes, SARD works across six critical areas of public health.</span>
+          <span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট (সার্ড বিডি) ঢাকা, বাংলাদেশ-ভিত্তিক একটি অলাভজনক সংগঠন। একাডেমিক গবেষণা এবং কমিউনিটি-স্তরের স্বাস্থ্যফলাফলের মধ্যে সেতুবন্ধন তৈরির লক্ষ্যে প্রতিষ্ঠিত, SARD জনস্বাস্থ্যের ছয়টি গুরুত্বপূর্ণ ক্ষেত্রে কাজ করে।</span>
+        </p>
+        <p class="sec-desc mb-4">
+          <span class="en-text">SARD operates from its head office in Mohakhali DOHS, Dhaka, and maintains three field offices in Araihazar, Sonargaon, and Noakhali — areas where its Research and community interventions are most active.</span>
+          <span class="bn-text">SARD মহাখালী ডিওএইচএস-এর প্রধান কার্যালয় থেকে পরিচালিত হয় এবং আড়াইহাজার, সোনারগাঁও ও নোয়াখালীতে তিনটি ফিল্ড অফিস রয়েছে — যেখানে এর গবেষণা ও কমিউনিটি হস্তক্ষেপ সবচেয়ে সক্রিয়।</span>
+        </p>
+        <p class="sec-desc mb-4">
+          <span class="en-text">SARD also publishes the <strong style="color:var(--green)">Bangladesh Journal of Applied Research & Development (JARD)</strong> — a biannual, double-blind peer-reviewed scientific journal open to national and international researchers.</span>
+          <span class="bn-text">SARD <strong style="color:var(--green)">বাংলাদেশ জার্নাল অব অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট (JARD)</strong> প্রকাশ করে — একটি দ্বিবার্ষিক, ডাবল-ব্লাইন্ড পিয়ার-রিভিউড বৈজ্ঞানিক জার্নাল।</span>
+        </p>
+        <a href="team.html" class="btn-green"><i class="bi bi-people"></i><span class="en-text">Meet Our Team</span><span class="bn-text">আমাদের দল দেখুন</span></a>
+      </div>
+      <div class="col-lg-5 offset-lg-1">
+        <!-- Registration Details -->
+        <div class="reg-box mb-4">
+          <div style="margin-bottom:14px">
+            <div class="sec-label" style="margin-bottom:4px"><span class="en-text">Organization Details</span><span class="bn-text">সংগঠনের তথ্য</span></div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-building"></i></div>
+            <div>
+              <div class="reg-label"><span class="en-text">Full Name</span><span class="bn-text">পূর্ণ নাম</span></div>
+              <div class="reg-value"><span class="en-text">Society for Applied Research and Development</span><span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট</span></div>
+            </div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-tag"></i></div>
+            <div>
+              <div class="reg-label"><span class="en-text">Short Name</span><span class="bn-text">সংক্ষিপ্ত নাম</span></div>
+              <div class="reg-value">SARD BD</div>
+            </div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-geo-alt"></i></div>
+            <div>
+              <div class="reg-label"><span class="en-text">head office</span><span class="bn-text">প্রধান কার্যালয়</span></div>
+              <div class="reg-value">Mohakhali DOHS, Dhaka, Bangladesh</div>
+            </div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-journal-text"></i></div>
+            <div>
+              <div class="reg-label"><span class="en-text">Journal</span><span class="bn-text">জার্নাল</span></div>
+              <div class="reg-value">JARD (Bangladesh Journal of Applied Research & Development)</div>
+            </div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-envelope"></i></div>
+            <div>
+              <div class="reg-label">Email</div>
+              <div class="reg-value">hemeunus@gmail.com</div>
+            </div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-telephone"></i></div>
+            <div>
+              <div class="reg-label">Phone</div>
+              <div class="reg-value">+880 1963-851090</div>
+            </div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-globe"></i></div>
+            <div>
+              <div class="reg-label">Website</div>
+              <div class="reg-value">www.sardbd.info</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VISION & MISSION (gray bg) ══════════════════════════════════ -->
+<section class="sec-bg-gray">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-label"><span class="en-text">Our Direction</span><span class="bn-text">আমাদের দিকনির্দেশনা</span></div>
+      <div class="divider mx-auto"></div>
+      <h2 class="sec-title"><span class="en-text">Vision & Mission</span><span class="bn-text">ভিশন ও মিশন</span></h2>
+    </div>
+
+    <div class="row g-4 mb-5">
+      <!-- VISION -->
+      <div class="col-lg-5">
+        <div class="vm-vision-new h-100">
+          <div class="vm-badge"><i class="bi bi-eye"></i> <span class="en-text">Vision</span><span class="bn-text">ভিশন</span></div>
+          <h3><span class="en-text">Our Vision</span><span class="bn-text">আমাদের ভিশন</span></h3>
+          <p>
+            <span class="en-text">A Bangladesh where every individual has equitable access to quality healthcare and lives a healthy, productive life — driven by evidence-based research, innovation, and inclusive community development.</span>
+            <span class="bn-text">একটি বাংলাদেশ যেখানে প্রতিটি মানুষ মানসম্পন্ন স্বাস্থ্যসেবায় ন্যায্য প্রবেশাধিকার পাবে এবং প্রমাণ-ভিত্তিক গবেষণা ও উদ্ভাবনের মাধ্যমে সুস্থ, উৎপাদনশীল জীবন যাপন করবে।</span>
+          </p>
+          <!-- 3 value pills -->
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;">
+            <span style="background:rgba(255,239,179,.15);border:1px solid rgba(255,239,179,.25);color:var(--butter);font-size:.65rem;font-weight:700;padding:5px 12px;border-radius:20px;"><i class="bi bi-check2 me-1"></i><span class="en-text">Evidence-Based</span><span class="bn-text">প্রমাণ-ভিত্তিক</span></span>
+            <span style="background:rgba(255,239,179,.15);border:1px solid rgba(255,239,179,.25);color:var(--butter);font-size:.65rem;font-weight:700;padding:5px 12px;border-radius:20px;"><i class="bi bi-check2 me-1"></i><span class="en-text">Equitable Access</span><span class="bn-text">সমান সুযোগ</span></span>
+            <span style="background:rgba(255,239,179,.15);border:1px solid rgba(255,239,179,.25);color:var(--butter);font-size:.65rem;font-weight:700;padding:5px 12px;border-radius:20px;"><i class="bi bi-check2 me-1"></i><span class="en-text">Innovation</span><span class="bn-text">উদ্ভাবন</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MISSION -->
+      <div class="col-lg-7">
+        <div class="vm-mission-new h-100">
+          <div class="vm-badge"><i class="bi bi-bullseye"></i> <span class="en-text">Mission</span><span class="bn-text">মিশন</span></div>
+          <h3><span class="en-text">Our Mission</span><span class="bn-text">আমাদের মিশন</span></h3>
+          <ul class="mission-list">
+            <li>
+              <span class="ml-num">01</span>
+              <div class="ml-text">
+                <strong><span class="en-text">Conduct Applied Research</span><span class="bn-text">ফলিত গবেষণা পরিচালনা</span></strong>
+                <span class="en-text">High-quality public health research addressing key challenges with rigorous scientific methodology.</span>
+                <span class="bn-text">কঠোর বৈজ্ঞানিক পদ্ধতিতে জনস্বাস্থ্য গবেষণা পরিচালনা।</span>
+              </div>
+            </li>
+            <li>
+              <span class="ml-num">02</span>
+              <div class="ml-text">
+                <strong><span class="en-text">Build Capacity</span><span class="bn-text">সক্ষমতা বৃদ্ধি</span></strong>
+                <span class="en-text">Structured training and mentorship for healthcare professionals, researchers, and community workers.</span>
+                <span class="bn-text">কাঠামোগত প্রশিক্ষণ ও মেন্টরশিপের মাধ্যমে সক্ষমতা বৃদ্ধি।</span>
+              </div>
+            </li>
+            <li>
+              <span class="ml-num">03</span>
+              <div class="ml-text">
+                <strong><span class="en-text">Disseminate Knowledge</span><span class="bn-text">জ্ঞান প্রসার</span></strong>
+                <span class="en-text">Share findings through JARD journal, publications, conferences, and health education.</span>
+                <span class="bn-text">JARD জার্নাল, প্রকাশনা ও সম্মেলনের মাধ্যমে গবেষণা ফলাফল প্রচার।</span>
+              </div>
+            </li>
+            <li>
+              <span class="ml-num">04</span>
+              <div class="ml-text">
+                <strong><span class="en-text">Community Intervention</span><span class="bn-text">কমিউনিটি হস্তক্ষেপ</span></strong>
+                <span class="en-text">Translate research into community-based health programs, especially in underserved areas.</span>
+                <span class="bn-text">গবেষণাকে কমিউনিটি-ভিত্তিক স্বাস্থ্য কার্যক্রমে রূপান্তরিত করা।</span>
+              </div>
+            </li>
+            <li>
+              <span class="ml-num">05</span>
+              <div class="ml-text">
+                <strong><span class="en-text">Advocacy & Policy</span><span class="bn-text">অ্যাডভোকেসি ও নীতি</span></strong>
+                <span class="en-text">Advocate for evidence-based health policies with government, international, and civil society partners.</span>
+                <span class="bn-text">সরকার ও আন্তর্জাতিক সংস্থার সাথে প্রমাণ-ভিত্তিক নীতির জন্য সওয়াল।</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CORE Approach (write) ════════════════════════════════════════ -->
+<section>
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="sec-label"><span class="en-text">How We Work</span><span class="bn-text">আমরা কীভাবে কাজ করি</span></div>
+      <div class="divider mx-auto"></div>
+      <h2 class="sec-title"><span class="en-text">Our Core Approach</span><span class="bn-text">আমাদের মূল পদ্ধতি</span></h2>
+      <p class="sec-desc mx-auto" style="max-width:580px">
+        <span class="en-text">SARD's work is built on a systematic Approach that integrates scientific rigor, community engagement, and capacity building at every stage.</span>
+        <span class="bn-text">SARD-এর কাজ বৈজ্ঞানিক কঠোরতা, কমিউনিটি সম্পৃক্ততা এবং সক্ষমতা বৃদ্ধির সমন্বয়ে গড়ে উঠেছে।</span>
+      </p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="approach-card">
+          <div class="approach-icon"><i class="bi bi-search"></i></div>
+          <h5><span class="en-text">evidence-based research</span><span class="bn-text">প্রমাণ-ভিত্তিক গবেষণা</span></h5>
+          <p><span class="en-text">All programs and interventions are grounded in rigorous scientific Research. We use validated methodologies including epidemiological studies, randomized controlled trials, and mixed-methods Approaches.</span><span class="bn-text">সকল কার্যক্রম ও হস্তক্ষেপ কঠোর বৈজ্ঞানিক গবেষণার উপর ভিত্তি করে। মহামারীবিদ্যামূলক গবেষণা, র‌্যান্ডমাইজড ট্রায়াল ও মিশ্র পদ্ধতি ব্যবহার করা হয়।</span></p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="approach-card">
+          <div class="approach-icon"><i class="bi bi-people"></i></div>
+          <h5><span class="en-text">Community Participation</span><span class="bn-text">কমিউনিটি অংশগ্রহণ</span></h5>
+          <p><span class="en-text">We engage communities as active partners in research design, data collection, and program implementation. This ensures our interventions are culturally appropriate and locally accepted.</span><span class="bn-text">আমরা গবেষণা নকশা, তথ্য সংগ্রহ ও কার্যক্রম বাস্তবায়নে কমিউনিটিকে সক্রিয় অংশীদার হিসেবে সম্পৃক্ত করি।</span></p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="approach-card">
+          <div class="approach-icon"><i class="bi bi-mortarboard"></i></div>
+          <h5><span class="en-text">Capacity Development</span><span class="bn-text">সক্ষমতা উন্নয়ন</span></h5>
+          <p><span class="en-text">SARD invests in building the next generation of public health researchers and practitioners through structured training programs, mentorship, and Research boot camps.</span><span class="bn-text">প্রশিক্ষণ কার্যক্রম, মেন্টরশিপ ও রিসার্চ বুট ক্যাম্পের মাধ্যমে পরবর্তী প্রজন্মের জনস্বাস্থ্য গবেষকদের গড়ে তোলা।</span></p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="approach-card">
+          <div class="approach-icon"><i class="bi bi-diagram-3"></i></div>
+          <h5><span class="en-text">Multi-Sectoral Collaboration</span><span class="bn-text">বহু-খাতীয় সহযোগিতা</span></h5>
+          <p><span class="en-text">We collaborate with government agencies, hospitals, universities, NGOs, and international organizations to maximize the reach and impact of our Research and programs.</span><span class="bn-text">গবেষণা ও কার্যক্রমের প্রভাব সর্বোচ্চ করতে সরকারি সংস্থা, হাসপাতাল, বিশ্ববিদ্যালয় ও আন্তর্জাতিক সংস্থার সাথে সহযোগিতা।</span></p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="approach-card">
+          <div class="approach-icon"><i class="bi bi-bar-chart"></i></div>
+          <h5><span class="en-text">Data-Driven Decisions</span><span class="bn-text">তথ্য-চালিত সিদ্ধান্ত</span></h5>
+          <p><span class="en-text">SARD uses advanced statistical and epidemiological methods — including SPSS, R, STATA, and GIS mapping — to analyze data and derive actionable public health insights.</span><span class="bn-text">SPSS, R, STATA ও GIS ম্যাপিং সহ উন্নত পরিসংখ্যানগত পদ্ধতি ব্যবহার করে তথ্য বিশ্লেষণ ও কার্যকর অন্তর্দৃষ্টি অর্জন।</span></p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div class="approach-card">
+          <div class="approach-icon"><i class="bi bi-megaphone"></i></div>
+          <h5><span class="en-text">Knowledge Translation</span><span class="bn-text">জ্ঞানের অনুবাদ</span></h5>
+          <p><span class="en-text">Research findings are translated into practical tools, policy briefs, and community guidelines. SARD bridges the gap between academic research and on-tre-ground action.</span><span class="bn-text">গবেষণা ফলাফল ব্যবহারিক সরঞ্জাম, নীতি সারাংশ ও কমিউনিটি নির্দেশিকায় রূপান্তর। একাডেমিক গবেষণা ও মাঠ পর্যায়ের কর্মের মধ্যে সেতুবন্ধন।</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Research & ACADEMIC CAPACITY (gray bg) ═══════════════════════ -->
+<section class="sec-bg-gray">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-6">
+        <div class="sec-label"><span class="en-text">Academic Strengtr</span><span class="bn-text">একাডেমিক সক্ষমতা</span></div>
+        <div class="divider"></div>
+        <h2 class="sec-title"><span class="en-text">Research & Academic Capacity</span><span class="bn-text">গবেষণা ও একাডেমিক সক্ষমতা</span></h2>
+        <p class="sec-desc mb-4">
+          <span class="en-text">SARD has assembled a team of experienced Researchers, clinicians, and public health practitioners with extensive national and international academic backgrounds.</span>
+          <span class="bn-text">SARD বিস্তৃত জাতীয় ও আন্তর্জাতিক একাডেমিক পটভূমির অভিজ্ঞ গবেষক, চিকিৎসক ও জনস্বাস্থ্য পেশাদারদের একটি দল গড়ে তুলেছে।</span>
+        </p>
+        <ul class="capacity-list">
+          <li>
+            <i class="bi bi-check-circle-fill"></i>
+            <span><strong><span class="en-text">Epidemiology & Biostatistics</span><span class="bn-text">মহামারীবিদ্যা ও বায়োস্ট্যাটিস্টিক্স</span></strong> — <span class="en-text">Study design, sample size calculation, statistical analysis (SPSS, R, STATA, EpiInfo), systematic reviews and meta-analysis.</span><span class="bn-text">স্টাডি ডিজাইন, নমুনা আকার গণনা, পরিসংখ্যানগত বিশ্লেষণ, পদ্ধতিগত পর্যালোচনা।</span></span>
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i>
+            <span><strong><span class="en-text">Clinical Research</span><span class="bn-text">ক্লিনিক্যাল গবেষণা</span></strong> — <span class="en-text">Clinical trials, observational studies, pharmacoepidemiology, and outcomes Research in rospital and community settings.</span><span class="bn-text">ক্লিনিক্যাল ট্রায়াল, পর্যবেক্ষণমূলক গবেষণা ও ফলাফল গবেষণা।</span></span>
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i>
+            <span><strong><span class="en-text">Environmental health Research</span><span class="bn-text">পরিবেশগত স্বাস্থ্য গবেষণা</span></strong> — <span class="en-text">Arsenic exposure studies (Araihazar, Noakhali), water quality, air pollution, and occupational health investigations.</span><span class="bn-text">আর্সেনিক এক্সপোজার গবেষণা, পানির গুণমান, বায়ু দূষণ ও পেশাগত স্বাস্থ্য।</span></span>
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i>
+            <span><strong><span class="en-text">Maternal & Child health</span><span class="bn-text">মাতৃ ও শিশু স্বাস্থ্য</span></strong> — <span class="en-text">Nutrition studies, neonatal outcomes, family planning, reproductive health, and adolescent health programs.</span><span class="bn-text">পুষ্টি গবেষণা, নবজাতকের ফলাফল, পরিবার পরিকল্পনা ও কিশোর স্বাস্থ্য।</span></span>
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i>
+            <span><strong><span class="en-text">NCD Research</span><span class="bn-text">এনসিডি গবেষণা</span></strong> — <span class="en-text">Diabetes, hypertension, cardiovascular disease surveillance and prevention studies across rural and urban Bangladesh.</span><span class="bn-text">ডায়াবেটিস, উচ্চ রক্তচাপ, কার্ডিওভাসকুলার রোগ নজরদারি ও প্রতিরোধ গবেষণা।</span></span>
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i>
+            <span><strong><span class="en-text">health Systems Research</span><span class="bn-text">স্বাস্থ্য ব্যবস্থা গবেষণা</span></strong> — <span class="en-text">health policy analysis, health financing, ruman resources for health, quality of care assessment, and service delivery evaluation.</span><span class="bn-text">স্বাস্থ্য নীতি বিশ্লেষণ, স্বাস্থ্য অর্থায়ন ও সেবা মান মূল্যায়ন।</span></span>
+          </li>
+          <li>
+            <i class="bi bi-check-circle-fill"></i>
+            <span><strong><span class="en-text">Scientific Writing & Publication</span><span class="bn-text">বৈজ্ঞানিক লেখা ও প্রকাশনা</span></strong> — <span class="en-text">Manuscript preparation, journal submission, peer review process, grant writing, and Research dissemination.</span><span class="bn-text">পাণ্ডুলিপি প্রস্তুতি, জার্নাল জমা, পিয়ার রিভিউ, গ্রান্ট লেখা ও গবেষণা প্রচার।</span></span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-5 offset-lg-1">
+        <h5 style="color:var(--green);font-weight:700;margin-bottom:14px"><span class="en-text">Fields of Expertise</span><span class="bn-text">দক্ষতার ক্ষেত্রসমূহ</span></h5>
+        <div class="mb-4">
+          <span class="expertise-badge">Public health</span>
+          <span class="expertise-badge">Epidemiology</span>
+          <span class="expertise-badge">Biostatistics</span>
+          <span class="expertise-badge">Environmental health</span>
+          <span class="expertise-badge">Maternal & Child health</span>
+          <span class="expertise-badge">NCDs</span>
+          <span class="expertise-badge">health Systems</span>
+          <span class="expertise-badge">Community health</span>
+          <span class="expertise-badge">Clinical Research</span>
+          <span class="expertise-badge">health Policy</span>
+          <span class="expertise-badge">Nutrition</span>
+          <span class="expertise-badge">SPSS / R / STATA</span>
+          <span class="expertise-badge">GIS Mapping</span>
+          <span class="expertise-badge">Qualitative methods</span>
+          <span class="expertise-badge">Scientific Writing</span>
+          <span class="expertise-badge">Grant Writing</span>
+          <span class="expertise-badge">Arsenic Research</span>
+          <span class="expertise-badge">health Education</span>
+        </div>
+
+        <!-- Tools Used -->
+        <div class="reg-box mt-3">
+          <div style="margin-bottom:12px">
+            <h6 style="color:var(--green);font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0">
+              <span class="en-text">research tools & Software</span><span class="bn-text">গবেষণা সরঞ্জাম</span>
+            </h6>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-calculator"></i></div>
+            <div><div class="reg-label"><span class="en-text">Statistical</span><span class="bn-text">পরিসংখ্যান</span></div><div class="reg-value">SPSS, R, STATA, EpiInfo</div></div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-geo"></i></div>
+            <div><div class="reg-label">GIS / Mapping</div><div class="reg-value">ArcGIS, QGIS, Google Eartr</div></div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-file-earmark-text"></i></div>
+            <div><div class="reg-label"><span class="en-text">Qualitative</span><span class="bn-text">গুণগত</span></div><div class="reg-value">NVivo, ATLAS.ti</div></div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-database"></i></div>
+            <div><div class="reg-label"><span class="en-text">Data Collection</span><span class="bn-text">তথ্য সংগ্রহ</span></div><div class="reg-value">KoBoToolbox, ODK, REDCap</div></div>
+          </div>
+          <div class="reg-item">
+            <div class="reg-icon"><i class="bi bi-search"></i></div>
+            <div><div class="reg-label"><span class="en-text">Literature</span><span class="bn-text">সাহিত্য পর্যালোচনা</span></div><div class="reg-value">Zotero, Mendeley, EndNote</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ JOURNEY / TIMELINE (write) ══════════════════════════════════ -->
+<section>
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-5">
+        <div class="sec-label"><span class="en-text">Our Journey</span><span class="bn-text">আমাদের যাত্রা</span></div>
+        <div class="divider"></div>
+        <h2 class="sec-title"><span class="en-text">How SARD Grew</span><span class="bn-text">SARD-এর বিকাশ</span></h2>
+        <p class="sec-desc mb-4">
+          <span class="en-text">From a small Research initiative to a growing organization with a national presence, SARD has consistently expanded its impact in public health research and community development.</span>
+          <span class="bn-text">একটি ছোট গবেষণা উদ্যোগ থেকে জাতীয় পরিসরে বিস্তৃত সংগঠনে, SARD ধারাবাহিকভাবে জনস্বাস্থ্য গবেষণায় প্রভাব বিস্তার করছে।</span>
+        </p>
+        <a href="team.html" class="btn-green"><i class="bi bi-people"></i><span class="en-text">Our Research Team</span><span class="bn-text">গবেষণা দল</span></a>
+      </div>
+      <div class="col-lg-6 offset-lg-1">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2021</div>
+            <div class="tl-title"><span class="en-text">Foundation of SARD BD</span><span class="bn-text">SARD BD প্রতিষ্ঠা</span></div>
+            <div class="tl-desc"><span class="en-text">SARD BD was founded in Dhaka with a core team of public health researchers and clinicians committed to evidence-based research in Bangladesh.</span><span class="bn-text">জনস্বাস্থ্য গবেষক ও চিকিৎসকদের একটি মূল দল নিয়ে ঢাকায় SARD BD প্রতিষ্ঠিত হয়।</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2022</div>
+            <div class="tl-title"><span class="en-text">Field Offices established</span><span class="bn-text">ফিল্ড অফিস স্থাপন</span></div>
+            <div class="tl-desc"><span class="en-text">Field Research offices established in Araihazar and Sonargaon, Narayanganj — key areas for arsenic exposure and community health Research.</span><span class="bn-text">আড়াইহাজার ও সোনারগাঁওতে ফিল্ড অফিস স্থাপিত হয় — আর্সেনিক এক্সপোজার ও কমিউনিটি স্বাস্থ্য গবেষণার কেন্দ্রীয় এলাকা।</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2023</div>
+            <div class="tl-title"><span class="en-text">Training Programs Launched</span><span class="bn-text">প্রশিক্ষণ কার্যক্রম শুরু</span></div>
+            <div class="tl-desc"><span class="en-text">Launched structured public health research training programs including the flagship 10-Day Residential Research Boot Camp for healthcare professionals.</span><span class="bn-text">স্বাস্থ্যসেবা পেশাদারদের জন্য ১০ দিনের রেসিডেন্শিয়াল রিসার্চ বুট ক্যাম্প সহ কাঠামোগত প্রশিক্ষণ কার্যক্রম শুরু।</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2024</div>
+            <div class="tl-title"><span class="en-text">Noakhali Field Office & Expansion</span><span class="bn-text">নোয়াখালী ফিল্ড অফিস ও সম্প্রসারণ</span></div>
+            <div class="tl-desc"><span class="en-text">Third field office opened in Chakril, Noakhali. Research teams expanded with additional faculty members and clinical Researchers joining SARD.</span><span class="bn-text">নোয়াখালীর চাখিলে তৃতীয় ফিল্ড অফিস খোলা হয়। অতিরিক্ত ফ্যাকাল্টি সদস্য ও ক্লিনিক্যাল গবেষকদের নিয়ে দল সম্প্রসারিত।</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2025</div>
+            <div class="tl-title"><span class="en-text">JARD Journal Founded</span><span class="bn-text">JARD জার্নাল প্রতিষ্ঠা</span></div>
+            <div class="tl-desc"><span class="en-text">Bangladesh Journal of Applied Research & Development (JARD) founded as SARD's official peer-reviewed scientific publication, with an international editorial board assembled.</span><span class="bn-text">বাংলাদেশ জার্নাল অব অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট (JARD) SARD-এর সরকারি পিয়ার-রিভিউড প্রকাশনা হিসেবে প্রতিষ্ঠিত।</span></div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--green);border-color:var(--butter)"></div>
+            <div class="tl-year" style="color:var(--green-light)">2026</div>
+            <div class="tl-title"><span class="en-text">JARD Vol. 1 — First Issue Published</span><span class="bn-text">JARD খণ্ড ১ — প্রথম সংখ্যা প্রকাশিত</span></div>
+            <div class="tl-desc"><span class="en-text">JARD publishes its inaugural issue (Vol. 1, Issue 1, June 2026). Website Launched at sardbd.info with online manuscript submission portal.</span><span class="bn-text">JARD-এর উদ্বোধনী সংখ্যা প্রকাশিত (খণ্ড ১, সংখ্যা ১, জুন ২০২৬)। sardbd.info-এ অনলাইন পাণ্ডুলিপি জমা পোর্টাল সহ ওয়েবসাইট চালু।</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TEAM CTA ════════════════════════════════════════════════════ -->
+<section id="team" class="sec-bg-gray">
+  <div class="container text-center" style="padding:64px 0;">
+    <div class="sec-label"><span class="en-text">Our Team</span><span class="bn-text">আমাদের দল</span></div>
+    <div class="divider mx-auto"></div>
+    <h2 class="sec-title"><span class="en-text">Meet the SARD BD Team</span><span class="bn-text">SARD BD দলের সাথে পরিচিত হন</span></h2>
+    <p class="sec-desc mx-auto mb-4" style="max-width:520px">
+      <span class="en-text">Our team of physicians, epidemiologists, public health researchers, and IT professionals is dedicated to advancing public health in Bangladesh.</span>
+      <span class="bn-text">আমাদের চিকিৎসক, মহামারীবিদ, জনস্বাস্থ্য গবেষক ও আইটি পেশাদারদের দল বাংলাদেশে জনস্বাস্থ্য উন্নয়নে নিবেদিত।</span>
+    </p>
+    <a href="team.html" class="btn-green"><i class="bi bi-people"></i><span class="en-text">View Our Full Team</span><span class="bn-text">সম্পূর্ণ দল দেখুন</span></a>
+  </div>
+</section>
+
+<!-- ══ CTA ═══════════════════════════════════════════════════════════ -->
+<section class="cta-sec">
+  <div class="container text-center">
+    <h2 style="color:var(--butter);font-weight:800;font-size:clamp(1.5rem,3vw,2rem);margin-bottom:10px">
+      <span class="en-text">Want to Collaborate with SARD?</span>
+      <span class="bn-text">SARD-এর সাথে সহযোগিতা করতে চান?</span>
+    </h2>
+    <p style="color:rgba(255,255,255,0.65);font-size:0.96rem;max-width:480px;margin:0 auto 26px">
+      <span class="en-text">We welcome Researchers, institutions, healthcare professionals, and organizations interested in public health research, training, or community programs in Bangladesh.</span>
+      <span class="bn-text">আমরা বাংলাদেশে জনস্বাস্থ্য গবেষণা, প্রশিক্ষণ বা কমিউনিটি কার্যক্রমে আগ্রহী গবেষক, প্রতিষ্ঠান ও সংগঠনকে স্বাগত জানাই।</span>
+    </p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="contact.html" class="btn-butter"><i class="bi bi-envelope"></i><span class="en-text">Contact Us</span><span class="bn-text">যোগাযোগ করুন</span></a>
+      <a href="#" class="btn-outline-white"><i class="bi bi-calendar-check"></i><span class="en-text">Book Appointment</span><span class="bn-text">অ্যাপয়েন্টমেন্ট</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ═════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="foot-brand">SARD BD</div>
+        <p class="foot-desc">
+          <span class="en-text">Society for Applied Research and Development — A not-for-profit Public Health Organization based in Bangladesh.</span>
+          <span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট — বাংলাদেশ-ভিত্তিক একটি অলাভজনক জনস্বাস্থ্য সংগঠন।</span>
+        </p>
+        <div class="foot-contact">
+          <p><i class="bi bi-envelope"></i> hemeunus@gmail.com</p>
+          <p><i class="bi bi-telephone"></i> +880 1963-851090</p>
+          <p><i class="bi bi-geo-alt"></i> House #184, Road #02, Mohakhali DOHS, Dhaka</p>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <h6><span class="en-text">Organization</span><span class="bn-text">সংগঠন</span></h6>
+        <ul>
+          <li><a href="index.html"><i class="bi bi-chevron-right"></i><span class="en-text">Home</span><span class="bn-text">হোম</span></a></li>
+          <li><a href="about.html"><i class="bi bi-chevron-right"></i><span class="en-text">About SARD</span><span class="bn-text">সম্পর্কে</span></a></li>
+          <li><a href="team.html"><i class="bi bi-chevron-right"></i><span class="en-text">Research Team</span><span class="bn-text">গবেষণা দল</span></a></li>
+          <li><a href="training.html"><i class="bi bi-chevron-right"></i><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
+          <li><a href="index.html#news"><i class="bi bi-chevron-right"></i><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <h6>Journal (JARD)</h6>
+        <ul>
+          <li><a href="journal.html"><i class="bi bi-chevron-right"></i><span class="en-text">Journal Overview</span><span class="bn-text">পরিচিতি</span></a></li>
+          <li><a href="editorial-board.html"><i class="bi bi-chevron-right"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a></li>
+          <li><a href="author-guidelines.html"><i class="bi bi-chevron-right"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span></a></li>
+          <li><a href="journal.html#submit"><i class="bi bi-chevron-right"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a></li>
+          <li><a href="#"><i class="bi bi-chevron-right"></i><span class="en-text">Archive</span><span class="bn-text">আর্কাইভ</span></a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <h6><span class="en-text">Field Offices</span><span class="bn-text">ফিল্ড অফিস</span></h6>
+        <ul>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Araihazar, Narayanganj</a></li>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Sonargaon, Narayanganj</a></li>
+          <li><a href="#"><i class="bi bi-geo-alt"></i> Chakril, Noakhali</a></li>
+        </ul>
+        <h6 class="mt-4"><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></h6>
+        <ul>
+          <li><a href="contact.html"><i class="bi bi-chevron-right"></i><span class="en-text">Contact Us</span><span class="bn-text">যোগাযোগ করুন</span></a></li>
+          <li><a href="#"><i class="bi bi-chevron-right"></i><span class="en-text">Appointment</span><span class="bn-text">অ্যাপয়েন্টমেন্ট</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom mt-5">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p>© 2026 <a href="index.html">SARD BD</a>. <span class="en-text">All rigrts reserved.</span><span class="bn-text">সর্বস্বত্ব সংরক্ষিত।</span></p>
+      <p><span class="en-text">Publisrer of</span><span class="bn-text">প্রকাশক:</span> <a href="#">JARD</a> · www.sardbd.info</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/8801963851090" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('bn', lang === 'bn');
+    document.documentElement.lang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-bn').classList.toggle('active', lang === 'bn');
+    localStorage.setItem('sardbd_lang', lang);
+  }
+  const saved = localStorage.getItem('sardbd_lang');
+  if (saved === 'bn') setLang('bn');
+</script>
+</body>
+</html>

@@ -1,0 +1,1266 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JARD — Bangladesh Journal of Applied Research & Development | SARD BD</title>
+  <meta name="description" content="Bangladesh Journal of Applied Research &amp; Development (JARD) — Open-access, double-blind peer-reviewed journal published biannually by SARD BD. Browse current and past issues."/>
+  <meta name="keywords"    content="JARD, Bangladesh journal, applied research, public health journal, SARD BD, peer-reviewed, open access, epidemiology, environmental health"/>
+  <meta name="author"      content="SARD BD"/>
+  <meta name="robots"      content="index, follow"/>
+  <link  rel="canonical"   href="https://sardbd.org/journal.html"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website"/>
+  <meta property="og:site_name"   content="JARD — SARD BD"/>
+  <meta property="og:title"       content="JARD — Bangladesh Journal of Applied Research &amp; Development"/>
+  <meta property="og:description" content="Open-access, double-blind peer-reviewed journal published biannually by SARD BD. Browse articles in public health, epidemiology, and environmental health."/>
+  <meta property="og:url"         content="https://sardbd.org/journal.html"/>
+  <meta property="og:image"       content="https://sardbd.org/assets/jard-cover-og.png"/>
+  <meta property="og:locale"      content="en_BD"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:site"        content="@SARDBD"/>
+  <meta name="twitter:title"       content="JARD — Bangladesh Journal of Applied Research &amp; Development"/>
+  <meta name="twitter:description" content="Open-access peer-reviewed journal by SARD BD. Browse articles in public health, epidemiology &amp; environmental health from Bangladesh."/>
+  <meta name="twitter:image"       content="https://sardbd.org/assets/jard-cover-og.png"/>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Periodical",
+      "name": "Bangladesh Journal of Applied Research & Development",
+      "alternateName": "JARD",
+      "issn": "XXXX-XXXX",
+      "url": "https://sardbd.org/journal.html",
+      "description": "Open-access, double-blind peer-reviewed scientific journal published biannually (June & December) by SARD BD covering public health, epidemiology, environmental health and development studies in Bangladesh.",
+      "inLanguage": "en",
+      "publisher": {
+        "@type": "Organization",
+        "name": "SARD BD",
+        "url": "https://sardbd.org",
+        "logo": { "@type": "ImageObject", "url": "https://sardbd.org/assets/logo.png" }
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "about": [
+        { "@type": "Thing", "name": "Public Health" },
+        { "@type": "Thing", "name": "Epidemiology" },
+        { "@type": "Thing", "name": "Environmental Health" },
+        { "@type": "Thing", "name": "Bangladesh" }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home",    "item": "https://sardbd.org/" },
+        { "@type": "ListItem", "position": 2, "name": "Journal", "item": "https://sardbd.org/journal.html" }
+      ]
+    }
+  ]
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --green:        #013e37;
+      --green-light:  #025a50;
+      --green-dark:   #012a25;
+      --butter:       #ffefb3;
+      --butter-light: #fffaed;
+      --white:        #ffffff;
+      --gray-bg:      #f7f8fa;
+      --text:         #1a1a1a;
+      --text-muted:   #6c757d;
+      --border:       #e5e7eb;
+      --link:         #025a50;
+      --shadow:       0 2px 16px rgba(0,0,0,0.07);
+      --radius:       10px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter','Hind Siliguri',sans-serif; color: var(--text); background: #fff; }
+    body.bn { font-family: 'Hind Siliguri','Inter',sans-serif; }
+    body.bn .en-text { display: none !important; }
+    body:not(.bn) .bn-text { display: none !important; }
+
+    /* ── NAVBAR ─────────────────────────────── */
+    .navbar-main { background: var(--green); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 16px rgba(1,62,55,0.3); padding: 0; }
+    .navbar-main .navbar-brand { color: var(--butter) !important; font-weight: 800; font-size: 1.1rem; padding: 12px 0; line-height: 1.2; }
+    .navbar-main .navbar-brand span { display: block; color: rgba(255,255,255,0.6); font-size: 0.72rem; font-weight: 400; }
+    .navbar-main .nav-link { color: rgba(255,255,255,0.82) !important; font-weight: 500; font-size: 0.88rem; padding: 20px 13px !important; transition: color 0.2s; position: relative; }
+    .navbar-main .nav-link:hover, .navbar-main .nav-link.active { color: var(--butter) !important; }
+    .navbar-main .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 13px; right: 13px; height: 3px; background: var(--butter); border-radius: 2px 2px 0 0; }
+    .navbar-main .dropdown-menu { background: var(--green-dark); border: none; border-top: 3px solid var(--butter); border-radius: 0 0 10px 10px; min-width: 210px; }
+    .navbar-main .dropdown-item { color: rgba(255,255,255,0.8); font-size: 0.85rem; padding: 9px 18px; }
+    .navbar-main .dropdown-item:hover { background: var(--green-light); color: var(--butter); }
+    .btn-lang { background: transparent; border: 1.5px solid rgba(255,255,255,0.35); color: rgba(255,255,255,0.8); font-size: 0.78rem; font-weight: 700; padding: 5px 13px; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
+    .btn-lang.active, .btn-lang:hover { background: var(--butter); border-color: var(--butter); color: var(--green); }
+    .navbar-toggler { border: 1.5px solid rgba(255,255,255,0.4); padding: 5px 10px; }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    /* ── JOURNAL SUB-NAV ──────────────────────── */
+    .journal-subnav {
+      background: #fff;
+      border-bottom: 2px solid var(--border);
+      position: sticky; top: 57px; z-index: 900;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .journal-subnav .container { display: flex; align-items: center; gap: 0; overflow-x: auto; scrollbar-width: none; }
+    .journal-subnav .container::-webkit-scrollbar { display: none; }
+    .jnav-link {
+      display: flex; align-items: center; gap: 7px;
+      padding: 14px 18px; font-size: 0.86rem; font-weight: 600;
+      color: var(--text-muted); text-decoration: none; white-space: nowrap;
+      border-bottom: 3px solid transparent; margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+    .jnav-link:hover { color: var(--green); border-bottom-color: var(--green); }
+    .jnav-link.active { color: var(--green); border-bottom-color: var(--green); }
+    .jnav-link i { font-size: 0.9rem; }
+    .jnav-submit {
+      margin-left: auto; flex-shrink: 0;
+      background: var(--green); color: var(--butter);
+      font-weight: 700; font-size: 0.82rem;
+      padding: 8px 18px; border-radius: 6px;
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .jnav-submit:hover { background: var(--green-light); color: var(--butter); }
+
+    /* ── JOURNAL HERO BANNER ─────────────────── */
+    .journal-banner {
+      background: linear-gradient(110deg, var(--green) 0%, #025a50 50%, #036b60 100%);
+      padding: 36px 0 32px; border-bottom: 4px solid var(--butter);
+    }
+    .jb-title { color: #fff; font-weight: 800; font-size: clamp(1.2rem,2.5vw,1.7rem); line-height: 1.25; margin-bottom: 4px; }
+    .jb-abbr { color: var(--butter); font-size: 0.82rem; font-weight: 600; margin-bottom: 14px; }
+    .jb-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .jb-badge {
+      background: rgba(255,239,179,0.15); border: 1px solid rgba(255,239,179,0.3);
+      color: rgba(255,255,255,0.85); font-size: 0.72rem; font-weight: 600;
+      padding: 4px 12px; border-radius: 20px; display: flex; align-items: center; gap: 5px;
+    }
+    .jb-badge.highlight { background: var(--butter); color: var(--green); border-color: var(--butter); }
+
+    /* ── MAIN LAYOUT ─────────────────────────── */
+    .journal-body { padding: 32px 0 60px; background: #fff; }
+
+    /* ── COVER CARD (left sidebar) ───────────── */
+    .cover-card {
+      position: sticky; top: 120px;
+    }
+    .cover-img-box {
+      background: linear-gradient(145deg, var(--green) 0%, #025a50 100%);
+      border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 6px 28px rgba(1,62,55,0.25);
+      aspect-ratio: 3/4; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; padding: 24px 20px;
+      text-align: center; margin-bottom: 16px; position: relative;
+    }
+    .cover-img-box::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 12px);
+    }
+    .cover-jard-logo { color: var(--butter); font-weight: 900; font-size: 2.8rem; line-height: 1; margin-bottom: 8px; letter-spacing: -1px; }
+    .cover-jard-full { color: rgba(255,255,255,0.7); font-size: 0.72rem; line-height: 1.5; margin-bottom: 14px; }
+    .cover-issue-tag { background: var(--butter); color: var(--green); font-weight: 800; font-size: 0.72rem; padding: 5px 14px; border-radius: 20px; margin-bottom: 8px; }
+    .cover-vol { color: rgba(255,255,255,0.55); font-size: 0.7rem; }
+    .cover-org { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.65rem; }
+
+    .info-box {
+      background: var(--butter-light); border: 1.5px solid #e8e0a0;
+      border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px;
+    }
+    .info-box h6 { color: var(--green); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.5px; margin-bottom: 10px; text-transform: uppercase; }
+    .info-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid #e0d890; font-size: 0.8rem; gap: 8px; }
+    .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .info-row .ik { color: var(--text-muted); flex-shrink: 0; }
+    .info-row .iv { color: var(--green); font-weight: 600; text-align: right; }
+
+    .sidebar-links { list-style: none; padding: 0; margin: 0; }
+    .sidebar-links li { border-bottom: 1px solid var(--border); }
+    .sidebar-links li:last-child { border-bottom: none; }
+    .sidebar-links a { display: flex; align-items: center; gap: 8px; padding: 9px 4px; color: var(--link); font-size: 0.83rem; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+    .sidebar-links a:hover { color: var(--green); }
+    .sidebar-links a i { font-size: 0.9rem; color: var(--green); }
+
+    /* ── MAIN CONTENT ─────────────────────────── */
+    .current-issue-header {
+      border-bottom: 2px solid var(--green);
+      padding-bottom: 10px; margin-bottom: 24px;
+    }
+    .current-issue-header h3 { color: var(--green); font-weight: 800; font-size: 1.15rem; margin: 0; }
+    .current-issue-header .issue-meta { color: var(--text-muted); font-size: 0.82rem; margin-top: 3px; }
+
+    /* Article section group */
+    .article-group { margin-bottom: 32px; }
+    .article-group-title {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text-muted); padding: 7px 0; border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border); margin-bottom: 0;
+    }
+    .article-item {
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+    }
+    .article-item:last-child { border-bottom: none; }
+    .article-item.hidden { display: none; }
+    /* Search bar */
+    /* subnav search focus */
+    #journal-search-wrap:focus-within{border-color:var(--green)!important;background:#fff!important;}
+    /* BOARD SLIDER */
+    .board-slider-wrap{overflow:hidden;position:relative;margin-bottom:8px;}
+    .board-slider-wrap::before,.board-slider-wrap::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;pointer-events:none;}
+    .board-slider-wrap::before{left:0;background:linear-gradient(to right,var(--gray-bg),transparent);}
+    .board-slider-wrap::after{right:0;background:linear-gradient(to left,var(--gray-bg),transparent);}
+    .board-slider-track{display:flex;gap:10px;width:max-content;animation:boardScroll 22s linear infinite;}
+    .board-slider-track:hover{animation-play-state:paused;}
+    @keyframes boardScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+    .search-no-result{display:none;text-align:center;padding:32px 0;color:var(--text-muted);font-size:.9rem;}
+    .article-title {
+      color: var(--link); font-weight: 600; font-size: 0.92rem; line-height: 1.45;
+      text-decoration: none; display: block; margin-bottom: 5px; transition: color 0.2s;
+    }
+    .article-title:hover { color: var(--green); text-decoration: underline; }
+    .article-authors { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 8px; line-height: 1.5; }
+    .article-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .article-pages { color: var(--text-muted); font-size: 0.78rem; }
+    .btn-pdf {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: transparent; border: 1.5px solid #c0392b;
+      color: #c0392b; font-size: 0.72rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 5px; text-decoration: none;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .btn-pdf:hover { background: #c0392b; color: #fff; }
+    .btn-abstract {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: transparent; border: 1.5px solid var(--green);
+      color: var(--green); font-size: 0.72rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 5px; text-decoration: none;
+      transition: all 0.2s; cursor: pointer;
+    }
+    .btn-abstract:hover { background: var(--green); color: #fff; }
+    .article-doi { color: var(--text-muted); font-size: 0.74rem; }
+    .article-doi a { color: var(--link); text-decoration: none; }
+    .article-doi a:hover { text-decoration: underline; }
+
+    /* Abstract collapse */
+    .abstract-box {
+      background: var(--gray-bg); border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0; padding: 14px 16px; margin-top: 10px;
+      font-size: 0.83rem; line-height: 1.75; color: #333;
+      display: none;
+    }
+    .abstract-box.show { display: block; }
+    .abstract-box strong { color: var(--green); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+    /* ── ABOUT JARD PANEL ─────────────────────── */
+    .about-panel { display: none; }
+    .about-panel.show { display: block; }
+
+    /* ── ARCHIVES PANEL ──────────────────────── */
+    .archive-panel { display: none; }
+    .archive-panel.show { display: block; }
+    .archive-vol-card {
+      background: #fff; border: 1.5px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; transition: all 0.25s;
+    }
+    .archive-vol-card:hover { border-color: var(--green); box-shadow: var(--shadow); }
+    .avc-header {
+      background: var(--green); padding: 14px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .avc-header .vol { color: var(--butter); font-weight: 700; font-size: 0.9rem; }
+    .avc-header .yr { color: rgba(255,255,255,0.6); font-size: 0.78rem; }
+    .avc-issues { padding: 12px 18px; }
+    .avc-issue-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 0.84rem;
+    }
+    .avc-issue-row:last-child { border-bottom: none; }
+    .avc-issue-row a { color: var(--link); text-decoration: none; font-weight: 500; }
+    .avc-issue-row a:hover { color: var(--green); text-decoration: underline; }
+    .avc-issue-row .art-count { color: var(--text-muted); font-size: 0.75rem; }
+
+    /* ── SUBMISSION PANEL ─────────────────────── */
+    .submission-panel { display: none; }
+    .submission-panel.show { display: block; }
+
+    /* ── COMMON BUTTONS ──────────────────────── */
+    .btn-green { background: var(--green); color: var(--butter); font-weight: 700; font-size: 0.88rem; padding: 11px 22px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; border: none; }
+    .btn-green:hover { background: var(--green-light); color: var(--butter); }
+    .btn-green-outline { background: transparent; color: var(--green); font-weight: 600; font-size: 0.88rem; padding: 10px 22px; border-radius: 8px; border: 1.5px solid var(--green); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+    .btn-green-outline:hover { background: var(--green); color: var(--butter); }
+
+    /* ── FORM STYLES ─────────────────────────── */
+    .form-label { font-size: 0.85rem; font-weight: 600; color: var(--green); margin-bottom: 5px; }
+    .form-control, .form-select { border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.88rem; padding: 10px 14px; }
+    .form-control:focus, .form-select:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(1,62,55,0.1); }
+    .required-star { color: #c0392b; }
+    .step-badge { background: var(--butter); color: var(--green); font-weight: 800; font-size: 0.72rem; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+    .form-section { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px 26px; margin-bottom: 20px; }
+    .form-section h5 { color: var(--green); font-weight: 800; font-size: 0.95rem; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid var(--butter); }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer { background: var(--green-dark); padding: 40px 0 0; }
+    .foot-brand { color: var(--butter); font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
+    .foot-desc { color: rgba(255,255,255,0.4); font-size: 0.8rem; line-height: 1.7; max-width: 260px; margin-bottom: 14px; }
+    footer h6 { color: var(--butter); font-weight: 700; font-size: 0.76rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+    footer ul { list-style: none; padding: 0; margin: 0; }
+    footer ul li { margin-bottom: 7px; }
+    footer ul li a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.81rem; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+    footer ul li a:hover { color: var(--butter); }
+    .foot-bottom { background: rgba(0,0,0,0.25); padding: 13px 0; margin-top: 36px; }
+    .foot-bottom p { margin: 0; font-size: 0.76rem; color: rgba(255,255,255,0.3); }
+    .foot-bottom a { color: var(--butter); text-decoration: none; }
+    .wa-float { position: fixed; bottom: 26px; right: 26px; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; text-decoration: none; box-shadow: 0 4px 18px rgba(37,211,102,0.45); z-index: 999; transition: all 0.25s; }
+    .wa-float:hover { transform: scale(1.12); color: #fff; }
+
+    @media(max-width:768px){
+      .cover-card { position: static; margin-bottom: 24px; }
+      .cover-img-box { aspect-ratio: 16/7; }
+      .jnav-link { padding: 12px 14px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVBAR ══════════════════════════════════════════════════════ -->
+<nav class="navbar navbar-main navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      SARD BD
+      <span><span class="en-text">Society for Applied Research & Development</span><span class="bn-text">সোসাইটি ফর অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="index.html"><span class="en-text">Home</span><span class="bn-text">হোম</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html"><span class="en-text">About</span><span class="bn-text">সম্পর্কে</span></a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            <span class="en-text">Journal</span><span class="bn-text">জার্নাল</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="journal.html"><i class="bi bi-journal-text me-2"></i><span class="en-text">Journal Overview</span><span class="bn-text">পরিচিতি</span></a></li>
+            <li><a class="dropdown-item" href="editorial-board.html"><i class="bi bi-people me-2"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a></li>
+            <li><a class="dropdown-item" href="author-guidelines.html"><i class="bi bi-file-text me-2"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span></a></li>
+            <li><a class="dropdown-item" href="journal.html?tab=archive"><i class="bi bi-archive me-2"></i><span class="en-text">Archive</span><span class="bn-text">আর্কাইভ</span></a></li>
+            <li><hr class="dropdown-divider" style="border-color:rgba(255,255,255,0.1)"></li>
+            <li><a class="dropdown-item" href="journal.html?tab=submit"><i class="bi bi-upload me-2"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="about.html#team"><span class="en-text">Team</span><span class="bn-text">দল</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#training"><span class="en-text">Training</span><span class="bn-text">প্রশিক্ষণ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#news"><span class="en-text">News</span><span class="bn-text">সংবাদ</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html"><span class="en-text">Contact</span><span class="bn-text">যোগাযোগ</span></a></li>
+        <li class="nav-item ms-lg-2 d-flex gap-2">
+          <button class="btn-lang active" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="btn-lang" id="btn-bn" onclick="setLang('bn')">বাং</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ JOURNAL BANNER ══════════════════════════════════════════════ -->
+<div class="journal-banner">
+  <div class="container">
+    <div class="row align-items-center g-3">
+      <div class="col-lg-8">
+        <div class="jb-title">Bangladesh Journal of Applied Research &amp; Development</div>
+        <div class="jb-abbr">JARD &nbsp;·&nbsp; Published by SARD BD &nbsp;·&nbsp; www.sardbd.info</div>
+        <div class="jb-badges">
+          <span class="jb-badge"><i class="bi bi-patch-check"></i> Double-Blind Peer Review</span>
+          <span class="jb-badge"><i class="bi bi-globe"></i> Open Access</span>
+          <span class="jb-badge"><i class="bi bi-calendar3"></i> Biannual</span>
+          <span class="jb-badge"><i class="bi bi-translate"></i> English</span>
+          <span class="jb-badge highlight"><i class="bi bi-journal-text"></i> Vol. 1, Issue 1 · June 2026</span>
+        </div>
+      </div>
+      <div class="col-lg-4 text-lg-end">
+        <a href="#" onclick="switchTab('submit');return false;" class="btn-pdf" style="font-size:0.85rem;padding:10px 22px;border-color:var(--butter);color:var(--butter);display:inline-flex;align-items:center;gap:8px;border-radius:8px;border-width:1.5px">
+          <i class="bi bi-upload"></i>
+          <span class="en-text">Submit Manuscript</span><span class="bn-text">পাণ্ডুলিপি জমা দিন</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ JOURNAL SUB-NAV ════════════════════════════════════════════ -->
+<div class="journal-subnav">
+  <div class="container">
+    <a class="jnav-link active" id="tab-current" onclick="switchTab('current');return false;" href="#">
+      <i class="bi bi-journals"></i><span class="en-text">Current</span><span class="bn-text">বর্তমান</span>
+    </a>
+    <a class="jnav-link" id="tab-archive" onclick="switchTab('archive');return false;" href="#">
+      <i class="bi bi-archive"></i><span class="en-text">Archives</span><span class="bn-text">আর্কাইভ</span>
+    </a>
+    <a class="jnav-link" id="tab-submit" onclick="switchTab('submit');return false;" href="#">
+      <i class="bi bi-upload"></i><span class="en-text">Online Submission</span><span class="bn-text">অনলাইন জমা</span>
+    </a>
+    <a class="jnav-link" href="editorial-board.html">
+      <i class="bi bi-people"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span>
+    </a>
+    <a class="jnav-link" href="author-guidelines.html">
+      <i class="bi bi-file-text"></i><span class="en-text">Author Guidelines</span><span class="bn-text">নির্দেশিকা</span>
+    </a>
+    <a class="jnav-link" id="tab-about" onclick="switchTab('about');return false;" href="#">
+      <i class="bi bi-info-circle"></i><span class="en-text">About JARD</span><span class="bn-text">জার্নাল সম্পর্কে</span>
+    </a>
+    <!-- Compact inline search -->
+    <div style="margin-left:auto;display:flex;align-items:center;padding:6px 0;">
+      <div id="journal-search-wrap" style="display:flex;align-items:center;background:#f4f6f8;border:1.5px solid var(--border);border-radius:20px;padding:5px 12px;gap:6px;transition:.2s;min-width:190px;max-width:220px;">
+        <i class="bi bi-search" style="color:var(--text-muted);font-size:.8rem;flex-shrink:0;"></i>
+        <input type="text" id="journal-search" placeholder="Search title or author…" oninput="journalSearch(this.value)" autocomplete="off" style="border:none;outline:none;background:transparent;font-size:.75rem;color:var(--text);width:100%;"/>
+        <button id="search-clear" onclick="clearSearch()" style="display:none;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:.7rem;padding:0;flex-shrink:0;"><i class="bi bi-x-lg"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ JOURNAL BODY ════════════════════════════════════════════════ -->
+<div class="journal-body">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- ── LEFT SIDEBAR ─────────────────────── -->
+      <div class="col-lg-3 col-md-4">
+        <div class="cover-card">
+          <!-- Cover Image -->
+          <div class="cover-img-box">
+            <div class="cover-jard-logo">JARD</div>
+            <div class="cover-jard-full">Bangladesh Journal of<br>Applied Research &amp; Development</div>
+            <div class="cover-issue-tag">Vol. 1 · Issue 1</div>
+            <div class="cover-vol">June 2026</div>
+            <div class="cover-org">Published by SARD BD</div>
+          </div>
+
+          <!-- Journal Info -->
+          <div class="info-box">
+            <h6><span class="en-text">Journal Info</span><span class="bn-text">জার্নালের তথ্য</span></h6>
+            <div class="info-row"><span class="ik"><span class="en-text">Publisher</span><span class="bn-text">প্রকাশক</span></span><span class="iv">SARD BD</span></div>
+            <div class="info-row"><span class="ik">ISSN</span><span class="iv">— (Pending)</span></div>
+            <div class="info-row"><span class="ik"><span class="en-text">Review</span><span class="bn-text">রিভিউ</span></span><span class="iv">Double-Blind</span></div>
+            <div class="info-row"><span class="ik">APC</span><span class="iv">USD 50</span></div>
+            <div class="info-row"><span class="ik"><span class="en-text">Frequency</span><span class="bn-text">প্রকাশনা</span></span><span class="iv"><span class="en-text">Biannual</span><span class="bn-text">দ্বিবার্ষিক</span></span></div>
+            <div class="info-row"><span class="ik"><span class="en-text">Language</span><span class="bn-text">ভাষা</span></span><span class="iv">English</span></div>
+            <div class="info-row"><span class="ik">Email</span><span class="iv" style="font-size:0.72rem">hemeunus@gmail.com</span></div>
+          </div>
+
+          <!-- Quick Links -->
+          <ul class="sidebar-links">
+            <li><a href="#" onclick="switchTab('about');return false;"><i class="bi bi-info-circle"></i><span class="en-text">About JARD</span><span class="bn-text">জার্নাল সম্পর্কে</span></a></li>
+            <li><a href="editorial-board.html"><i class="bi bi-people"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a></li>
+            <li><a href="author-guidelines.html"><i class="bi bi-file-earmark-text"></i><span class="en-text">Author Guidelines</span><span class="bn-text">লেখক নির্দেশিকা</span></a></li>
+            <li><a href="#" onclick="switchTab('submit');return false;"><i class="bi bi-upload"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">পাণ্ডুলিপি জমা</span></a></li>
+            <li><a href="#" onclick="switchTab('archive');return false;"><i class="bi bi-archive"></i><span class="en-text">Archive</span><span class="bn-text">আর্কাইভ</span></a></li>
+            <li><a href="#"><i class="bi bi-search"></i><span class="en-text">Search Articles</span><span class="bn-text">আর্টিকেল খুঁজুন</span></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ── MAIN CONTENT ─────────────────────── -->
+      <div class="col-lg-9 col-md-8">
+
+        <div class="search-no-result" id="search-no-result">
+          <i class="bi bi-search" style="font-size:1.8rem;margin-bottom:8px;display:block;opacity:.3;"></i>
+          <span class="en-text">No articles found for "<span id="search-term-display"></span>"</span>
+          <span class="bn-text">কোনো আর্টিকেল পাওয়া যায়নি</span>
+        </div>
+
+        <!-- ── CURRENT ISSUE PANEL ─────────────── -->
+        <div id="panel-current" class="tab-panel">
+          <div class="current-issue-header">
+            <h3><span class="en-text">Current Issue</span><span class="bn-text">বর্তমান সংখ্যা</span></h3>
+            <div class="issue-meta">
+              <span class="en-text">Vol. 1, No. 1 (2026) · Published: June 30, 2026</span>
+              <span class="bn-text">খণ্ড ১, সংখ্যা ১ (২০২৬) · প্রকাশিত: ৩০ জুন ২০২৬</span>
+            </div>
+          </div>
+
+          <!-- Section: Editorial -->
+          <div class="article-group">
+            <div class="article-group-title">Editorial</div>
+
+            <div class="article-item">
+              <a class="article-title" href="article.html?id=001">
+                Public Health Research in Bangladesh: Challenges, Opportunities, and the Role of JARD
+              </a>
+              <div class="article-authors">
+                H.E.M. Mahbubul Eunus, Syed Muhammad Baqui Billah
+              </div>
+              <div class="article-meta">
+                <span class="article-pages">pp. 1–3</span>
+                <a href="#" class="btn-pdf" onclick="return false;"><i class="bi bi-file-pdf"></i> PDF</a>
+                <span class="article-doi">DOI: <a href="#">10.XXXXX/jard.2026.001</a></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Original Articles -->
+          <div class="article-group">
+            <div class="article-group-title">Original Articles</div>
+
+            <div class="article-item">
+              <a class="article-title" href="article.html?id=002">
+                Arsenic Exposure and Cardiovascular Risk Factors Among Rural Adults in Araihazar Upazila, Bangladesh: A Cross-Sectional Study
+              </a>
+              <div class="article-authors">
+                Mohammad Arifuzzaman, H.E.M. Mahbubul Eunus, Sabrina Parvin Mohammad, Md. Mizanur Rahman
+              </div>
+              <div class="article-meta">
+                <span class="article-pages">pp. 4–14</span>
+                <a href="#" class="btn-pdf" onclick="return false;"><i class="bi bi-file-pdf"></i> PDF</a>
+                <button class="btn-abstract" onclick="toggleAbstract(this)"><i class="bi bi-text-left"></i> Abstract</button>
+                <span class="article-doi">DOI: <a href="#">10.XXXXX/jard.2026.002</a></span>
+              </div>
+              <div class="abstract-box">
+                <strong>Background:</strong> Arsenic contamination of groundwater remains a significant public health challenge in Bangladesh, affecting an estimated 20–40 million people. Araihazar, Narayanganj is among the most severely affected regions.
+                <br><br><strong>Methods:</strong> A cross-sectional study was conducted among 420 adults (aged 18–65 years) in Araihazar Upazila. Urinary arsenic levels were measured and cardiovascular risk factors including blood pressure, blood glucose, and lipid profiles were assessed.
+                <br><br><strong>Results:</strong> The mean urinary arsenic level was 142 µg/L (SD ± 68). Subjects with higher arsenic exposure showed significantly elevated systolic blood pressure (p&lt;0.01) and fasting blood glucose (p&lt;0.05) compared to low-exposure groups.
+                <br><br><strong>Conclusion:</strong> Chronic arsenic exposure is associated with increased cardiovascular risk in this rural Bangladeshi population. Targeted interventions for arsenic mitigation and cardiovascular screening are recommended.
+                <br><br><strong>Keywords:</strong> Arsenic, Cardiovascular risk, Bangladesh, Araihazar, Groundwater contamination
+              </div>
+            </div>
+
+            <div class="article-item">
+              <a class="article-title" href="article.html?id=003">
+                Prevalence and Risk Factors of Type 2 Diabetes Among Adults in Urban Slum Communities of Dhaka, Bangladesh
+              </a>
+              <div class="article-authors">
+                Md. Mizanur Rahman, Shamima Parveen Lasker, H.E.M. Mahbubul Eunus
+              </div>
+              <div class="article-meta">
+                <span class="article-pages">pp. 15–25</span>
+                <a href="#" class="btn-pdf" onclick="return false;"><i class="bi bi-file-pdf"></i> PDF</a>
+                <button class="btn-abstract" onclick="toggleAbstract(this)"><i class="bi bi-text-left"></i> Abstract</button>
+                <span class="article-doi">DOI: <a href="#">10.XXXXX/jard.2026.003</a></span>
+              </div>
+              <div class="abstract-box">
+                <strong>Background:</strong> Type 2 diabetes mellitus (T2DM) is rapidly emerging as a major public health burden in Bangladesh, particularly in urban slum populations where access to healthcare is limited.
+                <br><br><strong>Methods:</strong> A community-based cross-sectional study was conducted in three urban slum areas of Dhaka. A total of 610 participants aged ≥30 years were enrolled. Fasting blood glucose and HbA1c were measured.
+                <br><br><strong>Results:</strong> The prevalence of T2DM was 18.4% (95% CI: 15.3–21.5%). Significant risk factors included age ≥45 years (OR 3.2), family history of diabetes (OR 2.8), physical inactivity (OR 2.1), and overweight/obesity (OR 2.5).
+                <br><br><strong>Conclusion:</strong> The high prevalence of T2DM in urban slum communities of Dhaka underscores the urgent need for targeted diabetes prevention programs and early screening strategies.
+                <br><br><strong>Keywords:</strong> Type 2 diabetes, Urban slum, Dhaka, Prevalence, Risk factors
+              </div>
+            </div>
+
+            <div class="article-item">
+              <a class="article-title" href="article.html?id=004">
+                Maternal Nutritional Status and Birth Outcomes in Rural Noakhali District: A Prospective Cohort Study
+              </a>
+              <div class="article-authors">
+                Sabrina Parvin Mohammad, Mohammad Arifuzzaman, Md. Mizanur Rahman, Syed Muhammad Baqui Billah
+              </div>
+              <div class="article-meta">
+                <span class="article-pages">pp. 26–37</span>
+                <a href="#" class="btn-pdf" onclick="return false;"><i class="bi bi-file-pdf"></i> PDF</a>
+                <button class="btn-abstract" onclick="toggleAbstract(this)"><i class="bi bi-text-left"></i> Abstract</button>
+                <span class="article-doi">DOI: <a href="#">10.XXXXX/jard.2026.004</a></span>
+              </div>
+              <div class="abstract-box">
+                <strong>Background:</strong> Maternal malnutrition is a leading contributor to adverse birth outcomes including low birth weight and preterm birth in Bangladesh.
+                <br><br><strong>Methods:</strong> A prospective cohort study was conducted in Chakhil, Noakhali among 380 pregnant women from the first trimester until delivery. Maternal anthropometric measures and dietary intake were assessed. Birth outcomes were recorded.
+                <br><br><strong>Results:</strong> Of the 380 women, 38.2% had chronic energy deficiency (CED). Low birth weight prevalence was 31.6%. Maternal CED was independently associated with low birth weight (OR 2.9, 95% CI: 1.8–4.7) and preterm birth (OR 2.1, 95% CI: 1.2–3.6).
+                <br><br><strong>Conclusion:</strong> Maternal undernutrition remains highly prevalent in rural Noakhali and is strongly associated with adverse birth outcomes. Antenatal nutritional supplementation programs are urgently needed.
+                <br><br><strong>Keywords:</strong> Maternal nutrition, Birth outcomes, Low birth weight, Noakhali, Bangladesh
+              </div>
+            </div>
+
+            <div class="article-item">
+              <a class="article-title" href="article.html?id=005">
+                Knowledge, Attitudes and Practices Regarding Hypertension Management Among Healthcare Workers in Primary Health Care Centers of Narayanganj District
+              </a>
+              <div class="article-authors">
+                H.E.M. Mahbubul Eunus, Shamima Parveen Lasker, Mohammad Arifuzzaman
+              </div>
+              <div class="article-meta">
+                <span class="article-pages">pp. 38–48</span>
+                <a href="#" class="btn-pdf" onclick="return false;"><i class="bi bi-file-pdf"></i> PDF</a>
+                <button class="btn-abstract" onclick="toggleAbstract(this)"><i class="bi bi-text-left"></i> Abstract</button>
+                <span class="article-doi">DOI: <a href="#">10.XXXXX/jard.2026.005</a></span>
+              </div>
+              <div class="abstract-box">
+                <strong>Background:</strong> Hypertension is the most common NCD in Bangladesh yet remains significantly underdiagnosed and undertreated. Healthcare worker knowledge and practice gaps contribute substantially to this problem.
+                <br><br><strong>Methods:</strong> A cross-sectional KAP study was conducted among 185 healthcare workers in 12 primary health care centers in Narayanganj. A pre-tested, structured questionnaire was used.
+                <br><br><strong>Results:</strong> Only 52.4% of healthcare workers had good knowledge of hypertension management guidelines. Attitude scores were moderate (mean 3.2/5). Practice gaps were identified in blood pressure measurement technique (38.9%) and patient counselling (44.3%).
+                <br><br><strong>Conclusion:</strong> Significant gaps exist in hypertension-related KAP among primary healthcare workers. Structured training programs and updated clinical protocols are recommended.
+                <br><br><strong>Keywords:</strong> Hypertension, KAP study, Healthcare workers, Primary health care, Bangladesh
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Review Articles -->
+          <div class="article-group">
+            <div class="article-group-title">Review Article</div>
+
+            <div class="article-item">
+              <a class="article-title" href="article.html?id=006">
+                Environmental Determinants of Non-Communicable Diseases in Bangladesh: A Systematic Review and Meta-Analysis
+              </a>
+              <div class="article-authors">
+                Syed Muhammad Baqui Billah, H.E.M. Mahbubul Eunus, Md. Mizanur Rahman, Sabrina Parvin Mohammad
+              </div>
+              <div class="article-meta">
+                <span class="article-pages">pp. 49–62</span>
+                <a href="#" class="btn-pdf" onclick="return false;"><i class="bi bi-file-pdf"></i> PDF</a>
+                <button class="btn-abstract" onclick="toggleAbstract(this)"><i class="bi bi-text-left"></i> Abstract</button>
+                <span class="article-doi">DOI: <a href="#">10.XXXXX/jard.2026.006</a></span>
+              </div>
+              <div class="abstract-box">
+                <strong>Background:</strong> Non-communicable diseases (NCDs) are increasingly linked to environmental exposures in low-and middle-income countries. Bangladesh faces a dual burden of environmental hazards and rising NCD prevalence.
+                <br><br><strong>Objective:</strong> To systematically review the evidence on environmental determinants of NCDs in Bangladesh, including air pollution, water contamination, occupational exposures, and climate-related factors.
+                <br><br><strong>Methods:</strong> A systematic search of PubMed, Scopus, EMBASE, and BanglaJOL was conducted following PRISMA guidelines. Studies published 2000–2025 were included. Random-effects meta-analysis was performed where data permitted.
+                <br><br><strong>Results:</strong> 68 studies met inclusion criteria. Strong evidence was found for arsenic-NCD associations (cardiovascular disease: pooled OR 2.1; diabetes: pooled OR 1.7). Air pollution was associated with respiratory and cardiovascular morbidity. Gaps in occupational and climate-related NCD research were identified.
+                <br><br><strong>Keywords:</strong> NCDs, Environmental health, Bangladesh, Arsenic, Air pollution, Systematic review
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Case Reports -->
+          <div class="article-group">
+            <div class="article-group-title">Case Report</div>
+
+            <div class="article-item">
+              <a class="article-title" href="article.html?id=007">
+                Arsenical Keratosis Presenting as Bowen's Disease in a 52-Year-Old Male from Araihazar: A Case Report
+              </a>
+              <div class="article-authors">
+                Mohammad Arifuzzaman, H.E.M. Mahbubul Eunus, Sabrina Parvin Mohammad
+              </div>
+              <div class="article-meta">
+                <span class="article-pages">pp. 63–67</span>
+                <a href="#" class="btn-pdf" onclick="return false;"><i class="bi bi-file-pdf"></i> PDF</a>
+                <button class="btn-abstract" onclick="toggleAbstract(this)"><i class="bi bi-text-left"></i> Abstract</button>
+                <span class="article-doi">DOI: <a href="#">10.XXXXX/jard.2026.007</a></span>
+              </div>
+              <div class="abstract-box">
+                <strong>Background:</strong> Chronic arsenic poisoning through contaminated drinking water is a significant health issue in Bangladesh. Arsenical skin lesions including keratosis and Bowen's disease represent pre-malignant and malignant complications.
+                <br><br><strong>Case Summary:</strong> A 52-year-old male from Araihazar presented with widespread keratotic plaques on the trunk and extremities with a 25-year history of consuming tube-well water. Urinary arsenic was 320 µg/L. Skin biopsy confirmed Bowen's disease (squamous cell carcinoma in situ). The patient was started on arsenic chelation and referred for dermatology follow-up.
+                <br><br><strong>Conclusion:</strong> This case highlights the ongoing risk of arsenical skin malignancy in high-exposure regions of Bangladesh and emphasizes the need for regular dermatological screening.
+                <br><br><strong>Keywords:</strong> Arsenical keratosis, Bowen's disease, Arsenic poisoning, Araihazar, Bangladesh
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center mt-2 pt-3 border-top">
+            <a href="#" onclick="switchTab('archive');return false;" class="btn-green-outline">
+              <i class="bi bi-archive"></i><span class="en-text">View All Issues</span><span class="bn-text">সব সংখ্যা দেখুন</span>
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── ARCHIVES PANEL ──────────────────── -->
+        <div id="panel-archive" class="tab-panel archive-panel">
+          <div class="current-issue-header">
+            <h3><span class="en-text">Archives</span><span class="bn-text">আর্কাইভ</span></h3>
+            <div class="issue-meta"><span class="en-text">All published volumes and issues of JARD</span><span class="bn-text">JARD-এর সকল প্রকাশিত খণ্ড ও সংখ্যা</span></div>
+          </div>
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="archive-vol-card">
+                <div class="avc-header">
+                  <span class="vol"><span class="en-text">Volume 1</span><span class="bn-text">খণ্ড ১</span></span>
+                  <span class="yr">2026</span>
+                </div>
+                <div class="avc-issues">
+                  <div class="avc-issue-row">
+                    <a href="#" onclick="switchTab('current');return false;"><span class="en-text">Issue 1 — June 2026</span><span class="bn-text">সংখ্যা ১ — জুন ২০২৬</span></a>
+                    <span class="art-count">7 <span class="en-text">articles</span><span class="bn-text">আর্টিকেল</span></span>
+                  </div>
+                  <div class="avc-issue-row" style="color:var(--text-muted)">
+                    <span><span class="en-text">Issue 2 — December 2026</span><span class="bn-text">সংখ্যা ২ — ডিসেম্বর ২০২৬</span> &nbsp;<small style="color:#c0392b"><span class="en-text">(Upcoming)</span><span class="bn-text">(আসছে)</span></small></span>
+                    <span class="art-count">—</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <div style="background:var(--butter-light);border:1.5px dashed #e0d890;border-radius:var(--radius);padding:22px 24px;text-align:center">
+                <i class="bi bi-hourglass-split" style="font-size:1.8rem;color:var(--green);display:block;margin-bottom:8px"></i>
+                <div style="color:var(--green);font-weight:700;font-size:0.9rem;margin-bottom:4px"><span class="en-text">JARD is a new journal — more volumes coming soon</span><span class="bn-text">JARD একটি নতুন জার্নাল — শীঘ্রই আরও সংখ্যা আসছে</span></div>
+                <div style="color:var(--text-muted);font-size:0.82rem"><span class="en-text">Submit your manuscript for December 2026 issue</span><span class="bn-text">ডিসেম্বর ২০২৬ সংখ্যার জন্য পাণ্ডুলিপি জমা দিন</span></div>
+                <a href="#" onclick="switchTab('submit');return false;" class="btn-green mt-3" style="font-size:0.83rem;padding:9px 20px"><i class="bi bi-upload"></i><span class="en-text">Submit Now</span><span class="bn-text">এখনই জমা দিন</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SUBMISSION PANEL ────────────────── -->
+        <div id="panel-submit" class="tab-panel submission-panel">
+
+          <!-- ══ JARD SPLASH BANNER ═══════════════════════════ -->
+          <div style="background:linear-gradient(135deg,#011f1b 0%,var(--green) 40%,var(--green-light) 75%,#036b60 100%);border-radius:var(--radius);padding:36px 28px 30px;margin-bottom:28px;position:relative;overflow:hidden;border-bottom:4px solid var(--butter);">
+            <!-- Decorative grid overlay -->
+            <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,239,179,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,239,179,0.04) 1px,transparent 1px);background-size:36px 36px;pointer-events:none;border-radius:var(--radius);"></div>
+            <!-- Glow circles -->
+            <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,239,179,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+            <div style="position:relative;z-index:1;text-align:center;">
+              <!-- Badge -->
+              <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,239,179,0.12);border:1px solid rgba(255,239,179,0.35);color:var(--butter);font-size:0.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:30px;margin-bottom:20px;">
+                <i class="bi bi-upload"></i>
+                <span class="en-text">Online Manuscript Submission</span>
+                <span class="bn-text">অনলাইন পাণ্ডুলিপি জমা</span>
+              </div>
+              <!-- Logo -->
+              <div style="width:68px;height:68px;border-radius:50%;background:var(--butter);box-shadow:0 0 0 6px rgba(255,239,179,0.15),0 0 0 12px rgba(255,239,179,0.07);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;color:var(--green);margin:0 auto 18px;letter-spacing:-0.5px;">JARD</div>
+              <!-- Title -->
+              <div style="color:#fff;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:800;line-height:1.2;margin-bottom:4px;">
+                <span class="en-text">Bangladesh Journal of</span>
+                <span class="bn-text">বাংলাদেশ জার্নাল অব</span>
+              </div>
+              <div style="color:var(--butter);font-size:clamp(1rem,2vw,1.5rem);font-weight:800;line-height:1.2;margin-bottom:16px;">
+                <span class="en-text">Applied Research &amp; Development</span>
+                <span class="bn-text">অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট</span>
+              </div>
+              <!-- Divider -->
+              <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0;">
+                <span style="height:1px;width:44px;background:rgba(255,239,179,0.35);display:block;"></span>
+                <i class="bi bi-diamond-fill" style="color:var(--butter);font-size:0.5rem;"></i>
+                <span style="height:1px;width:44px;background:rgba(255,239,179,0.35);display:block;"></span>
+              </div>
+              <!-- Meta -->
+              <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:5px 20px;margin-bottom:14px;">
+                <span style="color:rgba(255,255,255,0.75);font-size:0.8rem;display:flex;align-items:center;gap:5px;"><i class="bi bi-journal-bookmark"></i><strong style="color:var(--butter)">Vol. 1 &middot; Issue 1</strong></span>
+                <span style="color:rgba(255,255,255,0.75);font-size:0.8rem;display:flex;align-items:center;gap:5px;"><i class="bi bi-calendar3"></i>June 2026</span>
+                <span style="color:var(--butter);font-weight:700;font-size:0.8rem;display:flex;align-items:center;gap:5px;"><i class="bi bi-building"></i><span class="en-text">Published by</span><span class="bn-text">প্রকাশিত</span> <strong>SARD BD</strong></span>
+              </div>
+              <!-- Tags -->
+              <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;">
+                <span style="background:rgba(255,239,179,0.12);border:1px solid rgba(255,239,179,0.25);color:rgba(255,255,255,0.8);font-size:0.68rem;font-weight:600;padding:3px 12px;border-radius:20px;display:flex;align-items:center;gap:4px;"><i class="bi bi-patch-check"></i> Double-Blind Peer Review</span>
+                <span style="background:rgba(255,239,179,0.12);border:1px solid rgba(255,239,179,0.25);color:rgba(255,255,255,0.8);font-size:0.68rem;font-weight:600;padding:3px 12px;border-radius:20px;display:flex;align-items:center;gap:4px;"><i class="bi bi-globe"></i> Open Access</span>
+                <span style="background:var(--butter);color:var(--green);font-size:0.68rem;font-weight:700;padding:3px 12px;border-radius:20px;display:flex;align-items:center;gap:4px;"><i class="bi bi-clock-history"></i> <span class="en-text">Review: 4–6 weeks</span><span class="bn-text">রিভিউ: ৪–৬ সপ্তাহ</span></span>
+              </div>
+            </div>
+          </div>
+          <!-- ══ END JARD SPLASH ════════════════════════════════ -->
+
+          <!-- Guidelines box -->
+          <div style="background:var(--butter-light);border:1.5px solid #e0d890;border-radius:var(--radius);padding:16px 20px;margin-bottom:24px">
+            <div style="font-weight:700;color:var(--green);font-size:0.88rem;margin-bottom:8px"><i class="bi bi-info-circle me-2"></i><span class="en-text">Before You Submit</span><span class="bn-text">জমা দেওয়ার আগে</span></div>
+            <ul style="margin:0;padding-left:18px;color:var(--text-muted);font-size:0.82rem;line-height:1.8">
+              <li><span class="en-text">Manuscript must be in English, MS Word format (.doc or .docx)</span><span class="bn-text">পাণ্ডুলিপি ইংরেজিতে, MS Word ফরম্যাটে হতে হবে</span></li>
+              <li><span class="en-text">Word limit: Original article 3000–4000 words; Review 4000–5000; Case report 1500–2000</span><span class="bn-text">শব্দ সীমা: মৌলিক গবেষণা ৩০০০–৪০০০; রিভিউ ৪০০০–৫০০০; কেস রিপোর্ট ১৫০০–২০০০</span></li>
+              <li><span class="en-text">All authors must approve the final manuscript before submission</span><span class="bn-text">জমা দেওয়ার আগে সকল লেখককে চূড়ান্ত পাণ্ডুলিপি অনুমোদন করতে হবে</span></li>
+              <li><span class="en-text">APC: USD 50 — payable only after acceptance</span><span class="bn-text">APC: USD ৫০ — শুধুমাত্র গৃহীত হওয়ার পরে প্রযোজ্য</span></li>
+              <li><span class="en-text">Review time: 4–6 weeks</span><span class="bn-text">রিভিউ সময়: ৪–৬ সপ্তাহ</span></li>
+            </ul>
+          </div>
+
+          <form onsubmit="submitForm(event)">
+            <!-- Step 1: Manuscript Info -->
+            <div class="form-section">
+              <div class="step-badge"><span class="en-text">Step 1</span><span class="bn-text">ধাপ ১</span></div>
+              <h5><i class="bi bi-file-text me-2"></i><span class="en-text">Manuscript Information</span><span class="bn-text">পাণ্ডুলিপির তথ্য</span></h5>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label"><span class="en-text">Full Title</span><span class="bn-text">পূর্ণ শিরোনাম</span> <span class="required-star">*</span></label>
+                  <input type="text" class="form-control" placeholder="Full title of your manuscript" required/>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="en-text">Running Title</span><span class="bn-text">সংক্ষিপ্ত শিরোনাম</span></label>
+                  <input type="text" class="form-control" placeholder="Short running title (max 50 characters)"/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><span class="en-text">Manuscript Type</span><span class="bn-text">পাণ্ডুলিপির ধরন</span> <span class="required-star">*</span></label>
+                  <select class="form-select" required>
+                    <option value="">-- <span class="en-text">Select type</span> --</option>
+                    <option>Original Article</option>
+                    <option>Review Article</option>
+                    <option>Case Report</option>
+                    <option>Short Communication</option>
+                    <option>Letter to the Editor</option>
+                    <option>Editorial</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><span class="en-text">Subject Area</span><span class="bn-text">বিষয় ক্ষেত্র</span> <span class="required-star">*</span></label>
+                  <select class="form-select" required>
+                    <option value="">-- <span class="en-text">Select area</span> --</option>
+                    <option>Public Health & Epidemiology</option>
+                    <option>Environmental Health</option>
+                    <option>Maternal & Child Health</option>
+                    <option>Non-Communicable Diseases</option>
+                    <option>Community Health</option>
+                    <option>Health Systems Research</option>
+                    <option>Clinical Research</option>
+                    <option>Nutrition</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="en-text">Abstract</span><span class="bn-text">সারসংক্ষেপ</span> <span class="required-star">*</span></label>
+                  <textarea class="form-control" rows="5" placeholder="Structured abstract: Background, Methods, Results, Conclusion (max 300 words)" required></textarea>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="en-text">Keywords</span><span class="bn-text">কীওয়ার্ড</span> <span class="required-star">*</span></label>
+                  <input type="text" class="form-control" placeholder="3–6 keywords, comma separated" required/>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="en-text">Upload Manuscript File (.doc / .docx)</span><span class="bn-text">পাণ্ডুলিপি ফাইল আপলোড</span> <span class="required-star">*</span></label>
+                  <input type="file" class="form-control" accept=".doc,.docx" required/>
+                  <div class="form-text" style="font-size:0.75rem;color:var(--text-muted);margin-top:5px"><span class="en-text">Max file size: 10MB. Format: .doc or .docx</span><span class="bn-text">সর্বোচ্চ ফাইল সাইজ: ১০ MB. ফরম্যাট: .doc বা .docx</span></div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="en-text">Cover Letter (optional)</span><span class="bn-text">কভার লেটার (ঐচ্ছিক)</span></label>
+                  <textarea class="form-control" rows="3" placeholder="Brief cover letter to the editor (optional)"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Corresponding Author -->
+            <div class="form-section">
+              <div class="step-badge"><span class="en-text">Step 2</span><span class="bn-text">ধাপ ২</span></div>
+              <h5><i class="bi bi-person-badge me-2"></i><span class="en-text">Corresponding Author</span><span class="bn-text">যোগাযোগকারী লেখক</span></h5>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label"><span class="en-text">Full Name</span><span class="bn-text">পূর্ণ নাম</span> <span class="required-star">*</span></label>
+                  <input type="text" class="form-control" placeholder="Dr. / Prof. Full Name" required/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><span class="en-text">Designation</span><span class="bn-text">পদবী</span> <span class="required-star">*</span></label>
+                  <input type="text" class="form-control" placeholder="e.g. Associate Professor" required/>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="en-text">Institution / Affiliation</span><span class="bn-text">প্রতিষ্ঠান</span> <span class="required-star">*</span></label>
+                  <input type="text" class="form-control" placeholder="Department, Institution, City, Country" required/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><span class="en-text">Email Address</span><span class="bn-text">ইমেইল</span> <span class="required-star">*</span></label>
+                  <input type="email" class="form-control" required/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><span class="en-text">Phone / WhatsApp</span><span class="bn-text">ফোন</span></label>
+                  <input type="tel" class="form-control" placeholder="+880..."/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">ORCID iD</label>
+                  <input type="text" class="form-control" placeholder="0000-0000-0000-0000"/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Country <span class="required-star">*</span></label>
+                  <input type="text" class="form-control" placeholder="Bangladesh" required/>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Co-Authors -->
+            <div class="form-section">
+              <div class="step-badge"><span class="en-text">Step 3</span><span class="bn-text">ধাপ ৩</span></div>
+              <h5><i class="bi bi-people me-2"></i><span class="en-text">Co-Authors</span><span class="bn-text">সহ-লেখক</span></h5>
+              <div id="coauthors-container">
+                <div class="row g-3 mb-3 coauthor-row">
+                  <div class="col-md-4"><label class="form-label"><span class="en-text">Name</span><span class="bn-text">নাম</span></label><input type="text" class="form-control" placeholder="Full name"/></div>
+                  <div class="col-md-4"><label class="form-label"><span class="en-text">Institution</span><span class="bn-text">প্রতিষ্ঠান</span></label><input type="text" class="form-control" placeholder="Affiliation"/></div>
+                  <div class="col-md-4"><label class="form-label">Email</label><input type="email" class="form-control" placeholder="Email"/></div>
+                </div>
+              </div>
+              <button type="button" class="btn-green-outline" style="font-size:0.8rem;padding:7px 16px" onclick="addCoAuthor()">
+                <i class="bi bi-plus-circle"></i><span class="en-text">Add Co-Author</span><span class="bn-text">সহ-লেখক যোগ করুন</span>
+              </button>
+            </div>
+
+            <!-- Step 4: Declaration -->
+            <div class="form-section">
+              <div class="step-badge"><span class="en-text">Step 4</span><span class="bn-text">ধাপ ৪</span></div>
+              <h5><i class="bi bi-shield-check me-2"></i><span class="en-text">Declaration & Ethics</span><span class="bn-text">ঘোষণা ও নীতি</span></h5>
+              <div class="row g-3">
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="chk1" required/>
+                    <label class="form-check-label" for="chk1" style="font-size:0.84rem"><span class="en-text">This manuscript has not been published and is not under consideration elsewhere</span><span class="bn-text">এই পাণ্ডুলিপি অন্য কোথাও প্রকাশিত হয়নি বা বিবেচনাধীন নেই</span></label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="chk2" required/>
+                    <label class="form-check-label" for="chk2" style="font-size:0.84rem"><span class="en-text">All authors have read, approved the manuscript and agree to the submission</span><span class="bn-text">সকল লেখক পাণ্ডুলিপি পড়েছেন, অনুমোদন করেছেন এবং জমা দিতে সম্মত</span></label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="chk3" required/>
+                    <label class="form-check-label" for="chk3" style="font-size:0.84rem"><span class="en-text">The study was conducted ethically and all required approvals were obtained</span><span class="bn-text">গবেষণাটি নৈতিকভাবে পরিচালিত হয়েছে এবং সকল প্রয়োজনীয় অনুমোদন নেওয়া হয়েছে</span></label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="chk4" required/>
+                    <label class="form-check-label" for="chk4" style="font-size:0.84rem"><span class="en-text">I agree to pay the APC of USD 50 only if the manuscript is accepted for publication</span><span class="bn-text">পাণ্ডুলিপি গৃহীত হলেই কেবল USD ৫০ APC প্রদান করতে সম্মত আছি</span></label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span class="en-text">Ethical Approval Number (if applicable)</span><span class="bn-text">নৈতিক অনুমোদন নম্বর (প্রযোজ্য হলে)</span></label>
+                  <input type="text" class="form-control" placeholder="e.g. IRB-2026-001"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn-green" style="font-size:0.95rem;padding:14px 40px">
+                <i class="bi bi-upload"></i>
+                <span class="en-text">Submit Manuscript</span><span class="bn-text">পাণ্ডুলিপি জমা দিন</span>
+              </button>
+              <p style="color:var(--text-muted);font-size:0.78rem;margin-top:10px"><span class="en-text">You will receive a confirmation email within 24 hours.</span><span class="bn-text">২৪ ঘণ্টার মধ্যে নিশ্চিতকরণ ইমেইল পাবেন।</span></p>
+            </div>
+          </form>
+
+          <!-- Success message (hidden) -->
+          <div id="submit-success" style="display:none;background:#e8f5e9;border:1.5px solid #66bb6a;border-radius:var(--radius);padding:24px;text-align:center;margin-top:20px">
+            <i class="bi bi-check-circle-fill" style="font-size:2rem;color:#2e7d32;display:block;margin-bottom:10px"></i>
+            <div style="font-weight:800;color:#1b5e20;font-size:1rem;margin-bottom:6px"><span class="en-text">Manuscript Submitted Successfully!</span><span class="bn-text">পাণ্ডুলিপি সফলভাবে জমা হয়েছে!</span></div>
+            <div style="color:#388e3c;font-size:0.85rem"><span class="en-text">Your tracking ID will be emailed to you within 24 hours. Thank you for submitting to JARD.</span><span class="bn-text">আপনার ট্র্যাকিং আইডি ২৪ ঘণ্টার মধ্যে ইমেইলে পাঠানো হবে। JARD-এ জমা দেওয়ার জন্য ধন্যবাদ।</span></div>
+          </div>
+        </div>
+
+        <!-- ── ABOUT JARD PANEL ─────────────────── -->
+        <div id="panel-about" class="tab-panel about-panel">
+          <div class="current-issue-header">
+            <h3><span class="en-text">About JARD</span><span class="bn-text">JARD সম্পর্কে</span></h3>
+            <div class="issue-meta">Bangladesh Journal of Applied Research &amp; Development</div>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-lg-8">
+              <h5 style="color:var(--green);font-weight:700;font-size:0.95rem;margin-bottom:10px"><span class="en-text">About the Journal</span><span class="bn-text">জার্নালটি সম্পর্কে</span></h5>
+              <p style="font-size:0.88rem;line-height:1.8;color:#333;margin-bottom:16px">
+                <span class="en-text">The <strong>Bangladesh Journal of Applied Research & Development (JARD)</strong> is an international, double-blind peer-reviewed, open-access scientific journal published biannually (June and December) by the Society for Applied Research and Development (SARD BD). JARD aims to publish high-quality research on public health, epidemiology, environmental health, maternal and child health, non-communicable diseases, health systems research, and development studies from Bangladesh and beyond.</span>
+                <span class="bn-text"><strong>বাংলাদেশ জার্নাল অব অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট (JARD)</strong> হল SARD BD কর্তৃক বছরে দুইবার (জুন ও ডিসেম্বর) প্রকাশিত একটি আন্তর্জাতিক, ডাবল-ব্লাইন্ড পিয়ার-রিভিউড, ওপেন-অ্যাক্সেস বৈজ্ঞানিক জার্নাল।</span>
+              </p>
+
+              <h5 style="color:var(--green);font-weight:700;font-size:0.95rem;margin-bottom:10px"><span class="en-text">Scope</span><span class="bn-text">পরিধি</span></h5>
+              <p style="font-size:0.88rem;line-height:1.8;color:#333;margin-bottom:16px">
+                <span class="en-text">JARD publishes original research articles, systematic reviews, meta-analyses, case reports, short communications, and editorials across the following areas:</span>
+                <span class="bn-text">JARD নিম্নোক্ত ক্ষেত্রে মৌলিক গবেষণা, পদ্ধতিগত পর্যালোচনা, কেস রিপোর্ট এবং সম্পাদকীয় প্রকাশ করে:</span>
+              </p>
+              <ul style="font-size:0.86rem;color:#444;line-height:2;padding-left:20px;margin-bottom:20px">
+                <li><span class="en-text">Public Health & Epidemiology</span><span class="bn-text">জনস্বাস্থ্য ও মহামারীবিদ্যা</span></li>
+                <li><span class="en-text">Environmental & Occupational Health</span><span class="bn-text">পরিবেশগত ও পেশাগত স্বাস্থ্য</span></li>
+                <li><span class="en-text">Maternal, Child & Reproductive Health</span><span class="bn-text">মাতৃ, শিশু ও প্রজনন স্বাস্থ্য</span></li>
+                <li><span class="en-text">Non-Communicable Diseases (NCDs)</span><span class="bn-text">অসংক্রামক রোগ</span></li>
+                <li><span class="en-text">Infectious Disease & Immunology</span><span class="bn-text">সংক্রামক রোগ ও ইমিউনোলজি</span></li>
+                <li><span class="en-text">Health Systems & Health Policy</span><span class="bn-text">স্বাস্থ্য ব্যবস্থা ও নীতি</span></li>
+                <li><span class="en-text">Nutrition & Food Security</span><span class="bn-text">পুষ্টি ও খাদ্য নিরাপত্তা</span></li>
+                <li><span class="en-text">Community Health & Development Studies</span><span class="bn-text">কমিউনিটি স্বাস্থ্য ও উন্নয়ন গবেষণা</span></li>
+              </ul>
+
+              <!-- Editorial Board -->
+              <h5 style="color:var(--green);font-weight:700;font-size:0.95rem;margin-bottom:14px"><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></h5>
+              <div style="background:var(--gray-bg);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px">
+                <div style="display:grid;gap:14px">
+                  <div style="border-bottom:1px solid var(--border);padding-bottom:12px">
+                    <div style="font-size:0.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:6px"><span class="en-text">Editor-in-Chief</span><span class="bn-text">প্রধান সম্পাদক</span></div>
+                    <div style="font-weight:700;color:var(--text);font-size:0.9rem">Dr. Syed Muhammad Baqui Billah</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem">SARD BD, Dhaka, Bangladesh</div>
+                  </div>
+                  <div style="border-bottom:1px solid var(--border);padding-bottom:12px">
+                    <div style="font-size:0.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:6px"><span class="en-text">Executive Editor</span><span class="bn-text">নির্বাহী সম্পাদক</span></div>
+                    <div style="font-weight:700;color:var(--text);font-size:0.9rem">Dr. H.E.M. Mahbubul Eunus</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem">SARD BD, Dhaka, Bangladesh</div>
+                  </div>
+                  <div style="border-bottom:1px solid var(--border);padding-bottom:12px">
+                    <div style="font-size:0.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:6px"><span class="en-text">Advisory Board</span><span class="bn-text">উপদেষ্টা বোর্ড</span></div>
+                    <div style="font-weight:700;color:var(--text);font-size:0.88rem;margin-bottom:2px">Prof. Shamima Parveen Lasker</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem;margin-bottom:8px">Bangladesh</div>
+                    <div style="font-weight:700;color:var(--text);font-size:0.88rem;margin-bottom:2px">Prof. Mohd. Arifuzzaman</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem">Bangladesh</div>
+                  </div>
+                  <div>
+                    <div style="font-size:0.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--green);margin-bottom:6px"><span class="en-text">Editorial Members</span><span class="bn-text">সম্পাদকীয় সদস্য</span></div>
+                    <div style="font-weight:700;color:var(--text);font-size:0.88rem;margin-bottom:2px">Dr. Sabrina Parvin Mohammad</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem;margin-bottom:8px">SARD BD, Bangladesh</div>
+                    <div style="font-weight:700;color:var(--text);font-size:0.88rem;margin-bottom:2px">Dr. Md. Mizanur Rahman</div>
+                    <div style="color:var(--text-muted);font-size:0.78rem">SARD BD, Bangladesh</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Editorial Board Auto-Slider -->
+              <div class="board-slider-wrap">
+                <div class="board-slider-track" id="boardTrack">
+                  <!-- Set 1 -->
+                  <div style="flex-shrink:0;width:110px;background:var(--green);border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">SB</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Dr. Syed M. Baqui Billah</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Editor-in-Chief</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:var(--green-light);border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">ME</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Dr. H.E.M. Mahbubul Eunus</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Executive Editor</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:#1a5c54;border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">SL</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Prof. Shamima Parveen Lasker</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Advisory Board</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:#1a5c54;border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">MA</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Prof. Mohd. Arifuzzaman</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Advisory Board</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:var(--green-dark);border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">SP</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Dr. Sabrina Parvin Mohammad</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Editorial Member</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:var(--green-dark);border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">MR</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Dr. Md. Mizanur Rahman</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Editorial Member</div>
+                  </div>
+                  <!-- Set 2 (duplicate for seamless loop) -->
+                  <div style="flex-shrink:0;width:110px;background:var(--green);border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">SB</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Dr. Syed M. Baqui Billah</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Editor-in-Chief</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:var(--green-light);border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">ME</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Dr. H.E.M. Mahbubul Eunus</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Executive Editor</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:#1a5c54;border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">SL</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Prof. Shamima Parveen Lasker</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Advisory Board</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:#1a5c54;border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">MA</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Prof. Mohd. Arifuzzaman</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Advisory Board</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:var(--green-dark);border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">SP</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Dr. Sabrina Parvin Mohammad</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Editorial Member</div>
+                  </div>
+                  <div style="flex-shrink:0;width:110px;background:var(--green-dark);border-radius:10px;text-align:center;padding:14px 8px 12px;">
+                    <div style="width:44px;height:44px;border-radius:50%;background:var(--butter);color:var(--green);font-size:.82rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;">MR</div>
+                    <div style="color:#fff;font-size:.6rem;font-weight:700;line-height:1.3;margin-bottom:3px;">Dr. Md. Mizanur Rahman</div>
+                    <div style="color:var(--butter);font-size:.53rem;font-weight:600;">Editorial Member</div>
+                  </div>
+                </div>
+              </div>
+              <div style="text-align:right;margin-bottom:4px;">
+                <a href="editorial-board.html" style="font-size:.72rem;color:var(--green);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;"><i class="bi bi-arrow-right-circle"></i> <span class="en-text">View Full Board</span><span class="bn-text">সম্পূর্ণ বোর্ড দেখুন</span></a>
+              </div>
+
+              <!-- INDEXED IN -->
+              <div style="margin-top:28px;">
+                <h5 style="color:var(--green);font-weight:700;font-size:0.95rem;margin-bottom:6px;display:flex;align-items:center;gap:7px;"><i class="bi bi-patch-check-fill"></i><span class="en-text">Indexed In</span><span class="bn-text">ইন্ডেক্সড</span></h5>
+                <div style="width:40px;height:3px;background:var(--green);border-radius:2px;margin-bottom:16px;"></div>
+
+                <!-- NLM / NIH -->
+                <div style="display:flex;align-items:center;gap:10px;background:var(--gray-bg);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:10px;">
+                  <div style="background:#000;border-radius:5px;padding:5px 9px;display:flex;align-items:center;gap:7px;flex-shrink:0;">
+                    <span style="color:#fff;font-size:.75rem;font-weight:900;letter-spacing:.5px;">NIH</span>
+                    <span style="color:#fff;font-size:.62rem;font-weight:400;border-left:1px solid rgba(255,255,255,.3);padding-left:7px;">National Library of Medicine</span>
+                  </div>
+                  <div style="font-size:.72rem;color:var(--text-muted);">NLM ID: <strong style="color:var(--green);">101591288</strong></div>
+                </div>
+
+                <!-- Logo grid -->
+                <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+                  <div style="background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:6px 12px;font-size:.85rem;font-weight:900;color:#1a1a1a;letter-spacing:-1px;">J<span style="color:#4caf50;">O</span>L</div>
+                  <div style="background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:6px 12px;font-size:.8rem;font-weight:800;color:#e05f00;">●&nbsp;DOAJ</div>
+                  <div style="background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-size:.65rem;font-weight:700;color:#1565c0;text-align:center;">IMSEAR<br><span style="font-weight:400;font-size:.55rem;color:var(--text-muted);">Index Medicus</span></div>
+                  <div style="background:#c00;border-radius:7px;padding:6px 10px;font-size:.6rem;font-weight:700;color:#fff;text-align:center;">Free medical journals<br><span style="font-weight:400;font-size:.52rem;opacity:.85;">Geneva Foundation</span></div>
+                  <div style="background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:6px 12px;font-size:.78rem;font-weight:900;color:#2c3e50;letter-spacing:.5px;">DRJI</div>
+                  <div style="background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-size:.7rem;font-weight:800;color:#c0392b;">ROAD</div>
+                  <div style="background:#1a237e;border-radius:7px;padding:6px 12px;font-size:.72rem;font-weight:800;color:#fff;">IPI</div>
+                  <div style="background:#0077b6;border-radius:7px;padding:6px 12px;font-size:.72rem;font-weight:800;color:#fff;">Globethics</div>
+                </div>
+              </div>
+
+              <!-- MEMBER -->
+              <div style="margin-top:22px;">
+                <h5 style="color:var(--green);font-weight:700;font-size:0.95rem;margin-bottom:6px;display:flex;align-items:center;gap:7px;"><i class="bi bi-building"></i><span class="en-text">Member</span><span class="bn-text">সদস্য</span></h5>
+                <div style="width:40px;height:3px;background:var(--green);border-radius:2px;margin-bottom:14px;"></div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+                  <div style="background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:6px 14px;font-size:.85rem;font-weight:900;color:#1565c0;letter-spacing:.5px;">ICMJE</div>
+                  <div style="background:#0077b6;border-radius:7px;padding:6px 12px;font-size:.72rem;font-weight:800;color:#fff;">Globethics</div>
+                  <div style="background:#fff;border:1.5px solid var(--border);border-radius:7px;padding:6px 12px;font-size:.75rem;font-weight:800;color:#2e7d32;display:flex;align-items:center;gap:5px;"><i class="bi bi-globe" style="color:#2e7d32;"></i>WAME</div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-lg-4">
+              <div class="info-box mb-3">
+                <h6><span class="en-text">Publication Ethics</span><span class="bn-text">প্রকাশনা নীতি</span></h6>
+                <p style="font-size:0.8rem;color:#555;line-height:1.7;margin:0">
+                  <span class="en-text">JARD follows COPE (Committee on Publication Ethics) guidelines. Plagiarism, data fabrication, and duplicate submission are grounds for immediate rejection and retraction.</span>
+                  <span class="bn-text">JARD COPE নির্দেশিকা অনুসরণ করে। প্লেজিয়ারিজম, তথ্য জালিয়াতি এবং দ্বৈত জমা প্রত্যাখ্যানের কারণ।</span>
+                </p>
+              </div>
+              <div class="info-box">
+                <h6>Contact</h6>
+                <div class="info-row"><span class="ik">Email</span><span class="iv" style="font-size:0.75rem">hemeunus@gmail.com</span></div>
+                <div class="info-row"><span class="ik">Phone</span><span class="iv">+880 1963-851090</span></div>
+                <div class="info-row"><span class="ik">Website</span><span class="iv">www.sardbd.info</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /col -->
+    </div><!-- /row -->
+  </div><!-- /container -->
+</div>
+
+<!-- ══ FOOTER ═════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="foot-brand">SARD BD / JARD</div>
+        <p class="foot-desc"><span class="en-text">Bangladesh Journal of Applied Research & Development — published biannually by SARD BD.</span><span class="bn-text">বাংলাদেশ জার্নাল অব অ্যাপ্লায়েড রিসার্চ অ্যান্ড ডেভেলপমেন্ট — SARD BD কর্তৃক দ্বিবার্ষিক প্রকাশিত।</span></p>
+        <div style="color:rgba(255,255,255,0.45);font-size:0.8rem;line-height:1.9">
+          <div><i class="bi bi-envelope me-2" style="color:var(--butter)"></i>hemeunus@gmail.com</div>
+          <div><i class="bi bi-telephone me-2" style="color:var(--butter)"></i>+880 1963-851090</div>
+          <div><i class="bi bi-globe me-2" style="color:var(--butter)"></i>www.sardbd.info</div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h6>JARD</h6>
+        <ul>
+          <li><a href="#" onclick="switchTab('current');return false;"><i class="bi bi-chevron-right"></i>Current Issue</a></li>
+          <li><a href="#" onclick="switchTab('archive');return false;"><i class="bi bi-chevron-right"></i>Archives</a></li>
+          <li><a href="#" onclick="switchTab('submit');return false;"><i class="bi bi-chevron-right"></i>Submit</a></li>
+          <li><a href="#" onclick="switchTab('about');return false;"><i class="bi bi-chevron-right"></i>About JARD</a></li>
+          <li><a href="#" onclick="switchTab('about');return false;"><i class="bi bi-chevron-right"></i>Editorial Board</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h6><span class="en-text">Organization</span><span class="bn-text">সংগঠন</span></h6>
+        <ul>
+          <li><a href="index.html"><i class="bi bi-chevron-right"></i>SARD BD Home</a></li>
+          <li><a href="about.html"><i class="bi bi-chevron-right"></i>About SARD</a></li>
+          <li><a href="#"><i class="bi bi-chevron-right"></i>Research Team</a></li>
+          <li><a href="#"><i class="bi bi-chevron-right"></i>Training</a></li>
+          <li><a href="#"><i class="bi bi-chevron-right"></i>Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6><span class="en-text">Call for Submissions</span><span class="bn-text">পাণ্ডুলিপি আহ্বান</span></h6>
+        <p style="color:rgba(255,255,255,0.45);font-size:0.8rem;line-height:1.7;margin-bottom:14px"><span class="en-text">JARD is accepting manuscripts for the December 2026 issue. Submit your research by October 31, 2026.</span><span class="bn-text">JARD ডিসেম্বর ২০২৬ সংখ্যার জন্য পাণ্ডুলিপি গ্রহণ করছে।</span></p>
+        <a href="#" onclick="switchTab('submit');return false;" style="background:var(--butter);color:var(--green);font-weight:700;font-size:0.82rem;padding:9px 20px;border-radius:7px;text-decoration:none;display:inline-flex;align-items:center;gap:7px"><i class="bi bi-upload"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">জমা দিন</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom mt-4">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p>© 2026 <a href="index.html">SARD BD</a> · <a href="journal.html">JARD</a>. <span class="en-text">All rights reserved.</span><span class="bn-text">সর্বস্বত্ব সংরক্ষিত।</span></p>
+      <p style="color:rgba(255,255,255,.35);font-size:.72rem;"><span class="en-text">Designed &amp; Developed by</span><span class="bn-text">ডিজাইন ও ডেভেলপমেন্ট:</span> <a href="https://botbari.com" target="_blank" rel="noopener" style="color:var(--butter);font-weight:600;text-decoration:none;">Botbari.com</a></p>
+      <p>ISSN: — (Pending) · www.sardbd.info</p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/8801963851090" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  /* ── Tab switching ── */
+  function switchTab(tab) {
+    ['current','archive','submit','about'].forEach(function(t) {
+      document.getElementById('tab-' + t).classList.remove('active');
+      var p = document.getElementById('panel-' + t);
+      if (p) { p.style.display = 'none'; p.classList.remove('show'); }
+    });
+    document.getElementById('tab-' + tab).classList.add('active');
+    var panel = document.getElementById('panel-' + tab);
+    if (panel) { panel.style.display = 'block'; panel.classList.add('show'); }
+    window.scrollTo({ top: document.querySelector('.journal-subnav').offsetTop - 60, behavior: 'smooth' });
+  }
+
+  /* ── Abstract toggle ── */
+  /* ── Journal Search ── */
+  function journalSearch(q) {
+    var term = q.trim().toLowerCase();
+    var clearBtn = document.getElementById('search-clear');
+    var noResult = document.getElementById('search-no-result');
+    clearBtn.style.display = term ? 'block' : 'none';
+    var items = document.querySelectorAll('.article-item');
+    var visible = 0;
+    items.forEach(function(item){
+      var title = (item.querySelector('.article-title')||{}).textContent||'';
+      var authors = (item.querySelector('.article-authors')||{}).textContent||'';
+      var match = !term || title.toLowerCase().indexOf(term) > -1 || authors.toLowerCase().indexOf(term) > -1;
+      item.classList.toggle('hidden', !match);
+      if(match) visible++;
+    });
+    // show/hide group titles
+    document.querySelectorAll('.article-group').forEach(function(g){
+      var anyVisible = g.querySelector('.article-item:not(.hidden)');
+      g.style.display = anyVisible ? '' : 'none';
+    });
+    // no result message
+    noResult.style.display = (term && visible === 0) ? 'block' : 'none';
+    document.getElementById('search-term-display').textContent = q.trim();
+  }
+  function clearSearch() {
+    document.getElementById('journal-search').value = '';
+    journalSearch('');
+  }
+
+  function toggleAbstract(btn) {
+    var box = btn.closest('.article-item').querySelector('.abstract-box');
+    box.classList.toggle('show');
+    btn.innerHTML = box.classList.contains('show')
+      ? '<i class="bi bi-chevron-up"></i> <span class="en-text">Hide</span><span class="bn-text">লুকান</span>'
+      : '<i class="bi bi-text-left"></i> Abstract';
+  }
+
+  /* ── Add co-author ── */
+  function addCoAuthor() {
+    var c = document.getElementById('coauthors-container');
+    var row = document.createElement('div');
+    row.className = 'row g-3 mb-3 coauthor-row';
+    row.innerHTML = '<div class="col-md-4"><input type="text" class="form-control" placeholder="Full name"/></div>'
+      + '<div class="col-md-4"><input type="text" class="form-control" placeholder="Affiliation"/></div>'
+      + '<div class="col-md-3"><input type="email" class="form-control" placeholder="Email"/></div>'
+      + '<div class="col-md-1 d-flex align-items-end"><button type="button" class="btn btn-outline-danger btn-sm" onclick="this.closest(\'.coauthor-row\').remove()"><i class="bi bi-x"></i></button></div>';
+    c.appendChild(row);
+  }
+
+  /* ── Form submit ── */
+  function submitForm(e) {
+    e.preventDefault();
+    document.querySelector('form').style.display = 'none';
+    document.getElementById('submit-success').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('submit-success').offsetTop - 80, behavior: 'smooth' });
+  }
+
+  /* ── Language ── */
+  function setLang(lang) {
+    document.body.classList.toggle('bn', lang === 'bn');
+    document.documentElement.lang = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-bn').classList.toggle('active', lang === 'bn');
+    localStorage.setItem('sardbd_lang', lang);
+  }
+  const saved = localStorage.getItem('sardbd_lang');
+  if (saved === 'bn') setLang('bn');
+
+  /* Init: show only current panel, then apply URL tab if present */
+  ['archive','submit','about'].forEach(function(t) {
+    var p = document.getElementById('panel-' + t);
+    if (p) p.style.display = 'none';
+  });
+  var urlTab = new URLSearchParams(window.location.search).get('tab')
+    || (window.location.hash ? window.location.hash.replace('#','') : null);
+  if (urlTab) switchTab(urlTab);
+</script>
+</body>
+</html>
