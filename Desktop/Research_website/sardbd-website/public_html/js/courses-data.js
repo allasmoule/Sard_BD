@@ -320,6 +320,11 @@ var COURSE_PRICES = [
   6000, 5000                                    // Special Programs
 ];
 
-// Attach prices to COURSES objects
-(function(){ COURSES.forEach(function(c,i){ c.price = COURSE_PRICES[i] || 2500; }); })();
+// Attach prices AND index to every COURSES object (idx used by enroll/course pages)
+(function(){
+  COURSES.forEach(function(c,i){
+    c.price = COURSE_PRICES[i] || 2500;
+    c.idx   = i; // permanent index — never changes even after filter/slice
+  });
+})();
 

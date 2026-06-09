@@ -287,13 +287,20 @@
   };
 
   /* ────────────────────────────────────────────
-     2.  LOAD COURSE FROM URL ?id=
+     2.  LOAD COURSE — URL param → sessionStorage fallback
   ──────────────────────────────────────────── */
   var courseIdx = null;
   var course    = null;
 
+  // Primary: read from URL ?id=X
   var rawId = new URLSearchParams(window.location.search).get('id');
   var numId = parseInt(rawId, 10);
+
+  // Fallback: read from sessionStorage (set when clicking enroll anywhere)
+  if (isNaN(numId) || numId < 0) {
+    var ss = parseInt(sessionStorage.getItem('sardEnrollId'), 10);
+    if (!isNaN(ss) && ss >= 0) numId = ss;
+  }
 
   if (!isNaN(numId) && numId >= 0
       && typeof COURSES !== 'undefined'
@@ -301,6 +308,8 @@
     courseIdx = numId;
     course    = COURSES[numId];
     if (typeof course.price === 'undefined') course.price = 2500;
+    // Persist for safety
+    sessionStorage.setItem('sardEnrollId', String(numId));
   }
 
   /* ────────────────────────────────────────────

@@ -379,7 +379,7 @@ function renderPage(){
               <span class="hero-pill"><i class="bi bi-patch-check-fill pi"></i>${isBn?'সার্টিফিকেট':'Certificate'}</span>
             </div>
             <div class="hero-cta">
-              <a href="enroll.html?id=${idx}" class="btn-enroll-hero">
+              <a href="enroll.html?id=${idx}" onclick="sessionStorage.setItem('sardEnrollId','${idx}')" class="btn-enroll-hero">
                 <i class="bi bi-pencil-square"></i>
                 <span class="en-text">Enroll Now</span><span class="bn-text">এখনই ভর্তি হন</span>
               </a>
@@ -551,7 +551,7 @@ function renderPage(){
         <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:4px;"><span class="en-text">Duration</span><span class="bn-text">সময়কাল</span></div>
         <div style="font-size:1.6rem;font-weight:900;color:${c.color};">${c.duration}</div>
       </div>
-      <a href="enroll.html?id=${idx}" style="display:flex;align-items:center;justify-content:center;gap:8px;background:${c.color};color:#fff;font-weight:800;font-size:0.9rem;padding:13px 0;border-radius:8px;text-decoration:none;margin-bottom:10px;transition:opacity .2s;" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+      <a href="enroll.html?id=${idx}" onclick="sessionStorage.setItem('sardEnrollId','${idx}')" style="display:flex;align-items:center;justify-content:center;gap:8px;background:${c.color};color:#fff;font-weight:800;font-size:0.9rem;padding:13px 0;border-radius:8px;text-decoration:none;margin-bottom:10px;transition:opacity .2s;" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
         <i class="bi bi-cart-fill"></i>
         <span class="en-text">Enroll Now — ৳ ${c.price ? c.price.toLocaleString('en-BD') : ''}</span><span class="bn-text">ভর্তি হন — ৳ ${c.price ? c.price.toLocaleString('en-BD') : ''}</span>
       </a>
@@ -594,7 +594,7 @@ function renderPage(){
       <div class="container">
         <h2><span class="en-text">Ready to <em>start your journey?</em></span><span class="bn-text">আপনার <em>যাত্রা শুরু</em> করতে প্রস্তুত?</span></h2>
         <p><span class="en-text">Join ${c.enrolled} learners who have already enrolled in this course.</span><span class="bn-text">${c.enrolled} শিক্ষার্থীর সাথে যোগ দিন যারা ইতিমধ্যে এই কোর্সে ভর্তি হয়েছেন।</span></p>
-        <a href="enroll.html?id=${idx}" class="btn-cta-big">
+        <a href="enroll.html?id=${idx}" onclick="sessionStorage.setItem('sardEnrollId','${idx}')" class="btn-cta-big">
           <i class="bi bi-cart-fill"></i>
           <span class="en-text">Enroll Now — ৳ ${c.price ? c.price.toLocaleString('en-BD') : ''}</span>
           <span class="bn-text">এখনই ভর্তি হন — ৳ ${c.price ? c.price.toLocaleString('en-BD') : ''}</span>

@@ -1351,6 +1351,7 @@ function starsHtmlHome(r){
 function buildHomeCard(idx){
   var c = COURSES[idx];
   if(!c) return '';
+  var realIdx = (typeof c.idx !== 'undefined') ? c.idx : idx; // use c.idx if set
   var isBn = document.body.classList.contains('bn');
   var name = isBn ? c.titleBn : c.title;
   var desc = isBn ? c.descBn : c.desc;
@@ -1358,7 +1359,7 @@ function buildHomeCard(idx){
   var badgeHtml = c.badge ? '<span class="tc-badge">🔥 Popular</span>' : '';
   // Use div+onclick for card (not nested <a>), buttons are proper links
   return '<div class="col-md-6">'
-    +'<div class="training-card" onclick="location.href=\'course.html?id='+idx+'\'">'
+    +'<div class="training-card" onclick="location.href=\'course.html?id='+realIdx+'\'">'
     +'<div class="tc-thumb" style="background:linear-gradient(135deg,'+c.color+'dd,'+c.color+'88);">'
     +'<i class="bi '+c.icon+'"></i>'+badgeHtml
     +'</div>'
@@ -1376,11 +1377,11 @@ function buildHomeCard(idx){
     +'<span class="tc-dur"><i class="bi bi-clock"></i> '+c.duration+'</span>'
     +'</div>'
     +'<div class="tc-actions" onclick="event.stopPropagation();">'
-    +'<a href="course.html?id='+idx+'" class="tc-btn-more">'
+    +'<a href="course.html?id='+realIdx+'" class="tc-btn-more">'
     +'<i class="bi bi-eye-fill"></i>'
     +'<span class="en-text">Details</span><span class="bn-text">বিস্তারিত</span>'
     +'</a>'
-    +'<a href="enroll.html?id='+idx+'" class="tc-btn-enroll">'
+    +'<a href="enroll.html?id='+realIdx+'" class="tc-btn-enroll">'
     +'<i class="bi bi-cart-fill"></i>'
     +'<span class="en-text">Enroll — '+priceStr+'</span><span class="bn-text">ভর্তি — '+priceStr+'</span>'
     +'</a>'

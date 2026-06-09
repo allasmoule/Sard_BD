@@ -616,9 +616,9 @@ function starsHtml(r) {
 
 function fmtPrice(p){ return '৳ '+p.toLocaleString('en-BD'); }
 
-function buildCard(c, realIdx) {
+function buildCard(c) {
   const isBn = document.body.classList.contains('bn');
-  // realIdx passed directly — no indexOf needed
+  const realIdx = c.idx; // set by courses-data.js IIFE, always correct
   const badgeHtml = c.badge ? `<span class="cc-badge badge-${c.badge}">${c.badge==='popular'?'🔥 Popular':c.badge==='new'?'✦ New':'⭐ Featured'}</span>` : '';
   const priceLabel = isBn ? 'কোর্স ফি' : 'Course Fee';
   return `
@@ -653,7 +653,7 @@ function buildCard(c, realIdx) {
             <i class="bi bi-eye-fill"></i>
             <span class="en-text">View Details</span><span class="bn-text">বিস্তারিত</span>
           </a>
-          <a href="enroll.html?id=${realIdx}" class="cc-btn-enroll">
+          <a href="enroll.html?id=${realIdx}" class="cc-btn-enroll" onclick="sessionStorage.setItem('sardEnrollId','${realIdx}')">
             <i class="bi bi-cart-fill"></i>
             <span class="en-text">Enroll — ${fmtPrice(c.price)}</span><span class="bn-text">ভর্তি — ${fmtPrice(c.price)}</span>
           </a>
@@ -667,7 +667,7 @@ function renderCourses() {
   if(!grid) return;
   const filtered = currentFilter === 'all' ? COURSES : COURSES.filter(c => c.cat === currentFilter);
   const toShow = showAll ? filtered : filtered.slice(0, VISIBLE_INIT);
-  grid.innerHTML = toShow.map(c => buildCard(c, COURSES.indexOf(c))).join('');
+  grid.innerHTML = toShow.map(c => buildCard(c)).join('');
   const wrap = document.getElementById('viewMoreWrap');
   if(!wrap) return;
   if(filtered.length <= VISIBLE_INIT || showAll) {
