@@ -196,8 +196,6 @@
     .toggle input:checked + .toggle-slider:before{transform:translateX(18px);}
 
     /* ── Publish Form ── */
-    #publishModal .form-group label{font-size:.75rem;}
-    #publishModal input{font-size:.82rem;}
     /* Submission detail tabs */
     .sub-tab{background:none;border:none;padding:10px 16px;font-size:.78rem;font-weight:600;color:#6c757d;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.15s;}
     .sub-tab:hover{color:#013e37;}
@@ -965,34 +963,6 @@
   </div>
 </div>
 
-<!-- Publish Modal -->
-<div class="modal-overlay" id="publishModal">
-  <div class="modal-box" style="max-width:520px;">
-    <div class="modal-hdr">
-      <h6><i class="bi bi-check-circle-fill me-2" style="color:#059669;"></i>Approve & Publish Article</h6>
-      <button class="modal-close" onclick="closeModal('publishModal')">×</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="pubSubId"/>
-      <p style="font-size:.78rem;color:#6c757d;margin-bottom:18px;">Fill in publication details. The article will appear on journal.html automatically.</p>
-      <div class="form-row">
-        <div class="form-group"><label>Volume <span class="req">*</span></label><input type="text" id="pubVol" placeholder="e.g. 1"/></div>
-        <div class="form-group"><label>Issue <span class="req">*</span></label><input type="text" id="pubIssue" placeholder="e.g. 1"/></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Year <span class="req">*</span></label><input type="text" id="pubYear" placeholder="2025"/></div>
-        <div class="form-group"><label>Pages</label><input type="text" id="pubPages" placeholder="e.g. 1–12"/></div>
-      </div>
-      <div class="form-group"><label>DOI (optional)</label><input type="text" id="pubDoi" placeholder="10.xxxxx/…"/></div>
-      <div class="form-group"><label>PDF Link (optional)</label><input type="text" id="pubPdf" placeholder="Google Drive / server link"/></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-sm-outline" onclick="closeModal('publishModal')">Cancel</button>
-      <button class="btn-submit" onclick="publishArticle()"><i class="bi bi-check-circle-fill me-1"></i>Publish Now</button>
-    </div>
-  </div>
-</div>
-
 <!-- Reject Modal -->
 <div class="modal-overlay" id="rejectModal">
   <div class="modal-box" style="max-width:440px;">
@@ -1492,43 +1462,9 @@ function changeSubStatus(subId, status){
 }
 
 function openPublish(subId){
-  document.getElementById('pubSubId').value=subId;
-  document.getElementById('pubYear').value=new Date().getFullYear();
-  openModal('publishModal');
-}
-
-function publishArticle(){
-  var subId = document.getElementById('pubSubId').value;
-  var vol   = document.getElementById('pubVol').value.trim();
-  var issue = document.getElementById('pubIssue').value.trim();
-  var year  = document.getElementById('pubYear').value.trim();
-  if(!vol||!issue||!year){toast('Volume, Issue and Year are required.','error');return;}
-
-  var subs = getData('sardSubmissions');
-  var sub  = subs.find(function(s){return s.subId===subId;});
-  if(!sub){toast('Submission not found.','error');return;}
-
-  var articleId = 'JARD-'+year+'-'+uid().slice(-4);
-  var article = {
-    articleId:articleId, subId:subId,
-    title:sub.title, authors:sub.authors, affiliation:sub.affiliation||'',
-    abstract:sub.abstract||'', keywords:sub.keywords||'', type:sub.type||'',
-    volume:vol, issue:issue, year:year,
-    pages:document.getElementById('pubPages').value.trim(),
-    doi:document.getElementById('pubDoi').value.trim(),
-    pdfLink:document.getElementById('pubPdf').value.trim(),
-    publishedDate:new Date().toISOString()
-  };
-  var articles = getData('sardPublishedArticles');
-  articles.push(article);
-  setData('sardPublishedArticles',articles);
-
-  sub.status='Published'; sub.articleId=articleId;
-  setData('sardSubmissions',subs);
-
-  closeModal('publishModal');
-  renderJournalTable(); updateSidebarBadges();
-  toast('Article published! ID: '+articleId);
+  // Open full detail modal → Action tab (where all publish fields are)
+  viewSub(subId);
+  setTimeout(function(){ switchSubTab('action'); }, 100);
 }
 
 function openReject(subId){

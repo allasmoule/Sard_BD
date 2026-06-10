@@ -1,3 +1,11 @@
+<?php
+/* ── install.php টা চালানোর আগে password verify করো ── */
+$install_key = isset($_GET['key']) ? $_GET['key'] : '';
+if ($install_key !== 'sardbd_install_2026') {
+    http_response_code(403);
+    die('<h2 style="font-family:Arial;color:#991b1b;padding:40px;">403 Forbidden — এই file চালাতে ?key=sardbd_install_2026 দিন URL এ।<br><br>উদাহরণ: <code>https://sardbd.info/api/install.php?key=sardbd_install_2026</code></h2>');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
