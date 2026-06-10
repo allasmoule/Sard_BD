@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Security Alert — SARD BD</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      min-height:100vh;
+      background:linear-gradient(135deg,#011f1b 0%,#013e37 50%,#012a25 100%);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Segoe UI',Arial,sans-serif;
+      overflow:hidden;
+    }
+    /* Animated background grid */
+    body::before{
+      content:'';position:fixed;inset:0;
+      background-image:
+        linear-gradient(rgba(255,239,179,.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,239,179,.03) 1px,transparent 1px);
+      background-size:40px 40px;
+      animation:gridMove 20s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes gridMove{from{background-position:0 0;}to{background-position:40px 40px;}}
+
+    .lock-wrap{
+      text-align:center;padding:52px 44px;max-width:480px;width:90%;
+      background:rgba(255,255,255,.04);
+      backdrop-filter:blur(20px);
+      border:1.5px solid rgba(255,239,179,.12);
+      border-radius:20px;
+      box-shadow:0 32px 80px rgba(0,0,0,.5);
+      position:relative;z-index:1;
+    }
+    .lock-icon{
+      width:90px;height:90px;
+      background:rgba(255,239,179,.08);
+      border:2px solid rgba(255,239,179,.2);
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 24px;
+      font-size:2.6rem;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,239,179,.15);}50%{box-shadow:0 0 0 18px rgba(255,239,179,.0);}}
+
+    h1{color:#ffefb3;font-size:1.5rem;font-weight:800;margin-bottom:10px;letter-spacing:-.3px;}
+    .sub{color:rgba(255,255,255,.5);font-size:.86rem;line-height:1.7;margin-bottom:28px;}
+
+    .info-box{
+      background:rgba(255,239,179,.06);
+      border:1px solid rgba(255,239,179,.15);
+      border-radius:12px;padding:16px 20px;
+      text-align:left;margin-bottom:24px;
+    }
+    .info-row{display:flex;gap:10px;align-items:flex-start;padding:5px 0;font-size:.78rem;color:rgba(255,255,255,.55);}
+    .info-row i{color:#ffefb3;font-size:.85rem;flex-shrink:0;margin-top:1px;}
+
+    .btn-go-back{
+      display:inline-flex;align-items:center;gap:8px;
+      background:#ffefb3;color:#013e37;
+      font-weight:800;font-size:.88rem;padding:13px 28px;
+      border-radius:10px;text-decoration:none;border:none;cursor:pointer;
+      transition:all .2s;
+    }
+    .btn-go-back:hover{background:#fff;transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,239,179,.25);}
+
+    .logo{color:rgba(255,255,255,.2);font-size:.72rem;margin-top:22px;letter-spacing:1px;}
+
+    /* Countdown */
+    .countdown{color:rgba(255,255,255,.35);font-size:.75rem;margin-top:12px;}
+    .countdown span{color:#ffefb3;font-weight:800;font-size:.9rem;}
+  </style>
+</head>
+<body>
+<div class="lock-wrap">
+  <div class="lock-icon">🔒</div>
+  <h1>Access Suspended</h1>
+  <p class="sub">Developer tools were detected while viewing SARD BD. For security reasons, this page has been locked.</p>
+
+  <div class="info-box">
+    <div class="info-row"><i>⚠️</i>Developer tools (Inspect / View Source) are disabled on this website to protect content and user data.</div>
+    <div class="info-row"><i>ℹ️</i>Please close all developer tool panels and return to the website.</div>
+    <div class="info-row"><i>📧</i>If you believe this is an error, contact: hemeunus@gmail.com</div>
+  </div>
+
+  <button class="btn-go-back" onclick="goBack()">↩ Return to Website</button>
+  <div class="countdown">Auto-redirect in <span id="timer">10</span>s</div>
+  <div class="logo">sardbd.info · SARD BD</div>
+</div>
+
+<script>
+  // Countdown and auto-redirect
+  var t = 10;
+  var iv = setInterval(function(){
+    t--;
+    var el = document.getElementById('timer');
+    if(el) el.textContent = t;
+    if(t <= 0){
+      clearInterval(iv);
+      goBack();
+    }
+  }, 1000);
+
+  function goBack(){
+    // Go to previous page, or home if no history
+    if(document.referrer && document.referrer.indexOf('lock.html') === -1){
+      window.location.href = document.referrer;
+    } else {
+      window.location.href = 'index.html';
+    }
+  }
+</script>
+</body>
+</html>
