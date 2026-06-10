@@ -197,6 +197,25 @@
     /* ── Publish Form ── */
     #publishModal .form-group label{font-size:.75rem;}
     #publishModal input{font-size:.82rem;}
+    /* Submission detail tabs */
+    .sub-tab{background:none;border:none;padding:10px 16px;font-size:.78rem;font-weight:600;color:#6c757d;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.15s;}
+    .sub-tab:hover{color:#013e37;}
+    .sub-tab.active-tab{color:#013e37;border-bottom-color:#013e37;font-weight:800;}
+    .sub-info-row{display:flex;gap:6px;padding:7px 0;border-bottom:1px solid #f3f4f6;font-size:.8rem;}
+    .sub-info-row:last-child{border-bottom:none;}
+    .sub-info-key{font-weight:700;color:#6c757d;min-width:120px;flex-shrink:0;font-size:.75rem;}
+    .sub-info-val{color:#1a1a1a;word-break:break-word;}
+    .sts-btn{border:none;border-radius:8px;padding:7px 14px;font-size:.75rem;font-weight:700;cursor:pointer;transition:.15s;}
+    .sts-btn.submitted{background:#dbeafe;color:#1e40af;}
+    .sts-btn.review{background:#fef9c3;color:#854d0e;}
+    .sts-btn.revision{background:#ffedd5;color:#9a3412;}
+    .sts-btn.rejected{background:#fee2e2;color:#991b1b;}
+    .sts-btn:hover{filter:brightness(.92);}
+    .file-link-box{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;margin-bottom:10px;text-decoration:none;}
+    .file-link-box:hover{border-color:#013e37;background:#f0fdf4;}
+    .file-link-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+    .file-link-label{font-size:.78rem;font-weight:700;color:#013e37;}
+    .file-link-url{font-size:.68rem;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px;}
 
     /* ── Toast ── */
     .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
@@ -813,13 +832,77 @@
 
 <!-- Journal Detail Modal -->
 <div class="modal-overlay" id="jsDetailModal">
-  <div class="modal-box">
-    <div class="modal-hdr">
-      <h6><i class="bi bi-journal-text me-2"></i>Submission Detail</h6>
-      <button class="modal-close" onclick="closeModal('jsDetailModal')">×</button>
+  <div class="modal-box" style="max-width:720px;">
+    <div class="modal-hdr" style="background:linear-gradient(90deg,#013e37,#025a50);padding:16px 22px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:rgba(255,239,179,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="bi bi-journal-text" style="color:#ffefb3;font-size:1rem;"></i></div>
+        <div>
+          <h6 style="color:#fff;margin:0;font-size:.88rem;">Submission Details</h6>
+          <div style="font-size:.7rem;color:rgba(255,255,255,.5);" id="jsDetailSubId">—</div>
+        </div>
+        <span id="jsDetailBadge" style="margin-left:10px;font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:10px;"></span>
+      </div>
+      <button class="modal-close" onclick="closeModal('jsDetailModal')" style="color:#fff;">×</button>
     </div>
-    <div class="modal-body" id="jsDetailBody"></div>
-    <div class="modal-footer" id="jsDetailFooter"></div>
+
+    <div class="modal-body" style="padding:0;">
+      <!-- Tab bar -->
+      <div style="display:flex;border-bottom:2px solid #e5e7eb;background:#fafafa;">
+        <button onclick="switchSubTab('info')" id="stab-info" class="sub-tab active-tab"><i class="bi bi-info-circle me-1"></i>Info</button>
+        <button onclick="switchSubTab('abstract')" id="stab-abstract" class="sub-tab"><i class="bi bi-file-text me-1"></i>Abstract</button>
+        <button onclick="switchSubTab('file')" id="stab-file" class="sub-tab"><i class="bi bi-paperclip me-1"></i>File & Links</button>
+        <button onclick="switchSubTab('action')" id="stab-action" class="sub-tab"><i class="bi bi-gear me-1"></i>Action</button>
+      </div>
+
+      <!-- Tab: Info -->
+      <div id="stab-info-panel" style="padding:20px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="jsInfoGrid"></div>
+      </div>
+      <!-- Tab: Abstract -->
+      <div id="stab-abstract-panel" style="padding:20px;display:none;">
+        <div style="margin-bottom:12px;">
+          <div style="font-size:.7rem;font-weight:800;color:#6c757d;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Abstract</div>
+          <div id="jsAbstractBox" style="background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:8px;padding:14px;font-size:.82rem;line-height:1.8;max-height:220px;overflow-y:auto;"></div>
+        </div>
+        <div id="jsCoverLetterWrap" style="display:none;">
+          <div style="font-size:.7rem;font-weight:800;color:#6c757d;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Cover Letter</div>
+          <div id="jsCoverBox" style="background:#fffbeb;border:1.5px solid #e0d890;border-radius:8px;padding:14px;font-size:.82rem;line-height:1.8;max-height:160px;overflow-y:auto;"></div>
+        </div>
+      </div>
+      <!-- Tab: File -->
+      <div id="stab-file-panel" style="padding:20px;display:none;">
+        <div id="jsFileLinks"></div>
+      </div>
+      <!-- Tab: Action -->
+      <div id="stab-action-panel" style="padding:20px;display:none;" id="stab-action-panel">
+        <div style="margin-bottom:14px;">
+          <div style="font-size:.72rem;font-weight:800;color:#374151;margin-bottom:8px;">Change Status</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button onclick="changeSubStatusFromModal('Submitted')" class="sts-btn submitted">Submitted</button>
+            <button onclick="changeSubStatusFromModal('Under Review')" class="sts-btn review">Under Review</button>
+            <button onclick="changeSubStatusFromModal('Revision Required')" class="sts-btn revision">Revision Required</button>
+            <button onclick="changeSubStatusFromModal('Rejected')" class="sts-btn rejected">Reject</button>
+          </div>
+        </div>
+        <hr style="border-color:#e5e7eb;margin:16px 0;">
+        <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:16px;">
+          <div style="font-size:.78rem;font-weight:800;color:#166534;margin-bottom:12px;"><i class="bi bi-check-circle-fill me-2"></i>Approve & Publish to Journal</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><label style="font-size:.7rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Volume *</label><input type="text" id="qpVol" placeholder="1" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:7px 10px;font-size:.82rem;"/></div>
+            <div><label style="font-size:.7rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Issue *</label><input type="text" id="qpIssue" placeholder="1" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:7px 10px;font-size:.82rem;"/></div>
+            <div><label style="font-size:.7rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Year *</label><input type="text" id="qpYear" placeholder="2026" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:7px 10px;font-size:.82rem;"/></div>
+            <div><label style="font-size:.7rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Pages</label><input type="text" id="qpPages" placeholder="1–12" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:7px 10px;font-size:.82rem;"/></div>
+          </div>
+          <div style="margin-bottom:8px;"><label style="font-size:.7rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">DOI (optional)</label><input type="text" id="qpDoi" placeholder="10.xxxxx/…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:7px 10px;font-size:.82rem;"/></div>
+          <div style="margin-bottom:12px;"><label style="font-size:.7rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">PDF Link (optional)</label><input type="text" id="qpPdf" placeholder="Google Drive / server link" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:7px 10px;font-size:.82rem;"/></div>
+          <button onclick="quickPublish()" style="width:100%;background:#013e37;color:#ffefb3;border:none;border-radius:8px;padding:11px;font-size:.84rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;"><i class="bi bi-send-fill"></i>Publish to Journal Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer" id="jsDetailFooter" style="background:#f9fafb;">
+      <button class="btn-sm-outline" onclick="closeModal('jsDetailModal')">Close</button>
+    </div>
   </div>
 </div>
 
@@ -1185,30 +1268,131 @@ function renderJournalTable(){
     '<tr><td colspan="9"><div class="no-data"><i class="bi bi-inbox"></i><p>No submissions found</p></div></td></tr>';
 }
 
+var _currentSubId = null;
 function viewSub(subId){
   var s = getData('sardSubmissions').find(function(x){return x.subId===subId;});
   if(!s) return;
-  document.getElementById('jsDetailBody').innerHTML =
-    dr('Submission ID','<span class="oid">'+esc(s.subId)+'</span>')+
-    dr('Status','<span class="badge-status '+statusClass(s.status)+'">'+esc(s.status)+'</span>')+
-    dr('Title',esc(s.title))+
-    dr('Authors',esc(s.authors))+
-    dr('Affiliation',esc(s.affiliation||'—'))+
-    dr('Manuscript Type',esc(s.type||'—'))+
-    dr('Email',esc(s.email))+
-    dr('Phone',esc(s.phone||'—'))+
-    dr('Keywords',esc(s.keywords||'—'))+
-    dr('Abstract','<span style="white-space:pre-wrap;font-size:.78rem;">'+esc(s.abstract||'—')+'</span>')+
-    dr('File Link',s.fileLink?'<a href="'+esc(s.fileLink)+'" target="_blank" style="color:var(--green);">Open File</a>':'—')+
-    dr('Cover Letter',s.coverLetter?esc(s.coverLetter):'—')+
-    dr('Submitted',fmtDate(s.date));
-  document.getElementById('jsDetailFooter').innerHTML =
-    '<button class="btn-sm-outline" onclick="closeModal(\'jsDetailModal\')">Close</button>'+
-    (s.status!=='Published'&&s.status!=='Rejected'?
-      '<button class="btn-sm-info" onclick="changeSubStatus(\''+subId+'\',\'Under Review\')">Mark Under Review</button>'+
-      '<button class="btn-submit" onclick="closeModal(\'jsDetailModal\');openPublish(\''+subId+'\')">Approve & Publish</button>'
-    :'');
+  _currentSubId = subId;
+
+  // Header
+  document.getElementById('jsDetailSubId').textContent = s.subId;
+  var badge = document.getElementById('jsDetailBadge');
+  var sc = {Submitted:'background:#dbeafe;color:#1e40af',
+    'Under Review':'background:#fef9c3;color:#854d0e',
+    'Revision Required':'background:#ffedd5;color:#9a3412',
+    Published:'background:#dcfce7;color:#166534',
+    Approved:'background:#d1fae5;color:#065f46',
+    Rejected:'background:#fee2e2;color:#991b1b'};
+  badge.style.cssText = (sc[s.status]||'background:#f3f4f6;color:#374151')+';font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:10px;';
+  badge.textContent = s.status;
+
+  // Tab: Info
+  var rows = [
+    ['Title', '<strong>'+esc(s.title)+'</strong>'],
+    ['Author(s)', esc(s.authors)],
+    ['Affiliation', esc(s.affiliation||'—')],
+    ['Email', '<a href="mailto:'+esc(s.email||'')+'" style="color:#013e37;">'+esc(s.email||'—')+'</a>'],
+    ['Phone', esc(s.phone||'—')],
+    ['Manuscript Type', '<span style="background:#f0fdf4;color:#166534;padding:2px 8px;border-radius:6px;font-size:.75rem;font-weight:700;">'+esc(s.type||'—')+'</span>'],
+    ['Keywords', esc(s.keywords||'—')],
+    ['Word Count', esc(s.wordCount||'—')],
+    ['Funding', esc(s.funding||'—')],
+    ['Conflict of Interest', esc(s.conflict||'—')],
+    ['Submitted', fmtDate(s.date)],
+    ['Article ID', s.articleId ? '<span class="oid">'+esc(s.articleId)+'</span>' : '—']
+  ];
+  document.getElementById('jsInfoGrid').innerHTML = rows.map(function(r){
+    return '<div class="sub-info-row"><span class="sub-info-key">'+r[0]+'</span><span class="sub-info-val">'+r[1]+'</span></div>';
+  }).join('');
+
+  // Tab: Abstract
+  document.getElementById('jsAbstractBox').textContent = s.abstract||'—';
+  if(s.coverLetter){
+    document.getElementById('jsCoverLetterWrap').style.display='block';
+    document.getElementById('jsCoverBox').textContent = s.coverLetter;
+  } else {
+    document.getElementById('jsCoverLetterWrap').style.display='none';
+  }
+
+  // Tab: File
+  var fl = '';
+  if(s.fileLink){
+    fl += '<a href="'+esc(s.fileLink)+'" target="_blank" class="file-link-box">'+
+      '<div class="file-link-icon" style="background:#dbeafe;color:#1e40af;"><i class="bi bi-file-earmark-text-fill"></i></div>'+
+      '<div><div class="file-link-label">Manuscript File</div><div class="file-link-url">'+esc(s.fileLink)+'</div></div>'+
+      '<i class="bi bi-box-arrow-up-right ms-auto" style="color:#9ca3af;"></i></a>';
+  }
+  if(s.articleId){
+    fl += '<a href="article.html?id='+esc(s.articleId)+'" target="_blank" class="file-link-box">'+
+      '<div class="file-link-icon" style="background:#dcfce7;color:#166534;"><i class="bi bi-journal-check"></i></div>'+
+      '<div><div class="file-link-label">Published Article Page</div><div class="file-link-url">article.html?id='+esc(s.articleId)+'</div></div>'+
+      '<i class="bi bi-box-arrow-up-right ms-auto" style="color:#9ca3af;"></i></a>';
+  }
+  if(!fl) fl = '<div style="text-align:center;padding:28px;color:#9ca3af;font-size:.82rem;"><i class="bi bi-paperclip" style="font-size:1.5rem;display:block;margin-bottom:8px;"></i>No file links available</div>';
+  document.getElementById('jsFileLinks').innerHTML = fl;
+
+  // Tab: Action — pre-fill publish year
+  document.getElementById('qpYear').value = new Date().getFullYear();
+  document.getElementById('qpVol').value = '';
+  document.getElementById('qpIssue').value = '';
+  document.getElementById('qpPages').value = '';
+  document.getElementById('qpDoi').value = '';
+  document.getElementById('qpPdf').value = s.fileLink||'';
+
+  // Show first tab
+  switchSubTab('info');
   openModal('jsDetailModal');
+}
+
+function switchSubTab(name){
+  ['info','abstract','file','action'].forEach(function(t){
+    document.getElementById('stab-'+t).classList.toggle('active-tab', t===name);
+    document.getElementById('stab-'+t+'-panel').style.display = t===name ? 'block' : 'none';
+  });
+}
+
+function changeSubStatusFromModal(status){
+  if(!_currentSubId) return;
+  var subs = getData('sardSubmissions');
+  subs.forEach(function(s){if(s.subId===_currentSubId) s.status=status;});
+  setData('sardSubmissions',subs);
+  // Update badge in modal header
+  viewSub(_currentSubId);
+  renderJournalTable(); updateSidebarBadges();
+  toast('Status → '+status);
+}
+
+function quickPublish(){
+  var vol   = document.getElementById('qpVol').value.trim();
+  var issue = document.getElementById('qpIssue').value.trim();
+  var year  = document.getElementById('qpYear').value.trim();
+  if(!vol||!issue||!year){toast('Volume, Issue and Year are required.','error');return;}
+
+  var subs = getData('sardSubmissions');
+  var sub  = subs.find(function(s){return s.subId===_currentSubId;});
+  if(!sub){toast('Submission not found.','error');return;}
+
+  var articleId = 'JARD-'+year+'-'+uid().slice(-4);
+  var article = {
+    articleId:articleId, subId:sub.subId,
+    title:sub.title, authors:sub.authors, affiliation:sub.affiliation||'',
+    abstract:sub.abstract||'', keywords:sub.keywords||'', type:sub.type||'',
+    volume:vol, issue:issue, year:year,
+    pages:document.getElementById('qpPages').value.trim(),
+    doi:document.getElementById('qpDoi').value.trim(),
+    pdfLink:document.getElementById('qpPdf').value.trim(),
+    publishedDate:new Date().toISOString()
+  };
+  var articles = getData('sardPublishedArticles');
+  articles.push(article);
+  setData('sardPublishedArticles', articles);
+
+  sub.status='Published'; sub.articleId=articleId;
+  setData('sardSubmissions', subs);
+
+  closeModal('jsDetailModal');
+  renderJournalTable(); updateSidebarBadges();
+  toast('✅ Article published! ID: '+articleId+' — Now visible on journal.html');
 }
 
 function changeSubStatus(subId, status){
