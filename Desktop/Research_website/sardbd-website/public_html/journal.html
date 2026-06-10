@@ -1272,6 +1272,74 @@
   var urlTab = new URLSearchParams(window.location.search).get('tab')
     || (window.location.hash ? window.location.hash.replace('#','') : null);
   if (urlTab) switchTab(urlTab);
+
+  /* ── Dynamic Published Articles from Admin ── */
+  (function(){
+    var articles = JSON.parse(localStorage.getItem('sardPublishedArticles') || '[]');
+    if (!articles.length) return;
+
+    // Sort newest first
+    articles.sort(function(a,b){ return new Date(b.publishedDate)-new Date(a.publishedDate); });
+
+    var panel = document.getElementById('panel-current');
+    if (!panel) return;
+
+    // Group by Volume/Issue
+    var groups = {};
+    articles.forEach(function(a){
+      var key = 'Vol. '+a.volume+', No. '+a.issue+' ('+a.year+')';
+      if (!groups[key]) groups[key] = { key:key, vol:a.volume, issue:a.issue, year:a.year, items:[] };
+      groups[key].items.push(a);
+    });
+
+    var html = '<div style="background:#e6fff5;border:1.5px solid #a7f3d0;border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;">' +
+      '<i class="bi bi-check-circle-fill" style="color:#059669;font-size:1.1rem;"></i>' +
+      '<span style="font-size:.82rem;font-weight:700;color:#065f46;">'+articles.length+' published article(s) from admin approval</span>' +
+    '</div>';
+
+    Object.values(groups).forEach(function(g){
+      html += '<div class="article-group">' +
+        '<div class="article-group-title" style="display:flex;align-items:center;justify-content:space-between;">' +
+          '<span>Published Articles — '+g.key+'</span>' +
+          '<span style="font-size:.7rem;font-weight:600;background:var(--green);color:var(--butter);padding:2px 9px;border-radius:8px;">'+g.items.length+' article(s)</span>' +
+        '</div>';
+      g.items.forEach(function(a){
+        html += '<div class="article-item">' +
+          '<a class="article-title" href="article.html?id='+a.articleId+'">'+a.title+'</a>' +
+          '<div class="article-authors">'+a.authors+'</div>' +
+          '<div class="article-meta">' +
+            (a.pages ? '<span class="article-pages">pp. '+a.pages+'</span>' : '') +
+            (a.pdfLink ? '<a href="'+a.pdfLink+'" target="_blank" class="btn-pdf"><i class="bi bi-file-pdf"></i> PDF</a>' : '') +
+            (a.doi ? '<span class="article-doi">DOI: <a href="https://doi.org/'+a.doi+'" target="_blank">'+a.doi+'</a></span>' : '') +
+            '<span style="font-size:.68rem;color:#059669;font-weight:700;"><i class="bi bi-check-circle me-1"></i>Published</span>' +
+          '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    });
+
+    // Also update archive tab with groupings
+    var archivePanel = document.getElementById('panel-archive');
+    if (archivePanel) {
+      var archiveHtml = '<div style="margin-bottom:20px;">';
+      Object.values(groups).forEach(function(g){
+        archiveHtml += '<div style="background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:14px;">' +
+          '<div style="font-weight:800;color:var(--green);font-size:.88rem;margin-bottom:4px;">'+g.key+'</div>' +
+          '<div style="font-size:.75rem;color:#6c757d;margin-bottom:12px;">'+g.items.length+' article(s)</div>' +
+          g.items.map(function(a){
+            return '<div style="padding:8px 0;border-bottom:1px solid #f1f3f5;">' +
+              '<a href="article.html?id='+a.articleId+'" style="color:var(--green);font-weight:600;font-size:.82rem;text-decoration:none;">'+a.title+'</a>' +
+              '<div style="font-size:.72rem;color:#9ca3af;margin-top:2px;">'+a.authors+'</div>' +
+            '</div>';
+          }).join('') +
+        '</div>';
+      });
+      archiveHtml += '</div>';
+      archivePanel.insertAdjacentHTML('afterbegin', archiveHtml);
+    }
+
+    panel.insertAdjacentHTML('afterbegin', html);
+  })();
 </script>
 </body>
 </html>

@@ -598,10 +598,88 @@ function renderSimilar(currentId) {
   document.getElementById('similar-cards').innerHTML = html;
 }
 
+// ── Dynamic: check sardPublishedArticles first ────────────────────────────────
+(function(){
+  var id = new URLSearchParams(window.location.search).get('id') || '';
+  if (!id) return;
+
+  // Check if this ID is a dynamic article (starts with JARD-)
+  if (!id.startsWith('JARD-')) return;
+
+  var published = JSON.parse(localStorage.getItem('sardPublishedArticles') || '[]');
+  var art = published.find(function(a){ return a.articleId === id; });
+  if (!art) {
+    document.getElementById('art-title').textContent = 'Article not found.';
+    document.getElementById('art-abstract-body').textContent = 'This article could not be found. It may have been removed or the link is incorrect.';
+    return;
+  }
+
+  // Populate the page
+  document.title = art.title + ' — JARD | SARD BD';
+  var titleEl = document.getElementById('art-title');
+  if (titleEl) titleEl.textContent = art.title;
+
+  var authorsEl = document.getElementById('art-authors');
+  if (authorsEl) authorsEl.textContent = art.authors;
+
+  var affiliEl = document.getElementById('art-affil');
+  if (affiliEl) affiliEl.textContent = art.affiliation || '';
+
+  var abstractEl = document.getElementById('art-abstract-body');
+  if (abstractEl) abstractEl.textContent = art.abstract || 'Abstract not available.';
+
+  var kwEl = document.getElementById('art-keywords');
+  if (kwEl) kwEl.textContent = art.keywords || '—';
+
+  // Citation info
+  var citeEl = document.getElementById('art-cite');
+  if (citeEl) {
+    citeEl.textContent = art.authors + '. ' + art.title + '. Bangladesh J Appl Res Dev (JARD). ' +
+      art.year + ';' + art.volume + '(' + art.issue + ')' + (art.pages ? ':' + art.pages : '') + '.';
+  }
+
+  // DOI
+  var doiEl = document.getElementById('art-doi');
+  if (doiEl && art.doi) {
+    doiEl.innerHTML = '<a href="https://doi.org/'+art.doi+'" target="_blank">'+art.doi+'</a>';
+  } else if (doiEl) { doiEl.textContent = '—'; }
+
+  // PDF link
+  var pdfEl = document.getElementById('art-pdf-btn');
+  if (pdfEl && art.pdfLink) {
+    pdfEl.href = art.pdfLink;
+    pdfEl.target = '_blank';
+  }
+
+  // Published date
+  var pubEl = document.getElementById('art-pub-date');
+  if (pubEl && art.publishedDate) {
+    try { pubEl.textContent = new Date(art.publishedDate).toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'}); }
+    catch(e){}
+  }
+
+  // Volume/Issue badge
+  var volEl = document.getElementById('art-vol-issue');
+  if (volEl) volEl.textContent = 'Vol. ' + art.volume + ', No. ' + art.issue + ' (' + art.year + ')';
+
+  // Type badge
+  var typeEl = document.getElementById('art-type');
+  if (typeEl) typeEl.textContent = art.type || 'Research Article';
+
+  // Hide static content indicators
+  var staticNote = document.getElementById('static-article-note');
+  if (staticNote) staticNote.style.display = 'none';
+
+  // Stop the normal renderArticle from running on JARD- ids
+  window._dynArticleLoaded = true;
+})();
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 var id = new URLSearchParams(window.location.search).get('id') || '001';
-renderArticle(id);
-renderSimilar(id);
+if (!window._dynArticleLoaded) {
+  renderArticle(id);
+  renderSimilar(id);
+}
 
 function setLang(l){document.body.classList.toggle('bn',l==='bn');document.getElementById('btn-en').classList.toggle('active',l==='en');document.getElementById('btn-bn').classList.toggle('active',l==='bn');localStorage.setItem('sardbd_lang',l);}
 (function(){var s=localStorage.getItem('sardbd_lang');if(s)setLang(s);})();
