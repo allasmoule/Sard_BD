@@ -728,6 +728,7 @@ function uploadToServer(file){
 
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'api/upload.php', true);
+  xhr.setRequestHeader('X-SARD-Token', window._SARD_TOKEN || 'sardbd_s3cr3t_2026_!xK9');
 
   xhr.upload.onprogress = function(e){
     if(e.lengthComputable){

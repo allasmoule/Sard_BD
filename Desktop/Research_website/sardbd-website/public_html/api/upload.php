@@ -7,6 +7,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     jsonResponse(['success' => false, 'error' => 'POST only'], 405);
 }
 
+// Token required for upload
+requireToken();
+rateLimit(($_SERVER['REMOTE_ADDR'] ?? 'x').'_upload', 10, 60); // max 10 uploads/min per IP
+
 // Allowed types
 $allowed_ext  = ['pdf', 'doc', 'docx'];
 $allowed_mime = ['application/pdf', 'application/msword',

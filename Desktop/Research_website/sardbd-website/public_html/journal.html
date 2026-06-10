@@ -1477,6 +1477,7 @@
     prog.style.display='block'; fill.style.width='10%';
     var fd=new FormData(); fd.append('manuscript',file);
     var xhr=new XMLHttpRequest(); xhr.open('POST','api/upload.php',true);
+    xhr.setRequestHeader('X-SARD-Token', window._SARD_TOKEN || 'sardbd_s3cr3t_2026_!xK9');
     xhr.upload.onprogress=function(e){if(e.lengthComputable)fill.style.width=Math.round((e.loaded/e.total)*100)+'%';};
     xhr.onload=function(){
       try{var res=JSON.parse(xhr.responseText);

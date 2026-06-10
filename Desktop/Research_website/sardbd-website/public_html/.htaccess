@@ -1,0 +1,45 @@
+# ══════════════════════════════════════════════════
+#  SARD BD — Main Security Rules
+# ══════════════════════════════════════════════════
+
+Options -Indexes
+ServerSignature Off
+
+# ── Force HTTPS ──
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ── Remove www (canonical) ──
+RewriteCond %{HTTP_HOST} ^www\.sardbd\.info [NC]
+RewriteRule ^(.*)$ https://sardbd.info/$1 [L,R=301]
+
+# ── Block bad bots and scanners ──
+RewriteCond %{HTTP_USER_AGENT} (sqlmap|nikto|nmap|masscan|zgrab|python-requests|curl|wget) [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} ^$ [OR]
+RewriteCond %{QUERY_STRING} (union.*select|insert.*into|drop.*table|exec\(|script.*alert) [NC]
+RewriteRule .* - [F,L]
+
+# ── Block common exploit paths ──
+RewriteRule ^(wp-admin|wp-login|\.env|\.git|phpinfo|shell|backdoor|c99|r57|webshell) - [F,L]
+
+# ── Protect sensitive files ──
+<FilesMatch "\.(env|log|sql|bak|conf|ini|sh|py)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ── PHP error hiding (don't expose server info) ──
+php_flag display_errors off
+php_flag log_errors on
+
+# ── Clickjacking protection ──
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-XSS-Protection "1; mode=block"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+# ── Cache static assets ──
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2)$">
+    Header set Cache-Control "max-age=2592000, public"
+</FilesMatch>

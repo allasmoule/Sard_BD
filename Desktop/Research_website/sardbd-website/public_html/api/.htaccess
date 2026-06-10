@@ -1,0 +1,28 @@
+# ══════════════════════════════════════════════════
+#  SARD BD — API Folder Security
+#  config.php, db.php সরাসরি browser এ খোলা যাবে না
+# ══════════════════════════════════════════════════
+
+# PHP execution allowed (needed for API)
+Options -Indexes
+
+# Block direct access to sensitive files
+<FilesMatch "^(config|db|install)\.php$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Only data.php and upload.php accessible via HTTP
+<FilesMatch "^(data|upload)\.php$">
+    Order Deny,Allow
+    Allow from all
+</FilesMatch>
+
+# No directory listing
+DirectoryIndex disabled
+
+# Prevent access to backup/temp files
+<FilesMatch "\.(bak|log|sql|conf|env|txt|md)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
