@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Editor Portal — JARD | SARD BD</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--green:#013e37;--green-light:#025a50;--green-dark:#012a25;--butter:#ffefb3;--butter-light:#fffaed;--gray-bg:#f4f6f8;--border:#e5e7eb;--text:#1a1a1a;--muted:#6c757d;--radius:10px;}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter',sans-serif;background:var(--gray-bg);color:var(--text);}
+
+    /* ── LOGIN SCREEN ── */
+    #loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--green) 0%,#025a50 100%);padding:20px;}
+    .login-card{background:#fff;border-radius:16px;padding:36px 32px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
+    .login-logo{text-align:center;margin-bottom:24px;}
+    .login-logo .logo-badge{width:60px;height:60px;background:var(--green);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:1.5rem;color:var(--butter);}
+    .login-logo h2{font-size:1.25rem;font-weight:800;color:var(--green);}
+    .login-logo p{font-size:.78rem;color:var(--muted);}
+    .login-field{margin-bottom:14px;}
+    .login-field label{display:block;font-size:.75rem;font-weight:700;color:#374151;margin-bottom:6px;}
+    .login-field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-size:.85rem;outline:none;transition:border-color .2s;}
+    .login-field input:focus{border-color:var(--green);}
+    .login-error{display:none;background:#fff5f5;border:1.5px solid #fc8181;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#c53030;margin-bottom:12px;}
+    .btn-login{width:100%;padding:12px;background:var(--green);color:var(--butter);border:none;border-radius:10px;font-size:.88rem;font-weight:800;cursor:pointer;transition:background .2s;}
+    .btn-login:hover{background:var(--green-light);}
+    .login-back{text-align:center;margin-top:14px;font-size:.78rem;color:var(--muted);}
+    .login-back a{color:var(--green);text-decoration:none;font-weight:600;}
+
+    /* ── PANEL LAYOUT ── */
+    #panelScreen{display:none;min-height:100vh;flex-direction:column;}
+    .panel-topbar{background:var(--green);padding:0 20px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;box-shadow:0 2px 10px rgba(0,0,0,.2);}
+    .panel-topbar .tb-brand{color:var(--butter);font-weight:800;font-size:.95rem;}
+    .panel-topbar .tb-brand span{color:rgba(255,255,255,.5);font-size:.72rem;font-weight:400;margin-left:8px;}
+    .tb-right{display:flex;align-items:center;gap:12px;}
+    .tb-user{display:flex;align-items:center;gap:8px;font-size:.78rem;color:rgba(255,255,255,.75);}
+    .tb-user .avatar{width:30px;height:30px;border-radius:50%;background:var(--butter);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.75rem;}
+    .btn-logout{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.3);color:rgba(255,255,255,.8);font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:8px;cursor:pointer;transition:.2s;}
+    .btn-logout:hover{background:rgba(255,255,255,.2);}
+    .hamburger{display:none;background:transparent;border:none;color:#fff;font-size:1.3rem;cursor:pointer;padding:4px;}
+
+    .panel-body{display:flex;flex:1;}
+
+    /* ── SIDEBAR ── */
+    .sidebar{width:220px;background:#fff;border-right:1px solid var(--border);flex-shrink:0;padding:16px 0;height:calc(100vh - 54px);position:sticky;top:54px;overflow-y:auto;}
+    .sidebar-section{padding:4px 12px;margin-bottom:4px;}
+    .sidebar-section-title{font-size:.62rem;font-weight:800;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;padding:8px 8px 4px;display:block;}
+    .nav-item-s{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:600;color:#374151;transition:.15s;margin-bottom:2px;position:relative;}
+    .nav-item-s:hover{background:var(--gray-bg);color:var(--green);}
+    .nav-item-s.active{background:var(--butter-light);color:var(--green);}
+    .nav-item-s i{font-size:1rem;flex-shrink:0;}
+    .nav-badge{background:#dc2626;color:#fff;font-size:.6rem;font-weight:900;padding:2px 6px;border-radius:10px;margin-left:auto;}
+
+    /* ── MAIN CONTENT ── */
+    .main-content{flex:1;padding:24px;overflow-y:auto;max-width:100%;}
+    .section-panel{display:none;}
+    .section-panel.active{display:block;}
+
+    /* ── CARDS / STATS ── */
+    .stat-card{background:#fff;border-radius:var(--radius);padding:18px 20px;box-shadow:0 1px 6px rgba(0,0,0,.06);display:flex;align-items:center;gap:14px;}
+    .stat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+    .stat-val{font-size:1.6rem;font-weight:900;line-height:1;}
+    .stat-lbl{font-size:.72rem;color:var(--muted);margin-top:2px;}
+
+    /* ── TABLE ── */
+    .tbl-card{background:#fff;border-radius:var(--radius);box-shadow:0 1px 6px rgba(0,0,0,.06);overflow:hidden;}
+    .tbl-hdr{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+    .tbl-hdr h6{font-size:.85rem;font-weight:800;margin:0;color:var(--green);}
+    .search-box{border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-size:.78rem;outline:none;width:200px;}
+    .search-box:focus{border-color:var(--green);}
+    table{width:100%;border-collapse:collapse;}
+    th{font-size:.7rem;font-weight:800;color:#6c757d;text-transform:uppercase;letter-spacing:.5px;padding:10px 14px;background:#f9fafb;border-bottom:1px solid var(--border);text-align:left;}
+    td{padding:11px 14px;font-size:.8rem;border-bottom:1px solid #f3f4f6;vertical-align:middle;}
+    tr:hover td{background:#fafafa;}
+    .sub-id{font-family:monospace;font-size:.72rem;font-weight:700;color:var(--green);}
+    .status-badge{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:10px;white-space:nowrap;}
+    .s-submitted{background:#dbeafe;color:#1e40af;}
+    .s-review{background:#fef9c3;color:#854d0e;}
+    .s-revision{background:#ffedd5;color:#9a3412;}
+    .s-accepted{background:#dcfce7;color:#166534;}
+    .s-rejected{background:#fee2e2;color:#991b1b;}
+    .s-published{background:#e0f2fe;color:#075985;}
+    .empty-row td{text-align:center;color:var(--muted);font-size:.8rem;padding:28px;}
+
+    /* ── MODAL ── */
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:center;justify-content:center;padding:16px;}
+    .modal-overlay.open{display:flex;}
+    .modal-box{background:#fff;border-radius:14px;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+    .modal-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .modal-head h5{font-size:.9rem;font-weight:800;margin:0;color:var(--green);}
+    .modal-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);padding:0;}
+    .modal-body-inner{padding:20px;}
+    .detail-row{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid #f3f4f6;font-size:.8rem;}
+    .detail-row:last-child{border-bottom:none;}
+    .detail-key{font-weight:700;color:#6c757d;min-width:130px;flex-shrink:0;}
+    .detail-val{color:var(--text);}
+    .abstract-box{background:#f9fafb;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:.8rem;line-height:1.7;max-height:160px;overflow-y:auto;}
+    .status-select{border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;font-size:.82rem;font-weight:700;outline:none;color:var(--green);background:#fff;cursor:pointer;}
+    .status-select:focus{border-color:var(--green);}
+    .btn-update{background:var(--green);color:var(--butter);border:none;border-radius:8px;padding:9px 20px;font-size:.82rem;font-weight:700;cursor:pointer;transition:.2s;}
+    .btn-update:hover{background:var(--green-light);}
+    .update-success{display:none;background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:10px 14px;font-size:.78rem;color:#166534;margin-top:10px;}
+
+    /* PAGE HEADING */
+    .pg-head{margin-bottom:20px;}
+    .pg-head h4{font-size:1.1rem;font-weight:800;color:var(--green);margin-bottom:4px;}
+    .pg-head p{font-size:.8rem;color:var(--muted);}
+
+    /* TOAST */
+    .toast-wrap{position:fixed;bottom:22px;right:22px;z-index:99999;display:flex;flex-direction:column;gap:8px;}
+    .toast{background:#1a1a1a;color:#fff;padding:11px 18px;border-radius:10px;font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.3);animation:slideIn .3s ease;}
+    @keyframes slideIn{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
+    .toast.success{border-left:4px solid #22c55e;}
+    .toast.error{border-left:4px solid #ef4444;}
+
+    @media(max-width:768px){
+      .sidebar{position:fixed;top:54px;left:-220px;height:calc(100vh - 54px);z-index:800;transition:left .25s;}
+      .sidebar.open{left:0;box-shadow:4px 0 20px rgba(0,0,0,.15);}
+      .hamburger{display:block;}
+      .main-content{padding:16px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ LOGIN SCREEN ═══════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-badge"><i class="bi bi-person-badge-fill"></i></div>
+      <h2>Editor Portal</h2>
+      <p>JARD — Bangladesh Journal of Applied Research & Development</p>
+    </div>
+    <div id="loginError" class="login-error"><i class="bi bi-exclamation-triangle-fill me-2"></i><span id="loginErrorMsg"></span></div>
+    <div class="login-field">
+      <label>Email Address</label>
+      <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="email"/>
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="btn-login" onclick="doLogin()"><i class="bi bi-box-arrow-in-right me-2"></i>Login to Editor Portal</button>
+    <div class="login-back"><a href="index.html"><i class="bi bi-house me-1"></i>Back to SARD BD website</a></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PANEL SCREEN ═══════════════════════════════ -->
+<div id="panelScreen">
+
+  <!-- TOPBAR -->
+  <div class="panel-topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="hamburger" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+      <div class="tb-brand">JARD Editor Portal <span>sardbd.info</span></div>
+    </div>
+    <div class="tb-right">
+      <div class="tb-user">
+        <div class="avatar" id="tbAvatar">?</div>
+        <span id="tbName">Editor</span>
+      </div>
+      <button class="btn-logout" onclick="doLogout()"><i class="bi bi-box-arrow-right me-1"></i>Logout</button>
+    </div>
+  </div>
+
+  <div class="panel-body">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <span class="sidebar-section-title" style="padding-left:20px;">Menu</span>
+      <div class="sidebar-section">
+        <div class="nav-item-s active" onclick="showSection('dashboard')"><i class="bi bi-speedometer2"></i>Dashboard</div>
+        <div class="nav-item-s" onclick="showSection('submissions')"><i class="bi bi-file-earmark-text"></i>Submissions <span class="nav-badge" id="badgePending">0</span></div>
+        <div class="nav-item-s" onclick="showSection('published')"><i class="bi bi-journal-check"></i>Published Articles</div>
+      </div>
+      <span class="sidebar-section-title" style="padding-left:20px;margin-top:10px;">Account</span>
+      <div class="sidebar-section">
+        <div class="nav-item-s" onclick="showSection('profile')"><i class="bi bi-person-circle"></i>My Profile</div>
+        <div class="nav-item-s" onclick="doLogout()" style="color:#dc2626;"><i class="bi bi-box-arrow-right"></i>Logout</div>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main-content">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="section-panel active" id="sec-dashboard">
+        <div class="pg-head">
+          <h4>Dashboard</h4>
+          <p>Welcome back! Here's your overview.</p>
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="stat-card">
+              <div class="stat-icon" style="background:#dbeafe;color:#1e40af;"><i class="bi bi-inbox-fill"></i></div>
+              <div><div class="stat-val" id="dTotal">0</div><div class="stat-lbl">Total Submissions</div></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card">
+              <div class="stat-icon" style="background:#fef9c3;color:#854d0e;"><i class="bi bi-hourglass-split"></i></div>
+              <div><div class="stat-val" id="dPending">0</div><div class="stat-lbl">Awaiting Review</div></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card">
+              <div class="stat-icon" style="background:#ffedd5;color:#9a3412;"><i class="bi bi-pencil-square"></i></div>
+              <div><div class="stat-val" id="dRevision">0</div><div class="stat-lbl">Revision Required</div></div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card">
+              <div class="stat-icon" style="background:#dcfce7;color:#166534;"><i class="bi bi-journal-check"></i></div>
+              <div><div class="stat-val" id="dPublished">0</div><div class="stat-lbl">Published Articles</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Submissions on Dashboard -->
+        <div class="tbl-card">
+          <div class="tbl-hdr"><h6><i class="bi bi-clock-history me-2"></i>Recent Submissions</h6></div>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead><tr><th>ID</th><th>Title</th><th>Author(s)</th><th>Type</th><th>Status</th><th>Date</th></tr></thead>
+              <tbody id="dashRecentBody"><tr class="empty-row"><td colspan="6">No submissions yet.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SUBMISSIONS ── -->
+      <div class="section-panel" id="sec-submissions">
+        <div class="pg-head">
+          <h4>Manuscript Submissions</h4>
+          <p>Review and update the status of submitted manuscripts. You can set status to <strong>Under Review</strong> or <strong>Revision Required</strong>.</p>
+        </div>
+        <div class="tbl-card">
+          <div class="tbl-hdr">
+            <h6><i class="bi bi-file-earmark-text me-2"></i>All Submissions</h6>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <select id="filterStatus" class="search-box" style="width:160px;" onchange="renderSubmissions()">
+                <option value="">All Status</option>
+                <option value="Submitted">Submitted</option>
+                <option value="Under Review">Under Review</option>
+                <option value="Revision Required">Revision Required</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Published">Published</option>
+              </select>
+              <input type="text" class="search-box" id="searchSub" placeholder="Search title / author…" oninput="renderSubmissions()"/>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead><tr><th>Sub ID</th><th>Title</th><th>Author(s)</th><th>Type</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+              <tbody id="subBody"><tr class="empty-row"><td colspan="7">No submissions found.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PUBLISHED ── -->
+      <div class="section-panel" id="sec-published">
+        <div class="pg-head">
+          <h4>Published Articles</h4>
+          <p>All articles approved and published by the admin.</p>
+        </div>
+        <div class="tbl-card">
+          <div class="tbl-hdr"><h6><i class="bi bi-journal-check me-2"></i>Published Articles</h6>
+            <input type="text" class="search-box" id="searchPub" placeholder="Search title…" oninput="renderPublished()"/>
+          </div>
+          <div style="overflow-x:auto;">
+            <table>
+              <thead><tr><th>Article ID</th><th>Title</th><th>Author(s)</th><th>Vol / Issue</th><th>Year</th><th>DOI</th></tr></thead>
+              <tbody id="pubBody"><tr class="empty-row"><td colspan="6">No published articles yet.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── PROFILE ── -->
+      <div class="section-panel" id="sec-profile">
+        <div class="pg-head"><h4>My Profile</h4><p>Your editor account information.</p></div>
+        <div class="tbl-card" style="max-width:500px;">
+          <div class="tbl-hdr"><h6><i class="bi bi-person-circle me-2"></i>Account Details</h6></div>
+          <div style="padding:20px;">
+            <div class="detail-row"><span class="detail-key">Name</span><span class="detail-val" id="profName">—</span></div>
+            <div class="detail-row"><span class="detail-key">Email</span><span class="detail-val" id="profEmail">—</span></div>
+            <div class="detail-row"><span class="detail-key">Role</span><span class="detail-val" id="profRole">—</span></div>
+            <div class="detail-row"><span class="detail-key">Specialization</span><span class="detail-val" id="profSpec">—</span></div>
+            <div class="detail-row"><span class="detail-key">Account Status</span><span class="detail-val"><span style="color:#166534;font-weight:700;">✓ Active</span></span></div>
+            <div class="detail-row"><span class="detail-key">Permission</span><span class="detail-val" style="font-size:.75rem;color:#6c757d;">Can review & update status. Cannot approve, publish, or delete.</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-content -->
+  </div><!-- /panel-body -->
+</div><!-- /panelScreen -->
+
+<!-- ── SUBMISSION DETAIL MODAL ── -->
+<div class="modal-overlay" id="subModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h5><i class="bi bi-file-earmark-text me-2"></i>Submission Details</h5>
+      <button class="modal-close" onclick="closeModal('subModal')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body-inner">
+      <div class="detail-row"><span class="detail-key">Submission ID</span><span class="detail-val sub-id" id="mSubId">—</span></div>
+      <div class="detail-row"><span class="detail-key">Title</span><span class="detail-val" id="mTitle">—</span></div>
+      <div class="detail-row"><span class="detail-key">Author(s)</span><span class="detail-val" id="mAuthors">—</span></div>
+      <div class="detail-row"><span class="detail-key">Affiliation</span><span class="detail-val" id="mAffil">—</span></div>
+      <div class="detail-row"><span class="detail-key">Email</span><span class="detail-val" id="mEmail">—</span></div>
+      <div class="detail-row"><span class="detail-key">Phone</span><span class="detail-val" id="mPhone">—</span></div>
+      <div class="detail-row"><span class="detail-key">Type</span><span class="detail-val" id="mType">—</span></div>
+      <div class="detail-row"><span class="detail-key">Keywords</span><span class="detail-val" id="mKeywords">—</span></div>
+      <div class="detail-row"><span class="detail-key">Submitted</span><span class="detail-val" id="mDate">—</span></div>
+      <div class="detail-row"><span class="detail-key">File Link</span><span class="detail-val"><a id="mFileLink" href="#" target="_blank" style="color:var(--green);font-weight:600;">Open File ↗</a></span></div>
+      <div style="margin:12px 0 6px;font-size:.75rem;font-weight:700;color:#374151;">Abstract</div>
+      <div class="abstract-box" id="mAbstract">—</div>
+      <div id="mCoverWrap" style="margin-top:10px;display:none;">
+        <div style="margin-bottom:6px;font-size:.75rem;font-weight:700;color:#374151;">Cover Letter</div>
+        <div class="abstract-box" id="mCover">—</div>
+      </div>
+
+      <!-- Status Update -->
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);">
+        <div style="font-size:.78rem;font-weight:800;color:var(--green);margin-bottom:8px;"><i class="bi bi-pencil-square me-2"></i>Update Status</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <select id="mStatusSelect" class="status-select">
+            <option value="Submitted">Submitted</option>
+            <option value="Under Review">Under Review</option>
+            <option value="Revision Required">Revision Required</option>
+          </select>
+          <button class="btn-update" onclick="updateStatus()"><i class="bi bi-check-circle me-1"></i>Update Status</button>
+        </div>
+        <div class="update-success" id="updateSuccess"><i class="bi bi-check-circle-fill me-2"></i>Status updated successfully!</div>
+        <div style="margin-top:8px;font-size:.72rem;color:#9ca3af;"><i class="bi bi-info-circle me-1"></i>Only Admin can Approve, Publish, or Delete submissions.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+function getData(k){ try{ return JSON.parse(localStorage.getItem(k)||'null'); }catch(e){ return null; } }
+function setData(k,v){ localStorage.setItem(k,JSON.stringify(v)); }
+function fmtDate(iso){ if(!iso) return '—'; var d=new Date(iso); return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }
+function escHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function showToast(msg,type){
+  var w=document.getElementById('toastWrap');
+  var t=document.createElement('div');
+  t.className='toast '+(type||'success');
+  t.innerHTML='<i class="bi bi-'+(type==='error'?'exclamation-circle':'check-circle')+'-fill"></i>'+escHtml(msg);
+  w.appendChild(t);
+  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3000);
+}
+function statusBadge(s){
+  var cls={Submitted:'s-submitted','Under Review':'s-review','Revision Required':'s-revision',Accepted:'s-accepted',Rejected:'s-rejected',Published:'s-published'};
+  return '<span class="status-badge '+(cls[s]||'s-submitted')+'">'+escHtml(s)+'</span>';
+}
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
+
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+var currentEditor = null;
+var currentSubId  = null;
+
+/* ════════════════════════════════════════
+   LOGIN
+════════════════════════════════════════ */
+function doLogin(){
+  var email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  var pass  = document.getElementById('loginPass').value;
+  var errBox= document.getElementById('loginError');
+  var errMsg= document.getElementById('loginErrorMsg');
+  errBox.style.display='none';
+
+  if(!email||!pass){ errMsg.textContent='Please enter email and password.'; errBox.style.display='block'; return; }
+
+  var accounts = getData('sardEditorAccounts') || [];
+  var acc = accounts.find(function(a){ return a.email.toLowerCase()===email && a.password===pass && a.active; });
+  if(!acc){ errMsg.textContent='Invalid credentials or account inactive. Please contact the Admin.'; errBox.style.display='block'; return; }
+
+  // Save session
+  sessionStorage.setItem('sardEditorSession', JSON.stringify({ id:acc.id, name:acc.name, email:acc.email, role:acc.role, spec:acc.spec }));
+  currentEditor = acc;
+  initPanel();
+}
+
+/* ════════════════════════════════════════
+   LOGOUT
+════════════════════════════════════════ */
+function doLogout(){
+  sessionStorage.removeItem('sardEditorSession');
+  currentEditor=null;
+  document.getElementById('panelScreen').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  document.getElementById('loginEmail').value='';
+  document.getElementById('loginPass').value='';
+}
+
+/* ════════════════════════════════════════
+   INIT PANEL
+════════════════════════════════════════ */
+function initPanel(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('panelScreen').style.display='flex';
+
+  // Set topbar
+  var initials = (currentEditor.name||'?').split(' ').map(function(w){return w[0];}).join('').slice(0,2).toUpperCase();
+  document.getElementById('tbAvatar').textContent = initials;
+  document.getElementById('tbName').textContent = currentEditor.name;
+
+  // Profile
+  document.getElementById('profName').textContent = currentEditor.name;
+  document.getElementById('profEmail').textContent = currentEditor.email;
+  document.getElementById('profRole').textContent = currentEditor.role||'Reviewer';
+  document.getElementById('profSpec').textContent = currentEditor.spec||'General';
+
+  renderDashboard();
+  renderSubmissions();
+  renderPublished();
+}
+
+/* ════════════════════════════════════════
+   DASHBOARD
+════════════════════════════════════════ */
+function renderDashboard(){
+  var subs = getData('sardSubmissions') || [];
+  var pubs = getData('sardPublishedArticles') || [];
+  var pending   = subs.filter(function(s){ return s.status==='Submitted'; }).length;
+  var revision  = subs.filter(function(s){ return s.status==='Revision Required'; }).length;
+
+  document.getElementById('dTotal').textContent    = subs.length;
+  document.getElementById('dPending').textContent  = pending;
+  document.getElementById('dRevision').textContent = revision;
+  document.getElementById('dPublished').textContent= pubs.length;
+  document.getElementById('badgePending').textContent = pending;
+  if(!pending) document.getElementById('badgePending').style.display='none';
+  else document.getElementById('badgePending').style.display='';
+
+  // Recent 5
+  var recent = subs.slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);}).slice(0,5);
+  var tbody = document.getElementById('dashRecentBody');
+  if(!recent.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="6">No submissions yet.</td></tr>'; return; }
+  tbody.innerHTML = recent.map(function(s){
+    return '<tr><td><span class="sub-id">'+escHtml(s.subId)+'</span></td><td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHtml(s.title)+'</td><td>'+escHtml(s.authors)+'</td><td>'+escHtml(s.type)+'</td><td>'+statusBadge(s.status)+'</td><td>'+fmtDate(s.date)+'</td></tr>';
+  }).join('');
+}
+
+/* ════════════════════════════════════════
+   SUBMISSIONS TABLE
+════════════════════════════════════════ */
+function renderSubmissions(){
+  var subs   = getData('sardSubmissions') || [];
+  var filter = document.getElementById('filterStatus').value;
+  var search = (document.getElementById('searchSub').value||'').toLowerCase();
+
+  if(filter) subs = subs.filter(function(s){ return s.status===filter; });
+  if(search) subs = subs.filter(function(s){ return (s.title+s.authors).toLowerCase().includes(search); });
+  subs = subs.slice().sort(function(a,b){ return new Date(b.date)-new Date(a.date); });
+
+  var tbody = document.getElementById('subBody');
+  if(!subs.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="7">No submissions found.</td></tr>'; return; }
+  tbody.innerHTML = subs.map(function(s){
+    return '<tr><td><span class="sub-id">'+escHtml(s.subId)+'</span></td><td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="'+escHtml(s.title)+'">'+escHtml(s.title)+'</td><td>'+escHtml(s.authors)+'</td><td style="white-space:nowrap;">'+escHtml(s.type)+'</td><td>'+statusBadge(s.status)+'</td><td style="white-space:nowrap;">'+fmtDate(s.date)+'</td><td><button style="background:var(--green);color:var(--butter);border:none;border-radius:6px;padding:5px 12px;font-size:.73rem;font-weight:700;cursor:pointer;" onclick="openSubModal(\''+escHtml(s.subId)+'\')"><i class="bi bi-eye-fill me-1"></i>View</button></td></tr>';
+  }).join('');
+}
+
+/* ════════════════════════════════════════
+   PUBLISHED TABLE
+════════════════════════════════════════ */
+function renderPublished(){
+  var pubs   = getData('sardPublishedArticles') || [];
+  var search = (document.getElementById('searchPub').value||'').toLowerCase();
+  if(search) pubs = pubs.filter(function(p){ return (p.title+p.authors).toLowerCase().includes(search); });
+  pubs = pubs.slice().sort(function(a,b){ return new Date(b.publishedDate)-new Date(a.publishedDate); });
+
+  var tbody = document.getElementById('pubBody');
+  if(!pubs.length){ tbody.innerHTML='<tr class="empty-row"><td colspan="6">No published articles yet.</td></tr>'; return; }
+  tbody.innerHTML = pubs.map(function(p){
+    var doiLink = p.doi ? '<a href="https://doi.org/'+escHtml(p.doi)+'" target="_blank" style="color:var(--green);font-size:.72rem;">'+escHtml(p.doi)+'</a>' : '<span style="color:#9ca3af;font-size:.72rem;">—</span>';
+    return '<tr><td><span class="sub-id">'+escHtml(p.articleId)+'</span></td><td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="'+escHtml(p.title)+'">'+escHtml(p.title)+'</td><td>'+escHtml(p.authors)+'</td><td style="white-space:nowrap;">Vol '+escHtml(p.volume)+' / Iss '+escHtml(p.issue)+'</td><td>'+escHtml(p.year)+'</td><td>'+doiLink+'</td></tr>';
+  }).join('');
+}
+
+/* ════════════════════════════════════════
+   SUBMISSION MODAL
+════════════════════════════════════════ */
+function openSubModal(subId){
+  var subs = getData('sardSubmissions') || [];
+  var s = subs.find(function(x){ return x.subId===subId; });
+  if(!s) return;
+  currentSubId = subId;
+
+  document.getElementById('mSubId').textContent   = s.subId;
+  document.getElementById('mTitle').textContent   = s.title;
+  document.getElementById('mAuthors').textContent = s.authors;
+  document.getElementById('mAffil').textContent   = s.affiliation||'—';
+  document.getElementById('mEmail').textContent   = s.email||'—';
+  document.getElementById('mPhone').textContent   = s.phone||'—';
+  document.getElementById('mType').textContent    = s.type||'—';
+  document.getElementById('mKeywords').textContent= s.keywords||'—';
+  document.getElementById('mDate').textContent    = fmtDate(s.date);
+  document.getElementById('mAbstract').textContent= s.abstract||'—';
+
+  var fl = document.getElementById('mFileLink');
+  fl.href = s.fileLink||'#';
+  fl.textContent = s.fileLink ? 'Open File ↗' : 'Not provided';
+
+  var cw = document.getElementById('mCoverWrap');
+  if(s.coverLetter){ document.getElementById('mCover').textContent=s.coverLetter; cw.style.display='block'; }
+  else cw.style.display='none';
+
+  // Status select — only Submitted/Under Review/Revision Required allowed
+  var sel = document.getElementById('mStatusSelect');
+  sel.value = (['Submitted','Under Review','Revision Required'].indexOf(s.status)>=0) ? s.status : 'Submitted';
+  document.getElementById('updateSuccess').style.display='none';
+
+  document.getElementById('subModal').classList.add('open');
+}
+
+function updateStatus(){
+  if(!currentSubId) return;
+  var subs = getData('sardSubmissions') || [];
+  var idx = subs.findIndex(function(x){ return x.subId===currentSubId; });
+  if(idx<0) return;
+  var newStatus = document.getElementById('mStatusSelect').value;
+  subs[idx].status = newStatus;
+  setData('sardSubmissions', subs);
+  document.getElementById('updateSuccess').style.display='block';
+  showToast('Status updated to "'+newStatus+'"','success');
+  renderSubmissions();
+  renderDashboard();
+}
+
+/* ════════════════════════════════════════
+   SECTION SWITCH
+════════════════════════════════════════ */
+function showSection(id){
+  document.querySelectorAll('.section-panel').forEach(function(el){ el.classList.remove('active'); });
+  document.querySelectorAll('.nav-item-s').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById('sec-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('open');
+}
+
+/* ════════════════════════════════════════
+   AUTO LOGIN CHECK
+════════════════════════════════════════ */
+(function(){
+  var sess = sessionStorage.getItem('sardEditorSession');
+  if(sess){
+    try{
+      currentEditor = JSON.parse(sess);
+      initPanel();
+    }catch(e){ sessionStorage.removeItem('sardEditorSession'); }
+  }
+})();
+</script>
+</body>
+</html>
