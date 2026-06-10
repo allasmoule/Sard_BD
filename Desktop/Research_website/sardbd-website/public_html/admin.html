@@ -3,231 +3,824 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Admin Panel — SARD BD Enrollments</title>
+  <title>Admin Panel — SARD BD</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
-    :root{--green:#013e37;--butter:#ffefb3;--butter-light:#fffaed;--gray-bg:#f7f8fa;--border:#e2e5ea;}
-    body{font-family:'Inter',sans-serif;background:var(--gray-bg);margin:0;}
+    :root{
+      --green:#013e37;--green2:#025a50;--butter:#ffefb3;--butter2:#f0e07a;
+      --gray-bg:#f4f6f9;--border:#e2e5ea;--sidebar-w:240px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Inter',sans-serif;background:var(--gray-bg);}
 
-    /* ── Login Screen ── */
+    /* ════ LOGIN ════ */
     #loginScreen{
       min-height:100vh;display:flex;align-items:center;justify-content:center;
-      background:linear-gradient(135deg,var(--green) 0%,#025a50 100%);
+      background:linear-gradient(135deg,var(--green) 0%,#025a50 60%,#014d43 100%);
     }
-    .login-card{
-      background:#fff;border-radius:18px;padding:44px 40px;
-      box-shadow:0 20px 60px rgba(0,0,0,.25);width:100%;max-width:380px;text-align:center;
-    }
-    .login-logo{
-      width:64px;height:64px;background:var(--green);border-radius:14px;
-      display:flex;align-items:center;justify-content:center;
-      margin:0 auto 18px;font-size:1.8rem;color:var(--butter);
-    }
-    .login-card h4{font-size:1.2rem;font-weight:900;color:var(--green);margin-bottom:4px;}
-    .login-card p{font-size:.8rem;color:#6c757d;margin-bottom:24px;}
-    .login-card input{
-      border:1.5px solid var(--border);border-radius:10px;
-      font-size:.88rem;padding:11px 14px;width:100%;margin-bottom:12px;outline:none;
-      transition:border-color .2s;
-    }
-    .login-card input:focus{border-color:var(--green);}
-    .login-btn{
-      width:100%;padding:12px;font-size:.9rem;font-weight:800;
-      background:var(--green);color:#fff;border:none;border-radius:10px;cursor:pointer;
-      transition:background .2s;
-    }
-    .login-btn:hover{background:#025a50;}
-    .login-error{
-      background:#fff5f5;border:1px solid #fc8181;color:#c53030;
-      border-radius:8px;padding:8px 14px;font-size:.78rem;margin-top:10px;display:none;
-    }
+    .lc{background:#fff;border-radius:20px;padding:46px 40px;box-shadow:0 24px 64px rgba(0,0,0,.28);width:100%;max-width:380px;text-align:center;}
+    .lc-logo{width:68px;height:68px;background:var(--green);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:2rem;color:var(--butter);}
+    .lc h4{font-size:1.25rem;font-weight:900;color:var(--green);margin-bottom:4px;}
+    .lc p{font-size:.8rem;color:#6c757d;margin-bottom:28px;}
+    .lc input{border:1.5px solid var(--border);border-radius:10px;font-size:.88rem;padding:12px 14px;width:100%;margin-bottom:12px;outline:none;transition:border-color .2s;}
+    .lc input:focus{border-color:var(--green);}
+    .lc-btn{width:100%;padding:13px;font-size:.9rem;font-weight:800;background:var(--green);color:#fff;border:none;border-radius:10px;cursor:pointer;transition:background .2s;}
+    .lc-btn:hover{background:var(--green2);}
+    .lc-err{background:#fff5f5;border:1px solid #fc8181;color:#c53030;border-radius:8px;padding:9px 14px;font-size:.78rem;margin-top:10px;display:none;}
 
-    /* ── Admin Layout ── */
-    #adminScreen{display:none;}
-    .admin-nav{
-      background:var(--green);padding:14px 24px;
+    /* ════ LAYOUT ════ */
+    #adminWrap{display:none;min-height:100vh;}
+
+    /* ── Sidebar ── */
+    .sidebar{
+      position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;
+      background:var(--green);display:flex;flex-direction:column;z-index:100;
+      overflow-y:auto;
+    }
+    .sb-brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
+    .sb-brand .logo-box{width:40px;height:40px;background:var(--butter);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--green);font-weight:900;margin-bottom:8px;}
+    .sb-brand h6{color:#fff;font-size:.88rem;font-weight:800;margin-bottom:2px;}
+    .sb-brand span{color:rgba(255,255,255,.5);font-size:.7rem;}
+    .sb-nav{flex:1;padding:12px 0;}
+    .sb-section{color:rgba(255,255,255,.35);font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:14px 20px 6px;}
+    .sb-item{
+      display:flex;align-items:center;gap:10px;padding:10px 20px;
+      color:rgba(255,255,255,.7);font-size:.8rem;font-weight:600;cursor:pointer;
+      transition:all .15s;border-left:3px solid transparent;text-decoration:none;
+    }
+    .sb-item:hover{background:rgba(255,255,255,.08);color:#fff;}
+    .sb-item.active{background:rgba(255,255,255,.12);color:#fff;border-left-color:var(--butter);}
+    .sb-item i{font-size:1rem;width:20px;text-align:center;}
+    .sb-badge{margin-left:auto;background:var(--butter);color:var(--green);font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:10px;}
+    .sb-bottom{padding:14px;border-top:1px solid rgba(255,255,255,.1);}
+    .sb-logout{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.7);font-size:.78rem;font-weight:600;border-radius:8px;width:100%;cursor:pointer;transition:all .15s;}
+    .sb-logout:hover{background:rgba(255,255,255,.15);color:#fff;}
+
+    /* ── Top Bar ── */
+    .topbar{
+      position:fixed;top:0;left:var(--sidebar-w);right:0;height:60px;
+      background:#fff;border-bottom:1px solid var(--border);
       display:flex;align-items:center;justify-content:space-between;
+      padding:0 24px;z-index:99;box-shadow:0 1px 8px rgba(0,0,0,.06);
     }
-    .admin-nav .brand{color:#fff;font-weight:900;font-size:1.05rem;display:flex;align-items:center;gap:10px;}
-    .admin-nav .brand span{background:var(--butter);color:var(--green);padding:2px 10px;border-radius:20px;font-size:.72rem;}
-    .admin-actions{display:flex;align-items:center;gap:10px;}
-    .btn-nav{
-      display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;
-      padding:7px 16px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;
-    }
-    .btn-export{background:var(--butter);color:var(--green);}
-    .btn-export:hover{background:#f0e07a;}
-    .btn-logout{background:rgba(255,255,255,.15);color:#fff;}
-    .btn-logout:hover{background:rgba(255,255,255,.25);}
+    .topbar-title{font-size:.95rem;font-weight:800;color:var(--green);}
+    .topbar-right{display:flex;align-items:center;gap:10px;}
+    .tb-btn{display:flex;align-items:center;gap:6px;font-size:.75rem;font-weight:700;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;}
+    .tb-btn-outline{background:transparent;border:1.5px solid var(--border);color:#555;}
+    .tb-btn-outline:hover{border-color:var(--green);color:var(--green);}
 
-    .admin-main{padding:28px 24px;}
+    /* ── Main Content ── */
+    .main-content{margin-left:var(--sidebar-w);margin-top:60px;padding:26px 28px;min-height:calc(100vh - 60px);}
 
-    /* ── Stats Row ── */
-    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px;}
-    .stat-card{
-      background:#fff;border-radius:12px;padding:18px 20px;
-      box-shadow:0 2px 12px rgba(1,62,55,.06);
-    }
-    .stat-card .stat-val{font-size:1.9rem;font-weight:900;color:var(--green);}
-    .stat-card .stat-lbl{font-size:.75rem;color:#6c757d;margin-top:2px;}
-    .stat-card .stat-icon{font-size:1.4rem;color:var(--green);opacity:.35;float:right;margin-top:-32px;}
+    /* ── Section Panels ── */
+    .section-panel{display:none;}
+    .section-panel.active{display:block;}
+
+    /* ── Page Header ── */
+    .page-hdr{margin-bottom:22px;}
+    .page-hdr h5{font-size:1.1rem;font-weight:900;color:#1a2332;margin-bottom:4px;}
+    .page-hdr p{font-size:.78rem;color:#6c757d;}
+
+    /* ── Stat Cards ── */
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin-bottom:24px;}
+    .stat-card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,.05);position:relative;overflow:hidden;}
+    .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--green);}
+    .stat-card.c1::before{background:#013e37;}
+    .stat-card.c2::before{background:#0e7c6e;}
+    .stat-card.c3::before{background:#d97706;}
+    .stat-card.c4::before{background:#059669;}
+    .stat-card.c5::before{background:#7c3aed;}
+    .stat-card.c6::before{background:#0284c7;}
+    .stat-card.c7::before{background:#db2777;}
+    .stat-card.c8::before{background:#ea580c;}
+    .sc-icon{font-size:1.6rem;color:var(--green);opacity:.2;position:absolute;right:16px;top:16px;}
+    .sc-val{font-size:1.8rem;font-weight:900;color:#1a2332;line-height:1;}
+    .sc-lbl{font-size:.72rem;color:#6c757d;margin-top:6px;font-weight:500;}
+
+    /* ── Cards / Boxes ── */
+    .card-box{background:#fff;border-radius:14px;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden;margin-bottom:20px;}
+    .card-box-hdr{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+    .card-box-hdr h6{font-size:.88rem;font-weight:800;color:var(--green);margin:0;}
+    .card-box-body{padding:20px;}
 
     /* ── Filter Bar ── */
-    .filter-bar{
-      background:#fff;border-radius:12px;padding:16px 18px;
-      box-shadow:0 2px 12px rgba(1,62,55,.06);margin-bottom:18px;
-      display:flex;flex-wrap:wrap;gap:10px;align-items:center;
-    }
-    .filter-bar input,.filter-bar select{
-      border:1.5px solid var(--border);border-radius:8px;
-      font-size:.8rem;padding:8px 12px;outline:none;transition:border-color .2s;
-    }
-    .filter-bar input:focus,.filter-bar select:focus{border-color:var(--green);}
-    .filter-bar input{flex:1;min-width:200px;}
-    .btn-clear{
-      padding:8px 16px;font-size:.78rem;font-weight:600;
-      background:var(--gray-bg);border:1.5px solid var(--border);border-radius:8px;cursor:pointer;
-    }
+    .fbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border);background:#fafbfc;}
+    .fbar input,.fbar select{border:1.5px solid var(--border);border-radius:8px;font-size:.78rem;padding:8px 12px;outline:none;transition:border-color .2s;background:#fff;}
+    .fbar input:focus,.fbar select:focus{border-color:var(--green);}
+    .fbar input{flex:1;min-width:180px;}
+    .btn-sm-green{font-size:.75rem;font-weight:700;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;background:var(--green);color:#fff;transition:background .2s;}
+    .btn-sm-green:hover{background:var(--green2);}
+    .btn-sm-outline{font-size:.75rem;font-weight:700;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;background:#fff;color:#555;transition:all .2s;}
+    .btn-sm-outline:hover{border-color:var(--green);color:var(--green);}
+    .btn-sm-danger{font-size:.75rem;font-weight:700;padding:7px 14px;border-radius:8px;border:none;cursor:pointer;background:#fff0f0;color:#dc2626;transition:all .2s;}
+    .btn-sm-danger:hover{background:#fee2e2;}
+    .btn-sm-warn{font-size:.75rem;font-weight:700;padding:7px 12px;border-radius:8px;border:none;cursor:pointer;background:#fffbeb;color:#d97706;}
+    .btn-sm-warn:hover{background:#fef3c7;}
+    .btn-sm-info{font-size:.75rem;font-weight:700;padding:7px 12px;border-radius:8px;border:none;cursor:pointer;background:#eff6ff;color:#2563eb;}
+    .btn-sm-info:hover{background:#dbeafe;}
 
-    /* ── Table ── */
-    .table-wrap{
-      background:#fff;border-radius:14px;
-      box-shadow:0 2px 14px rgba(1,62,55,.07);overflow:hidden;
-    }
-    .table-head-bar{
-      padding:16px 20px;border-bottom:1px solid var(--border);
-      display:flex;align-items:center;justify-content:space-between;
-    }
-    .table-head-bar h6{font-size:.88rem;font-weight:800;color:var(--green);margin:0;}
-    .table-count{font-size:.75rem;color:#6c757d;}
+    /* ── Tables ── */
+    .tbl-wrap{overflow-x:auto;}
     .tbl{width:100%;border-collapse:collapse;font-size:.78rem;}
-    .tbl thead th{
-      background:var(--gray-bg);padding:10px 14px;font-size:.72rem;
-      font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.5px;
-      border-bottom:2px solid var(--border);white-space:nowrap;
-    }
+    .tbl thead th{background:#f8f9fa;padding:10px 14px;font-size:.7rem;font-weight:800;color:#4a5568;text-transform:uppercase;letter-spacing:.4px;border-bottom:2px solid var(--border);white-space:nowrap;}
     .tbl tbody td{padding:11px 14px;border-bottom:1px solid #f1f3f5;vertical-align:middle;}
     .tbl tbody tr:last-child td{border-bottom:none;}
     .tbl tbody tr:hover td{background:#f8fffe;}
-    .order-id-cell{font-family:monospace;font-size:.72rem;color:var(--green);font-weight:700;}
-    .course-cell{font-weight:600;color:#2d3748;max-width:160px;}
-    .price-cell{font-weight:800;color:var(--green);}
-    .status-badge{
-      display:inline-flex;align-items:center;gap:4px;font-size:.65rem;font-weight:700;
-      padding:3px 9px;border-radius:10px;
-    }
-    .status-pending{background:#fff7e6;color:#d97706;}
-    .status-confirmed{background:#e6fff5;color:#059669;}
-    .status-cancelled{background:#fff5f5;color:#dc2626;}
-    .no-data{text-align:center;padding:48px;color:#9ca3af;}
-    .no-data i{font-size:2.5rem;display:block;margin-bottom:10px;}
+    .oid{font-family:monospace;font-size:.7rem;color:var(--green);font-weight:700;}
+    .no-data{text-align:center;padding:50px 20px;color:#9ca3af;}
+    .no-data i{font-size:2.8rem;display:block;margin-bottom:12px;opacity:.4;}
+    .no-data p{font-size:.82rem;}
 
-    /* ── Delete btn ── */
-    .btn-del{
-      background:none;border:none;color:#e53e3e;cursor:pointer;
-      font-size:.8rem;padding:4px 6px;border-radius:6px;transition:background .15s;
-    }
-    .btn-del:hover{background:#fff5f5;}
+    /* ── Status Badges ── */
+    .badge-status{display:inline-flex;align-items:center;gap:4px;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:10px;white-space:nowrap;}
+    .bs-pending{background:#fff7e6;color:#d97706;}
+    .bs-confirmed,.bs-published,.bs-approved{background:#e6fff5;color:#059669;}
+    .bs-cancelled,.bs-rejected{background:#fff5f5;color:#dc2626;}
+    .bs-review{background:#eff6ff;color:#2563eb;}
+    .bs-revision{background:#faf5ff;color:#7c3aed;}
+    .bs-submitted{background:#f0f9ff;color:#0284c7;}
 
-    /* ── Mobile responsive ── */
-    @media(max-width:768px){
-      .admin-main{padding:16px;}
-      .tbl thead th:nth-child(5),.tbl tbody td:nth-child(5),
-      .tbl thead th:nth-child(6),.tbl tbody td:nth-child(6){display:none;}
+    /* ── Action Buttons in table ── */
+    .act-btn{background:none;border:none;cursor:pointer;padding:4px 7px;border-radius:6px;font-size:.8rem;transition:background .15s;}
+    .act-btn.view{color:#2563eb;} .act-btn.view:hover{background:#eff6ff;}
+    .act-btn.edit{color:#d97706;} .act-btn.edit:hover{background:#fffbeb;}
+    .act-btn.del{color:#dc2626;}  .act-btn.del:hover{background:#fff5f5;}
+    .act-btn.ok{color:#059669;}   .act-btn.ok:hover{background:#e6fff5;}
+    .act-btn.reject{color:#dc2626;} .act-btn.reject:hover{background:#fff5f5;}
+
+    /* ── Forms ── */
+    .form-group{margin-bottom:16px;}
+    .form-group label{display:block;font-size:.78rem;font-weight:700;color:#374151;margin-bottom:6px;}
+    .form-group input,.form-group select,.form-group textarea{
+      width:100%;border:1.5px solid var(--border);border-radius:10px;
+      font-size:.84rem;padding:10px 14px;outline:none;transition:border-color .2s;font-family:'Inter',sans-serif;
+    }
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--green);}
+    .form-group textarea{resize:vertical;min-height:90px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .form-row.three{grid-template-columns:1fr 1fr 1fr;}
+    .req{color:#dc2626;}
+    .form-actions{display:flex;gap:10px;margin-top:20px;}
+    .btn-submit{padding:11px 28px;font-size:.85rem;font-weight:800;background:var(--green);color:#fff;border:none;border-radius:10px;cursor:pointer;}
+    .btn-submit:hover{background:var(--green2);}
+    .btn-cancel-form{padding:11px 22px;font-size:.85rem;font-weight:700;background:var(--gray-bg);border:1.5px solid var(--border);color:#555;border-radius:10px;cursor:pointer;}
+
+    /* ── Modal ── */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:none;align-items:center;justify-content:center;padding:20px;}
+    .modal-overlay.open{display:flex;}
+    .modal-box{background:#fff;border-radius:18px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.25);}
+    .modal-hdr{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .modal-hdr h6{font-size:.95rem;font-weight:800;color:var(--green);margin:0;}
+    .modal-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:#9ca3af;line-height:1;}
+    .modal-close:hover{color:#374151;}
+    .modal-body{padding:24px;}
+    .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;}
+
+    /* ── Detail Row ── */
+    .detail-row{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid #f3f4f6;}
+    .detail-row:last-child{border-bottom:none;}
+    .detail-label{font-size:.72rem;font-weight:700;color:#9ca3af;text-transform:uppercase;min-width:120px;}
+    .detail-val{font-size:.82rem;color:#1a2332;font-weight:500;}
+
+    /* ── Toggle Switch ── */
+    .toggle-wrap{display:flex;align-items:center;gap:10px;}
+    .toggle{position:relative;width:40px;height:22px;cursor:pointer;}
+    .toggle input{opacity:0;width:0;height:0;}
+    .toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:22px;transition:.3s;}
+    .toggle-slider:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+    .toggle input:checked + .toggle-slider{background:var(--green);}
+    .toggle input:checked + .toggle-slider:before{transform:translateX(18px);}
+
+    /* ── Publish Form ── */
+    #publishModal .form-group label{font-size:.75rem;}
+    #publishModal input{font-size:.82rem;}
+
+    /* ── Toast ── */
+    .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;}
+    .toast-msg{background:#1a2332;color:#fff;padding:12px 20px;border-radius:10px;font-size:.78rem;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.2);animation:slideIn .25s ease;}
+    .toast-msg.success{background:var(--green);}
+    .toast-msg.error{background:#dc2626;}
+    @keyframes slideIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+    /* ── Recent table small ── */
+    .recent-tbl{width:100%;border-collapse:collapse;font-size:.76rem;}
+    .recent-tbl td{padding:9px 10px;border-bottom:1px solid #f3f4f6;}
+    .recent-tbl tr:last-child td{border-bottom:none;}
+    .recent-tbl tr:hover td{background:#f8fffe;}
+
+    /* ── Gallery grid ── */
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;}
+    .gallery-item{background:#f8f9fa;border-radius:10px;overflow:hidden;border:1.5px solid var(--border);}
+    .gallery-item img,.gallery-item iframe{width:100%;height:130px;object-fit:cover;display:block;border:none;}
+    .gallery-item-info{padding:10px 12px;}
+    .gallery-item-info .gi-title{font-size:.78rem;font-weight:700;color:#1a2332;margin-bottom:4px;}
+    .gallery-item-info .gi-cat{font-size:.68rem;color:#6c757d;}
+    .gallery-item-actions{display:flex;gap:6px;padding:8px 12px;border-top:1px solid var(--border);}
+
+    /* ── Editor cards ── */
+    .editor-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;align-items:center;gap:14px;}
+    .ec-avatar{width:46px;height:46px;border-radius:50%;background:var(--green);color:var(--butter);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;flex-shrink:0;}
+    .ec-info{flex:1;}
+    .ec-name{font-size:.85rem;font-weight:800;color:#1a2332;}
+    .ec-role{font-size:.7rem;color:var(--green);font-weight:700;margin-bottom:2px;}
+    .ec-email{font-size:.72rem;color:#6c757d;}
+    .ec-actions{display:flex;gap:6px;}
+    .ec-status{display:inline-flex;align-items:center;gap:4px;font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:8px;margin-left:8px;}
+    .ec-active{background:#e6fff5;color:#059669;}
+    .ec-inactive{background:#f1f3f5;color:#9ca3af;}
+
+    /* ── Board member cards ── */
+    .board-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px;display:flex;gap:14px;align-items:flex-start;}
+    .bc-photo{width:52px;height:52px;border-radius:50%;object-fit:cover;background:#e2e5ea;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#9ca3af;}
+    .bc-info{flex:1;}
+    .bc-name{font-size:.86rem;font-weight:800;color:#1a2332;}
+    .bc-title{font-size:.73rem;color:#6c757d;margin-bottom:2px;}
+    .bc-role{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:8px;display:inline-block;margin-bottom:4px;}
+    .role-chief{background:#fffbeb;color:#d97706;}
+    .role-exec{background:#eff6ff;color:#2563eb;}
+    .role-advisory{background:#faf5ff;color:#7c3aed;}
+    .role-member{background:#f0fdf4;color:#16a34a;}
+
+    /* ── Settings ── */
+    .settings-section{background:#fff;border-radius:14px;padding:24px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,.05);}
+    .settings-section h6{font-size:.88rem;font-weight:800;color:var(--green);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+    .danger-zone{border:1.5px solid #fee2e2;border-radius:14px;padding:24px;margin-bottom:18px;}
+    .danger-zone h6{color:#dc2626;}
+    .danger-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #fef2f2;}
+    .danger-item:last-child{border-bottom:none;}
+    .danger-item .di-info .di-title{font-size:.82rem;font-weight:700;color:#1a2332;}
+    .danger-item .di-info .di-desc{font-size:.72rem;color:#6c757d;}
+
+    /* ── News cards ── */
+    .news-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px;display:flex;gap:14px;}
+    .ni-img{width:80px;height:60px;object-fit:cover;border-radius:8px;background:#f1f3f5;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:1.4rem;}
+    .ni-body{flex:1;}
+    .ni-title{font-size:.84rem;font-weight:700;color:#1a2332;margin-bottom:4px;}
+    .ni-date{font-size:.7rem;color:#9ca3af;margin-bottom:4px;}
+    .ni-cat{font-size:.67rem;font-weight:700;padding:2px 8px;border-radius:8px;background:#f0fdf4;color:#16a34a;display:inline-block;}
+    .ni-actions{display:flex;gap:6px;align-items:flex-start;flex-shrink:0;}
+
+    @media(max-width:900px){
+      .sidebar{transform:translateX(-100%);transition:transform .25s;}
+      .sidebar.open{transform:none;}
+      .main-content{margin-left:0;}
+      .topbar{left:0;}
+      .form-row{grid-template-columns:1fr;}
+      .form-row.three{grid-template-columns:1fr;}
     }
   </style>
 </head>
 <body>
 
-<!-- ── LOGIN SCREEN ── -->
+<!-- ════ LOGIN SCREEN ════ -->
 <div id="loginScreen">
-  <div class="login-card">
-    <div class="login-logo"><i class="bi bi-shield-lock-fill"></i></div>
+  <div class="lc">
+    <div class="lc-logo"><i class="bi bi-shield-lock-fill"></i></div>
     <h4>Admin Panel</h4>
-    <p>SARD BD — Enrollment Management</p>
-    <input type="password" id="passInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <button class="login-btn" onclick="doLogin()"><i class="bi bi-box-arrow-in-right"></i> Login</button>
-    <div class="login-error" id="loginErr"><i class="bi bi-exclamation-triangle-fill"></i> Incorrect password</div>
+    <p>SARD BD — sardbd.info/admin.html</p>
+    <input type="password" id="passInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <button class="lc-btn" onclick="doLogin()"><i class="bi bi-box-arrow-in-right me-1"></i>Login</button>
+    <div class="lc-err" id="loginErr"><i class="bi bi-exclamation-triangle-fill me-1"></i>Incorrect password. Try again.</div>
   </div>
 </div>
 
-<!-- ── ADMIN SCREEN ── -->
-<div id="adminScreen">
+<!-- ════ ADMIN WRAP ════ -->
+<div id="adminWrap">
 
-  <!-- Nav -->
-  <div class="admin-nav">
-    <div class="brand">
-      <i class="bi bi-grid-fill"></i> SARD BD Admin
-      <span>Enrollments</span>
+  <!-- ── SIDEBAR ── -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="logo-box">S</div>
+      <h6>SARD BD</h6>
+      <span>Admin Dashboard</span>
     </div>
-    <div class="admin-actions">
-      <button class="btn-nav btn-export" onclick="exportCSV()"><i class="bi bi-download"></i> Export CSV</button>
-      <button class="btn-nav btn-logout" onclick="doLogout()"><i class="bi bi-box-arrow-right"></i> Logout</button>
+    <nav class="sb-nav">
+      <div class="sb-section">Main</div>
+      <div class="sb-item active" onclick="switchSection('dashboard',this)"><i class="bi bi-grid-fill"></i> Dashboard</div>
+      <div class="sb-item" onclick="switchSection('enrollments',this)"><i class="bi bi-clipboard-check-fill"></i> Enrollments <span class="sb-badge" id="sbPending">0</span></div>
+
+      <div class="sb-section">Journal</div>
+      <div class="sb-item" onclick="switchSection('journal',this)"><i class="bi bi-journal-text"></i> Submissions <span class="sb-badge" id="sbSubs">0</span></div>
+
+      <div class="sb-section">Content</div>
+      <div class="sb-item" onclick="switchSection('news',this)"><i class="bi bi-newspaper"></i> News</div>
+      <div class="sb-item" onclick="switchSection('gallery',this)"><i class="bi bi-images"></i> Gallery & Videos</div>
+
+      <div class="sb-section">People</div>
+      <div class="sb-item" onclick="switchSection('editors',this)"><i class="bi bi-person-badge-fill"></i> Editor Accounts</div>
+      <div class="sb-item" onclick="switchSection('board',this)"><i class="bi bi-people-fill"></i> Editorial Board</div>
+
+      <div class="sb-section">System</div>
+      <div class="sb-item" onclick="switchSection('settings',this)"><i class="bi bi-gear-fill"></i> Settings</div>
+    </nav>
+    <div class="sb-bottom">
+      <button class="sb-logout" onclick="doLogout()"><i class="bi bi-box-arrow-left"></i> Logout</button>
     </div>
   </div>
 
-  <div class="admin-main">
-
-    <!-- Stats -->
-    <div class="stats-row" id="statsRow">
-      <!-- Rendered by JS -->
+  <!-- ── TOP BAR ── -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button class="tb-btn tb-btn-outline" onclick="toggleSidebar()" style="display:none;padding:6px 10px;" id="menuBtn"><i class="bi bi-list" style="font-size:1.1rem;"></i></button>
+      <span class="topbar-title" id="topbarTitle"><i class="bi bi-grid-fill me-2"></i>Dashboard</span>
     </div>
-
-    <!-- Filter -->
-    <div class="filter-bar">
-      <input type="text" id="searchInput" placeholder="🔍  Search by name, phone, course..." oninput="renderTable()"/>
-      <select id="statusFilter" onchange="renderTable()">
-        <option value="">All Status</option>
-        <option value="Pending">Pending</option>
-        <option value="Confirmed">Confirmed</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
-      <button class="btn-clear" onclick="clearFilters()"><i class="bi bi-x-circle"></i> Clear</button>
+    <div class="topbar-right">
+      <span style="font-size:.72rem;color:#9ca3af;" id="lastRefresh"></span>
+      <button class="tb-btn tb-btn-outline" onclick="renderAll()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
     </div>
+  </div>
 
-    <!-- Table -->
-    <div class="table-wrap">
-      <div class="table-head-bar">
-        <h6><i class="bi bi-list-check me-2"></i>Enrollment Orders</h6>
-        <span class="table-count" id="tableCount">—</span>
+  <!-- ── MAIN CONTENT ── -->
+  <div class="main-content">
+
+    <!-- ════════════════════════════════
+         SECTION: DASHBOARD
+    ════════════════════════════════ -->
+    <div class="section-panel active" id="sec-dashboard">
+      <div class="page-hdr">
+        <h5>Dashboard</h5>
+        <p>Welcome back! Here's an overview of SARD BD activity.</p>
       </div>
-      <div style="overflow-x:auto;">
-        <table class="tbl" id="enrollTable">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Order ID</th>
-              <th>Course</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Price</th>
-              <th>Education</th>
-              <th>Reference</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody"></tbody>
-        </table>
+
+      <!-- Stats -->
+      <div class="stats-grid" id="dashStats"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;flex-wrap:wrap;">
+        <!-- Recent Enrollments -->
+        <div class="card-box">
+          <div class="card-box-hdr">
+            <h6><i class="bi bi-clipboard-check-fill me-2"></i>Recent Enrollments</h6>
+            <button class="btn-sm-outline" onclick="switchSection('enrollments',null)">View All</button>
+          </div>
+          <div class="tbl-wrap">
+            <table class="recent-tbl" id="recentEnroll">
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Recent Submissions -->
+        <div class="card-box">
+          <div class="card-box-hdr">
+            <h6><i class="bi bi-journal-text me-2"></i>Recent Submissions</h6>
+            <button class="btn-sm-outline" onclick="switchSection('journal',null)">View All</button>
+          </div>
+          <div class="tbl-wrap">
+            <table class="recent-tbl" id="recentSubs">
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- ════════════════════════════════
+         SECTION: ENROLLMENTS
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-enrollments">
+      <div class="page-hdr">
+        <h5>Enrollments</h5>
+        <p>Manage course enrollment orders.</p>
+      </div>
+      <div class="card-box">
+        <div class="card-box-hdr">
+          <h6><i class="bi bi-list-check me-2"></i>All Orders</h6>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-sm-green" onclick="exportCSV()"><i class="bi bi-download me-1"></i>Export CSV</button>
+          </div>
+        </div>
+        <div class="fbar">
+          <input type="text" id="enSearch" placeholder="Search name, phone, course, order ID…" oninput="renderEnrollTable()"/>
+          <select id="enStatus" onchange="renderEnrollTable()">
+            <option value="">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <button class="btn-sm-outline" onclick="document.getElementById('enSearch').value='';document.getElementById('enStatus').value='';renderEnrollTable()"><i class="bi bi-x-circle me-1"></i>Clear</button>
+          <span style="font-size:.72rem;color:#9ca3af;margin-left:auto;" id="enCount"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr>
+              <th>#</th><th>Order ID</th><th>Course</th><th>Name</th>
+              <th>Phone</th><th>Price</th><th>Education</th><th>Reference</th>
+              <th>Date</th><th>Status</th><th>Action</th>
+            </tr></thead>
+            <tbody id="enBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         SECTION: JOURNAL SUBMISSIONS
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-journal">
+      <div class="page-hdr">
+        <h5>Journal Submissions</h5>
+        <p>Review, approve, and publish manuscript submissions.</p>
+      </div>
+      <div class="card-box">
+        <div class="card-box-hdr">
+          <h6><i class="bi bi-journal-text me-2"></i>All Submissions</h6>
+        </div>
+        <div class="fbar">
+          <input type="text" id="jsSearch" placeholder="Search title, author, email…" oninput="renderJournalTable()"/>
+          <select id="jsStatus" onchange="renderJournalTable()">
+            <option value="">All Status</option>
+            <option value="Submitted">Submitted</option>
+            <option value="Under Review">Under Review</option>
+            <option value="Revision Required">Revision Required</option>
+            <option value="Approved">Approved</option>
+            <option value="Published">Published</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+          <button class="btn-sm-outline" onclick="document.getElementById('jsSearch').value='';document.getElementById('jsStatus').value='';renderJournalTable()"><i class="bi bi-x-circle me-1"></i>Clear</button>
+          <span style="font-size:.72rem;color:#9ca3af;margin-left:auto;" id="jsCount"></span>
+        </div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr>
+              <th>#</th><th>Sub. ID</th><th>Title</th><th>Author</th>
+              <th>Type</th><th>Email</th><th>Date</th><th>Status</th><th>Action</th>
+            </tr></thead>
+            <tbody id="jsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         SECTION: NEWS
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-news">
+      <div class="page-hdr">
+        <h5>News Management</h5>
+        <p>Add, edit and delete news posts. Changes show on news.html automatically.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start;">
+        <!-- News List -->
+        <div class="card-box">
+          <div class="card-box-hdr">
+            <h6><i class="bi bi-newspaper me-2"></i>All News</h6>
+            <span style="font-size:.72rem;color:#9ca3af;" id="newsCount"></span>
+          </div>
+          <div class="card-box-body" id="newsList" style="padding:14px;"></div>
+        </div>
+        <!-- Add/Edit Form -->
+        <div class="card-box" id="newsFormBox">
+          <div class="card-box-hdr"><h6 id="newsFormTitle"><i class="bi bi-plus-circle me-2"></i>Add News</h6></div>
+          <div class="card-box-body">
+            <input type="hidden" id="newsEditId"/>
+            <div class="form-group"><label>Title (EN) <span class="req">*</span></label><input type="text" id="newsTitle" placeholder="News title"/></div>
+            <div class="form-group"><label>Title (BN)</label><input type="text" id="newsTitleBn" placeholder="বাংলা শিরোনাম"/></div>
+            <div class="form-group"><label>Date <span class="req">*</span></label><input type="date" id="newsDate"/></div>
+            <div class="form-group"><label>Category</label>
+              <select id="newsCat">
+                <option value="General">General</option>
+                <option value="Research">Research</option>
+                <option value="Training">Training</option>
+                <option value="Journal">Journal</option>
+                <option value="Event">Event</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Image URL</label><input type="text" id="newsImg" placeholder="https://…"/></div>
+            <div class="form-group"><label>Short Description</label><textarea id="newsShort" rows="2" placeholder="Brief summary…"></textarea></div>
+            <div class="form-group"><label>Full Content</label><textarea id="newsContent" rows="5" placeholder="Full news content…"></textarea></div>
+            <div class="form-actions">
+              <button class="btn-submit" onclick="saveNews()">Save News</button>
+              <button class="btn-cancel-form" onclick="clearNewsForm()">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         SECTION: GALLERY & VIDEOS
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-gallery">
+      <div class="page-hdr">
+        <h5>Gallery & Videos</h5>
+        <p>Manage photos and YouTube videos. Changes show on gallery.html automatically.</p>
+      </div>
+      <!-- Tab switch -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button class="btn-sm-green" id="galTabPhotos" onclick="switchGalTab('photos')"><i class="bi bi-images me-1"></i>Photos</button>
+        <button class="btn-sm-outline" id="galTabVideos" onclick="switchGalTab('videos')"><i class="bi bi-play-circle me-1"></i>Videos</button>
+      </div>
+
+      <!-- Photos Panel -->
+      <div id="galPhotosPanel">
+        <div style="display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start;">
+          <div class="card-box">
+            <div class="card-box-hdr"><h6><i class="bi bi-images me-2"></i>Photos</h6><span style="font-size:.72rem;color:#9ca3af;" id="photoCount"></span></div>
+            <div class="card-box-body"><div class="gallery-grid" id="photoGrid"></div></div>
+          </div>
+          <div class="card-box">
+            <div class="card-box-hdr"><h6><i class="bi bi-plus-circle me-2"></i>Add Photo</h6></div>
+            <div class="card-box-body">
+              <div class="form-group"><label>Image URL <span class="req">*</span></label><input type="text" id="photoUrl" placeholder="https://…"/></div>
+              <div class="form-group"><label>Title <span class="req">*</span></label><input type="text" id="photoTitle" placeholder="Photo title"/></div>
+              <div class="form-group"><label>Category</label>
+                <select id="photoCat">
+                  <option value="Event">Event</option><option value="Research">Research</option>
+                  <option value="Training">Training</option><option value="Office">Office</option>
+                </select>
+              </div>
+              <div class="form-actions"><button class="btn-submit" onclick="savePhoto()"><i class="bi bi-plus me-1"></i>Add Photo</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Videos Panel -->
+      <div id="galVideosPanel" style="display:none;">
+        <div style="display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start;">
+          <div class="card-box">
+            <div class="card-box-hdr"><h6><i class="bi bi-play-circle me-2"></i>Videos</h6><span style="font-size:.72rem;color:#9ca3af;" id="videoCount"></span></div>
+            <div class="card-box-body"><div class="gallery-grid" id="videoGrid"></div></div>
+          </div>
+          <div class="card-box">
+            <div class="card-box-hdr"><h6><i class="bi bi-plus-circle me-2"></i>Add YouTube Video</h6></div>
+            <div class="card-box-body">
+              <div class="form-group"><label>YouTube URL <span class="req">*</span></label><input type="text" id="videoUrl" placeholder="https://youtube.com/watch?v=…"/></div>
+              <div class="form-group"><label>Title <span class="req">*</span></label><input type="text" id="videoTitle" placeholder="Video title"/></div>
+              <div class="form-group"><label>Category</label>
+                <select id="videoCat">
+                  <option value="Event">Event</option><option value="Research">Research</option>
+                  <option value="Training">Training</option><option value="Interview">Interview</option>
+                </select>
+              </div>
+              <div class="form-actions"><button class="btn-submit" onclick="saveVideo()"><i class="bi bi-plus me-1"></i>Add Video</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         SECTION: EDITOR ACCOUNTS
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-editors">
+      <div class="page-hdr">
+        <h5>Editor Accounts</h5>
+        <p>Create and manage editor login accounts for the Editor Panel (Editor.html).</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start;">
+        <!-- Editor List -->
+        <div class="card-box">
+          <div class="card-box-hdr">
+            <h6><i class="bi bi-person-badge-fill me-2"></i>Editor Accounts</h6>
+            <span style="font-size:.72rem;color:#9ca3af;" id="editorCount"></span>
+          </div>
+          <div class="card-box-body" id="editorList" style="padding:14px 14px 6px;"></div>
+        </div>
+        <!-- Add Editor Form -->
+        <div class="card-box">
+          <div class="card-box-hdr"><h6 id="edFormTitle"><i class="bi bi-plus-circle me-2"></i>Add Editor Account</h6></div>
+          <div class="card-box-body">
+            <input type="hidden" id="edEditId"/>
+            <div class="form-group"><label>Full Name <span class="req">*</span></label><input type="text" id="edName" placeholder="Dr. Full Name"/></div>
+            <div class="form-group"><label>Email / Username <span class="req">*</span></label><input type="email" id="edEmail" placeholder="editor@sardbd.info"/></div>
+            <div class="form-group"><label>Password <span class="req">*</span></label><input type="password" id="edPass" placeholder="Set a password"/></div>
+            <div class="form-group"><label>Role</label>
+              <select id="edRole">
+                <option value="Associate Editor">Associate Editor</option>
+                <option value="Section Editor">Section Editor</option>
+                <option value="Reviewer">Reviewer</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Specialization</label><input type="text" id="edSpec" placeholder="e.g. Public Health, MCH…"/></div>
+            <div class="form-group">
+              <label>Status</label>
+              <div class="toggle-wrap">
+                <label class="toggle"><input type="checkbox" id="edActive" checked/><span class="toggle-slider"></span></label>
+                <span style="font-size:.8rem;color:#374151;">Active</span>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn-submit" onclick="saveEditor()">Save Account</button>
+              <button class="btn-cancel-form" onclick="clearEditorForm()">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         SECTION: EDITORIAL BOARD
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-board">
+      <div class="page-hdr">
+        <h5>Editorial Board</h5>
+        <p>Manage editorial board members shown on editorial-board.html.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start;">
+        <!-- Board List -->
+        <div class="card-box">
+          <div class="card-box-hdr">
+            <h6><i class="bi bi-people-fill me-2"></i>Board Members</h6>
+            <span style="font-size:.72rem;color:#9ca3af;" id="boardCount"></span>
+          </div>
+          <div class="card-box-body" id="boardList" style="padding:14px 14px 6px;"></div>
+        </div>
+        <!-- Add Board Member Form -->
+        <div class="card-box">
+          <div class="card-box-hdr"><h6 id="boardFormTitle"><i class="bi bi-plus-circle me-2"></i>Add Board Member</h6></div>
+          <div class="card-box-body">
+            <input type="hidden" id="boardEditId"/>
+            <div class="form-group"><label>Name <span class="req">*</span></label><input type="text" id="bmName" placeholder="Prof. Full Name"/></div>
+            <div class="form-group"><label>Designation / Title <span class="req">*</span></label><input type="text" id="bmTitle" placeholder="Professor, Dept. of…"/></div>
+            <div class="form-group"><label>Institution <span class="req">*</span></label><input type="text" id="bmInst" placeholder="University / Organization"/></div>
+            <div class="form-group"><label>Role <span class="req">*</span></label>
+              <select id="bmRole">
+                <option value="Editor in Chief">Editor in Chief</option>
+                <option value="Executive Editor">Executive Editor</option>
+                <option value="Advisory">Advisory Board</option>
+                <option value="Member">Editorial Member</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Photo URL</label><input type="text" id="bmPhoto" placeholder="https://… (optional)"/></div>
+            <div class="form-group"><label>Email</label><input type="email" id="bmEmail" placeholder="email@institution.edu (optional)"/></div>
+            <div class="form-group"><label>Research Interest</label><input type="text" id="bmInterest" placeholder="Public Health, MCH… (optional)"/></div>
+            <div class="form-actions">
+              <button class="btn-submit" onclick="saveBoardMember()">Save Member</button>
+              <button class="btn-cancel-form" onclick="clearBoardForm()">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         SECTION: SETTINGS
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-settings">
+      <div class="page-hdr">
+        <h5>Settings</h5>
+        <p>Password, contact info, backup, and data management.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;">
+
+        <!-- Password Change -->
+        <div class="settings-section">
+          <h6><i class="bi bi-lock-fill me-2"></i>Change Admin Password</h6>
+          <div class="form-group"><label>Current Password</label><input type="password" id="oldPass" placeholder="Current password"/></div>
+          <div class="form-group"><label>New Password</label><input type="password" id="newPass" placeholder="New password (min 8 chars)"/></div>
+          <div class="form-group"><label>Confirm New Password</label><input type="password" id="confPass" placeholder="Repeat new password"/></div>
+          <button class="btn-submit" onclick="changePassword()">Update Password</button>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="settings-section">
+          <h6><i class="bi bi-info-circle-fill me-2"></i>Site Contact Info</h6>
+          <div class="form-group"><label>Phone</label><input type="text" id="cPhone" placeholder="+880…"/></div>
+          <div class="form-group"><label>Email</label><input type="email" id="cEmail" placeholder="office@sardbd.info"/></div>
+          <div class="form-group"><label>Address</label><textarea id="cAddress" rows="2" placeholder="Office address…"></textarea></div>
+          <button class="btn-submit" onclick="saveContact()">Save Contact Info</button>
+        </div>
+
+        <!-- Backup & Restore -->
+        <div class="settings-section">
+          <h6><i class="bi bi-cloud-arrow-down-fill me-2"></i>Backup & Restore</h6>
+          <p style="font-size:.78rem;color:#6c757d;margin-bottom:14px;">Download all data as JSON backup or restore from a previous backup.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn-submit" onclick="backupData()"><i class="bi bi-download me-1"></i>Download Backup</button>
+            <label class="btn-cancel-form" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:11px 20px;">
+              <i class="bi bi-upload"></i> Restore Backup
+              <input type="file" accept=".json" style="display:none;" onchange="restoreData(event)"/>
+            </label>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="danger-zone">
+          <h6 style="color:#dc2626;"><i class="bi bi-exclamation-triangle-fill me-2"></i>Danger Zone</h6>
+          <div class="danger-item">
+            <div class="di-info"><div class="di-title">Clear Enrollments</div><div class="di-desc">Delete all enrollment records</div></div>
+            <button class="btn-sm-danger" onclick="clearData('sardEnrollments','enrollments')">Clear</button>
+          </div>
+          <div class="danger-item">
+            <div class="di-info"><div class="di-title">Clear Submissions</div><div class="di-desc">Delete all journal submissions</div></div>
+            <button class="btn-sm-danger" onclick="clearData('sardSubmissions','submissions')">Clear</button>
+          </div>
+          <div class="danger-item">
+            <div class="di-info"><div class="di-title">Clear News</div><div class="di-desc">Delete all news posts</div></div>
+            <button class="btn-sm-danger" onclick="clearData('sardNews','news')">Clear</button>
+          </div>
+          <div class="danger-item">
+            <div class="di-info"><div class="di-title">Clear Gallery</div><div class="di-desc">Delete all photos and videos</div></div>
+            <button class="btn-sm-danger" onclick="clearData('sardGallery','gallery');clearData('sardVideos','videos')">Clear</button>
+          </div>
+          <div class="danger-item" style="border:none;">
+            <div class="di-info"><div class="di-title">Clear ALL Data</div><div class="di-desc">Wipe everything (irreversible)</div></div>
+            <button class="btn-sm-danger" onclick="clearAllData()" style="background:#dc2626;color:#fff;">Clear All</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+</div><!-- /adminWrap -->
+
+<!-- ════ MODALS ════ -->
+
+<!-- Enrollment Detail Modal -->
+<div class="modal-overlay" id="enDetailModal">
+  <div class="modal-box" style="max-width:480px;">
+    <div class="modal-hdr">
+      <h6><i class="bi bi-clipboard-check-fill me-2"></i>Enrollment Detail</h6>
+      <button class="modal-close" onclick="closeModal('enDetailModal')">×</button>
+    </div>
+    <div class="modal-body" id="enDetailBody"></div>
+    <div class="modal-footer">
+      <button class="btn-sm-outline" onclick="closeModal('enDetailModal')">Close</button>
+    </div>
   </div>
 </div>
 
+<!-- Journal Detail Modal -->
+<div class="modal-overlay" id="jsDetailModal">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <h6><i class="bi bi-journal-text me-2"></i>Submission Detail</h6>
+      <button class="modal-close" onclick="closeModal('jsDetailModal')">×</button>
+    </div>
+    <div class="modal-body" id="jsDetailBody"></div>
+    <div class="modal-footer" id="jsDetailFooter"></div>
+  </div>
+</div>
+
+<!-- Publish Modal -->
+<div class="modal-overlay" id="publishModal">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-hdr">
+      <h6><i class="bi bi-check-circle-fill me-2" style="color:#059669;"></i>Approve & Publish Article</h6>
+      <button class="modal-close" onclick="closeModal('publishModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="pubSubId"/>
+      <p style="font-size:.78rem;color:#6c757d;margin-bottom:18px;">Fill in publication details. The article will appear on journal.html automatically.</p>
+      <div class="form-row">
+        <div class="form-group"><label>Volume <span class="req">*</span></label><input type="text" id="pubVol" placeholder="e.g. 1"/></div>
+        <div class="form-group"><label>Issue <span class="req">*</span></label><input type="text" id="pubIssue" placeholder="e.g. 1"/></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Year <span class="req">*</span></label><input type="text" id="pubYear" placeholder="2025"/></div>
+        <div class="form-group"><label>Pages</label><input type="text" id="pubPages" placeholder="e.g. 1–12"/></div>
+      </div>
+      <div class="form-group"><label>DOI (optional)</label><input type="text" id="pubDoi" placeholder="10.xxxxx/…"/></div>
+      <div class="form-group"><label>PDF Link (optional)</label><input type="text" id="pubPdf" placeholder="Google Drive / server link"/></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm-outline" onclick="closeModal('publishModal')">Cancel</button>
+      <button class="btn-submit" onclick="publishArticle()"><i class="bi bi-check-circle-fill me-1"></i>Publish Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Reject Modal -->
+<div class="modal-overlay" id="rejectModal">
+  <div class="modal-box" style="max-width:440px;">
+    <div class="modal-hdr">
+      <h6><i class="bi bi-x-circle-fill me-2" style="color:#dc2626;"></i>Reject Submission</h6>
+      <button class="modal-close" onclick="closeModal('rejectModal')">×</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="rejSubId"/>
+      <div class="form-group"><label>Rejection Note (optional)</label><textarea id="rejNote" rows="4" placeholder="Reason for rejection…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm-outline" onclick="closeModal('rejectModal')">Cancel</button>
+      <button class="btn-sm-danger" style="padding:9px 20px;border-radius:8px;" onclick="confirmReject()">Reject Submission</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ════ SCRIPTS ════ -->
 <script>
-/* ── Password ── */
-var ADMIN_PASS = 'sardbd2025'; // Change this password
+/* ══════════════════════════════════════
+   CONSTANTS & PASSWORD
+══════════════════════════════════════ */
+var ADMIN_PASS_KEY = 'sardAdminPass';
+function getAdminPass(){ return localStorage.getItem(ADMIN_PASS_KEY) || 'sardbd2025'; }
 
+/* ══════════════════════════════════════
+   LOGIN / LOGOUT
+══════════════════════════════════════ */
 function doLogin(){
   var p = document.getElementById('passInput').value;
-  if(p === ADMIN_PASS){
+  if(p === getAdminPass()){
     sessionStorage.setItem('sardAdmin','1');
     document.getElementById('loginScreen').style.display='none';
-    document.getElementById('adminScreen').style.display='block';
+    document.getElementById('adminWrap').style.display='block';
     renderAll();
   } else {
     document.getElementById('loginErr').style.display='block';
@@ -238,155 +831,761 @@ function doLogin(){
 function doLogout(){
   sessionStorage.removeItem('sardAdmin');
   document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('adminScreen').style.display='none';
+  document.getElementById('adminWrap').style.display='none';
   document.getElementById('passInput').value='';
 }
-// Auto-login if session active
-if(sessionStorage.getItem('sardAdmin')==='1'){
-  document.getElementById('loginScreen').style.display='none';
-  document.getElementById('adminScreen').style.display='block';
+document.getElementById('passInput').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+
+/* ══════════════════════════════════════
+   SECTION SWITCHING
+══════════════════════════════════════ */
+var sectionTitles = {
+  dashboard:'<i class="bi bi-grid-fill me-2"></i>Dashboard',
+  enrollments:'<i class="bi bi-clipboard-check-fill me-2"></i>Enrollments',
+  journal:'<i class="bi bi-journal-text me-2"></i>Journal Submissions',
+  news:'<i class="bi bi-newspaper me-2"></i>News Management',
+  gallery:'<i class="bi bi-images me-2"></i>Gallery & Videos',
+  editors:'<i class="bi bi-person-badge-fill me-2"></i>Editor Accounts',
+  board:'<i class="bi bi-people-fill me-2"></i>Editorial Board',
+  settings:'<i class="bi bi-gear-fill me-2"></i>Settings'
+};
+
+function switchSection(name, el){
+  document.querySelectorAll('.section-panel').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.sb-item').forEach(function(i){i.classList.remove('active');});
+  var panel = document.getElementById('sec-'+name);
+  if(panel) panel.classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('topbarTitle').innerHTML = sectionTitles[name]||name;
+  renderSection(name);
 }
 
-/* ── Data ── */
-function getOrders(){
-  return JSON.parse(localStorage.getItem('sardEnrollments') || '[]');
-}
-function saveOrders(orders){
-  localStorage.setItem('sardEnrollments', JSON.stringify(orders));
-}
-
-/* ── Stats ── */
-function renderStats(){
-  var orders = getOrders();
-  var total = orders.length;
-  var totalRev = orders.reduce(function(s,o){return s+(o.price||0);},0);
-  var pending = orders.filter(function(o){return o.status==='Pending';}).length;
-  var confirmed = orders.filter(function(o){return o.status==='Confirmed';}).length;
-
-  document.getElementById('statsRow').innerHTML =
-    statCard(total,'Total Enrollments','bi-people-fill') +
-    statCard('৳ '+totalRev.toLocaleString(),'Total Revenue','bi-cash-stack') +
-    statCard(pending,'Pending','bi-hourglass-split') +
-    statCard(confirmed,'Confirmed','bi-check-circle-fill');
-}
-function statCard(val,lbl,icon){
-  return '<div class="stat-card"><div class="stat-val">'+val+'</div><div class="stat-lbl">'+lbl+'</div><i class="bi '+icon+' stat-icon"></i></div>';
+function renderSection(name){
+  if(name==='dashboard') renderDashboard();
+  else if(name==='enrollments') renderEnrollTable();
+  else if(name==='journal') renderJournalTable();
+  else if(name==='news') renderNews();
+  else if(name==='gallery'){ renderPhotos(); renderVideos(); }
+  else if(name==='editors') renderEditors();
+  else if(name==='board') renderBoard();
+  else if(name==='settings') loadContactInfo();
 }
 
-/* ── Table ── */
-function renderTable(){
-  var orders = getOrders();
-  var search = document.getElementById('searchInput').value.toLowerCase();
-  var statusF = document.getElementById('statusFilter').value;
+/* ══════════════════════════════════════
+   DATA HELPERS
+══════════════════════════════════════ */
+function getData(key){ return JSON.parse(localStorage.getItem(key)||'[]'); }
+function setData(key,val){ localStorage.setItem(key,JSON.stringify(val)); }
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function trunc(s,n){ return s&&s.length>n?s.slice(0,n)+'…':s||''; }
+function fmtDate(d){ try{ return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }catch(e){return d||'';} }
+function uid(){ return Date.now().toString(36).toUpperCase(); }
 
-  var filtered = orders.filter(function(o){
-    var matchSearch = !search ||
-      (o.name||'').toLowerCase().includes(search) ||
-      (o.phone||'').includes(search) ||
-      (o.courseName||'').toLowerCase().includes(search) ||
-      (o.orderId||'').toLowerCase().includes(search);
-    var matchStatus = !statusF || o.status===statusF;
-    return matchSearch && matchStatus;
-  });
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+function toast(msg, type){
+  type = type||'success';
+  var w = document.getElementById('toastWrap');
+  var t = document.createElement('div');
+  t.className='toast-msg '+type;
+  t.innerHTML = (type==='success'?'<i class="bi bi-check-circle-fill me-2"></i>':'<i class="bi bi-exclamation-triangle-fill me-2"></i>')+esc(msg);
+  w.appendChild(t);
+  setTimeout(function(){ t.remove(); },3000);
+}
 
-  // Sort newest first
-  filtered.sort(function(a,b){ return new Date(b.date)-new Date(a.date); });
+/* ══════════════════════════════════════
+   MODAL HELPERS
+══════════════════════════════════════ */
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(function(m){
+  m.addEventListener('click',function(e){ if(e.target===m) m.classList.remove('open'); });
+});
 
-  document.getElementById('tableCount').textContent = filtered.length + ' record(s)';
-
-  if(!filtered.length){
-    document.getElementById('tableBody').innerHTML =
-      '<tr><td colspan="11"><div class="no-data"><i class="bi bi-inbox"></i>No enrollments found</div></td></tr>';
-    return;
+/* ══════════════════════════════════════
+   RENDER ALL (top-level refresh)
+══════════════════════════════════════ */
+function renderAll(){
+  updateSidebarBadges();
+  document.getElementById('lastRefresh').textContent = 'Updated '+new Date().toLocaleTimeString();
+  var active = document.querySelector('.section-panel.active');
+  if(active){
+    var name = active.id.replace('sec-','');
+    renderSection(name);
   }
+}
 
-  var html = filtered.map(function(o, i){
-    var d = new Date(o.date);
-    var dateStr = d.toLocaleDateString('en-BD',{day:'2-digit',month:'short',year:'numeric'})+' '+
-                  d.toLocaleTimeString('en-BD',{hour:'2-digit',minute:'2-digit'});
-    var statusClass = o.status==='Confirmed'?'status-confirmed':o.status==='Cancelled'?'status-cancelled':'status-pending';
-    var statusIcon = o.status==='Confirmed'?'bi-check-circle-fill':o.status==='Cancelled'?'bi-x-circle-fill':'bi-hourglass-split';
-    // Find original index for deletion
-    var origIdx = getOrders().findIndex(function(x){return x.orderId===o.orderId;});
+function updateSidebarBadges(){
+  var pending = getData('sardEnrollments').filter(function(o){return o.status==='Pending';}).length;
+  var newSubs = getData('sardSubmissions').filter(function(s){return s.status==='Submitted';}).length;
+  document.getElementById('sbPending').textContent = pending;
+  document.getElementById('sbSubs').textContent = newSubs;
+  if(!pending) document.getElementById('sbPending').style.display='none';
+  else document.getElementById('sbPending').style.display='';
+  if(!newSubs) document.getElementById('sbSubs').style.display='none';
+  else document.getElementById('sbSubs').style.display='';
+}
+
+/* ══════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════ */
+function renderDashboard(){
+  var enrolls = getData('sardEnrollments');
+  var subs    = getData('sardSubmissions');
+  var pub     = getData('sardPublishedArticles');
+  var news    = getData('sardNews');
+  var photos  = getData('sardGallery');
+  var vids    = getData('sardVideos');
+  var editors = getData('sardEditorAccounts');
+
+  var rev = enrolls.reduce(function(s,o){return s+(o.price||0);},0);
+  var pending = enrolls.filter(function(o){return o.status==='Pending';}).length;
+
+  var stats = [
+    {val:enrolls.length, lbl:'Total Enrollments', icon:'bi-people-fill', c:'c1'},
+    {val:'৳ '+rev.toLocaleString(), lbl:'Total Revenue', icon:'bi-cash-stack', c:'c2'},
+    {val:pending, lbl:'Pending Orders', icon:'bi-hourglass-split', c:'c3'},
+    {val:subs.length, lbl:'Journal Submissions', icon:'bi-journal-text', c:'c4'},
+    {val:pub.length, lbl:'Published Articles', icon:'bi-book-fill', c:'c5'},
+    {val:news.length, lbl:'News Posts', icon:'bi-newspaper', c:'c6'},
+    {val:photos.length+vids.length, lbl:'Gallery Items', icon:'bi-images', c:'c7'},
+    {val:editors.length, lbl:'Active Editors', icon:'bi-person-badge-fill', c:'c8'}
+  ];
+  document.getElementById('dashStats').innerHTML = stats.map(function(s){
+    return '<div class="stat-card '+s.c+'"><i class="bi '+s.icon+' sc-icon"></i><div class="sc-val">'+s.val+'</div><div class="sc-lbl">'+s.lbl+'</div></div>';
+  }).join('');
+
+  // Recent Enrollments
+  var re = enrolls.slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);}).slice(0,5);
+  document.getElementById('recentEnroll').querySelector('tbody').innerHTML = re.length ?
+    re.map(function(o){
+      return '<tr><td><strong>'+esc(o.name)+'</strong><br><span style="color:#9ca3af;font-size:.68rem;">'+trunc(o.courseName,22)+'</span></td>'+
+        '<td><span class="badge-status '+(o.status==='Confirmed'?'bs-confirmed':o.status==='Cancelled'?'bs-cancelled':'bs-pending')+'">'+o.status+'</span></td>'+
+        '<td style="color:#9ca3af;">'+fmtDate(o.date)+'</td></tr>';
+    }).join('') :
+    '<tr><td colspan="3" class="no-data" style="padding:20px;"><i class="bi bi-inbox"></i><p>No enrollments yet</p></td></tr>';
+
+  // Recent Submissions
+  var rs = subs.slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);}).slice(0,5);
+  document.getElementById('recentSubs').querySelector('tbody').innerHTML = rs.length ?
+    rs.map(function(s){
+      return '<tr><td><strong>'+trunc(esc(s.title),28)+'</strong><br><span style="color:#9ca3af;font-size:.68rem;">'+esc(s.authors)+'</span></td>'+
+        '<td><span class="badge-status bs-'+s.status.toLowerCase().replace(/ /g,'-')+'">'+s.status+'</span></td>'+
+        '<td style="color:#9ca3af;">'+fmtDate(s.date)+'</td></tr>';
+    }).join('') :
+    '<tr><td colspan="3" class="no-data" style="padding:20px;"><i class="bi bi-inbox"></i><p>No submissions yet</p></td></tr>';
+}
+
+/* ══════════════════════════════════════
+   ENROLLMENTS
+══════════════════════════════════════ */
+function renderEnrollTable(){
+  var orders  = getData('sardEnrollments');
+  var search  = document.getElementById('enSearch').value.toLowerCase();
+  var statusF = document.getElementById('enStatus').value;
+
+  var f = orders.filter(function(o){
+    var ms = !search||(o.name||'').toLowerCase().includes(search)||(o.phone||'').includes(search)||
+             (o.courseName||'').toLowerCase().includes(search)||(o.orderId||'').toLowerCase().includes(search);
+    return ms && (!statusF||o.status===statusF);
+  }).sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+
+  document.getElementById('enCount').textContent = f.length+' record(s)';
+
+  document.getElementById('enBody').innerHTML = f.length ? f.map(function(o,i){
+    var sc = o.status==='Confirmed'?'bs-confirmed':o.status==='Cancelled'?'bs-cancelled':'bs-pending';
     return '<tr>'+
       '<td style="color:#9ca3af;">'+(i+1)+'</td>'+
-      '<td class="order-id-cell">'+o.orderId+'</td>'+
-      '<td class="course-cell" title="'+o.courseName+'">'+truncate(o.courseName,22)+'</td>'+
-      '<td style="font-weight:600;">'+escHtml(o.name)+'</td>'+
-      '<td>'+escHtml(o.phone)+'</td>'+
-      '<td class="price-cell">৳ '+(o.price||0).toLocaleString()+'</td>'+
+      '<td class="oid">'+esc(o.orderId)+'</td>'+
+      '<td title="'+esc(o.courseName)+'" style="max-width:150px;font-weight:600;">'+trunc(esc(o.courseName),20)+'</td>'+
+      '<td style="font-weight:600;">'+esc(o.name)+'</td>'+
+      '<td>'+esc(o.phone)+'</td>'+
+      '<td style="font-weight:800;color:var(--green);">৳ '+(o.price||0).toLocaleString()+'</td>'+
       '<td style="color:#6c757d;">'+(o.education||'—')+'</td>'+
-      '<td style="color:#6c757d;">'+(o.reference?escHtml(o.reference):'—')+'</td>'+
-      '<td style="color:#9ca3af;white-space:nowrap;">'+dateStr+'</td>'+
-      '<td>'+
-        '<select style="border:1.5px solid var(--border);border-radius:6px;font-size:.7rem;padding:3px 6px;outline:none;" '+
-        'onchange="changeStatus(\''+o.orderId+'\',this.value)">'+
-        '<option value="Pending"'+(o.status==='Pending'?' selected':'')+'>Pending</option>'+
-        '<option value="Confirmed"'+(o.status==='Confirmed'?' selected':'')+'>Confirmed</option>'+
-        '<option value="Cancelled"'+(o.status==='Cancelled'?' selected':'')+'>Cancelled</option>'+
-        '</select>'+
+      '<td style="color:#6c757d;">'+(o.reference?trunc(esc(o.reference),16):'—')+'</td>'+
+      '<td style="color:#9ca3af;white-space:nowrap;">'+fmtDate(o.date)+'</td>'+
+      '<td><select style="border:1.5px solid var(--border);border-radius:6px;font-size:.7rem;padding:3px 6px;outline:none;" onchange="changeEnrollStatus(\''+esc(o.orderId)+'\',this.value)">'+
+        '<option'+(o.status==='Pending'?' selected':'')+'>Pending</option>'+
+        '<option'+(o.status==='Confirmed'?' selected':'')+'>Confirmed</option>'+
+        '<option'+(o.status==='Cancelled'?' selected':'')+'>Cancelled</option>'+
+      '</select></td>'+
+      '<td style="white-space:nowrap;">'+
+        '<button class="act-btn view" onclick="viewEnroll(\''+esc(o.orderId)+'\')" title="View"><i class="bi bi-eye"></i></button>'+
+        '<button class="act-btn del" onclick="deleteEnroll(\''+esc(o.orderId)+'\')" title="Delete"><i class="bi bi-trash3"></i></button>'+
       '</td>'+
-      '<td><button class="btn-del" onclick="deleteOrder(\''+o.orderId+'\')" title="Delete"><i class="bi bi-trash3"></i></button></td>'+
     '</tr>';
-  }).join('');
-  document.getElementById('tableBody').innerHTML = html;
+  }).join('') :
+    '<tr><td colspan="11"><div class="no-data"><i class="bi bi-inbox"></i><p>No enrollments found</p></div></td></tr>';
 }
 
-function renderAll(){
-  if(sessionStorage.getItem('sardAdmin')!=='1') return;
-  renderStats();
-  renderTable();
+function changeEnrollStatus(orderId, status){
+  var orders = getData('sardEnrollments');
+  orders.forEach(function(o){if(o.orderId===orderId) o.status=status;});
+  setData('sardEnrollments',orders);
+  updateSidebarBadges();
+  toast('Status updated to '+status);
+}
+function deleteEnroll(orderId){
+  if(!confirm('Delete this enrollment? This cannot be undone.')) return;
+  setData('sardEnrollments', getData('sardEnrollments').filter(function(o){return o.orderId!==orderId;}));
+  renderEnrollTable(); updateSidebarBadges(); toast('Enrollment deleted');
+}
+function viewEnroll(orderId){
+  var o = getData('sardEnrollments').find(function(x){return x.orderId===orderId;});
+  if(!o) return;
+  var sc = o.status==='Confirmed'?'bs-confirmed':o.status==='Cancelled'?'bs-cancelled':'bs-pending';
+  document.getElementById('enDetailBody').innerHTML =
+    dr('Order ID', '<span class="oid">'+esc(o.orderId)+'</span>')+
+    dr('Course', esc(o.courseName))+
+    dr('Price', '<strong>৳ '+(o.price||0).toLocaleString()+'</strong>')+
+    dr('Name', esc(o.name))+
+    dr('Phone', esc(o.phone))+
+    dr('Education', esc(o.education||'—'))+
+    dr('Reference', esc(o.reference||'—'))+
+    dr('Date', fmtDate(o.date))+
+    dr('Status', '<span class="badge-status '+sc+'">'+o.status+'</span>');
+  openModal('enDetailModal');
+}
+function dr(lbl,val){
+  return '<div class="detail-row"><span class="detail-label">'+lbl+'</span><span class="detail-val">'+val+'</span></div>';
+}
+function exportCSV(){
+  var orders = getData('sardEnrollments');
+  if(!orders.length){toast('No data to export.','error');return;}
+  var h = ['Order ID','Course','Price','Name','Phone','Education','Reference','Date','Status'];
+  var rows = orders.map(function(o){
+    return [o.orderId,'"'+o.courseName+'"',o.price,'"'+o.name+'"',o.phone,
+            o.education||'','"'+(o.reference||'')+'"',new Date(o.date).toLocaleString(),o.status].join(',');
+  });
+  var blob = new Blob([h.join(',')+'\n'+rows.join('\n')],{type:'text/csv;charset=utf-8;'});
+  var a = document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='sard-enrollments-'+Date.now()+'.csv'; a.click();
+  toast('CSV downloaded!');
 }
 
-/* ── Actions ── */
-function changeStatus(orderId, newStatus){
-  var orders = getOrders();
-  orders.forEach(function(o){if(o.orderId===orderId) o.status=newStatus;});
-  saveOrders(orders);
-  renderStats();
+/* ══════════════════════════════════════
+   JOURNAL SUBMISSIONS
+══════════════════════════════════════ */
+function statusClass(s){
+  var m={Submitted:'bs-submitted','Under Review':'bs-review','Revision Required':'bs-revision',
+         Approved:'bs-approved',Published:'bs-published',Rejected:'bs-cancelled'};
+  return m[s]||'bs-submitted';
+}
+function renderJournalTable(){
+  var subs   = getData('sardSubmissions');
+  var search = document.getElementById('jsSearch').value.toLowerCase();
+  var statF  = document.getElementById('jsStatus').value;
+  var f = subs.filter(function(s){
+    var ms = !search||(s.title||'').toLowerCase().includes(search)||(s.authors||'').toLowerCase().includes(search)||(s.email||'').toLowerCase().includes(search);
+    return ms && (!statF||s.status===statF);
+  }).sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+
+  document.getElementById('jsCount').textContent = f.length+' record(s)';
+  document.getElementById('jsBody').innerHTML = f.length ? f.map(function(s,i){
+    return '<tr>'+
+      '<td style="color:#9ca3af;">'+(i+1)+'</td>'+
+      '<td class="oid">'+esc(s.subId)+'</td>'+
+      '<td title="'+esc(s.title)+'" style="max-width:180px;font-weight:600;">'+trunc(esc(s.title),28)+'</td>'+
+      '<td>'+esc(s.authors)+'</td>'+
+      '<td style="color:#6c757d;font-size:.72rem;">'+esc(s.type||'—')+'</td>'+
+      '<td style="color:#6c757d;">'+esc(s.email)+'</td>'+
+      '<td style="color:#9ca3af;white-space:nowrap;">'+fmtDate(s.date)+'</td>'+
+      '<td><span class="badge-status '+statusClass(s.status)+'">'+esc(s.status)+'</span></td>'+
+      '<td style="white-space:nowrap;">'+
+        '<button class="act-btn view" onclick="viewSub(\''+esc(s.subId)+'\')" title="View"><i class="bi bi-eye"></i></button>'+
+        (s.status!=='Published'&&s.status!=='Rejected'?
+          '<button class="act-btn ok" onclick="openPublish(\''+esc(s.subId)+'\')" title="Approve & Publish"><i class="bi bi-check-circle"></i></button>'+
+          '<button class="act-btn reject" onclick="openReject(\''+esc(s.subId)+'\')" title="Reject"><i class="bi bi-x-circle"></i></button>'
+        :'')+
+        '<button class="act-btn del" onclick="deleteSub(\''+esc(s.subId)+'\')" title="Delete"><i class="bi bi-trash3"></i></button>'+
+      '</td>'+
+    '</tr>';
+  }).join('') :
+    '<tr><td colspan="9"><div class="no-data"><i class="bi bi-inbox"></i><p>No submissions found</p></div></td></tr>';
 }
 
-function deleteOrder(orderId){
-  if(!confirm('Delete this order? This cannot be undone.')) return;
-  var orders = getOrders().filter(function(o){return o.orderId!==orderId;});
-  saveOrders(orders);
+function viewSub(subId){
+  var s = getData('sardSubmissions').find(function(x){return x.subId===subId;});
+  if(!s) return;
+  document.getElementById('jsDetailBody').innerHTML =
+    dr('Submission ID','<span class="oid">'+esc(s.subId)+'</span>')+
+    dr('Status','<span class="badge-status '+statusClass(s.status)+'">'+esc(s.status)+'</span>')+
+    dr('Title',esc(s.title))+
+    dr('Authors',esc(s.authors))+
+    dr('Affiliation',esc(s.affiliation||'—'))+
+    dr('Manuscript Type',esc(s.type||'—'))+
+    dr('Email',esc(s.email))+
+    dr('Phone',esc(s.phone||'—'))+
+    dr('Keywords',esc(s.keywords||'—'))+
+    dr('Abstract','<span style="white-space:pre-wrap;font-size:.78rem;">'+esc(s.abstract||'—')+'</span>')+
+    dr('File Link',s.fileLink?'<a href="'+esc(s.fileLink)+'" target="_blank" style="color:var(--green);">Open File</a>':'—')+
+    dr('Cover Letter',s.coverLetter?esc(s.coverLetter):'—')+
+    dr('Submitted',fmtDate(s.date));
+  document.getElementById('jsDetailFooter').innerHTML =
+    '<button class="btn-sm-outline" onclick="closeModal(\'jsDetailModal\')">Close</button>'+
+    (s.status!=='Published'&&s.status!=='Rejected'?
+      '<button class="btn-sm-info" onclick="changeSubStatus(\''+subId+'\',\'Under Review\')">Mark Under Review</button>'+
+      '<button class="btn-submit" onclick="closeModal(\'jsDetailModal\');openPublish(\''+subId+'\')">Approve & Publish</button>'
+    :'');
+  openModal('jsDetailModal');
+}
+
+function changeSubStatus(subId, status){
+  var subs = getData('sardSubmissions');
+  subs.forEach(function(s){if(s.subId===subId) s.status=status;});
+  setData('sardSubmissions',subs);
+  renderJournalTable(); updateSidebarBadges();
+  toast('Status → '+status);
+}
+
+function openPublish(subId){
+  document.getElementById('pubSubId').value=subId;
+  document.getElementById('pubYear').value=new Date().getFullYear();
+  openModal('publishModal');
+}
+
+function publishArticle(){
+  var subId = document.getElementById('pubSubId').value;
+  var vol   = document.getElementById('pubVol').value.trim();
+  var issue = document.getElementById('pubIssue').value.trim();
+  var year  = document.getElementById('pubYear').value.trim();
+  if(!vol||!issue||!year){toast('Volume, Issue and Year are required.','error');return;}
+
+  var subs = getData('sardSubmissions');
+  var sub  = subs.find(function(s){return s.subId===subId;});
+  if(!sub){toast('Submission not found.','error');return;}
+
+  var articleId = 'JARD-'+year+'-'+uid().slice(-4);
+  var article = {
+    articleId:articleId, subId:subId,
+    title:sub.title, authors:sub.authors, affiliation:sub.affiliation||'',
+    abstract:sub.abstract||'', keywords:sub.keywords||'', type:sub.type||'',
+    volume:vol, issue:issue, year:year,
+    pages:document.getElementById('pubPages').value.trim(),
+    doi:document.getElementById('pubDoi').value.trim(),
+    pdfLink:document.getElementById('pubPdf').value.trim(),
+    publishedDate:new Date().toISOString()
+  };
+  var articles = getData('sardPublishedArticles');
+  articles.push(article);
+  setData('sardPublishedArticles',articles);
+
+  sub.status='Published'; sub.articleId=articleId;
+  setData('sardSubmissions',subs);
+
+  closeModal('publishModal');
+  renderJournalTable(); updateSidebarBadges();
+  toast('Article published! ID: '+articleId);
+}
+
+function openReject(subId){
+  document.getElementById('rejSubId').value=subId;
+  document.getElementById('rejNote').value='';
+  openModal('rejectModal');
+}
+function confirmReject(){
+  var subId = document.getElementById('rejSubId').value;
+  var subs  = getData('sardSubmissions');
+  subs.forEach(function(s){if(s.subId===subId){s.status='Rejected';s.rejectNote=document.getElementById('rejNote').value;}});
+  setData('sardSubmissions',subs);
+  closeModal('rejectModal');
+  renderJournalTable(); updateSidebarBadges();
+  toast('Submission rejected.');
+}
+function deleteSub(subId){
+  if(!confirm('Delete this submission?')) return;
+  setData('sardSubmissions', getData('sardSubmissions').filter(function(s){return s.subId!==subId;}));
+  renderJournalTable(); updateSidebarBadges(); toast('Submission deleted.');
+}
+
+/* ══════════════════════════════════════
+   NEWS
+══════════════════════════════════════ */
+function renderNews(){
+  var news = getData('sardNews').slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+  document.getElementById('newsCount').textContent = news.length+' post(s)';
+  document.getElementById('newsList').innerHTML = news.length ? news.map(function(n){
+    return '<div class="news-item">'+
+      '<div class="ni-img">'+(n.img?'<img src="'+esc(n.img)+'" style="width:80px;height:60px;object-fit:cover;border-radius:8px;" onerror="this.style.display=\'none\'"/>':'<i class="bi bi-image"></i>')+'</div>'+
+      '<div class="ni-body">'+
+        '<div class="ni-title">'+esc(n.title)+'</div>'+
+        '<div class="ni-date">'+fmtDate(n.date)+'</div>'+
+        '<span class="ni-cat">'+esc(n.category||'General')+'</span>'+
+      '</div>'+
+      '<div class="ni-actions">'+
+        '<button class="act-btn edit" onclick="editNews(\''+esc(n.id)+'\')" title="Edit"><i class="bi bi-pencil"></i></button>'+
+        '<button class="act-btn del" onclick="deleteNews(\''+esc(n.id)+'\')" title="Delete"><i class="bi bi-trash3"></i></button>'+
+      '</div>'+
+    '</div>';
+  }).join('') :
+    '<div class="no-data"><i class="bi bi-newspaper"></i><p>No news posts yet</p></div>';
+}
+function saveNews(){
+  var title = document.getElementById('newsTitle').value.trim();
+  var date  = document.getElementById('newsDate').value;
+  if(!title||!date){toast('Title and Date are required.','error');return;}
+  var news = getData('sardNews');
+  var editId = document.getElementById('newsEditId').value;
+  var obj = {
+    id: editId||uid(), title:title,
+    titleBn:document.getElementById('newsTitleBn').value.trim(),
+    date:date, category:document.getElementById('newsCat').value,
+    img:document.getElementById('newsImg').value.trim(),
+    short:document.getElementById('newsShort').value.trim(),
+    content:document.getElementById('newsContent').value.trim()
+  };
+  if(editId){ var idx=news.findIndex(function(n){return n.id===editId;}); if(idx>-1) news[idx]=obj; else news.push(obj); }
+  else news.push(obj);
+  setData('sardNews',news); clearNewsForm(); renderNews();
+  toast(editId?'News updated!':'News added!');
+}
+function editNews(id){
+  var n = getData('sardNews').find(function(x){return x.id===id;});
+  if(!n) return;
+  document.getElementById('newsEditId').value=n.id;
+  document.getElementById('newsTitle').value=n.title;
+  document.getElementById('newsTitleBn').value=n.titleBn||'';
+  document.getElementById('newsDate').value=n.date;
+  document.getElementById('newsCat').value=n.category||'General';
+  document.getElementById('newsImg').value=n.img||'';
+  document.getElementById('newsShort').value=n.short||'';
+  document.getElementById('newsContent').value=n.content||'';
+  document.getElementById('newsFormTitle').innerHTML='<i class="bi bi-pencil me-2"></i>Edit News';
+}
+function deleteNews(id){
+  if(!confirm('Delete this news post?')) return;
+  setData('sardNews', getData('sardNews').filter(function(n){return n.id!==id;}));
+  renderNews(); toast('News deleted.');
+}
+function clearNewsForm(){
+  ['newsEditId','newsTitle','newsTitleBn','newsDate','newsImg','newsShort','newsContent'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('newsCat').value='General';
+  document.getElementById('newsFormTitle').innerHTML='<i class="bi bi-plus-circle me-2"></i>Add News';
+}
+
+/* ══════════════════════════════════════
+   GALLERY — PHOTOS
+══════════════════════════════════════ */
+function switchGalTab(tab){
+  document.getElementById('galPhotosPanel').style.display = tab==='photos'?'':'none';
+  document.getElementById('galVideosPanel').style.display = tab==='videos'?'':'none';
+  document.getElementById('galTabPhotos').className = tab==='photos'?'btn-sm-green':'btn-sm-outline';
+  document.getElementById('galTabVideos').className = tab==='videos'?'btn-sm-green':'btn-sm-outline';
+}
+function renderPhotos(){
+  var photos = getData('sardGallery');
+  document.getElementById('photoCount').textContent = photos.length+' photo(s)';
+  document.getElementById('photoGrid').innerHTML = photos.length ? photos.map(function(p){
+    return '<div class="gallery-item">'+
+      '<img src="'+esc(p.url)+'" alt="'+esc(p.title)+'" onerror="this.src=\'data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;180&quot; height=&quot;130&quot;><rect fill=&quot;%23f1f3f5&quot; width=&quot;180&quot; height=&quot;130&quot;/><text x=&quot;50%&quot; y=&quot;50%&quot; dominant-baseline=&quot;middle&quot; text-anchor=&quot;middle&quot; fill=&quot;%23aaa&quot; font-size=&quot;12&quot;>No image</text></svg>\'"/>'+
+      '<div class="gallery-item-info"><div class="gi-title">'+trunc(esc(p.title),22)+'</div><div class="gi-cat">'+esc(p.category)+'</div></div>'+
+      '<div class="gallery-item-actions"><button class="act-btn del" onclick="deletePhoto(\''+esc(p.id)+'\')" style="font-size:.72rem;"><i class="bi bi-trash3"></i> Delete</button></div>'+
+    '</div>';
+  }).join('') : '<p style="color:#9ca3af;font-size:.8rem;">No photos yet.</p>';
+}
+function savePhoto(){
+  var url=document.getElementById('photoUrl').value.trim();
+  var title=document.getElementById('photoTitle').value.trim();
+  if(!url||!title){toast('URL and Title required.','error');return;}
+  var photos=getData('sardGallery');
+  photos.push({id:uid(),url:url,title:title,category:document.getElementById('photoCat').value,date:new Date().toISOString()});
+  setData('sardGallery',photos);
+  document.getElementById('photoUrl').value=''; document.getElementById('photoTitle').value='';
+  renderPhotos(); toast('Photo added!');
+}
+function deletePhoto(id){
+  if(!confirm('Delete this photo?')) return;
+  setData('sardGallery',getData('sardGallery').filter(function(p){return p.id!==id;}));
+  renderPhotos(); toast('Photo deleted.');
+}
+
+/* ══════════════════════════════════════
+   GALLERY — VIDEOS
+══════════════════════════════════════ */
+function ytId(url){
+  var m = url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+  return m?m[1]:null;
+}
+function renderVideos(){
+  var videos=getData('sardVideos');
+  document.getElementById('videoCount').textContent=videos.length+' video(s)';
+  document.getElementById('videoGrid').innerHTML=videos.length?videos.map(function(v){
+    var vid=ytId(v.url)||'';
+    return '<div class="gallery-item">'+
+      (vid?'<iframe src="https://www.youtube.com/embed/'+vid+'" frameborder="0" allowfullscreen style="width:100%;height:130px;"></iframe>':'<div style="width:100%;height:130px;background:#f1f3f5;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:.75rem;">Invalid URL</div>')+
+      '<div class="gallery-item-info"><div class="gi-title">'+trunc(esc(v.title),22)+'</div><div class="gi-cat">'+esc(v.category)+'</div></div>'+
+      '<div class="gallery-item-actions"><button class="act-btn del" onclick="deleteVideo(\''+esc(v.id)+'\')" style="font-size:.72rem;"><i class="bi bi-trash3"></i> Delete</button></div>'+
+    '</div>';
+  }).join(''):'<p style="color:#9ca3af;font-size:.8rem;">No videos yet.</p>';
+}
+function saveVideo(){
+  var url=document.getElementById('videoUrl').value.trim();
+  var title=document.getElementById('videoTitle').value.trim();
+  if(!url||!title){toast('URL and Title required.','error');return;}
+  if(!ytId(url)){toast('Invalid YouTube URL.','error');return;}
+  var videos=getData('sardVideos');
+  videos.push({id:uid(),url:url,title:title,category:document.getElementById('videoCat').value,date:new Date().toISOString()});
+  setData('sardVideos',videos);
+  document.getElementById('videoUrl').value=''; document.getElementById('videoTitle').value='';
+  renderVideos(); toast('Video added!');
+}
+function deleteVideo(id){
+  if(!confirm('Delete this video?')) return;
+  setData('sardVideos',getData('sardVideos').filter(function(v){return v.id!==id;}));
+  renderVideos(); toast('Video deleted.');
+}
+
+/* ══════════════════════════════════════
+   EDITOR ACCOUNTS
+══════════════════════════════════════ */
+function renderEditors(){
+  var editors=getData('sardEditorAccounts');
+  document.getElementById('editorCount').textContent=editors.length+' account(s)';
+  document.getElementById('editorList').innerHTML=editors.length?editors.map(function(e){
+    var initials=(e.name||'?').split(' ').map(function(w){return w[0];}).slice(0,2).join('').toUpperCase();
+    return '<div class="editor-card">'+
+      '<div class="ec-avatar">'+initials+'</div>'+
+      '<div class="ec-info">'+
+        '<div class="ec-name">'+esc(e.name)+'<span class="ec-status '+(e.active?'ec-active':'ec-inactive')+'">'+(e.active?'Active':'Inactive')+'</span></div>'+
+        '<div class="ec-role">'+esc(e.role)+'</div>'+
+        '<div class="ec-email">'+esc(e.email)+(e.spec?' · '+esc(e.spec):'')+'</div>'+
+      '</div>'+
+      '<div class="ec-actions">'+
+        '<button class="act-btn edit" onclick="editEditor(\''+esc(e.id)+'\')" title="Edit"><i class="bi bi-pencil"></i></button>'+
+        '<button class="act-btn del" onclick="deleteEditor(\''+esc(e.id)+'\')" title="Delete"><i class="bi bi-trash3"></i></button>'+
+      '</div>'+
+    '</div>';
+  }).join(''):'<div class="no-data"><i class="bi bi-person-badge-fill"></i><p>No editor accounts yet</p></div>';
+}
+function saveEditor(){
+  var name=document.getElementById('edName').value.trim();
+  var email=document.getElementById('edEmail').value.trim();
+  var pass=document.getElementById('edPass').value;
+  if(!name||!email||!pass){toast('Name, Email and Password are required.','error');return;}
+  var editors=getData('sardEditorAccounts');
+  var editId=document.getElementById('edEditId').value;
+  // Check duplicate email
+  var dup=editors.find(function(e){return e.email===email && e.id!==editId;});
+  if(dup){toast('Email already exists.','error');return;}
+  var obj={
+    id:editId||uid(), name:name, email:email, password:pass,
+    role:document.getElementById('edRole').value,
+    spec:document.getElementById('edSpec').value.trim(),
+    active:document.getElementById('edActive').checked,
+    createdAt:editId?undefined:new Date().toISOString()
+  };
+  if(editId){var idx=editors.findIndex(function(e){return e.id===editId;});if(idx>-1)editors[idx]=obj;else editors.push(obj);}
+  else editors.push(obj);
+  setData('sardEditorAccounts',editors);
+  clearEditorForm(); renderEditors();
+  toast(editId?'Editor account updated!':'Editor account created!');
+}
+function editEditor(id){
+  var e=getData('sardEditorAccounts').find(function(x){return x.id===id;});
+  if(!e) return;
+  document.getElementById('edEditId').value=e.id;
+  document.getElementById('edName').value=e.name;
+  document.getElementById('edEmail').value=e.email;
+  document.getElementById('edPass').value=e.password;
+  document.getElementById('edRole').value=e.role;
+  document.getElementById('edSpec').value=e.spec||'';
+  document.getElementById('edActive').checked=!!e.active;
+  document.getElementById('edFormTitle').innerHTML='<i class="bi bi-pencil me-2"></i>Edit Editor Account';
+}
+function deleteEditor(id){
+  if(!confirm('Delete this editor account? They will lose access.')) return;
+  setData('sardEditorAccounts',getData('sardEditorAccounts').filter(function(e){return e.id!==id;}));
+  renderEditors(); toast('Editor account deleted.');
+}
+function clearEditorForm(){
+  ['edEditId','edName','edEmail','edPass','edSpec'].forEach(function(i){document.getElementById(i).value='';});
+  document.getElementById('edRole').value='Associate Editor';
+  document.getElementById('edActive').checked=true;
+  document.getElementById('edFormTitle').innerHTML='<i class="bi bi-plus-circle me-2"></i>Add Editor Account';
+}
+
+/* ══════════════════════════════════════
+   EDITORIAL BOARD
+══════════════════════════════════════ */
+var ROLE_CLASS={
+  'Editor in Chief':'role-chief',
+  'Executive Editor':'role-exec',
+  'Advisory':'role-advisory',
+  'Member':'role-member'
+};
+function renderBoard(){
+  var members=getData('sardEditors');
+  document.getElementById('boardCount').textContent=members.length+' member(s)';
+  document.getElementById('boardList').innerHTML=members.length?members.map(function(m){
+    var rc=ROLE_CLASS[m.role]||'role-member';
+    return '<div class="board-card">'+
+      (m.photo?'<img src="'+esc(m.photo)+'" class="bc-photo" onerror="this.style.display=\'none\'"/>'
+              :'<div class="bc-photo"><i class="bi bi-person-fill"></i></div>')+
+      '<div class="bc-info">'+
+        '<div class="bc-name">'+esc(m.name)+'</div>'+
+        '<div class="bc-title">'+esc(m.title)+'</div>'+
+        '<span class="bc-role '+rc+'">'+esc(m.role)+'</span>'+
+        '<div style="font-size:.72rem;color:#6c757d;">'+esc(m.institution)+(m.email?' · '+esc(m.email):'')+'</div>'+
+        (m.interest?'<div style="font-size:.7rem;color:#9ca3af;margin-top:2px;">'+esc(m.interest)+'</div>':'')+
+      '</div>'+
+      '<div style="display:flex;gap:6px;flex-shrink:0;">'+
+        '<button class="act-btn edit" onclick="editBoardMember(\''+esc(m.id)+'\')" title="Edit"><i class="bi bi-pencil"></i></button>'+
+        '<button class="act-btn del" onclick="deleteBoardMember(\''+esc(m.id)+'\')" title="Delete"><i class="bi bi-trash3"></i></button>'+
+      '</div>'+
+    '</div>';
+  }).join(''):'<div class="no-data"><i class="bi bi-people-fill"></i><p>No board members yet</p></div>';
+}
+function saveBoardMember(){
+  var name=document.getElementById('bmName').value.trim();
+  var title=document.getElementById('bmTitle').value.trim();
+  var inst=document.getElementById('bmInst').value.trim();
+  var role=document.getElementById('bmRole').value;
+  if(!name||!title||!inst){toast('Name, Designation and Institution are required.','error');return;}
+  var members=getData('sardEditors');
+  var editId=document.getElementById('boardEditId').value;
+  var obj={
+    id:editId||uid(), name:name, title:title, institution:inst, role:role,
+    photo:document.getElementById('bmPhoto').value.trim(),
+    email:document.getElementById('bmEmail').value.trim(),
+    interest:document.getElementById('bmInterest').value.trim()
+  };
+  if(editId){var idx=members.findIndex(function(m){return m.id===editId;});if(idx>-1)members[idx]=obj;else members.push(obj);}
+  else members.push(obj);
+  setData('sardEditors',members);
+  clearBoardForm(); renderBoard();
+  toast(editId?'Board member updated!':'Board member added!');
+}
+function editBoardMember(id){
+  var m=getData('sardEditors').find(function(x){return x.id===id;});
+  if(!m) return;
+  document.getElementById('boardEditId').value=m.id;
+  document.getElementById('bmName').value=m.name;
+  document.getElementById('bmTitle').value=m.title;
+  document.getElementById('bmInst').value=m.institution;
+  document.getElementById('bmRole').value=m.role;
+  document.getElementById('bmPhoto').value=m.photo||'';
+  document.getElementById('bmEmail').value=m.email||'';
+  document.getElementById('bmInterest').value=m.interest||'';
+  document.getElementById('boardFormTitle').innerHTML='<i class="bi bi-pencil me-2"></i>Edit Board Member';
+}
+function deleteBoardMember(id){
+  if(!confirm('Delete this board member?')) return;
+  setData('sardEditors',getData('sardEditors').filter(function(m){return m.id!==id;}));
+  renderBoard(); toast('Board member deleted.');
+}
+function clearBoardForm(){
+  ['boardEditId','bmName','bmTitle','bmInst','bmPhoto','bmEmail','bmInterest'].forEach(function(i){document.getElementById(i).value='';});
+  document.getElementById('bmRole').value='Member';
+  document.getElementById('boardFormTitle').innerHTML='<i class="bi bi-plus-circle me-2"></i>Add Board Member';
+}
+
+/* ══════════════════════════════════════
+   SETTINGS
+══════════════════════════════════════ */
+function loadContactInfo(){
+  var info=JSON.parse(localStorage.getItem('sardContactInfo')||'{}');
+  document.getElementById('cPhone').value=info.phone||'';
+  document.getElementById('cEmail').value=info.email||'';
+  document.getElementById('cAddress').value=info.address||'';
+  var oldPass=getAdminPass();
+  document.getElementById('oldPass').value='';
+  document.getElementById('newPass').value='';
+  document.getElementById('confPass').value='';
+}
+function saveContact(){
+  var info={
+    phone:document.getElementById('cPhone').value.trim(),
+    email:document.getElementById('cEmail').value.trim(),
+    address:document.getElementById('cAddress').value.trim()
+  };
+  localStorage.setItem('sardContactInfo',JSON.stringify(info));
+  toast('Contact info saved!');
+}
+function changePassword(){
+  var old=document.getElementById('oldPass').value;
+  var nw=document.getElementById('newPass').value;
+  var cf=document.getElementById('confPass').value;
+  if(old!==getAdminPass()){toast('Current password is incorrect.','error');return;}
+  if(nw.length<6){toast('New password must be at least 6 characters.','error');return;}
+  if(nw!==cf){toast('Passwords do not match.','error');return;}
+  localStorage.setItem(ADMIN_PASS_KEY,nw);
+  document.getElementById('oldPass').value='';
+  document.getElementById('newPass').value='';
+  document.getElementById('confPass').value='';
+  toast('Password changed successfully!');
+}
+function backupData(){
+  var backup={
+    sardEnrollments:getData('sardEnrollments'),
+    sardSubmissions:getData('sardSubmissions'),
+    sardPublishedArticles:getData('sardPublishedArticles'),
+    sardNews:getData('sardNews'),
+    sardGallery:getData('sardGallery'),
+    sardVideos:getData('sardVideos'),
+    sardEditorAccounts:getData('sardEditorAccounts'),
+    sardEditors:getData('sardEditors'),
+    sardContactInfo:JSON.parse(localStorage.getItem('sardContactInfo')||'{}'),
+    backupDate:new Date().toISOString()
+  };
+  var blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='sardbd-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click(); toast('Backup downloaded!');
+}
+function restoreData(event){
+  var file=event.target.files[0];
+  if(!file) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      var data=JSON.parse(e.target.result);
+      var keys=['sardEnrollments','sardSubmissions','sardPublishedArticles','sardNews','sardGallery','sardVideos','sardEditorAccounts','sardEditors'];
+      keys.forEach(function(k){ if(data[k]) localStorage.setItem(k,JSON.stringify(data[k])); });
+      if(data.sardContactInfo) localStorage.setItem('sardContactInfo',JSON.stringify(data.sardContactInfo));
+      toast('Backup restored successfully!');
+      renderAll();
+    }catch(err){ toast('Invalid backup file.','error'); }
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
+function clearData(key, name){
+  if(!confirm('Clear all '+name+'? This cannot be undone.')) return;
+  localStorage.removeItem(key);
+  renderAll(); toast(name+' cleared.');
+}
+function clearAllData(){
+  if(!confirm('⚠️ This will delete ALL data permanently. Are you absolutely sure?')) return;
+  if(!confirm('Last chance — DELETE EVERYTHING?')) return;
+  ['sardEnrollments','sardSubmissions','sardPublishedArticles','sardNews','sardGallery','sardVideos','sardEditorAccounts','sardEditors'].forEach(function(k){localStorage.removeItem(k);});
+  renderAll(); toast('All data cleared.');
+}
+
+/* ══════════════════════════════════════
+   MOBILE SIDEBAR
+══════════════════════════════════════ */
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
+if(window.innerWidth<=900) document.getElementById('menuBtn').style.display='flex';
+window.addEventListener('resize',function(){
+  if(window.innerWidth<=900) document.getElementById('menuBtn').style.display='flex';
+  else{ document.getElementById('menuBtn').style.display='none'; document.getElementById('sidebar').classList.remove('open'); }
+});
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+if(sessionStorage.getItem('sardAdmin')==='1'){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('adminWrap').style.display='block';
   renderAll();
 }
 
-function clearFilters(){
-  document.getElementById('searchInput').value='';
-  document.getElementById('statusFilter').value='';
-  renderTable();
-}
-
-/* ── CSV Export ── */
-function exportCSV(){
-  var orders = getOrders();
-  if(!orders.length){alert('No data to export.');return;}
-  var header = ['Order ID','Course','Price','Name','Phone','Education','Reference','Date','Status'];
-  var rows = orders.map(function(o){
-    return [
-      o.orderId, '"'+o.courseName+'"', o.price, '"'+o.name+'"', o.phone,
-      o.education||'', '"'+(o.reference||'')+'"',
-      new Date(o.date).toLocaleString(), o.status
-    ].join(',');
-  });
-  var csv = header.join(',')+'\n'+rows.join('\n');
-  var blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href=url; a.download='sard-enrollments-'+Date.now()+'.csv'; a.click();
-  URL.revokeObjectURL(url);
-}
-
-/* ── Helpers ── */
-function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function truncate(s,n){ return s&&s.length>n?s.slice(0,n)+'…':s; }
-
-// Init if already logged in
-if(sessionStorage.getItem('sardAdmin')==='1') renderAll();
-// Auto-refresh every 30s
-setInterval(function(){ if(sessionStorage.getItem('sardAdmin')==='1') renderAll(); }, 30000);
+// Auto-refresh every 60s
+setInterval(function(){
+  if(sessionStorage.getItem('sardAdmin')==='1') updateSidebarBadges();
+}, 60000);
 </script>
 </body>
 </html>
