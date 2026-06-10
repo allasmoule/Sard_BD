@@ -763,6 +763,130 @@ function setLang(lang) {
   localStorage.setItem('sardbd_lang', lang);
 }
 if (localStorage.getItem('sardbd_lang') === 'bn') setLang('bn');
+
+/* =====================  DYNAMIC NEWS FROM ADMIN  ===================== */
+(function(){
+  var isBn = document.body.classList.contains('bn');
+  var sardNews = JSON.parse(localStorage.getItem('sardNews') || '[]');
+  if (!sardNews.length) return;
+
+  // Sort newest first
+  sardNews.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+
+  var catClassMap = {
+    Research:'cat-research', Journal:'cat-journal', Training:'cat-training',
+    Event:'cat-event', General:'cat-bulletin'
+  };
+
+  function fmtDate(d){
+    try{ return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'}); }
+    catch(e){ return d || ''; }
+  }
+
+  // Build featured section (first 2 dynamic items)
+  var featuredHtml = '';
+  var featuredItems = sardNews.slice(0, 2);
+  if (featuredItems.length >= 2) {
+    var f1 = featuredItems[0], f2 = featuredItems[1];
+    var cc1 = catClassMap[f1.category] || 'cat-bulletin';
+    var cc2 = catClassMap[f2.category] || 'cat-bulletin';
+    featuredHtml =
+      '<div class="col-lg-7 news-item dyn-item" data-cat="'+(f1.category||'General').toLowerCase()+'">' +
+        '<div class="featured-card" onclick="openDynNews(\''+f1.id+'\')">'+
+          '<div class="featured-img" style="height:260px;overflow:hidden;position:relative;">'+
+            (f1.img ? '<img src="'+f1.img+'" alt="'+f1.title+'" onerror="this.parentElement.innerHTML=\'<div class=\\\'img-placeholder\\\'><i class=\\\'bi bi-newspaper\\\'></i></div>\'"  />'
+                    : '<div class="img-placeholder"><i class="bi bi-newspaper"></i></div>') +
+          '</div>'+
+          '<div class="featured-body">'+
+            '<span class="news-cat '+cc1+'">'+f1.category+'</span>'+
+            '<div class="featured-title">'+f1.title+'</div>'+
+            '<div class="featured-excerpt">'+(f1.short || (f1.content||'').replace(/<[^>]*>/g,'').slice(0,200))+'</div>'+
+            '<div class="news-meta"><span><i class="bi bi-calendar3"></i> '+fmtDate(f1.date)+'</span><span><i class="bi bi-person"></i> SARD BD</span></div>'+
+          '</div>'+
+        '</div>'+
+      '</div>' +
+      '<div class="col-lg-5 news-item dyn-item" data-cat="'+(f2.category||'General').toLowerCase()+'">' +
+        '<div class="featured-card" onclick="openDynNews(\''+f2.id+'\')">'+
+          '<div class="featured-img" style="height:260px;overflow:hidden;position:relative;">'+
+            (f2.img ? '<img src="'+f2.img+'" alt="'+f2.title+'" onerror="this.parentElement.innerHTML=\'<div class=\\\'img-placeholder\\\'><i class=\\\'bi bi-newspaper\\\'></i></div>\'"/>'
+                    : '<div class="img-placeholder"><i class="bi bi-newspaper"></i></div>') +
+          '</div>'+
+          '<div class="featured-body">'+
+            '<span class="news-cat '+cc2+'">'+f2.category+'</span>'+
+            '<div class="featured-title">'+f2.title+'</div>'+
+            '<div class="featured-excerpt">'+(f2.short || (f2.content||'').replace(/<[^>]*>/g,'').slice(0,200))+'</div>'+
+            '<div class="news-meta"><span><i class="bi bi-calendar3"></i> '+fmtDate(f2.date)+'</span></div>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+
+    var featRow = document.getElementById('featured-row');
+    if (featRow) {
+      // Prepend dynamic featured before static
+      featRow.insertAdjacentHTML('afterbegin', featuredHtml);
+    }
+  }
+
+  // Build All News cards (all dynamic items)
+  var grid = document.getElementById('news-grid');
+  if (!grid) return;
+  var cardsHtml = sardNews.map(function(n){
+    var cc = catClassMap[n.category] || 'cat-bulletin';
+    return '<div class="col-sm-6 col-lg-4 news-item dyn-item" data-cat="'+(n.category||'General').toLowerCase()+'">' +
+      '<div class="news-card" onclick="openDynNews(\''+n.id+'\')">' +
+        '<div class="news-thumb">' +
+          (n.img ? '<img src="'+n.img+'" alt="'+n.title+'" onerror="this.src=\'\';this.parentElement.innerHTML=\'<div class=\\\'thumb-placeholder\\\'><i class=\\\'bi bi-newspaper\\\'></i></div>\'"/>'
+                 : '<div class="thumb-placeholder"><i class="bi bi-newspaper"></i></div>') +
+        '</div>' +
+        '<div class="news-body">' +
+          '<span class="news-cat '+cc+'">'+n.category+'</span>' +
+          '<div class="news-title">'+n.title+'</div>' +
+          '<div class="news-excerpt">'+(n.short || '')+'</div>' +
+          '<div class="news-footer">' +
+            '<span><i class="bi bi-calendar3 me-1"></i>'+fmtDate(n.date)+'</span>' +
+            '<span class="read-more-badge">Read <i class="bi bi-arrow-right"></i></span>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  grid.insertAdjacentHTML('afterbegin', cardsHtml);
+
+  // Update count
+  var countEl = document.getElementById('news-count');
+  if (countEl) {
+    var total = document.querySelectorAll('.news-item').length;
+    countEl.textContent = total + ' stories';
+  }
+
+  // Dynamic news modal
+  window.openDynNews = function(id) {
+    var n = sardNews.find(function(x){ return x.id === id; });
+    if (!n) return;
+    var cc = catClassMap[n.category] || 'cat-bulletin';
+
+    var mediaDiv = document.getElementById('modalMedia');
+    var galleryDiv = document.getElementById('modalGallery');
+    mediaDiv.innerHTML = n.img
+      ? '<img src="'+n.img+'" alt="'+n.title+'" onerror="this.parentElement.innerHTML=\'<div class=\\\'media-placeholder\\\'><i class=\\\'bi bi-newspaper\\\'></i></div>\'"/>'
+      : '<div class="media-placeholder"><i class="bi bi-newspaper"></i></div>';
+    galleryDiv.classList.add('d-none');
+
+    document.getElementById('modalCat').className = 'news-cat ' + cc;
+    document.getElementById('modalCat').textContent = n.category;
+    document.getElementById('modalDate').textContent = fmtDate(n.date);
+    document.getElementById('modalTitle').textContent = n.title;
+    document.getElementById('modalMeta').innerHTML = '<span><i class="bi bi-person me-1"></i>SARD BD</span><span><i class="bi bi-tag me-1"></i>'+n.category+'</span>';
+    document.getElementById('modalContent').innerHTML = n.content
+      ? '<p>'+n.content.replace(/\n/g,'</p><p>')+'</p>'
+      : '<p>'+(n.short||'')+'</p>';
+    document.getElementById('modalTags').innerHTML = '';
+
+    document.getElementById('newsModal').classList.add('open');
+    document.body.classList.add('modal-open-custom');
+  };
+})();
 </script>
 </body>
 </html>

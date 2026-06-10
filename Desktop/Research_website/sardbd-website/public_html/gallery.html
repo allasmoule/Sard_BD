@@ -323,6 +323,92 @@
     if (e.target === document.getElementById('vidModal')) closeVideo();
   }
   document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeVideo(); });
+
+/* =====================  DYNAMIC GALLERY FROM ADMIN  ===================== */
+(function(){
+  var photos = JSON.parse(localStorage.getItem('sardGallery') || '[]');
+  var videos = JSON.parse(localStorage.getItem('sardVideos')  || '[]');
+  if (!photos.length && !videos.length) return;
+
+  var grid = document.getElementById('gallery-grid');
+  if (!grid) return;
+
+  function ytId(url){
+    var m = (url||'').match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : null;
+  }
+  function fmtDate(d){
+    try{ return new Date(d).toLocaleDateString('en-GB',{month:'long',year:'numeric'}); }
+    catch(e){ return ''; }
+  }
+
+  // Sort newest first
+  photos.sort(function(a,b){ return new Date(b.date)-new Date(a.date); });
+  videos.sort(function(a,b){ return new Date(b.date)-new Date(a.date); });
+
+  // Build photo cards
+  var photoHtml = photos.map(function(p, i){
+    var featured = i === 0 ? ' featured' : '';
+    var h = i === 0 ? '300px' : '200px';
+    return '<div class="col-lg-'+(i===0?'6':'4')+' col-md-6 gl-item dyn-gl-item" data-type="photo">' +
+      '<div class="gl-card'+featured+'" onclick="openPhotoLightbox(\''+p.url.replace(/'/g,"\\'")+'\')">' +
+        '<img src="'+p.url+'" class="gl-thumb" style="height:'+h+';object-fit:cover;" alt="'+p.title+'" onerror="this.style.display=\'none\';this.nextElementSibling&&this.nextElementSibling.remove();this.parentElement.querySelector(\'.gl-ph\')&&(this.parentElement.querySelector(\'.gl-ph\').style.display=\'flex\')"/>' +
+        '<div class="gl-ph" style="height:'+h+';display:none;"><i class="bi bi-camera"></i></div>' +
+        '<div class="gl-overlay">' +
+          '<div class="gl-info">' +
+            '<div class="gl-type"><i class="bi bi-camera"></i> Photo</div>' +
+            '<div class="gl-title">'+p.title+'</div>' +
+            '<div class="gl-date">'+p.category+' · '+fmtDate(p.date)+'</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // Build video cards
+  var videoHtml = videos.map(function(v, i){
+    var vid = ytId(v.url);
+    var embedUrl = vid ? 'https://www.youtube.com/embed/'+vid : '';
+    var thumbUrl = vid ? 'https://img.youtube.com/vi/'+vid+'/hqdefault.jpg' : '';
+    var featured = i === 0 && !photos.length ? ' featured' : '';
+    var h = (i===0 && !photos.length) ? '300px' : '200px';
+    var cols = (i===0 && !photos.length) ? '6' : '4';
+    return '<div class="col-lg-'+cols+' col-md-6 gl-item dyn-gl-item" data-type="video">' +
+      '<div class="gl-card'+featured+'" onclick="openVideo(\''+embedUrl+'\',\''+v.title.replace(/'/g,"\\'")+'\')">' +
+        (thumbUrl ? '<img src="'+thumbUrl+'" class="gl-thumb" style="height:'+h+';object-fit:cover;" alt="'+v.title+'"/>' : '') +
+        '<div class="gl-ph"'+(thumbUrl?' style="display:none;"':'')+' style="height:'+h+'px;"><i class="bi bi-camera-video"></i></div>' +
+        '<div class="play-ring"><i class="bi bi-play-fill"></i></div>' +
+        '<div class="gl-overlay">' +
+          '<div class="gl-info">' +
+            '<div class="gl-type"><i class="bi bi-play-fill"></i> Video</div>' +
+            '<div class="gl-title">'+v.title+'</div>' +
+            '<div class="gl-date">'+v.category+' · '+fmtDate(v.date)+'</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // Prepend dynamic items before static
+  grid.insertAdjacentHTML('afterbegin', photoHtml + videoHtml);
+
+  // Photo lightbox (simple)
+  window.openPhotoLightbox = function(url) {
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;';
+    overlay.innerHTML = '<img src="'+url+'" style="max-width:94vw;max-height:92vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.8);" alt="Photo"/>' +
+      '<button style="position:absolute;top:16px;right:18px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.1rem;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;" onclick="this.parentElement.remove()"><i class="bi bi-x-lg"></i></button>';
+    overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+    document.body.appendChild(overlay);
+  };
+
+  // Re-run filter to include dynamic items
+  var activeBtn = document.querySelector('.filter-btn.active');
+  if (activeBtn) {
+    var activeType = activeBtn.getAttribute('onclick').match(/'([^']+)'/);
+    if (activeType) filterGallery(activeType[1], activeBtn);
+  }
+})();
 </script>
 </body>
 </html>
