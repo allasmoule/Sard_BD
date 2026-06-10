@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Admin Panel — SARD BD</title>
+  <script src="js/api.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -877,7 +878,11 @@ function renderSection(name){
    DATA HELPERS
 ══════════════════════════════════════ */
 function getData(key){ return JSON.parse(localStorage.getItem(key)||'[]'); }
-function setData(key,val){ localStorage.setItem(key,JSON.stringify(val)); }
+function setData(key,val){
+  var str=JSON.stringify(val);
+  localStorage.setItem(key,str);
+  if(typeof sardSaveToServer==='function') sardSaveToServer(key,str);
+}
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function trunc(s,n){ return s&&s.length>n?s.slice(0,n)+'…':s||''; }
 function fmtDate(d){ try{ return new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); }catch(e){return d||'';} }
@@ -1502,6 +1507,7 @@ function saveContact(){
     address:document.getElementById('cAddress').value.trim()
   };
   localStorage.setItem('sardContactInfo',JSON.stringify(info));
+  if(typeof sardSaveToServer==='function') sardSaveToServer('sardContactInfo',JSON.stringify(info));
   toast('Contact info saved!');
 }
 function changePassword(){
@@ -1512,6 +1518,7 @@ function changePassword(){
   if(nw.length<6){toast('New password must be at least 6 characters.','error');return;}
   if(nw!==cf){toast('Passwords do not match.','error');return;}
   localStorage.setItem(ADMIN_PASS_KEY,nw);
+  if(typeof sardSaveToServer==='function') sardSaveToServer(ADMIN_PASS_KEY,nw);
   document.getElementById('oldPass').value='';
   document.getElementById('newPass').value='';
   document.getElementById('confPass').value='';
