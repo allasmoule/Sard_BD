@@ -31,6 +31,8 @@
   <!-- Schema.org JSON-LD (overwritten per article by renderArticle) -->
   <script type="application/ld+json" id="ld-article">{}</script>
 
+  <script src="js/api.js"></script>
+  <script src="js/security.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -273,10 +275,10 @@
           <div class="sc-head"><i class="bi bi-info-circle"></i> Article Info</div>
           <div class="sc-body">
             <div class="meta-row"><span class="meta-key">Published</span><span class="meta-val" id="si-published">—</span></div>
-            <div class="meta-row"><span class="meta-key">Issue</span><span class="meta-val">Vol. 1, No. 1 (2026)</span></div>
+            <div class="meta-row"><span class="meta-key">Issue</span><span class="meta-val" id="si-vol-issue">Vol. 1, No. 1 (2026)</span></div>
             <div class="meta-row"><span class="meta-key">Section</span><span class="meta-val" id="si-section">—</span></div>
             <div class="meta-row"><span class="meta-key">Pages</span><span class="meta-val" id="si-pages">—</span></div>
-            <div class="meta-row"><span class="meta-key">Language</span><span class="meta-val">English</span></div>
+            <div class="meta-row"><span class="meta-key">Language</span><span class="meta-val" id="si-language">English</span></div>
           </div>
         </div>
 
@@ -295,10 +297,10 @@
           <div class="sc-body">
             <div style="font-weight:800;color:var(--green);font-size:.9rem;margin-bottom:4px;">JARD</div>
             <div style="color:var(--text-muted);font-size:.78rem;margin-bottom:12px;line-height:1.5;">Bangladesh Journal of Applied Research &amp; Development</div>
-            <div class="meta-row"><span class="meta-key">Publisher</span><span class="meta-val">SARD BD</span></div>
-            <div class="meta-row"><span class="meta-key">ISSN</span><span class="meta-val">XXXX-XXXX</span></div>
-            <div class="meta-row"><span class="meta-key">Review</span><span class="meta-val">Double-Blind</span></div>
-            <div class="meta-row" style="border:none"><span class="meta-key">Access</span><span class="meta-val">Open Access</span></div>
+            <div class="meta-row"><span class="meta-key">Publisher</span><span class="meta-val" id="ji-publisher">SARD BD</span></div>
+            <div class="meta-row"><span class="meta-key">ISSN</span><span class="meta-val" id="ji-issn">—</span></div>
+            <div class="meta-row"><span class="meta-key">Review</span><span class="meta-val" id="ji-review">Double-Blind Peer Review</span></div>
+            <div class="meta-row" style="border:none"><span class="meta-key">Access</span><span class="meta-val" id="ji-access">Open Access</span></div>
             <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
               <a href="author-guidelines.html" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--green);color:#fff;font-size:.75rem;font-weight:700;padding:8px;border-radius:7px;text-decoration:none;min-width:90px;"><i class="bi bi-file-text"></i> Guidelines</a>
               <a href="editorial-board.html" style="flex:1;display:flex;align-items:center;justify-content:center;gap:5px;background:var(--butter-light);color:var(--green);border:1px solid rgba(1,62,55,.15);font-size:.75rem;font-weight:700;padding:8px;border-radius:7px;text-decoration:none;min-width:90px;"><i class="bi bi-people"></i> Board</a>
@@ -357,7 +359,9 @@
 
 <a href="https://wa.me/8801963851090" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/api.js"></script>
+  <script src="js/security.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 // ── Article data ──────────────────────────────────────────────────────────────
 var ARTICLES = {
@@ -602,75 +606,177 @@ function renderSimilar(currentId) {
 (function(){
   var id = new URLSearchParams(window.location.search).get('id') || '';
   if (!id) return;
-
-  // Check if this ID is a dynamic article (starts with JARD-)
   if (!id.startsWith('JARD-')) return;
 
   var published = JSON.parse(localStorage.getItem('sardPublishedArticles') || '[]');
   var art = published.find(function(a){ return a.articleId === id; });
   if (!art) {
     document.getElementById('art-title').textContent = 'Article not found.';
-    document.getElementById('art-abstract-body').textContent = 'This article could not be found. It may have been removed or the link is incorrect.';
+    document.getElementById('art-abstract').innerHTML = '<p style="color:#9ca3af;">This article could not be found.</p>';
+    window._dynArticleLoaded = true;
     return;
   }
 
-  // Populate the page
-  document.title = art.title + ' — JARD | SARD BD';
+  /* ── Page title & meta ── */
+  var pageTitle = art.title + ' — JARD | SARD BD';
+  document.title = pageTitle;
+  var setMeta = function(id, val){ var el=document.getElementById(id); if(el) el.content=val; };
+  setMeta('page-title',    pageTitle);
+  setMeta('meta-desc',     (art.abstract||'').replace(/<[^>]+>/g,'').substring(0,160));
+  setMeta('meta-kw',       (art.keywords||'')+', JARD, SARD BD, Bangladesh');
+  setMeta('meta-author',   art.authors||'');
+  setMeta('og-title',      pageTitle);
+  setMeta('og-desc',       (art.abstract||'').replace(/<[^>]+>/g,'').substring(0,200));
+  setMeta('tw-title',      pageTitle);
+  setMeta('tw-desc',       (art.abstract||'').replace(/<[^>]+>/g,'').substring(0,200));
+
+  /* ── Breadcrumb ── */
+  var sec = art.section || art.type || 'Article';
+  var bcEl = document.getElementById('bc-section');
+  if(bcEl) bcEl.textContent = sec;
+
+  /* ── Section badge ── */
+  var badgeEl = document.getElementById('art-section-badge');
+  if(badgeEl) badgeEl.textContent = sec;
+
+  /* ── Title / Authors / Affil ── */
   var titleEl = document.getElementById('art-title');
-  if (titleEl) titleEl.textContent = art.title;
+  if(titleEl) titleEl.textContent = art.title || '—';
 
   var authorsEl = document.getElementById('art-authors');
-  if (authorsEl) authorsEl.textContent = art.authors;
+  if(authorsEl) authorsEl.innerHTML = '<span>' + (art.authors||'—') + '</span>';
 
   var affiliEl = document.getElementById('art-affil');
-  if (affiliEl) affiliEl.textContent = art.affiliation || '';
+  if(affiliEl) affiliEl.textContent = art.affiliation || '';
 
-  var abstractEl = document.getElementById('art-abstract-body');
-  if (abstractEl) abstractEl.textContent = art.abstract || 'Abstract not available.';
-
-  var kwEl = document.getElementById('art-keywords');
-  if (kwEl) kwEl.textContent = art.keywords || '—';
-
-  // Citation info
-  var citeEl = document.getElementById('art-cite');
-  if (citeEl) {
-    citeEl.textContent = art.authors + '. ' + art.title + '. Bangladesh J Appl Res Dev (JARD). ' +
-      art.year + ';' + art.volume + '(' + art.issue + ')' + (art.pages ? ':' + art.pages : '') + '.';
-  }
-
-  // DOI
+  /* ── DOI ── */
   var doiEl = document.getElementById('art-doi');
-  if (doiEl && art.doi) {
-    doiEl.innerHTML = '<a href="https://doi.org/'+art.doi+'" target="_blank">'+art.doi+'</a>';
-  } else if (doiEl) { doiEl.textContent = '—'; }
-
-  // PDF link
-  var pdfEl = document.getElementById('art-pdf-btn');
-  if (pdfEl && art.pdfLink) {
-    pdfEl.href = art.pdfLink;
-    pdfEl.target = '_blank';
+  if(doiEl){
+    if(art.doi) doiEl.innerHTML = 'DOI: <a href="https://doi.org/'+art.doi+'" target="_blank" rel="noopener">'+art.doi+'</a>';
+    else doiEl.textContent = 'Article ID: ' + art.articleId;
   }
 
-  // Published date
-  var pubEl = document.getElementById('art-pub-date');
-  if (pubEl && art.publishedDate) {
-    try { pubEl.textContent = new Date(art.publishedDate).toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'}); }
-    catch(e){}
+  /* ── Keywords ── */
+  var kwEl = document.getElementById('art-keywords');
+  if(kwEl){
+    var kws = (art.keywords||'').split(',').map(function(k){return k.trim();}).filter(Boolean);
+    kwEl.innerHTML = kws.length
+      ? kws.map(function(k){return '<span class="kw-tag">'+k+'</span>';}).join('')
+      : '<span class="kw-tag">N/A</span>';
+    if(!kws.length) document.getElementById('kw-wrap').style.display='none';
   }
 
-  // Volume/Issue badge
-  var volEl = document.getElementById('art-vol-issue');
-  if (volEl) volEl.textContent = 'Vol. ' + art.volume + ', No. ' + art.issue + ' (' + art.year + ')';
+  /* ── Abstract ── */
+  var absEl = document.getElementById('art-abstract');
+  if(absEl){
+    if(art.abstractBackground || art.abstractMethods){
+      // Structured abstract
+      var html = '';
+      if(art.abstractBackground) html += '<p><strong>Background:</strong> '+art.abstractBackground+'</p>';
+      if(art.abstractMethods)    html += '<p><strong>Methods:</strong> '+art.abstractMethods+'</p>';
+      if(art.abstractResults)    html += '<p><strong>Results:</strong> '+art.abstractResults+'</p>';
+      if(art.abstractConclusion) html += '<p><strong>Conclusion:</strong> '+art.abstractConclusion+'</p>';
+      absEl.innerHTML = html;
+    } else {
+      absEl.innerHTML = art.abstract
+        ? art.abstract.replace(/\[Background\]/g,'<strong>Background:</strong>')
+                      .replace(/\[Methods\]/g,'<strong>Methods:</strong>')
+                      .replace(/\[Results\]/g,'<strong>Results:</strong>')
+                      .replace(/\[Conclusion\]/g,'<strong>Conclusion:</strong>')
+                      .replace(/\n\n/g,'</p><p>').replace(/\n/g,' ')
+        : '<p>Abstract not available.</p>';
+    }
+  }
 
-  // Type badge
-  var typeEl = document.getElementById('art-type');
-  if (typeEl) typeEl.textContent = art.type || 'Research Article';
+  /* ── Article Info sidebar ── */
+  var fmt = function(iso){
+    try{ return new Date(iso).toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'}); }
+    catch(e){ return iso || '—'; }
+  };
 
-  // Hide static content indicators
-  var staticNote = document.getElementById('static-article-note');
-  if (staticNote) staticNote.style.display = 'none';
+  var setText = function(id, val){ var el=document.getElementById(id); if(el) el.textContent=val||'—'; };
+  setText('si-published',  fmt(art.publishedDate));
+  setText('si-vol-issue',  art.volume && art.issue
+    ? 'Vol. '+art.volume+', No. '+art.issue+(art.year?' ('+art.year+')':'')
+    : '—');
+  setText('si-section',  art.section || art.type || '—');
+  setText('si-pages',    art.pages || '—');
+  setText('si-language', art.language || 'English');
 
-  // Stop the normal renderArticle from running on JARD- ids
+  /* ── Journal info sidebar ── */
+  setText('ji-publisher', art.publisher || 'SARD BD');
+  setText('ji-issn',      art.issn      || '—');
+  setText('ji-review',    art.reviewType|| 'Double-Blind Peer Review');
+  setText('ji-access',    art.accessType|| 'Open Access');
+
+  /* ── PDF buttons ── */
+  var pdfBtnEl = document.querySelector('.btn-pdf-full');
+  var htmlBtnEl = document.querySelector('.btn-html-full');
+  if(pdfBtnEl){
+    if(art.pdfLink){ pdfBtnEl.href=art.pdfLink; pdfBtnEl.target='_blank'; pdfBtnEl.removeAttribute('onclick'); }
+    else { pdfBtnEl.style.opacity='.4'; pdfBtnEl.style.cursor='not-allowed'; }
+  }
+  if(htmlBtnEl && art.fileUrl){
+    htmlBtnEl.href=art.fileUrl; htmlBtnEl.target='_blank'; htmlBtnEl.removeAttribute('onclick');
+    htmlBtnEl.innerHTML='<i class="bi bi-eye"></i> View Manuscript';
+  }
+
+  /* ── Breadcrumb volume/issue link ── */
+  var volLinkEl = document.querySelector('.breadcrumb-bar a:nth-child(3)');
+  if(volLinkEl && art.volume){
+    volLinkEl.textContent = 'Vol. '+art.volume+', No. '+(art.issue||'1')+' ('+(art.year||new Date().getFullYear())+')';
+  }
+
+  /* ── Citation ── */
+  var citeEl = document.getElementById('cite-box');
+  if(citeEl){
+    var authArr = (art.authors||'').split(',').map(function(a){return a.trim();});
+    var lastFirst = authArr.map(function(au){
+      var p=au.trim().split(' ');
+      return p.length>1 ? p[p.length-1]+' '+p.slice(0,-1).join(' ') : au;
+    }).join(', ');
+    var pages = art.pages ? ':'+art.pages.replace('pp.','').trim() : '';
+    var doi   = art.doi   ? ' https://doi.org/'+art.doi : '';
+    citeEl.innerHTML = lastFirst+'. ('+art.year+'). '+art.title+'. <em>Bangladesh Journal of Applied Research &amp; Development (JARD), '+art.volume+'</em>('+art.issue+')'+pages+'.'+doi;
+  }
+
+  /* ── Download bars (simulated) ── */
+  var dlAbs = Math.floor(Math.random()*200)+50;
+  var dlPdf = Math.floor(dlAbs*0.45);
+  var dlAbsEl = document.getElementById('dl-abstract');
+  var dlPdfEl = document.getElementById('dl-pdf');
+  if(dlAbsEl) dlAbsEl.textContent = dlAbs;
+  if(dlPdfEl) dlPdfEl.textContent = dlPdf;
+  var bars = []; for(var i=0;i<12;i++) bars.push(Math.floor(Math.random()*dlPdf*0.9)+5);
+  bars[11]=dlPdf;
+  var maxH = Math.max.apply(null,bars);
+  var bcEl2 = document.getElementById('bar-chart');
+  if(bcEl2) bcEl2.innerHTML = bars.map(function(v){return '<div class="bar" style="height:'+(v/maxH*100)+'%"></div>';}).join('');
+  var blEl = document.getElementById('bar-labels');
+  if(blEl) blEl.innerHTML = ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'].map(function(m){return '<span class="bar-label">'+m+'</span>';}).join('');
+
+  /* ── JSON-LD ── */
+  var ld = {
+    "@context":"https://schema.org","@type":"ScholarlyArticle",
+    "headline":art.title,"name":art.title,
+    "description":(art.abstract||'').replace(/<[^>]+>/g,'').substring(0,500),
+    "datePublished": art.publishedDate ? art.publishedDate.substring(0,10) : '',
+    "author":(art.authors||'').split(',').map(function(n){return{"@type":"Person","name":n.trim()};}),
+    "publisher":{"@type":"Organization","name":art.publisher||"SARD BD","url":"https://sardbd.info"},
+    "isPartOf":{
+      "@type":"Periodical","name":"Bangladesh Journal of Applied Research & Development",
+      "alternateName":"JARD","issn":art.issn||"",
+      "publisher":{"@type":"Organization","name":art.publisher||"SARD BD"}
+    },
+    "pagination":(art.pages||'').replace('pp.','').trim(),
+    "keywords":art.keywords||'',
+    "inLanguage":art.language||'en',
+    "license":"https://creativecommons.org/licenses/by/4.0/"
+  };
+  if(art.doi) ld["identifier"]={"@type":"PropertyValue","propertyID":"DOI","value":art.doi};
+  var ldEl = document.getElementById('ld-article');
+  if(ldEl) ldEl.textContent = JSON.stringify(ld,null,2);
+
   window._dynArticleLoaded = true;
 })();
 

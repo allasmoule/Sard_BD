@@ -1,137 +1,191 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Submit Manuscript — JARD | SARD BD</title>
-  <meta name="description" content="Submit your manuscript to JARD — Bangladesh Journal of Applied Research & Development. Open-access, double-blind peer-reviewed journal published by SARD BD."/>
+  <script src="js/api.js"></script>
+  <script src="js/security.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    :root{--green:#013e37;--green-light:#025a50;--green-dark:#012a25;--butter:#ffefb3;--butter-light:#fffaed;--gray-bg:#f7f8fa;--text:#1a1a1a;--text-muted:#6c757d;--border:#e5e7eb;--radius:12px;}
+    :root{--green:#013e37;--gl:#025a50;--gd:#012a25;--butter:#ffefb3;--bl:#fffaed;--gray:#f7f8fa;--border:#e5e7eb;--text:#1a1a1a;--muted:#6c757d;--r:12px;}
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Inter','Hind Siliguri',sans-serif;color:var(--text);background:var(--gray-bg);}
+    body{font-family:'Inter','Hind Siliguri',sans-serif;background:var(--gray);color:var(--text);}
     body.bn{font-family:'Hind Siliguri','Inter',sans-serif;}
     body.bn .en-text{display:none!important;}
     body:not(.bn) .bn-text{display:none!important;}
 
     /* NAVBAR */
     .navbar-main{background:var(--green);position:sticky;top:0;z-index:1000;box-shadow:0 2px 16px rgba(1,62,55,.3);padding:0;}
-    .navbar-main .navbar-brand{color:var(--butter)!important;font-weight:800;font-size:1.1rem;padding:12px 0;line-height:1.2;}
-    .navbar-main .navbar-brand span{display:block;color:rgba(255,255,255,.6);font-size:.72rem;font-weight:400;}
-    .navbar-main .nav-link{color:rgba(255,255,255,.82)!important;font-weight:500;font-size:.88rem;padding:20px 13px!important;transition:color .2s;position:relative;}
+    .navbar-main .navbar-brand{color:var(--butter)!important;font-weight:800;font-size:1.05rem;padding:12px 0;line-height:1.2;}
+    .navbar-main .navbar-brand span{display:block;color:rgba(255,255,255,.55);font-size:.7rem;font-weight:400;}
+    .navbar-main .nav-link{color:rgba(255,255,255,.82)!important;font-weight:500;font-size:.88rem;padding:18px 12px!important;transition:color .2s;position:relative;}
     .navbar-main .nav-link:hover,.navbar-main .nav-link.active{color:var(--butter)!important;}
-    .navbar-main .nav-link.active::after{content:'';position:absolute;bottom:0;left:13px;right:13px;height:3px;background:var(--butter);border-radius:2px 2px 0 0;}
-    .navbar-main .dropdown-menu{background:var(--green-dark);border:none;border-top:3px solid var(--butter);border-radius:0 0 10px 10px;}
-    .navbar-main .dropdown-item{color:rgba(255,255,255,.8);font-size:.85rem;padding:9px 18px;}
-    .navbar-main .dropdown-item:hover{background:var(--green-light);color:var(--butter);}
-    .btn-lang{background:transparent;border:1.5px solid rgba(255,255,255,.35);color:rgba(255,255,255,.8);font-size:.78rem;font-weight:700;padding:5px 13px;border-radius:20px;cursor:pointer;transition:all .2s;}
+    .navbar-main .nav-link.active::after{content:'';position:absolute;bottom:0;left:12px;right:12px;height:3px;background:var(--butter);border-radius:2px 2px 0 0;}
+    .navbar-main .dropdown-menu{background:var(--gd);border:none;border-top:3px solid var(--butter);border-radius:0 0 10px 10px;}
+    .navbar-main .dropdown-item{color:rgba(255,255,255,.8);font-size:.84rem;padding:9px 18px;}
+    .navbar-main .dropdown-item:hover{background:var(--gl);color:var(--butter);}
+    .btn-lang{background:transparent;border:1.5px solid rgba(255,255,255,.35);color:rgba(255,255,255,.8);font-size:.75rem;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;transition:.2s;}
     .btn-lang.active,.btn-lang:hover{background:var(--butter);border-color:var(--butter);color:var(--green);}
     .navbar-toggler{border:1.5px solid rgba(255,255,255,.4);padding:5px 10px;}
     .navbar-toggler-icon{filter:invert(1);}
 
     /* JOURNAL SUB-NAV */
-    .journal-subnav{background:#fff;border-bottom:2px solid var(--border);position:sticky;top:57px;z-index:900;}
-    .journal-subnav .container{display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;}
-    .journal-subnav .container::-webkit-scrollbar{display:none;}
-    .jnav-link{display:flex;align-items:center;gap:6px;padding:12px 16px;font-size:.83rem;font-weight:600;color:var(--text-muted);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;}
-    .jnav-link:hover{color:var(--green);border-bottom-color:var(--green);}
+    .jsubnav{background:#fff;border-bottom:2px solid var(--border);position:sticky;top:56px;z-index:900;}
+    .jsubnav .container{display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;}
+    .jsubnav .container::-webkit-scrollbar{display:none;}
+    .jnav-link{display:flex;align-items:center;gap:6px;padding:11px 15px;font-size:.82rem;font-weight:600;color:var(--muted);text-decoration:none;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s;}
+    .jnav-link:hover{color:var(--green);}
     .jnav-link.active{color:var(--green);border-bottom-color:var(--green);}
 
     /* HERO */
-    .page-hero{background:linear-gradient(120deg,var(--green) 0%,#025a50 60%,#036b60 100%);padding:44px 0 38px;position:relative;overflow:hidden;}
-    .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40px;background:var(--gray-bg);clip-path:ellipse(55% 100% at 50% 100%);}
-    .page-hero h1{color:#fff;font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:6px;}
+    .page-hero{background:linear-gradient(120deg,var(--green) 0%,#025a50 60%,#036b60 100%);padding:40px 0 34px;position:relative;overflow:hidden;}
+    .page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:36px;background:var(--gray);clip-path:ellipse(55% 100% at 50% 100%);}
+    .page-hero h1{color:#fff;font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;margin-bottom:6px;}
     .page-hero h1 em{color:var(--butter);font-style:normal;}
-    .page-hero p{color:rgba(255,255,255,.65);font-size:.88rem;max-width:520px;}
-    .page-hero .breadcrumb-item a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.82rem;}
-    .page-hero .breadcrumb-item.active{color:var(--butter);font-size:.82rem;}
-    .page-hero .breadcrumb-item+.breadcrumb-item::before{color:rgba(255,255,255,.3);}
+    .page-hero p{color:rgba(255,255,255,.62);font-size:.86rem;max-width:500px;}
+    .breadcrumb-item a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;}
+    .breadcrumb-item.active{color:var(--butter);font-size:.8rem;}
+    .breadcrumb-item+.breadcrumb-item::before{color:rgba(255,255,255,.3);}
+
+    /* PROGRESS STEPS */
+    .progress-steps{background:#fff;border-bottom:1px solid var(--border);padding:14px 0;}
+    .steps-row{display:flex;align-items:center;justify-content:center;gap:0;overflow-x:auto;scrollbar-width:none;}
+    .steps-row::-webkit-scrollbar{display:none;}
+    .step-item{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;font-size:.75rem;font-weight:700;color:#9ca3af;white-space:nowrap;transition:.2s;}
+    .step-item.active{background:var(--bl);color:var(--green);}
+    .step-item.done{color:#059669;}
+    .step-num{width:22px;height:22px;border-radius:50%;background:#e5e7eb;color:#6c757d;font-size:.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .step-item.active .step-num{background:var(--green);color:var(--butter);}
+    .step-item.done .step-num{background:#059669;color:#fff;}
+    .step-sep{color:#d1d5db;font-size:.7rem;flex-shrink:0;}
 
     /* LAYOUT */
-    .submit-wrap{padding:40px 0 64px;}
+    .submit-wrap{padding:32px 0 64px;}
 
     /* FORM CARD */
-    .form-card{background:#fff;border-radius:var(--radius);box-shadow:0 2px 14px rgba(0,0,0,.06);overflow:hidden;margin-bottom:20px;}
-    .fc-hdr{background:var(--green);padding:14px 22px;display:flex;align-items:center;gap:10px;}
+    .fc{background:#fff;border-radius:var(--r);box-shadow:0 2px 12px rgba(0,0,0,.06);overflow:hidden;margin-bottom:18px;display:none;}
+    .fc.active{display:block;}
+    .fc-hdr{background:linear-gradient(90deg,var(--green),var(--gl));padding:14px 22px;display:flex;align-items:center;gap:10px;}
     .fc-hdr i{color:var(--butter);font-size:1rem;}
-    .fc-hdr span{color:#fff;font-weight:800;font-size:.88rem;}
-    .fc-hdr .fc-step{background:var(--butter);color:var(--green);font-size:.65rem;font-weight:900;padding:2px 8px;border-radius:10px;margin-left:auto;}
-    .fc-body{padding:22px 24px;}
+    .fc-hdr .fc-title{color:#fff;font-weight:800;font-size:.88rem;}
+    .fc-hdr .fc-step{background:rgba(255,239,179,.2);color:var(--butter);font-size:.62rem;font-weight:900;padding:2px 9px;border-radius:10px;margin-left:auto;border:1px solid rgba(255,239,179,.3);}
+    .fc-body{padding:20px 22px;}
 
-    /* FORM ELEMENTS */
-    .fg{margin-bottom:16px;}
-    .fg label{display:block;font-size:.78rem;font-weight:700;color:#374151;margin-bottom:6px;}
+    /* FORM FIELDS */
+    .fg{margin-bottom:14px;}
+    .fg label{display:block;font-size:.75rem;font-weight:700;color:#374151;margin-bottom:5px;}
     .fg label .req{color:#dc2626;}
-    .fg label .opt{color:#9ca3af;font-weight:400;font-size:.72rem;}
-    .fg input,.fg select,.fg textarea{
-      width:100%;border:1.5px solid var(--border);border-radius:10px;
-      font-size:.84rem;padding:11px 14px;outline:none;transition:border-color .2s;
-      font-family:'Inter',sans-serif;background:#fff;color:var(--text);
-    }
-    .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green);}
+    .fg label .opt{color:#9ca3af;font-weight:400;}
+    .fg input,.fg select,.fg textarea{width:100%;border:1.5px solid var(--border);border-radius:9px;font-size:.84rem;padding:10px 13px;outline:none;transition:border-color .2s;font-family:'Inter',sans-serif;background:#fff;color:var(--text);}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(1,62,55,.08);}
     .fg textarea{resize:vertical;}
-    .fg .word-count{font-size:.7rem;color:#9ca3af;text-align:right;margin-top:4px;}
-    .fg .hint{font-size:.72rem;color:#6c757d;margin-top:5px;display:flex;align-items:flex-start;gap:5px;}
-    .fg .hint i{flex-shrink:0;margin-top:2px;color:var(--green);}
-    .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-    .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
 
-    /* CHECKBOX */
-    .check-wrap{display:flex;align-items:flex-start;gap:10px;padding:14px;background:var(--butter-light);border:1.5px solid #e0d890;border-radius:10px;}
-    .check-wrap input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--green);cursor:pointer;}
-    .check-wrap label{font-size:.8rem;color:var(--text);cursor:pointer;line-height:1.6;}
-    .check-wrap label a{color:var(--green);font-weight:700;}
+    /* WORD COUNT */
+    .wc-bar{display:flex;align-items:center;justify-content:space-between;margin-top:5px;}
+    .wc-num{font-size:.7rem;font-weight:700;}
+    .wc-num.ok{color:#059669;}
+    .wc-num.low{color:#d97706;}
+    .wc-num.over{color:#dc2626;}
+    .wc-track{flex:1;height:4px;background:#e5e7eb;border-radius:4px;margin:0 8px;overflow:hidden;}
+    .wc-fill{height:100%;background:#059669;border-radius:4px;transition:width .3s;}
+    .wc-fill.low{background:#d97706;}
+    .wc-fill.over{background:#dc2626;}
 
-    /* SUBMIT BUTTON */
-    .btn-submit-main{
-      width:100%;padding:15px;font-size:.95rem;font-weight:800;
-      background:var(--green);color:var(--butter);border:none;border-radius:12px;
-      cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;
-    }
-    .btn-submit-main:hover{background:var(--green-light);transform:translateY(-2px);box-shadow:0 6px 20px rgba(1,62,55,.25);}
-    .btn-submit-main:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+    /* ABSTRACT SECTIONS */
+    .abstract-section{background:#f9fafb;border:1.5px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
+    .abstract-section .abs-label{font-size:.7rem;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--green);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+    .abstract-section textarea{border:none;background:#fff;border-radius:8px;padding:10px 12px;font-size:.82rem;line-height:1.7;width:100%;resize:vertical;border:1px solid #e5e7eb;}
+    .abstract-section textarea:focus{outline:none;border-color:var(--green);}
+    .abs-total-bar{background:var(--bl);border:1.5px solid #e0d890;border-radius:10px;padding:12px 16px;margin-top:4px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+    .abs-total-label{font-size:.75rem;font-weight:700;color:#374151;}
+    .abs-total-val{font-size:1.1rem;font-weight:900;color:var(--green);}
+    .abs-range{font-size:.72rem;color:#6c757d;}
 
-    /* SUCCESS SCREEN */
-    #successScreen{display:none;text-align:center;padding:48px 24px;}
+    /* CO-AUTHORS */
+    .coauthor-card{background:#f9fafb;border:1.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px;position:relative;}
+    .coauthor-card .ca-num{position:absolute;top:12px;left:14px;width:22px;height:22px;background:var(--green);color:var(--butter);border-radius:50%;font-size:.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;}
+    .coauthor-card .ca-fields{padding-left:30px;}
+    .btn-add-ca{background:var(--bl);border:1.5px dashed #a3b89a;color:var(--green);font-size:.8rem;font-weight:700;padding:10px;border-radius:10px;width:100%;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+    .btn-add-ca:hover{background:#e6f4ea;border-color:var(--green);}
+    .btn-remove-ca{position:absolute;top:10px;right:10px;background:#fee2e2;color:#991b1b;border:none;border-radius:6px;padding:3px 8px;font-size:.7rem;font-weight:700;cursor:pointer;}
+
+    /* FILE UPLOAD */
+    .upload-zone{border:2px dashed #a3b89a;border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:.2s;background:#f9fafb;position:relative;}
+    .upload-zone:hover,.upload-zone.drag{border-color:var(--green);background:var(--bl);}
+    .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .upload-zone i{font-size:2rem;color:var(--green);margin-bottom:8px;display:block;}
+    .upload-zone .uz-title{font-size:.88rem;font-weight:700;color:var(--green);margin-bottom:4px;}
+    .upload-zone .uz-sub{font-size:.75rem;color:#6c757d;}
+    .upload-preview{background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:12px 16px;display:none;align-items:center;gap:12px;margin-top:10px;}
+    .up-icon{width:40px;height:40px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--butter);font-size:1.1rem;flex-shrink:0;}
+    .up-name{font-size:.82rem;font-weight:700;color:#166534;word-break:break-all;}
+    .up-size{font-size:.7rem;color:#6c757d;}
+    .up-remove{margin-left:auto;background:#fee2e2;color:#991b1b;border:none;border-radius:6px;padding:4px 10px;font-size:.72rem;font-weight:700;cursor:pointer;}
+    .upload-progress{display:none;margin-top:8px;}
+    .up-bar{height:6px;background:#e5e7eb;border-radius:6px;overflow:hidden;}
+    .up-fill{height:100%;background:var(--green);border-radius:6px;transition:width .3s;}
+
+    /* CHECKBOXES */
+    .chk-wrap{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bl);border:1.5px solid #e0d890;border-radius:10px;margin-bottom:10px;}
+    .chk-wrap input[type=checkbox]{width:17px;height:17px;flex-shrink:0;margin-top:2px;accent-color:var(--green);cursor:pointer;}
+    .chk-wrap label{font-size:.79rem;color:var(--text);cursor:pointer;line-height:1.6;}
+    .chk-wrap label a{color:var(--green);font-weight:700;}
+
+    /* NAV BUTTONS */
+    .form-nav{display:flex;gap:10px;margin-top:6px;}
+    .btn-next{flex:1;padding:13px;font-size:.88rem;font-weight:800;background:var(--green);color:var(--butter);border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;}
+    .btn-next:hover{background:var(--gl);}
+    .btn-prev{padding:13px 22px;font-size:.88rem;font-weight:700;background:#fff;color:var(--green);border:1.5px solid var(--green);border-radius:10px;cursor:pointer;transition:.2s;}
+    .btn-prev:hover{background:var(--bl);}
+    .btn-submit-final{flex:1;padding:13px;font-size:.9rem;font-weight:800;background:var(--green);color:var(--butter);border:none;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;}
+    .btn-submit-final:hover{background:var(--gl);transform:translateY(-1px);box-shadow:0 6px 20px rgba(1,62,55,.25);}
+    .btn-submit-final:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+
+    /* ERROR BOX */
+    .err-box{display:none;background:#fff5f5;border:1.5px solid #fc8181;border-radius:9px;padding:11px 15px;font-size:.78rem;color:#c53030;margin-bottom:14px;}
+
+    /* SUCCESS */
+    #successScreen{display:none;}
+    .success-wrap{background:#fff;border-radius:var(--r);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:44px 28px;text-align:center;}
     .success-icon{width:80px;height:80px;background:#e6fff5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2.2rem;color:#059669;}
-    .success-id{background:var(--butter-light);border:2px solid #e0d890;border-radius:12px;padding:16px 24px;margin:20px auto;max-width:320px;}
-    .success-id .sid-label{font-size:.72rem;color:#6c757d;font-weight:700;text-transform:uppercase;margin-bottom:4px;}
-    .success-id .sid-val{font-size:1.5rem;font-weight:900;color:var(--green);font-family:monospace;letter-spacing:2px;}
-    .success-steps{background:#f0fdf4;border:1.5px solid #a7f3d0;border-radius:10px;padding:16px 20px;margin:16px 0;text-align:left;}
-    .success-steps li{font-size:.82rem;color:#065f46;padding:4px 0;display:flex;align-items:flex-start;gap:8px;}
-    .success-steps li i{flex-shrink:0;margin-top:2px;color:#059669;}
+    .success-id-box{background:var(--bl);border:2px solid #e0d890;border-radius:12px;padding:16px 24px;display:inline-block;margin:18px auto;}
+    .sid-label{font-size:.7rem;color:#6c757d;font-weight:700;text-transform:uppercase;margin-bottom:4px;}
+    .sid-val{font-size:1.6rem;font-weight:900;color:var(--green);font-family:monospace;letter-spacing:2px;}
+    .success-steps{background:#f0fdf4;border:1.5px solid #a7f3d0;border-radius:10px;padding:14px 18px;margin:16px auto;max-width:440px;text-align:left;}
+    .success-steps li{font-size:.8rem;color:#065f46;padding:3px 0;display:flex;align-items:flex-start;gap:8px;}
 
-    /* SIDEBAR INFO */
-    .info-box{background:#fff;border-radius:var(--radius);box-shadow:0 2px 14px rgba(0,0,0,.06);padding:20px;margin-bottom:16px;}
-    .info-box h6{font-size:.82rem;font-weight:800;color:var(--green);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
-    .ib-row{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid #f3f4f6;font-size:.78rem;}
+    /* SIDEBAR */
+    .info-box{background:#fff;border-radius:var(--r);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:18px;margin-bottom:14px;}
+    .info-box h6{font-size:.8rem;font-weight:800;color:var(--green);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+    .ib-row{display:flex;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:.76rem;}
     .ib-row:last-child{border-bottom:none;}
-    .ib-key{color:#6c757d;min-width:90px;font-weight:600;}
-    .ib-val{color:var(--text);font-weight:500;}
-    .steps-list{counter-reset:steps;}
-    .step-item{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #f3f4f6;}
-    .step-item:last-child{border-bottom:none;}
-    .step-num{width:24px;height:24px;border-radius:50%;background:var(--green);color:var(--butter);font-size:.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-    .step-txt{font-size:.78rem;color:#374151;}
+    .ib-key{color:#6c757d;min-width:80px;font-weight:600;}
+    .step-guide .sg-item{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid #f3f4f6;}
+    .step-guide .sg-item:last-child{border-bottom:none;}
+    .sg-num{width:22px;height:22px;border-radius:50%;background:var(--green);color:var(--butter);font-size:.62rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+    .sg-txt{font-size:.75rem;color:#374151;}
+
+    /* HINT */
+    .hint{font-size:.7rem;color:#6c757d;margin-top:4px;display:flex;align-items:flex-start;gap:5px;}
+    .hint i{flex-shrink:0;margin-top:1px;color:var(--green);}
 
     /* FOOTER */
-    footer{background:var(--green-dark);padding:36px 0 0;}
-    .foot-brand{color:var(--butter);font-weight:800;font-size:1rem;margin-bottom:5px;}
-    footer h6{color:var(--butter);font-weight:700;font-size:.76rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+    footer{background:var(--gd);padding:32px 0 0;}
+    footer h6{color:var(--butter);font-weight:700;font-size:.74rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
     footer ul{list-style:none;padding:0;margin:0;}
-    footer ul li a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;display:flex;align-items:center;gap:6px;padding:3px 0;transition:color .2s;}
+    footer ul li a{color:rgba(255,255,255,.45);text-decoration:none;font-size:.78rem;display:flex;align-items:center;gap:5px;padding:2px 0;transition:.2s;}
     footer ul li a:hover{color:var(--butter);}
-    .foot-bottom{background:rgba(0,0,0,.25);padding:12px 0;margin-top:32px;}
-    .foot-bottom p{margin:0;font-size:.75rem;color:rgba(255,255,255,.3);}
-    .foot-bottom a{color:var(--butter);text-decoration:none;}
-    .wa-float{position:fixed;bottom:26px;right:26px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,.45);z-index:999;transition:.25s;}
-    .wa-float:hover{transform:scale(1.12);color:#fff;}
+    .foot-bottom{background:rgba(0,0,0,.2);padding:10px 0;margin-top:28px;}
+    .foot-bottom p{margin:0;font-size:.73rem;color:rgba(255,255,255,.3);}
+    .wa-float{position:fixed;bottom:24px;right:24px;width:50px;height:50px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.45rem;color:#fff;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,.45);z-index:999;transition:.25s;}
+    .wa-float:hover{transform:scale(1.1);color:#fff;}
 
-    @media(max-width:768px){
-      .form-row-2,.form-row-3{grid-template-columns:1fr;}
-    }
+    @media(max-width:768px){.grid2,.grid3{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
@@ -168,9 +222,9 @@
 </nav>
 
 <!-- JOURNAL SUB-NAV -->
-<div class="journal-subnav">
+<div class="jsubnav">
   <div class="container">
-    <a class="jnav-link" href="journal.html"><i class="bi bi-journals"></i><span class="en-text">Current</span><span class="bn-text">বর্তমান</span></a>
+    <a class="jnav-link" href="journal.html"><i class="bi bi-journals"></i><span class="en-text">Current Issue</span><span class="bn-text">বর্তমান সংখ্যা</span></a>
     <a class="jnav-link" href="journal.html#archive"><i class="bi bi-archive"></i><span class="en-text">Archives</span><span class="bn-text">আর্কাইভ</span></a>
     <a class="jnav-link active" href="submit.html"><i class="bi bi-upload"></i><span class="en-text">Submit Manuscript</span><span class="bn-text">পাণ্ডুলিপি জমা</span></a>
     <a class="jnav-link" href="editorial-board.html"><i class="bi bi-people"></i><span class="en-text">Editorial Board</span><span class="bn-text">সম্পাদকীয় বোর্ড</span></a>
@@ -178,7 +232,7 @@
   </div>
 </div>
 
-<!-- PAGE HERO -->
+<!-- HERO -->
 <div class="page-hero">
   <div class="container position-relative" style="z-index:1">
     <nav aria-label="breadcrumb" class="mb-3">
@@ -188,8 +242,23 @@
         <li class="breadcrumb-item active"><span class="en-text">Submit Manuscript</span><span class="bn-text">পাণ্ডুলিপি জমা</span></li>
       </ol>
     </nav>
-    <h1><span class="en-text">Submit <em>Manuscript</em></span><span class="bn-text">পাণ্ডুলিপি <em>জমা দিন</em></span></h1>
-    <p><span class="en-text">Submit your research manuscript to JARD — Bangladesh Journal of Applied Research & Development. APC: USD 50 (after acceptance only).</span><span class="bn-text">JARD-এ আপনার গবেষণা পাণ্ডুলিপি জমা দিন। APC: গৃহীত হওয়ার পরেই USD ৫০।</span></p>
+    <h1><span class="en-text">Submit Your <em>Manuscript</em></span><span class="bn-text">আপনার <em>পাণ্ডুলিপি</em> জমা দিন</span></h1>
+    <p><span class="en-text">JARD — Bangladesh Journal of Applied Research & Development · Open Access · Double-Blind Peer Review · APC: USD 50 (after acceptance only)</span><span class="bn-text">JARD · ওপেন অ্যাক্সেস · ডাবল-ব্লাইন্ড পিয়ার রিভিউ · APC: গৃহীত হওয়ার পরে USD ৫০</span></p>
+  </div>
+</div>
+
+<!-- PROGRESS STEPS -->
+<div class="progress-steps" id="progressBar">
+  <div class="steps-row">
+    <div class="step-item active" id="ps1"><div class="step-num">1</div><span class="en-text">Authors</span><span class="bn-text">লেখক</span></div>
+    <div class="step-sep"><i class="bi bi-chevron-right"></i></div>
+    <div class="step-item" id="ps2"><div class="step-num">2</div><span class="en-text">Manuscript</span><span class="bn-text">পাণ্ডুলিপি</span></div>
+    <div class="step-sep"><i class="bi bi-chevron-right"></i></div>
+    <div class="step-item" id="ps3"><div class="step-num">3</div><span class="en-text">Abstract</span><span class="bn-text">সারসংক্ষেপ</span></div>
+    <div class="step-sep"><i class="bi bi-chevron-right"></i></div>
+    <div class="step-item" id="ps4"><div class="step-num">4</div><span class="en-text">File Upload</span><span class="bn-text">ফাইল</span></div>
+    <div class="step-sep"><i class="bi bi-chevron-right"></i></div>
+    <div class="step-item" id="ps5"><div class="step-num">5</div><span class="en-text">Declaration</span><span class="bn-text">ঘোষণা</span></div>
   </div>
 </div>
 
@@ -197,219 +266,258 @@
 <div class="submit-wrap">
   <div class="container">
     <div class="row g-4">
-
-      <!-- FORM COLUMN -->
       <div class="col-lg-8">
 
-        <!-- Success Screen -->
-        <div id="successScreen" class="form-card">
-          <div class="fc-body">
-            <div style="text-align:center;padding:32px 16px;">
-              <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
-              <h4 style="color:var(--green);font-weight:900;margin-bottom:8px;"><span class="en-text">Submission Received!</span><span class="bn-text">জমা সফল হয়েছে!</span></h4>
-              <p style="color:#6c757d;font-size:.88rem;max-width:420px;margin:0 auto 16px;"><span class="en-text">Your manuscript has been submitted successfully. Please keep your Submission ID for future reference.</span><span class="bn-text">আপনার পাণ্ডুলিপি সফলভাবে জমা হয়েছে। ভবিষ্যতের জন্য আপনার Submission ID সংরক্ষণ করুন।</span></p>
-              <div class="success-id">
-                <div class="sid-label"><span class="en-text">Your Submission ID</span><span class="bn-text">আপনার সাবমিশন আইডি</span></div>
-                <div class="sid-val" id="successId">—</div>
-              </div>
-              <ul class="success-steps list-unstyled" style="max-width:400px;margin:0 auto;">
-                <li><i class="bi bi-check-circle-fill"></i><span class="en-text">Submission received by JARD Editorial Office</span><span class="bn-text">JARD সম্পাদকীয় দপ্তর কর্তৃক গৃহীত</span></li>
-                <li><i class="bi bi-envelope"></i><span class="en-text">You will be contacted within <strong>7 working days</strong></span><span class="bn-text"><strong>৭ কার্যদিবসের</strong> মধ্যে যোগাযোগ করা হবে</span></li>
-                <li><i class="bi bi-journal-check"></i><span class="en-text">Peer review process takes <strong>4–6 weeks</strong></span><span class="bn-text">পিয়ার রিভিউ প্রক্রিয়ায় <strong>৪–৬ সপ্তাহ</strong> সময় লাগে</span></li>
-              </ul>
-              <div style="margin-top:24px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
-                <a href="journal.html" class="btn-lang active" style="text-decoration:none;padding:10px 22px;border-radius:10px;background:var(--green);color:var(--butter);font-weight:700;font-size:.85rem;border:none;"><i class="bi bi-journal-text me-2"></i><span class="en-text">View Journal</span><span class="bn-text">জার্নাল দেখুন</span></a>
-                <a href="author-guidelines.html" class="btn-lang" style="text-decoration:none;padding:10px 22px;border-radius:10px;font-weight:700;font-size:.85rem;"><i class="bi bi-file-text me-2"></i><span class="en-text">Author Guidelines</span><span class="bn-text">লেখক নির্দেশিকা</span></a>
-              </div>
+        <!-- SUCCESS SCREEN -->
+        <div id="successScreen">
+          <div class="success-wrap">
+            <div class="success-icon"><i class="bi bi-check-circle-fill"></i></div>
+            <h4 style="color:var(--green);font-weight:900;margin-bottom:8px;"><span class="en-text">Submission Received!</span><span class="bn-text">জমা সফল!</span></h4>
+            <p style="color:#6c757d;font-size:.86rem;max-width:420px;margin:0 auto;"><span class="en-text">Your manuscript has been submitted. Please save your Submission ID.</span><span class="bn-text">আপনার পাণ্ডুলিপি জমা হয়েছে। Submission ID সংরক্ষণ করুন।</span></p>
+            <div class="success-id-box">
+              <div class="sid-label"><span class="en-text">Submission ID</span><span class="bn-text">সাবমিশন আইডি</span></div>
+              <div class="sid-val" id="successId">—</div>
+            </div>
+            <ul class="success-steps list-unstyled">
+              <li><i class="bi bi-check-circle-fill" style="color:#059669;flex-shrink:0;margin-top:2px;"></i><span class="en-text">Submission received by JARD Editorial Office</span><span class="bn-text">JARD সম্পাদকীয় দপ্তরে জমা হয়েছে</span></li>
+              <li><i class="bi bi-envelope" style="color:#059669;flex-shrink:0;margin-top:2px;"></i><span class="en-text">You will be contacted within <strong>7 working days</strong></span><span class="bn-text"><strong>৭ কার্যদিবসের</strong> মধ্যে যোগাযোগ করা হবে</span></li>
+              <li><i class="bi bi-journal-check" style="color:#059669;flex-shrink:0;margin-top:2px;"></i><span class="en-text">Peer review takes <strong>4–6 weeks</strong></span><span class="bn-text">পিয়ার রিভিউতে <strong>৪–৬ সপ্তাহ</strong></span></li>
+            </ul>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px;">
+              <a href="journal.html" style="background:var(--green);color:var(--butter);text-decoration:none;padding:10px 22px;border-radius:9px;font-weight:700;font-size:.84rem;"><i class="bi bi-journal-text me-2"></i><span class="en-text">View Journal</span><span class="bn-text">জার্নাল দেখুন</span></a>
+              <a href="submit.html" style="background:#fff;color:var(--green);text-decoration:none;padding:10px 22px;border-radius:9px;font-weight:700;font-size:.84rem;border:1.5px solid var(--green);"><i class="bi bi-plus-circle me-2"></i><span class="en-text">New Submission</span><span class="bn-text">নতুন জমা</span></a>
             </div>
           </div>
         </div>
 
-        <!-- SUBMISSION FORM -->
-        <div id="submitForm">
+        <!-- ═══ STEP 1: AUTHORS ═══ -->
+        <div class="fc active" id="step1">
+          <div class="fc-hdr"><i class="bi bi-person-fill"></i><span class="fc-title"><span class="en-text">Author Information</span><span class="bn-text">লেখকের তথ্য</span></span><span class="fc-step"><span class="en-text">Step 1 of 5</span><span class="bn-text">ধাপ ১/৫</span></span></div>
+          <div class="fc-body">
+            <!-- Main Author -->
+            <div style="font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:var(--green);margin-bottom:12px;"><i class="bi bi-star-fill me-2" style="font-size:.65rem;"></i><span class="en-text">Main / Corresponding Author</span><span class="bn-text">প্রধান / যোগাযোগকারী লেখক</span></div>
+            <div class="grid2">
+              <div class="fg"><label><span class="en-text">Full Name</span><span class="bn-text">পূর্ণ নাম</span> <span class="req">*</span></label><input type="text" id="maName" placeholder="Dr. / Prof. Full Name"/></div>
+              <div class="fg"><label><span class="en-text">Email</span><span class="bn-text">ইমেইল</span> <span class="req">*</span></label><input type="email" id="maEmail" placeholder="name@institution.edu"/></div>
+            </div>
+            <div class="grid2">
+              <div class="fg"><label><span class="en-text">Phone / WhatsApp</span><span class="bn-text">ফোন</span> <span class="req">*</span></label><input type="tel" id="maPhone" placeholder="+880 XXXX-XXXXXX"/></div>
+              <div class="fg"><label>ORCID iD <span class="opt">(optional)</span></label><input type="text" id="maOrcid" placeholder="0000-0000-0000-0000"/></div>
+            </div>
+            <div class="fg"><label><span class="en-text">Affiliation / Institution</span><span class="bn-text">প্রতিষ্ঠান</span> <span class="req">*</span></label><input type="text" id="maAffil" placeholder="Department, University / Hospital / Organization"/></div>
+            <div class="grid2">
+              <div class="fg"><label><span class="en-text">Country</span><span class="bn-text">দেশ</span> <span class="req">*</span></label>
+                <select id="maCountry">
+                  <option value="Bangladesh" selected>Bangladesh</option>
+                  <option value="India">India</option><option value="Pakistan">Pakistan</option>
+                  <option value="Nepal">Nepal</option><option value="Sri Lanka">Sri Lanka</option>
+                  <option value="USA">USA</option><option value="UK">UK</option>
+                  <option value="Canada">Canada</option><option value="Australia">Australia</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="fg"><label><span class="en-text">Designation</span><span class="bn-text">পদবি</span></label><input type="text" id="maDesig" placeholder="Professor / Researcher / MPH Student"/></div>
+            </div>
 
-          <!-- STEP 1: Author Info -->
-          <div class="form-card">
-            <div class="fc-hdr"><i class="bi bi-person-fill"></i><span><span class="en-text">Author Information</span><span class="bn-text">লেখকের তথ্য</span></span><span class="fc-step">Step 1 of 4</span></div>
-            <div class="fc-body">
-              <div class="form-row-2">
-                <div class="fg">
-                  <label><span class="en-text">Author(s) Full Name</span><span class="bn-text">লেখকের পূর্ণ নাম</span> <span class="req">*</span></label>
-                  <input type="text" id="fAuthors" placeholder="e.g. Dr. John Doe, Prof. Jane Smith"/>
-                  <div class="hint"><i class="bi bi-info-circle"></i><span class="en-text">For multiple authors, separate with commas</span><span class="bn-text">একাধিক লেখকের নাম কমা দিয়ে আলাদা করুন</span></div>
-                </div>
-                <div class="fg">
-                  <label><span class="en-text">Corresponding Author Email</span><span class="bn-text">ইমেইল</span> <span class="req">*</span></label>
-                  <input type="email" id="fEmail" placeholder="author@institution.edu"/>
-                </div>
-              </div>
-              <div class="form-row-2">
-                <div class="fg">
-                  <label><span class="en-text">Phone / WhatsApp</span><span class="bn-text">ফোন / WhatsApp</span> <span class="req">*</span></label>
-                  <input type="tel" id="fPhone" placeholder="+880 1XXX-XXXXXX"/>
-                </div>
-                <div class="fg">
-                  <label><span class="en-text">Affiliation / Institution</span><span class="bn-text">প্রতিষ্ঠান</span> <span class="req">*</span></label>
-                  <input type="text" id="fAffil" placeholder="University / Organization / Hospital"/>
-                </div>
-              </div>
+            <hr style="border-color:#e5e7eb;margin:18px 0 14px;">
+
+            <!-- Co-Authors -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <div style="font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.8px;color:#374151;"><i class="bi bi-people-fill me-2" style="color:var(--green);"></i><span class="en-text">Co-Author(s)</span><span class="bn-text">সহ-লেখক</span></div>
+              <span style="font-size:.7rem;color:#9ca3af;"><span class="en-text">Optional — add as many as needed</span><span class="bn-text">ঐচ্ছিক</span></span>
+            </div>
+            <div id="coauthorList"></div>
+            <button class="btn-add-ca" onclick="addCoAuthor()"><i class="bi bi-plus-circle"></i><span class="en-text">Add Co-Author</span><span class="bn-text">সহ-লেখক যোগ করুন</span></button>
+
+            <div class="form-nav" style="margin-top:20px;">
+              <button class="btn-next" onclick="goStep(2)"><span class="en-text">Next: Manuscript Info</span><span class="bn-text">পরবর্তী: পাণ্ডুলিপির তথ্য</span> <i class="bi bi-arrow-right"></i></button>
             </div>
           </div>
+        </div>
 
-          <!-- STEP 2: Manuscript Info -->
-          <div class="form-card">
-            <div class="fc-hdr"><i class="bi bi-file-earmark-text-fill"></i><span><span class="en-text">Manuscript Information</span><span class="bn-text">পাণ্ডুলিপির তথ্য</span></span><span class="fc-step">Step 2 of 4</span></div>
-            <div class="fc-body">
-              <div class="fg">
-                <label><span class="en-text">Manuscript Title</span><span class="bn-text">পাণ্ডুলিপির শিরোনাম</span> <span class="req">*</span></label>
-                <input type="text" id="fTitle" placeholder="Full title of your manuscript"/>
+        <!-- ═══ STEP 2: MANUSCRIPT ═══ -->
+        <div class="fc" id="step2">
+          <div class="fc-hdr"><i class="bi bi-file-earmark-text-fill"></i><span class="fc-title"><span class="en-text">Manuscript Information</span><span class="bn-text">পাণ্ডুলিপির তথ্য</span></span><span class="fc-step"><span class="en-text">Step 2 of 5</span><span class="bn-text">ধাপ ২/৫</span></span></div>
+          <div class="fc-body">
+            <div class="fg"><label><span class="en-text">Manuscript Title</span><span class="bn-text">পাণ্ডুলিপির শিরোনাম</span> <span class="req">*</span></label><input type="text" id="msTitle" placeholder="Full title of your manuscript"/></div>
+            <div class="grid2">
+              <div class="fg"><label><span class="en-text">Manuscript Type</span><span class="bn-text">ধরন</span> <span class="req">*</span></label>
+                <select id="msType">
+                  <option value="">-- Select --</option>
+                  <option>Original Research Article</option>
+                  <option>Review Article</option>
+                  <option>Case Report</option>
+                  <option>Short Communication</option>
+                  <option>Letter to Editor</option>
+                  <option>Systematic Review</option>
+                  <option>Meta-Analysis</option>
+                </select>
               </div>
-              <div class="form-row-2">
-                <div class="fg">
-                  <label><span class="en-text">Manuscript Type</span><span class="bn-text">পাণ্ডুলিপির ধরন</span> <span class="req">*</span></label>
-                  <select id="fType">
-                    <option value="">-- Select type --</option>
-                    <option value="Original Research Article">Original Research Article</option>
-                    <option value="Review Article">Review Article</option>
-                    <option value="Case Report">Case Report</option>
-                    <option value="Short Communication">Short Communication</option>
-                    <option value="Letter to Editor">Letter to Editor</option>
-                    <option value="Systematic Review">Systematic Review</option>
-                    <option value="Meta-Analysis">Meta-Analysis</option>
-                  </select>
-                </div>
-                <div class="fg">
-                  <label><span class="en-text">Keywords</span><span class="bn-text">কীওয়ার্ড</span> <span class="req">*</span> <span class="opt">(max 5)</span></label>
-                  <input type="text" id="fKeywords" placeholder="e.g. Public Health, Nutrition, Bangladesh"/>
-                  <div class="hint"><i class="bi bi-info-circle"></i><span class="en-text">Separate keywords with commas</span><span class="bn-text">কমা দিয়ে আলাদা করুন</span></div>
-                </div>
-              </div>
-              <div class="fg">
-                <label><span class="en-text">Abstract</span><span class="bn-text">সারসংক্ষেপ</span> <span class="req">*</span> <span class="opt">(max 250 words)</span></label>
-                <textarea id="fAbstract" rows="6" placeholder="Structured abstract: Background, Methods, Results, Conclusion..." oninput="countWords(this,'abstractCount',250)"></textarea>
-                <div class="word-count"><span id="abstractCount">0</span> / 250 <span class="en-text">words</span><span class="bn-text">শব্দ</span></div>
+              <div class="fg"><label><span class="en-text">Total Word Count</span><span class="bn-text">মোট শব্দসংখ্যা</span> <span class="req">*</span></label>
+                <input type="number" id="msWordCount" placeholder="e.g. 3500" min="500" max="15000"/>
+                <div class="hint"><i class="bi bi-info-circle"></i><span class="en-text">Count excluding references & tables. Max 1500 for Short Communication.</span><span class="bn-text">References ও Tables বাদে। Short Communication: সর্বোচ্চ ১৫০০ শব্দ।</span></div>
               </div>
             </div>
-          </div>
+            <div class="fg"><label><span class="en-text">Keywords</span><span class="bn-text">কীওয়ার্ড</span> <span class="req">*</span> <span class="opt">(3–5 keywords)</span></label>
+              <input type="text" id="msKeywords" placeholder="e.g. Public Health, Nutrition, Bangladesh, MCH"/>
+              <div class="hint"><i class="bi bi-info-circle"></i><span class="en-text">Separate with commas. Min 3, max 5 keywords.</span><span class="bn-text">কমা দিয়ে আলাদা করুন। সর্বনিম্ন ৩, সর্বোচ্চ ৫।</span></div>
+            </div>
+            <div class="grid2">
+              <div class="fg"><label><span class="en-text">Funding Source</span><span class="bn-text">ফান্ডিং</span></label><input type="text" id="msFunding" placeholder="Grant / Organization or 'None'"/></div>
+              <div class="fg"><label><span class="en-text">Ethics Approval No.</span><span class="bn-text">নৈতিক অনুমোদন নং</span></label><input type="text" id="msEthics" placeholder="Ethics committee reference / N/A"/></div>
+            </div>
+            <div class="fg"><label><span class="en-text">Conflict of Interest</span><span class="bn-text">স্বার্থ দ্বন্দ্ব</span></label><input type="text" id="msConflict" placeholder="None declared / or describe..."/></div>
 
-          <!-- STEP 3: File & Additional Info -->
-          <div class="form-card">
-            <div class="fc-hdr"><i class="bi bi-cloud-upload-fill"></i><span><span class="en-text">File & Additional Info</span><span class="bn-text">ফাইল ও অতিরিক্ত তথ্য</span></span><span class="fc-step">Step 3 of 4</span></div>
-            <div class="fc-body">
-              <div class="fg">
-                <label><span class="en-text">Manuscript File Link</span><span class="bn-text">পাণ্ডুলিপি ফাইল লিংক</span> <span class="req">*</span></label>
-                <input type="url" id="fFileLink" placeholder="Google Drive / OneDrive / Dropbox shareable link"/>
-                <div class="hint"><i class="bi bi-info-circle"></i><span class="en-text">Upload your .docx or .pdf file to Google Drive and paste the shareable link here. File must be accessible.</span><span class="bn-text">Google Drive বা OneDrive-এ ফাইল আপলোড করে শেয়ারযোগ্য লিংক এখানে পেস্ট করুন।</span></div>
-              </div>
-              <div class="form-row-2">
-                <div class="fg">
-                  <label><span class="en-text">Word Count</span><span class="bn-text">শব্দসংখ্যা</span> <span class="opt">(<span class="en-text">optional</span><span class="bn-text">ঐচ্ছিক</span>)</span></label>
-                  <input type="number" id="fWordCount" placeholder="e.g. 3500"/>
-                </div>
-                <div class="fg">
-                  <label><span class="en-text">Funding Source</span><span class="bn-text">ফান্ডিং উৎস</span> <span class="opt">(<span class="en-text">optional</span><span class="bn-text">ঐচ্ছিক</span>)</span></label>
-                  <input type="text" id="fFunding" placeholder="Grant name / organization or 'None'"/>
-                </div>
-              </div>
-              <div class="fg">
-                <label><span class="en-text">Conflict of Interest</span><span class="bn-text">স্বার্থ দ্বন্দ্ব</span> <span class="opt">(<span class="en-text">optional</span><span class="bn-text">ঐচ্ছিক</span>)</span></label>
-                <input type="text" id="fConflict" placeholder="None declared / or describe any conflict of interest"/>
-              </div>
-              <div class="fg">
-                <label><span class="en-text">Cover Letter</span><span class="bn-text">কভার লেটার</span> <span class="opt">(<span class="en-text">optional</span><span class="bn-text">ঐচ্ছিক</span>)</span></label>
-                <textarea id="fCoverLetter" rows="4" placeholder="Brief note to the editor about your manuscript, its significance, and why it suits JARD..."></textarea>
-              </div>
+            <div class="form-nav">
+              <button class="btn-prev" onclick="goStep(1)"><i class="bi bi-arrow-left me-1"></i><span class="en-text">Back</span><span class="bn-text">পিছনে</span></button>
+              <button class="btn-next" onclick="goStep(3)"><span class="en-text">Next: Abstract</span><span class="bn-text">পরবর্তী: সারসংক্ষেপ</span> <i class="bi bi-arrow-right"></i></button>
             </div>
           </div>
+        </div>
 
-          <!-- STEP 4: Agreement & Submit -->
-          <div class="form-card">
-            <div class="fc-hdr"><i class="bi bi-shield-check-fill"></i><span><span class="en-text">Declaration & Submit</span><span class="bn-text">ঘোষণা ও জমা</span></span><span class="fc-step">Step 4 of 4</span></div>
-            <div class="fc-body">
-              <div class="check-wrap mb-3">
-                <input type="checkbox" id="chkOriginal"/>
-                <label for="chkOriginal"><span class="en-text">The manuscript is original, has not been published elsewhere, and is not under review by another journal.</span><span class="bn-text">পাণ্ডুলিপিটি মৌলিক, অন্য কোথাও প্রকাশিত হয়নি এবং অন্য কোনো জার্নালে পর্যালোচনাধীন নয়।</span></label>
-              </div>
-              <div class="check-wrap mb-3">
-                <input type="checkbox" id="chkEthics"/>
-                <label for="chkEthics"><span class="en-text">All authors have approved this submission. Ethical clearance has been obtained (if applicable).</span><span class="bn-text">সকল লেখক এই জমা অনুমোদন করেছেন। নৈতিক ছাড়পত্র প্রাপ্ত হয়েছে (প্রযোজ্য হলে)।</span></label>
-              </div>
-              <div class="check-wrap mb-4">
-                <input type="checkbox" id="chkGuidelines"/>
-                <label for="chkGuidelines"><span class="en-text">I have read and agree to the <a href="author-guidelines.html" target="_blank">JARD Author Guidelines</a> and understand that APC of USD 50 is payable only after acceptance.</span><span class="bn-text">আমি <a href="author-guidelines.html" target="_blank">JARD লেখক নির্দেশিকা</a> পড়েছি এবং সম্মত আছি। APC USD ৫০ শুধুমাত্র গৃহীত হওয়ার পরেই প্রযোজ্য।</span></label>
-              </div>
+        <!-- ═══ STEP 3: ABSTRACT ═══ -->
+        <div class="fc" id="step3">
+          <div class="fc-hdr"><i class="bi bi-paragraph"></i><span class="fc-title"><span class="en-text">Structured Abstract</span><span class="bn-text">কাঠামোগত সারসংক্ষেপ</span></span><span class="fc-step"><span class="en-text">Step 3 of 5</span><span class="bn-text">ধাপ ৩/৫</span></span></div>
+          <div class="fc-body">
+            <div style="background:#dbeafe;border-radius:9px;padding:10px 14px;font-size:.76rem;color:#1e40af;margin-bottom:16px;display:flex;gap:8px;"><i class="bi bi-info-circle-fill flex-shrink-0" style="margin-top:1px;"></i><span class="en-text">Write a structured abstract with 4 sections. <strong>Total: 300–450 words.</strong> Each section should be clear and concise.</span><span class="bn-text">৪টি অংশে কাঠামোগত সারসংক্ষেপ লিখুন। <strong>মোট: ৩০০–৪৫০ শব্দ।</strong></span></div>
 
-              <!-- Error Box -->
-              <div id="formError" style="display:none;background:#fff5f5;border:1.5px solid #fc8181;border-radius:10px;padding:12px 16px;font-size:.8rem;color:#c53030;margin-bottom:16px;">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i><span id="formErrorMsg"></span>
-              </div>
+            <div class="abstract-section">
+              <div class="abs-label"><i class="bi bi-1-circle-fill"></i><span class="en-text">Background / Introduction</span><span class="bn-text">পটভূমি / ভূমিকা</span></div>
+              <textarea id="absBackground" rows="4" placeholder="What is the context and rationale for this study? What problem does it address?" oninput="calcAbstract()"></textarea>
+              <div class="wc-bar"><span class="wc-num" id="wcBg">0 words</span><div class="wc-track"><div class="wc-fill" id="wfBg" style="width:0%"></div></div></div>
+            </div>
 
-              <button class="btn-submit-main" onclick="submitManuscript()" id="submitBtn">
-                <i class="bi bi-send-fill"></i>
-                <span class="en-text">Submit Manuscript to JARD</span>
-                <span class="bn-text">JARD-এ পাণ্ডুলিপি জমা দিন</span>
-              </button>
-              <p style="text-align:center;font-size:.72rem;color:#9ca3af;margin-top:12px;"><i class="bi bi-lock-fill me-1"></i><span class="en-text">Your submission is saved securely. You will receive acknowledgement within 7 working days.</span><span class="bn-text">আপনার জমা নিরাপদে সংরক্ষিত। ৭ কার্যদিবসের মধ্যে নিশ্চিতকরণ পাবেন।</span></p>
+            <div class="abstract-section">
+              <div class="abs-label"><i class="bi bi-2-circle-fill"></i><span class="en-text">Methods</span><span class="bn-text">পদ্ধতি</span></div>
+              <textarea id="absMethods" rows="4" placeholder="Study design, participants, data collection methods, analysis techniques..." oninput="calcAbstract()"></textarea>
+              <div class="wc-bar"><span class="wc-num" id="wcMt">0 words</span><div class="wc-track"><div class="wc-fill" id="wfMt" style="width:0%"></div></div></div>
+            </div>
+
+            <div class="abstract-section">
+              <div class="abs-label"><i class="bi bi-3-circle-fill"></i><span class="en-text">Results</span><span class="bn-text">ফলাফল</span></div>
+              <textarea id="absResults" rows="4" placeholder="Key findings with relevant data, statistics, and outcomes..." oninput="calcAbstract()"></textarea>
+              <div class="wc-bar"><span class="wc-num" id="wcRs">0 words</span><div class="wc-track"><div class="wc-fill" id="wfRs" style="width:0%"></div></div></div>
+            </div>
+
+            <div class="abstract-section">
+              <div class="abs-label"><i class="bi bi-4-circle-fill"></i><span class="en-text">Conclusion</span><span class="bn-text">উপসংহার</span></div>
+              <textarea id="absConclusion" rows="3" placeholder="Main conclusions, implications, and recommendations..." oninput="calcAbstract()"></textarea>
+              <div class="wc-bar"><span class="wc-num" id="wcCn">0 words</span><div class="wc-track"><div class="wc-fill" id="wfCn" style="width:0%"></div></div></div>
+            </div>
+
+            <!-- Total bar -->
+            <div class="abs-total-bar">
+              <div>
+                <div class="abs-total-label"><span class="en-text">Total Abstract Words</span><span class="bn-text">মোট শব্দ</span></div>
+                <div class="abs-range"><span class="en-text">Required: 300–450 words</span><span class="bn-text">প্রয়োজন: ৩০০–৪৫০ শব্দ</span></div>
+              </div>
+              <div style="text-align:center;">
+                <div class="abs-total-val" id="absTotal">0</div>
+                <div style="font-size:.65rem;color:#6c757d;" id="absTotalStatus">—</div>
+              </div>
+              <div style="flex:1;min-width:100px;">
+                <div class="wc-track" style="height:8px;">
+                  <div class="wc-fill" id="absTotalBar" style="width:0%;height:100%;"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;font-size:.6rem;color:#9ca3af;margin-top:2px;"><span>0</span><span>300</span><span>450</span></div>
+              </div>
+            </div>
+
+            <div class="form-nav">
+              <button class="btn-prev" onclick="goStep(2)"><i class="bi bi-arrow-left me-1"></i><span class="en-text">Back</span><span class="bn-text">পিছনে</span></button>
+              <button class="btn-next" onclick="goStep(4)"><span class="en-text">Next: File Upload</span><span class="bn-text">পরবর্তী: ফাইল আপলোড</span> <i class="bi bi-arrow-right"></i></button>
             </div>
           </div>
+        </div>
 
-        </div><!-- /submitForm -->
-      </div>
+        <!-- ═══ STEP 4: FILE UPLOAD ═══ -->
+        <div class="fc" id="step4">
+          <div class="fc-hdr"><i class="bi bi-cloud-upload-fill"></i><span class="fc-title"><span class="en-text">File Upload</span><span class="bn-text">ফাইল আপলোড</span></span><span class="fc-step"><span class="en-text">Step 4 of 5</span><span class="bn-text">ধাপ ৪/৫</span></span></div>
+          <div class="fc-body">
+            <div class="fg">
+              <label><span class="en-text">Manuscript File</span><span class="bn-text">পাণ্ডুলিপি ফাইল</span> <span class="req">*</span></label>
+              <div class="upload-zone" id="uploadZone">
+                <input type="file" id="msFile" accept=".pdf,.doc,.docx" onchange="handleFileSelect(this)"/>
+                <i class="bi bi-cloud-upload"></i>
+                <div class="uz-title"><span class="en-text">Click or drag file here</span><span class="bn-text">ক্লিক করুন বা ফাইল টেনে আনুন</span></div>
+                <div class="uz-sub"><span class="en-text">PDF, DOC, DOCX · Max 15 MB</span><span class="bn-text">PDF, DOC, DOCX · সর্বোচ্চ ১৫ MB</span></div>
+              </div>
+              <div class="upload-preview" id="uploadPreview">
+                <div class="up-icon"><i class="bi bi-file-earmark-text-fill"></i></div>
+                <div><div class="up-name" id="upFileName">—</div><div class="up-size" id="upFileSize">—</div></div>
+                <button class="up-remove" onclick="removeFile()"><i class="bi bi-x"></i></button>
+              </div>
+              <div class="upload-progress" id="uploadProgress">
+                <div style="font-size:.75rem;color:#374151;margin-bottom:4px;" id="upProgressText"><span class="en-text">Uploading...</span><span class="bn-text">আপলোড হচ্ছে...</span></div>
+                <div class="up-bar"><div class="up-fill" id="upFill" style="width:0%"></div></div>
+              </div>
+              <div class="hint" style="margin-top:8px;"><i class="bi bi-shield-check"></i><span class="en-text">File is uploaded securely to our server. Anonymous during peer review.</span><span class="bn-text">ফাইল নিরাপদে আমাদের সার্ভারে আপলোড হবে। পিয়ার রিভিউতে anonymous থাকবে।</span></div>
+            </div>
+            <input type="hidden" id="uploadedFileUrl"/>
+            <input type="hidden" id="uploadedFileName"/>
+
+            <div class="fg" style="margin-top:4px;">
+              <label><span class="en-text">Cover Letter</span><span class="bn-text">কভার লেটার</span> <span class="opt">(optional)</span></label>
+              <textarea id="msCoverLetter" rows="4" placeholder="Brief note to the Editor — significance of your work, why it suits JARD..."></textarea>
+            </div>
+
+            <div class="form-nav">
+              <button class="btn-prev" onclick="goStep(3)"><i class="bi bi-arrow-left me-1"></i><span class="en-text">Back</span><span class="bn-text">পিছনে</span></button>
+              <button class="btn-next" onclick="goStep(5)"><span class="en-text">Next: Declaration</span><span class="bn-text">পরবর্তী: ঘোষণা</span> <i class="bi bi-arrow-right"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ STEP 5: DECLARATION ═══ -->
+        <div class="fc" id="step5">
+          <div class="fc-hdr"><i class="bi bi-shield-check-fill"></i><span class="fc-title"><span class="en-text">Declaration & Submit</span><span class="bn-text">ঘোষণা ও জমা</span></span><span class="fc-step"><span class="en-text">Step 5 of 5</span><span class="bn-text">ধাপ ৫/৫</span></span></div>
+          <div class="fc-body">
+            <div class="chk-wrap"><input type="checkbox" id="chk1"/><label for="chk1"><strong><span class="en-text">Originality:</span><span class="bn-text">মৌলিকতা:</span></strong> <span class="en-text">This manuscript is original, has not been published elsewhere, and is not currently under review by any other journal.</span><span class="bn-text">এই পাণ্ডুলিপিটি মৌলিক, অন্য কোথাও প্রকাশিত হয়নি এবং অন্য জার্নালে পর্যালোচনাধীন নয়।</span></label></div>
+            <div class="chk-wrap"><input type="checkbox" id="chk2"/><label for="chk2"><strong><span class="en-text">Author Consent:</span><span class="bn-text">লেখক সম্মতি:</span></strong> <span class="en-text">All listed authors have approved this submission and agree to authorship responsibilities.</span><span class="bn-text">সকল তালিকাভুক্ত লেখক এই জমা অনুমোদন করেছেন।</span></label></div>
+            <div class="chk-wrap"><input type="checkbox" id="chk3"/><label for="chk3"><strong><span class="en-text">Ethics:</span><span class="bn-text">নৈতিকতা:</span></strong> <span class="en-text">Ethical clearance has been obtained where applicable. Human/animal subjects research complies with ethical guidelines.</span><span class="bn-text">প্রযোজ্য ক্ষেত্রে নৈতিক ছাড়পত্র প্রাপ্ত হয়েছে।</span></label></div>
+            <div class="chk-wrap"><input type="checkbox" id="chk4"/><label for="chk4"><span class="en-text">I have read and agree to the <a href="author-guidelines.html" target="_blank">JARD Author Guidelines</a>. I understand the APC of USD 50 is payable <strong>only after acceptance</strong>.</span><span class="bn-text">আমি <a href="author-guidelines.html" target="_blank">JARD লেখক নির্দেশিকা</a> পড়েছি ও সম্মত। APC USD ৫০ শুধু <strong>গৃহীত হওয়ার পরে</strong>।</span></label></div>
+
+            <div class="err-box" id="formErr"><i class="bi bi-exclamation-triangle-fill me-2"></i><span id="formErrMsg"></span></div>
+
+            <div class="form-nav">
+              <button class="btn-prev" onclick="goStep(4)"><i class="bi bi-arrow-left me-1"></i><span class="en-text">Back</span><span class="bn-text">পিছনে</span></button>
+              <button class="btn-submit-final" id="btnSubmit" onclick="submitManuscript()"><i class="bi bi-send-fill"></i><span class="en-text">Submit to JARD</span><span class="bn-text">JARD এ জমা দিন</span></button>
+            </div>
+            <p style="text-align:center;font-size:.7rem;color:#9ca3af;margin-top:10px;"><i class="bi bi-lock-fill me-1"></i><span class="en-text">Submission saved securely · Acknowledgement within 7 working days</span><span class="bn-text">নিরাপদে সংরক্ষিত · ৭ কার্যদিবসের মধ্যে নিশ্চিতকরণ</span></p>
+          </div>
+        </div>
+
+      </div><!-- /col-lg-8 -->
 
       <!-- SIDEBAR -->
       <div class="col-lg-4">
-
-        <!-- Journal Info -->
         <div class="info-box">
-          <h6><i class="bi bi-journal-text me-2"></i>JARD — Journal Info</h6>
-          <div class="ib-row"><span class="ib-key">Publisher</span><span class="ib-val">SARD BD</span></div>
-          <div class="ib-row"><span class="ib-key">Review</span><span class="ib-val">Double-Blind</span></div>
-          <div class="ib-row"><span class="ib-key">Access</span><span class="ib-val">Open Access</span></div>
-          <div class="ib-row"><span class="ib-key">APC</span><span class="ib-val">USD 50 <small style="color:#9ca3af">(after accept)</small></span></div>
-          <div class="ib-row"><span class="ib-key">Frequency</span><span class="ib-val">Biannual</span></div>
-          <div class="ib-row"><span class="ib-key">Language</span><span class="ib-val">English</span></div>
-          <div class="ib-row"><span class="ib-key">Contact</span><span class="ib-val" style="font-size:.75rem;"><a href="mailto:hemeunus@gmail.com" style="color:var(--green);">hemeunus@gmail.com</a></span></div>
+          <h6><i class="bi bi-journal-text me-2"></i>JARD Info</h6>
+          <div class="ib-row"><span class="ib-key">Publisher</span><span>SARD BD</span></div>
+          <div class="ib-row"><span class="ib-key">Review</span><span>Double-Blind</span></div>
+          <div class="ib-row"><span class="ib-key">Access</span><span>Open Access</span></div>
+          <div class="ib-row"><span class="ib-key">APC</span><span>USD 50 <small style="color:#9ca3af">(after accept)</small></span></div>
+          <div class="ib-row"><span class="ib-key">Frequency</span><span>Biannual</span></div>
+          <div class="ib-row"><span class="ib-key">Language</span><span>English</span></div>
         </div>
-
-        <!-- Submission Process -->
-        <div class="info-box">
-          <h6><i class="bi bi-diagram-3-fill me-2"></i><span class="en-text">Submission Process</span><span class="bn-text">জমা প্রক্রিয়া</span></h6>
-          <div class="steps-list">
-            <div class="step-item"><div class="step-num">1</div><div class="step-txt"><strong><span class="en-text">Submit</span><span class="bn-text">জমা দিন</span></strong> — <span class="en-text">Fill this form and submit</span><span class="bn-text">এই ফর্ম পূরণ করুন</span></div></div>
-            <div class="step-item"><div class="step-num">2</div><div class="step-txt"><strong><span class="en-text">Acknowledgement</span><span class="bn-text">নিশ্চিতকরণ</span></strong> — <span class="en-text">7 working days</span><span class="bn-text">৭ কার্যদিবসের মধ্যে</span></div></div>
-            <div class="step-item"><div class="step-num">3</div><div class="step-txt"><strong><span class="en-text">Peer Review</span><span class="bn-text">পিয়ার রিভিউ</span></strong> — <span class="en-text">4–6 weeks</span><span class="bn-text">৪–৬ সপ্তাহ</span></div></div>
-            <div class="step-item"><div class="step-num">4</div><div class="step-txt"><strong><span class="en-text">Decision</span><span class="bn-text">সিদ্ধান্ত</span></strong> — <span class="en-text">Accept / Revise / Reject</span></div></div>
-            <div class="step-item"><div class="step-num">5</div><div class="step-txt"><strong><span class="en-text">Publication</span><span class="bn-text">প্রকাশনা</span></strong> — <span class="en-text">June or December issue</span><span class="bn-text">জুন বা ডিসেম্বর সংখ্যায়</span></div></div>
-          </div>
+        <div class="info-box step-guide">
+          <h6><i class="bi bi-list-check me-2"></i><span class="en-text">5-Step Submission</span><span class="bn-text">৫ ধাপে জমা</span></h6>
+          <div class="sg-item"><div class="sg-num">1</div><div class="sg-txt"><strong><span class="en-text">Author Info</span><span class="bn-text">লেখকের তথ্য</span></strong> — <span class="en-text">Main + Co-Authors</span><span class="bn-text">প্রধান + সহ-লেখক</span></div></div>
+          <div class="sg-item"><div class="sg-num">2</div><div class="sg-txt"><strong><span class="en-text">Manuscript</span><span class="bn-text">পাণ্ডুলিপি</span></strong> — <span class="en-text">Title, Type, Keywords</span></div></div>
+          <div class="sg-item"><div class="sg-num">3</div><div class="sg-txt"><strong><span class="en-text">Abstract</span><span class="bn-text">সারসংক্ষেপ</span></strong> — <span class="en-text">Background + Methods + Results + Conclusion (300–450 words)</span></div></div>
+          <div class="sg-item"><div class="sg-num">4</div><div class="sg-txt"><strong><span class="en-text">File Upload</span><span class="bn-text">ফাইল</span></strong> — <span class="en-text">PDF / DOC / DOCX · max 15MB</span></div></div>
+          <div class="sg-item"><div class="sg-num">5</div><div class="sg-txt"><strong><span class="en-text">Declaration</span><span class="bn-text">ঘোষণা</span></strong> — <span class="en-text">Agree & Submit</span></div></div>
         </div>
-
-        <!-- Accepted Formats -->
         <div class="info-box">
-          <h6><i class="bi bi-file-earmark-check-fill me-2"></i><span class="en-text">Accepted Topics</span><span class="bn-text">গ্রহণযোগ্য বিষয়</span></h6>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
-            <span style="background:#f0fdf4;color:#166534;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;">Public Health</span>
-            <span style="background:#f0fdf4;color:#166534;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;">Epidemiology</span>
-            <span style="background:#f0fdf4;color:#166534;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;">MCH</span>
-            <span style="background:#f0fdf4;color:#166534;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;">Nutrition</span>
-            <span style="background:#f0fdf4;color:#166534;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;">Environmental Health</span>
-            <span style="background:#f0fdf4;color:#166534;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;">NCD</span>
-            <span style="background:#f0fdf4;color:#166534;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;">Health Systems</span>
-            <span style="background:#f0fdf4;color:#166534;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;">Community Health</span>
-          </div>
-        </div>
-
-        <!-- Contact -->
-        <div class="info-box">
-          <h6><i class="bi bi-envelope-fill me-2"></i><span class="en-text">Contact Editorial Office</span><span class="bn-text">সম্পাদকীয় দপ্তর</span></h6>
-          <div style="font-size:.8rem;color:#374151;line-height:1.9;">
+          <h6><i class="bi bi-envelope-fill me-2"></i><span class="en-text">Contact Editorial</span><span class="bn-text">সম্পাদকীয় যোগাযোগ</span></h6>
+          <div style="font-size:.78rem;color:#374151;line-height:2;">
             <div><i class="bi bi-envelope me-2" style="color:var(--green);"></i><a href="mailto:hemeunus@gmail.com" style="color:var(--green);font-weight:600;">hemeunus@gmail.com</a></div>
             <div><i class="bi bi-telephone me-2" style="color:var(--green);"></i>+880 1963-851090</div>
-            <div><i class="bi bi-geo-alt me-2" style="color:var(--green);"></i>House #184, Road 02, Mohakhali DOHS, Dhaka</div>
           </div>
         </div>
-
       </div>
-    </div>
+
+    </div><!-- /row -->
   </div>
 </div>
 
@@ -418,142 +526,323 @@
   <div class="container">
     <div class="row g-4">
       <div class="col-lg-4">
-        <div class="foot-brand">SARD BD / JARD</div>
-        <p style="font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.7;margin-bottom:10px;">Bangladesh Journal of Applied Research & Development · www.sardbd.info</p>
-        <div style="font-size:.8rem;color:rgba(255,255,255,.45);line-height:1.9;">
-          <div><i class="bi bi-envelope me-2" style="color:var(--butter)"></i>hemeunus@gmail.com</div>
-          <div><i class="bi bi-telephone me-2" style="color:var(--butter)"></i>+880 1963-851090</div>
-        </div>
+        <div style="color:var(--butter);font-weight:800;font-size:.95rem;margin-bottom:5px;">SARD BD / JARD</div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.38);line-height:1.7;">Bangladesh Journal of Applied Research & Development · www.sardbd.info</p>
       </div>
-      <div class="col-lg-2 col-6">
-        <h6>JARD</h6>
-        <ul>
-          <li><a href="journal.html"><i class="bi bi-chevron-right"></i>Current Issue</a></li>
-          <li><a href="editorial-board.html"><i class="bi bi-chevron-right"></i>Editorial Board</a></li>
-          <li><a href="author-guidelines.html"><i class="bi bi-chevron-right"></i>Author Guidelines</a></li>
-          <li><a href="submit.html"><i class="bi bi-chevron-right"></i>Submit</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-2 col-6">
-        <h6>SARD BD</h6>
-        <ul>
-          <li><a href="index.html"><i class="bi bi-chevron-right"></i>Home</a></li>
-          <li><a href="about.html"><i class="bi bi-chevron-right"></i>About</a></li>
-          <li><a href="training.html"><i class="bi bi-chevron-right"></i>Training</a></li>
-          <li><a href="contact.html"><i class="bi bi-chevron-right"></i>Contact</a></li>
-        </ul>
-      </div>
+      <div class="col-lg-2 col-6"><h6>JARD</h6><ul>
+        <li><a href="journal.html"><i class="bi bi-chevron-right"></i>Current Issue</a></li>
+        <li><a href="editorial-board.html"><i class="bi bi-chevron-right"></i>Editorial Board</a></li>
+        <li><a href="author-guidelines.html"><i class="bi bi-chevron-right"></i>Author Guidelines</a></li>
+        <li><a href="submit.html"><i class="bi bi-chevron-right"></i>Submit</a></li>
+      </ul></div>
+      <div class="col-lg-2 col-6"><h6>SARD BD</h6><ul>
+        <li><a href="index.html"><i class="bi bi-chevron-right"></i>Home</a></li>
+        <li><a href="about.html"><i class="bi bi-chevron-right"></i>About</a></li>
+        <li><a href="training.html"><i class="bi bi-chevron-right"></i>Training</a></li>
+        <li><a href="contact.html"><i class="bi bi-chevron-right"></i>Contact</a></li>
+      </ul></div>
     </div>
   </div>
-  <div class="foot-bottom mt-4">
-    <div class="container d-flex flex-wrap justify-content-between gap-2">
-      <p>© 2026 <a href="index.html">SARD BD</a> · <a href="journal.html">JARD</a>. All rights reserved.</p>
-      <p>www.sardbd.info</p>
-    </div>
-  </div>
+  <div class="foot-bottom mt-4"><div class="container d-flex flex-wrap justify-content-between gap-2">
+    <p>© 2026 <a href="index.html" style="color:var(--butter);">SARD BD</a>. All rights reserved.</p>
+    <p>sardbd.info</p>
+  </div></div>
 </footer>
 
 <a href="https://wa.me/8801963851090" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 /* ── Language ── */
-function setLang(lang){
-  document.body.classList.toggle('bn',lang==='bn');
-  document.documentElement.lang=lang;
-  document.getElementById('btn-en').classList.toggle('active',lang==='en');
-  document.getElementById('btn-bn').classList.toggle('active',lang==='bn');
-  localStorage.setItem('sardbd_lang',lang);
+function setLang(l){
+  document.body.classList.toggle('bn',l==='bn');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.getElementById('btn-bn').classList.toggle('active',l==='bn');
+  localStorage.setItem('sardbd_lang',l);
 }
 if(localStorage.getItem('sardbd_lang')==='bn') setLang('bn');
 
-/* ── Word Counter ── */
-function countWords(el, countId, max){
-  var words = el.value.trim().split(/\s+/).filter(function(w){return w.length>0;}).length;
-  if(el.value.trim()==='') words=0;
-  var el2 = document.getElementById(countId);
-  if(el2) el2.textContent = words;
-  if(words > max) el.style.borderColor='#dc2626';
-  else el.style.borderColor='';
+/* ── Step Navigation ── */
+var currentStep = 1;
+function goStep(n){
+  if(n > currentStep && !validateStep(currentStep)) return;
+  document.getElementById('step'+currentStep).classList.remove('active');
+  document.getElementById('step'+n).classList.add('active');
+  // Update progress
+  for(var i=1;i<=5;i++){
+    var el = document.getElementById('ps'+i);
+    el.classList.remove('active','done');
+    if(i < n) el.classList.add('done');
+    else if(i === n) el.classList.add('active');
+  }
+  currentStep = n;
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 /* ── Validation ── */
-function showError(msg){
-  var box = document.getElementById('formError');
-  var msgEl = document.getElementById('formErrorMsg');
-  box.style.display='block';
-  msgEl.textContent=msg;
-  box.scrollIntoView({behavior:'smooth',block:'center'});
+function showErr(msg){ var b=document.getElementById('formErr'); b.style.display='flex'; document.getElementById('formErrMsg').textContent=msg; b.scrollIntoView({behavior:'smooth',block:'center'}); }
+function hideErr(){ document.getElementById('formErr').style.display='none'; }
+
+function validateStep(n){
+  hideErr();
+  if(n===1){
+    if(!document.getElementById('maName').value.trim()){ alert('Main author name is required.'); return false; }
+    if(!document.getElementById('maEmail').value.trim()){ alert('Email is required.'); return false; }
+    if(!document.getElementById('maPhone').value.trim()){ alert('Phone is required.'); return false; }
+    if(!document.getElementById('maAffil').value.trim()){ alert('Affiliation is required.'); return false; }
+  }
+  if(n===2){
+    if(!document.getElementById('msTitle').value.trim()){ alert('Manuscript title is required.'); return false; }
+    if(!document.getElementById('msType').value){ alert('Please select manuscript type.'); return false; }
+    if(!document.getElementById('msWordCount').value){ alert('Total word count is required.'); return false; }
+    if(!document.getElementById('msKeywords').value.trim()){ alert('Keywords are required.'); return false; }
+  }
+  if(n===3){
+    var bg = document.getElementById('absBackground').value.trim();
+    var mt = document.getElementById('absMethods').value.trim();
+    var rs = document.getElementById('absResults').value.trim();
+    var cn = document.getElementById('absConclusion').value.trim();
+    if(!bg||!mt||!rs||!cn){ alert('All 4 abstract sections are required.'); return false; }
+    var total = countWords(bg)+countWords(mt)+countWords(rs)+countWords(cn);
+    if(total < 300){ alert('Abstract is too short ('+total+' words). Minimum 300 words required.'); return false; }
+    if(total > 450){ alert('Abstract is too long ('+total+' words). Maximum 450 words allowed.'); return false; }
+  }
+  if(n===4){
+    // File is optional here (can upload on step 5) — but warn
+  }
+  return true;
 }
-function hideError(){ document.getElementById('formError').style.display='none'; }
 
-/* ── Submit ── */
+/* ── Word Counter ── */
+function countWords(txt){ return txt.trim().split(/\s+/).filter(function(w){return w.length>0;}).length || 0; }
+function calcAbstract(){
+  var sections = [
+    {id:'absBackground', wcId:'wcBg', fillId:'wfBg'},
+    {id:'absMethods',    wcId:'wcMt', fillId:'wfMt'},
+    {id:'absResults',    wcId:'wcRs', fillId:'wfRs'},
+    {id:'absConclusion', wcId:'wcCn', fillId:'wfCn'}
+  ];
+  var total = 0;
+  sections.forEach(function(s){
+    var w = countWords(document.getElementById(s.id).value);
+    total += w;
+    document.getElementById(s.wcId).textContent = w + ' words';
+    var pct = Math.min(w/100*100, 100);
+    document.getElementById(s.fillId).style.width = pct+'%';
+  });
+  document.getElementById('absTotal').textContent = total;
+  var totalEl = document.getElementById('absTotalStatus');
+  var bar     = document.getElementById('absTotalBar');
+  var pct     = Math.min((total/450)*100, 100);
+  bar.style.width = pct+'%';
+  if(total < 300){ totalEl.textContent='Too short (need '+300+')'; bar.className='wc-fill low'; }
+  else if(total > 450){ totalEl.textContent='Too long! Max 450'; bar.className='wc-fill over'; }
+  else { totalEl.textContent='✓ Good length'; bar.className='wc-fill ok'; }
+}
+
+/* ── Co-Authors ── */
+var caCount = 0;
+function addCoAuthor(){
+  caCount++;
+  var n = caCount;
+  var div = document.createElement('div');
+  div.className = 'coauthor-card';
+  div.id = 'ca_'+n;
+  div.innerHTML =
+    '<div class="ca-num">'+n+'</div>'+
+    '<button class="btn-remove-ca" onclick="removeCoAuthor('+n+')"><i class="bi bi-x"></i></button>'+
+    '<div class="ca-fields">'+
+      '<div class="grid2">'+
+        '<div class="fg"><label>Full Name *</label><input type="text" id="ca_name_'+n+'" placeholder="Co-author full name"/></div>'+
+        '<div class="fg"><label>Email *</label><input type="email" id="ca_email_'+n+'" placeholder="coauthor@institution.edu"/></div>'+
+      '</div>'+
+      '<div class="fg"><label>Affiliation / Institution *</label><input type="text" id="ca_affil_'+n+'" placeholder="Department, University / Organization"/></div>'+
+      '<div class="grid3">'+
+        '<div class="fg"><label>Country</label>'+
+          '<select id="ca_country_'+n+'">'+
+            '<option>Bangladesh</option><option>India</option><option>Pakistan</option>'+
+            '<option>Nepal</option><option>USA</option><option>UK</option><option>Other</option>'+
+          '</select>'+
+        '</div>'+
+        '<div class="fg"><label>Designation</label><input type="text" id="ca_desig_'+n+'" placeholder="Prof. / Dr. / Researcher"/></div>'+
+        '<div class="fg"><label>ORCID <span class="opt">(opt)</span></label><input type="text" id="ca_orcid_'+n+'" placeholder="0000-0000-0000-0000"/></div>'+
+      '</div>'+
+    '</div>';
+  document.getElementById('coauthorList').appendChild(div);
+}
+function removeCoAuthor(n){ var el=document.getElementById('ca_'+n); if(el) el.remove(); }
+function getCoAuthors(){
+  var list=[];
+  document.querySelectorAll('[id^="ca_name_"]').forEach(function(el){
+    var n = el.id.replace('ca_name_','');
+    if(document.getElementById('ca_'+n)){
+      list.push({
+        name: el.value.trim(),
+        email: (document.getElementById('ca_email_'+n)||{value:''}).value.trim(),
+        affiliation: (document.getElementById('ca_affil_'+n)||{value:''}).value.trim(),
+        country: (document.getElementById('ca_country_'+n)||{value:''}).value,
+        designation: (document.getElementById('ca_desig_'+n)||{value:''}).value.trim(),
+        orcid: (document.getElementById('ca_orcid_'+n)||{value:''}).value.trim()
+      });
+    }
+  });
+  return list;
+}
+
+/* ── File Upload ── */
+var uploadedFile = null;
+function handleFileSelect(input){
+  var file = input.files[0];
+  if(!file) return;
+  var ext = file.name.split('.').pop().toLowerCase();
+  if(!['pdf','doc','docx'].includes(ext)){
+    alert('Only PDF, DOC, DOCX files are allowed.');
+    input.value=''; return;
+  }
+  if(file.size > 15*1024*1024){
+    alert('File too large. Maximum 15 MB allowed.');
+    input.value=''; return;
+  }
+  uploadedFile = file;
+  document.getElementById('upFileName').textContent = file.name;
+  document.getElementById('upFileSize').textContent = (file.size/1024/1024).toFixed(2)+' MB';
+  document.getElementById('uploadPreview').style.display='flex';
+  // Upload to server
+  uploadToServer(file);
+}
+function removeFile(){
+  uploadedFile = null;
+  document.getElementById('msFile').value='';
+  document.getElementById('uploadPreview').style.display='none';
+  document.getElementById('uploadProgress').style.display='none';
+  document.getElementById('uploadedFileUrl').value='';
+  document.getElementById('uploadedFileName').value='';
+}
+function uploadToServer(file){
+  var prog = document.getElementById('uploadProgress');
+  var fill = document.getElementById('upFill');
+  prog.style.display='block';
+  fill.style.width='10%';
+
+  var fd = new FormData();
+  fd.append('manuscript', file);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'api/upload.php', true);
+
+  xhr.upload.onprogress = function(e){
+    if(e.lengthComputable){
+      fill.style.width = Math.round((e.loaded/e.total)*100)+'%';
+    }
+  };
+
+  xhr.onload = function(){
+    try{
+      var res = JSON.parse(xhr.responseText);
+      if(res.success){
+        fill.style.width='100%';
+        document.getElementById('uploadedFileUrl').value = res.url;
+        document.getElementById('uploadedFileName').value = res.filename;
+        document.getElementById('upProgressText').innerHTML = '<span style="color:#059669;font-weight:700;">✅ Upload complete!</span>';
+      } else {
+        prog.style.display='none';
+        // fallback — store file name only
+        document.getElementById('uploadedFileName').value = file.name;
+        console.warn('Upload API error:', res.error);
+      }
+    } catch(e){
+      prog.style.display='none';
+      document.getElementById('uploadedFileName').value = file.name;
+    }
+  };
+
+  xhr.onerror = function(){
+    prog.style.display='none';
+    // Store file name as fallback
+    document.getElementById('uploadedFileName').value = file.name;
+  };
+
+  xhr.send(fd);
+}
+
+/* ── Final Submit ── */
 function submitManuscript(){
-  hideError();
-  var isBn = document.body.classList.contains('bn');
+  hideErr();
+  // Validate step 5 checkboxes
+  if(!document.getElementById('chk1').checked||!document.getElementById('chk2').checked||
+     !document.getElementById('chk3').checked||!document.getElementById('chk4').checked){
+    showErr('Please tick all 4 declarations before submitting.');
+    return;
+  }
+  if(!document.getElementById('uploadedFileName').value && !uploadedFile){
+    showErr('Please upload your manuscript file (PDF, DOC, or DOCX).');
+    return;
+  }
 
-  var authors  = document.getElementById('fAuthors').value.trim();
-  var email    = document.getElementById('fEmail').value.trim();
-  var phone    = document.getElementById('fPhone').value.trim();
-  var affil    = document.getElementById('fAffil').value.trim();
-  var title    = document.getElementById('fTitle').value.trim();
-  var type     = document.getElementById('fType').value;
-  var keywords = document.getElementById('fKeywords').value.trim();
-  var abstract = document.getElementById('fAbstract').value.trim();
-  var fileLink = document.getElementById('fFileLink').value.trim();
-  var chk1     = document.getElementById('chkOriginal').checked;
-  var chk2     = document.getElementById('chkEthics').checked;
-  var chk3     = document.getElementById('chkGuidelines').checked;
+  var btn = document.getElementById('btnSubmit');
+  btn.disabled=true;
+  btn.innerHTML='<i class="bi bi-hourglass-split me-2"></i>Submitting…';
 
-  // Validate
-  if(!authors){ showError('Author(s) name is required.'); return; }
-  if(!email || !/\S+@\S+\.\S+/.test(email)){ showError('A valid email address is required.'); return; }
-  if(!phone){ showError('Phone number is required.'); return; }
-  if(!affil){ showError('Affiliation / Institution is required.'); return; }
-  if(!title){ showError('Manuscript title is required.'); return; }
-  if(!type){ showError('Please select the manuscript type.'); return; }
-  if(!keywords){ showError('Keywords are required.'); return; }
-  if(!abstract){ showError('Abstract is required.'); return; }
-  var wc = abstract.split(/\s+/).filter(function(w){return w.length>0;}).length;
-  if(wc > 250){ showError('Abstract exceeds 250 words (currently '+wc+' words).'); return; }
-  if(!fileLink){ showError('Manuscript file link is required.'); return; }
-  if(!chk1 || !chk2 || !chk3){ showError('Please agree to all declarations before submitting.'); return; }
+  // Build abstract
+  var abstract =
+    '[Background]\n'+document.getElementById('absBackground').value.trim()+
+    '\n\n[Methods]\n'+document.getElementById('absMethods').value.trim()+
+    '\n\n[Results]\n'+document.getElementById('absResults').value.trim()+
+    '\n\n[Conclusion]\n'+document.getElementById('absConclusion').value.trim();
 
-  // Generate Submission ID
+  // Submission ID
   var year = new Date().getFullYear();
-  var subs = JSON.parse(localStorage.getItem('sardSubmissions') || '[]');
-  var serial = String(subs.length + 1).padStart(3,'0');
-  var subId = 'JARD-' + year + '-' + serial;
+  var subs = JSON.parse(localStorage.getItem('sardSubmissions')||'[]');
+  var serial = String(subs.length+1).padStart(3,'0');
+  var subId = 'JARD-'+year+'-'+serial;
 
-  // Build submission object
+  var coAuthors = getCoAuthors();
+
   var submission = {
     subId: subId,
-    title: title,
-    authors: authors,
-    affiliation: affil,
-    email: email,
-    phone: phone,
-    type: type,
-    keywords: keywords,
+    title: document.getElementById('msTitle').value.trim(),
+    authors: document.getElementById('maName').value.trim() +
+      (coAuthors.length ? ', '+coAuthors.map(function(c){return c.name;}).join(', ') : ''),
+    mainAuthor: {
+      name: document.getElementById('maName').value.trim(),
+      email: document.getElementById('maEmail').value.trim(),
+      phone: document.getElementById('maPhone').value.trim(),
+      affiliation: document.getElementById('maAffil').value.trim(),
+      country: document.getElementById('maCountry').value,
+      designation: document.getElementById('maDesig').value.trim(),
+      orcid: document.getElementById('maOrcid').value.trim()
+    },
+    coAuthors: coAuthors,
+    affiliation: document.getElementById('maAffil').value.trim(),
+    email: document.getElementById('maEmail').value.trim(),
+    phone: document.getElementById('maPhone').value.trim(),
+    type: document.getElementById('msType').value,
+    wordCount: document.getElementById('msWordCount').value,
+    keywords: document.getElementById('msKeywords').value.trim(),
     abstract: abstract,
-    fileLink: fileLink,
-    wordCount: document.getElementById('fWordCount').value || '',
-    funding: document.getElementById('fFunding').value.trim(),
-    conflict: document.getElementById('fConflict').value.trim(),
-    coverLetter: document.getElementById('fCoverLetter').value.trim(),
+    abstractBackground: document.getElementById('absBackground').value.trim(),
+    abstractMethods: document.getElementById('absMethods').value.trim(),
+    abstractResults: document.getElementById('absResults').value.trim(),
+    abstractConclusion: document.getElementById('absConclusion').value.trim(),
+    fileUrl: document.getElementById('uploadedFileUrl').value,
+    fileName: document.getElementById('uploadedFileName').value,
+    funding: document.getElementById('msFunding').value.trim(),
+    ethics: document.getElementById('msEthics').value.trim(),
+    conflict: document.getElementById('msConflict').value.trim(),
+    coverLetter: document.getElementById('msCoverLetter').value.trim(),
     status: 'Submitted',
     date: new Date().toISOString()
   };
 
   subs.push(submission);
-  var subsStr = JSON.stringify(subs);
-  localStorage.setItem('sardSubmissions', subsStr);
-  // Server এ save করো
-  if (typeof sardSaveToServer === 'function') sardSaveToServer('sardSubmissions', subsStr);
+  var str = JSON.stringify(subs);
+  localStorage.setItem('sardSubmissions', str);
+  if(typeof sardSaveToServer==='function') sardSaveToServer('sardSubmissions', str);
 
   // Show success
   document.getElementById('successId').textContent = subId;
-  document.getElementById('submitForm').style.display = 'none';
-  document.getElementById('successScreen').style.display = 'block';
+  document.querySelectorAll('.fc').forEach(function(el){el.style.display='none';});
+  document.getElementById('progressBar').style.display='none';
+  document.getElementById('successScreen').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
