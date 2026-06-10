@@ -545,7 +545,10 @@ function submitManuscript(){
   };
 
   subs.push(submission);
-  localStorage.setItem('sardSubmissions', JSON.stringify(subs));
+  var subsStr = JSON.stringify(subs);
+  localStorage.setItem('sardSubmissions', subsStr);
+  // Server এ save করো
+  if (typeof sardSaveToServer === 'function') sardSaveToServer('sardSubmissions', subsStr);
 
   // Show success
   document.getElementById('successId').textContent = subId;
