@@ -305,6 +305,12 @@
       <div class="sb-section">Journal</div>
       <div class="sb-item" onclick="switchSection('journal',this)"><i class="bi bi-journal-text"></i> Submissions <span class="sb-badge" id="sbSubs">0</span></div>
 
+      <div class="sb-section">Training</div>
+      <div class="sb-item" onclick="switchSection('training-enroll',this)"><i class="bi bi-mortarboard-fill"></i> Training Enrollments <span class="sb-badge" id="sbTraining">0</span></div>
+
+      <div class="sb-section">Messages</div>
+      <div class="sb-item" onclick="switchSection('messages',this)"><i class="bi bi-chat-dots-fill"></i> Contact Messages <span class="sb-badge" id="sbMsgs">0</span></div>
+
       <div class="sb-section">Content</div>
       <div class="sb-item" onclick="switchSection('news',this)"><i class="bi bi-newspaper"></i> News</div>
       <div class="sb-item" onclick="switchSection('gallery',this)"><i class="bi bi-images"></i> Gallery & Videos</div>
@@ -659,6 +665,65 @@
     </div>
 
     <!-- ════════════════════════════════
+         SECTION: TRAINING ENROLLMENTS
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-training-enroll">
+      <div class="page-hdr">
+        <h5>Training Enrollments</h5>
+        <p>Training programs এ enrolled users এর তালিকা।</p>
+      </div>
+      <div class="card-box">
+        <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span><i class="bi bi-mortarboard-fill me-2"></i>All Enrollments</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <select id="teFilterStatus" class="form-ctrl" style="width:160px;" onchange="renderTrainingEnroll()">
+              <option value="">All Status</option>
+              <option value="Pending">Pending</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <input type="text" id="teSearch" class="form-ctrl" placeholder="Search name / course…" style="width:200px;" oninput="renderTrainingEnroll()"/>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>Order ID</th><th>Name</th><th>Phone</th><th>Course</th><th>Price</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+            <tbody id="teBody"><tr><td colspan="8" class="empty-td">No enrollments yet.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         SECTION: CONTACT MESSAGES
+    ════════════════════════════════ -->
+    <div class="section-panel" id="sec-messages">
+      <div class="page-hdr">
+        <h5>Contact Messages</h5>
+        <p>Website এর contact form থেকে আসা messages।</p>
+      </div>
+      <div class="card-box">
+        <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span><i class="bi bi-chat-dots-fill me-2"></i>All Messages</span>
+          <div style="display:flex;gap:8px;">
+            <select id="msgFilterStatus" class="form-ctrl" style="width:160px;" onchange="renderMessages()">
+              <option value="">All</option>
+              <option value="Unread">Unread</option>
+              <option value="Read">Read</option>
+            </select>
+            <input type="text" id="msgSearch" class="form-ctrl" placeholder="Search name / subject…" style="width:200px;" oninput="renderMessages()"/>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Subject</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+            <tbody id="msgBody"><tr><td colspan="7" class="empty-td">No messages yet.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════
          SECTION: SETTINGS
     ════════════════════════════════ -->
     <div class="section-panel" id="sec-settings">
@@ -871,6 +936,8 @@ function renderSection(name){
   else if(name==='gallery'){ renderPhotos(); renderVideos(); }
   else if(name==='editors') renderEditors();
   else if(name==='board') renderBoard();
+  else if(name==='training-enroll') renderTrainingEnroll();
+  else if(name==='messages') renderMessages();
   else if(name==='settings') loadContactInfo();
 }
 
@@ -924,14 +991,18 @@ function renderAll(){
 }
 
 function updateSidebarBadges(){
-  var pending = getData('sardEnrollments').filter(function(o){return o.status==='Pending';}).length;
-  var newSubs = getData('sardSubmissions').filter(function(s){return s.status==='Submitted';}).length;
-  document.getElementById('sbPending').textContent = pending;
-  document.getElementById('sbSubs').textContent = newSubs;
-  if(!pending) document.getElementById('sbPending').style.display='none';
-  else document.getElementById('sbPending').style.display='';
-  if(!newSubs) document.getElementById('sbSubs').style.display='none';
-  else document.getElementById('sbSubs').style.display='';
+  var pending  = getData('sardEnrollments').filter(function(o){return o.status==='Pending';}).length;
+  var newSubs  = getData('sardSubmissions').filter(function(s){return s.status==='Submitted';}).length;
+  var newMsgs  = getData('sardMessages').filter(function(m){return m.status==='Unread';}).length;
+  var newTrain = getData('sardEnrollments').filter(function(o){return o.status==='Pending';}).length;
+  document.getElementById('sbPending').textContent  = pending;
+  document.getElementById('sbSubs').textContent     = newSubs;
+  document.getElementById('sbTraining').textContent = newTrain;
+  document.getElementById('sbMsgs').textContent     = newMsgs;
+  ['sbPending','sbSubs','sbTraining','sbMsgs'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.style.display = parseInt(el.textContent)>0 ? '' : 'none';
+  });
 }
 
 /* ══════════════════════════════════════
@@ -946,8 +1017,10 @@ function renderDashboard(){
   var vids    = getData('sardVideos');
   var editors = getData('sardEditorAccounts');
 
+  var msgs    = getData('sardMessages');
   var rev = enrolls.reduce(function(s,o){return s+(o.price||0);},0);
   var pending = enrolls.filter(function(o){return o.status==='Pending';}).length;
+  var unreadMsgs = msgs.filter(function(m){return m.status==='Unread';}).length;
 
   var stats = [
     {val:enrolls.length, lbl:'Total Enrollments', icon:'bi-people-fill', c:'c1'},
@@ -957,7 +1030,7 @@ function renderDashboard(){
     {val:pub.length, lbl:'Published Articles', icon:'bi-book-fill', c:'c5'},
     {val:news.length, lbl:'News Posts', icon:'bi-newspaper', c:'c6'},
     {val:photos.length+vids.length, lbl:'Gallery Items', icon:'bi-images', c:'c7'},
-    {val:editors.length, lbl:'Active Editors', icon:'bi-person-badge-fill', c:'c8'}
+    {val:unreadMsgs+' / '+msgs.length, lbl:'Messages (Unread/Total)', icon:'bi-chat-dots-fill', c:'c8'}
   ];
   document.getElementById('dashStats').innerHTML = stats.map(function(s){
     return '<div class="stat-card '+s.c+'"><i class="bi '+s.icon+' sc-icon"></i><div class="sc-val">'+s.val+'</div><div class="sc-lbl">'+s.lbl+'</div></div>';
@@ -1485,6 +1558,101 @@ function clearBoardForm(){
   ['boardEditId','bmName','bmTitle','bmInst','bmPhoto','bmEmail','bmInterest'].forEach(function(i){document.getElementById(i).value='';});
   document.getElementById('bmRole').value='Member';
   document.getElementById('boardFormTitle').innerHTML='<i class="bi bi-plus-circle me-2"></i>Add Board Member';
+}
+
+/* ══════════════════════════════════════
+   TRAINING ENROLLMENTS
+══════════════════════════════════════ */
+function renderTrainingEnroll(){
+  var list   = getData('sardEnrollments');
+  var filter = document.getElementById('teFilterStatus').value;
+  var search = (document.getElementById('teSearch').value||'').toLowerCase();
+  if(filter) list = list.filter(function(o){return o.status===filter;});
+  if(search) list = list.filter(function(o){return ((o.name||'')+(o.courseName||'')).toLowerCase().includes(search);});
+  list = list.slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+  var tbody = document.getElementById('teBody');
+  if(!list.length){tbody.innerHTML='<tr><td colspan="8" class="empty-td">No enrollments yet.</td></tr>';return;}
+  var statusColors={Pending:'#fef9c3;color:#854d0e',Confirmed:'#dcfce7;color:#166534',Cancelled:'#fee2e2;color:#991b1b'};
+  tbody.innerHTML = list.map(function(o){
+    var sc = statusColors[o.status]||statusColors.Pending;
+    return '<tr><td><span style="font-family:monospace;font-size:.72rem;font-weight:700;color:#013e37;">'+esc(o.orderId||'')+'</span></td>'+
+      '<td>'+esc(o.name||'')+'</td>'+
+      '<td>'+esc(o.phone||'')+'</td>'+
+      '<td style="max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+esc(o.courseName||'')+'</td>'+
+      '<td>BDT '+esc(String(o.price||''))+'</td>'+
+      '<td><span style="font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;background:'+sc+';">'+esc(o.status||'')+'</span></td>'+
+      '<td style="white-space:nowrap;">'+fmtDate(o.date)+'</td>'+
+      '<td><div style="display:flex;gap:5px;">'+
+        '<select onchange="updateEnrollStatus(\''+esc(o.orderId||'')+'\',this.value)" style="border:1.5px solid #e5e7eb;border-radius:6px;padding:4px 8px;font-size:.72rem;font-weight:700;color:#013e37;cursor:pointer;">'+
+          ['Pending','Confirmed','Cancelled'].map(function(s){return '<option value="'+s+'"'+(o.status===s?' selected':'')+'>'+s+'</option>';}).join('')+
+        '</select>'+
+        '<button onclick="deleteEnrollment(\''+esc(o.orderId||'')+'\')" style="background:#fee2e2;color:#991b1b;border:none;border-radius:6px;padding:4px 10px;font-size:.72rem;font-weight:700;cursor:pointer;">Del</button>'+
+      '</div></td></tr>';
+  }).join('');
+}
+function updateEnrollStatus(orderId, newStatus){
+  var list = getData('sardEnrollments');
+  var idx = list.findIndex(function(o){return o.orderId===orderId;});
+  if(idx<0) return;
+  list[idx].status = newStatus;
+  setData('sardEnrollments', list);
+  renderTrainingEnroll(); updateSidebarBadges();
+  toast('Status updated to "'+newStatus+'"');
+}
+function deleteEnrollment(orderId){
+  if(!confirm('Delete this enrollment?')) return;
+  var list = getData('sardEnrollments').filter(function(o){return o.orderId!==orderId;});
+  setData('sardEnrollments', list);
+  renderTrainingEnroll(); updateSidebarBadges();
+  toast('Enrollment deleted');
+}
+
+/* ══════════════════════════════════════
+   CONTACT MESSAGES
+══════════════════════════════════════ */
+function renderMessages(){
+  var list   = getData('sardMessages');
+  var filter = document.getElementById('msgFilterStatus').value;
+  var search = (document.getElementById('msgSearch').value||'').toLowerCase();
+  if(filter) list = list.filter(function(m){return m.status===filter;});
+  if(search) list = list.filter(function(m){return ((m.name||'')+(m.subject||'')).toLowerCase().includes(search);});
+  list = list.slice().sort(function(a,b){return new Date(b.date)-new Date(a.date);});
+  var tbody = document.getElementById('msgBody');
+  if(!list.length){tbody.innerHTML='<tr><td colspan="7" class="empty-td">No messages yet.</td></tr>';return;}
+  tbody.innerHTML = list.map(function(m){
+    var unread = m.status==='Unread';
+    return '<tr style="'+(unread?'background:#fffbeb;':'')+'">'+
+      '<td style="font-family:monospace;font-size:.72rem;color:#013e37;font-weight:700;">'+esc(m.id||'')+'</td>'+
+      '<td style="font-weight:'+(unread?'700':'400')+';">'+esc(m.name||'')+'</td>'+
+      '<td><a href="mailto:'+esc(m.email||'')+'" style="color:#013e37;">'+esc(m.email||'')+'</a></td>'+
+      '<td>'+esc(m.subject||'')+'</td>'+
+      '<td><span style="font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:10px;background:'+(unread?'#fef9c3;color:#854d0e':'#f3f4f6;color:#374151')+';">'+esc(m.status||'Unread')+'</span></td>'+
+      '<td style="white-space:nowrap;">'+fmtDate(m.date)+'</td>'+
+      '<td><div style="display:flex;gap:5px;">'+
+        '<button onclick="viewMessage(\''+esc(m.id||'')+'\')" style="background:#013e37;color:#ffefb3;border:none;border-radius:6px;padding:4px 10px;font-size:.72rem;font-weight:700;cursor:pointer;"><i class="bi bi-eye-fill"></i></button>'+
+        '<button onclick="deleteMessage(\''+esc(m.id||'')+'\')" style="background:#fee2e2;color:#991b1b;border:none;border-radius:6px;padding:4px 10px;font-size:.72rem;font-weight:700;cursor:pointer;"><i class="bi bi-trash-fill"></i></button>'+
+      '</div></td></tr>';
+  }).join('');
+}
+function viewMessage(id){
+  var list = getData('sardMessages');
+  var m = list.find(function(x){return x.id===id;});
+  if(!m) return;
+  // Mark as read
+  if(m.status==='Unread'){
+    m.status='Read';
+    setData('sardMessages', list);
+    updateSidebarBadges();
+  }
+  alert('From: '+m.name+' <'+m.email+'>\nPhone: '+(m.phone||'—')+'\nSubject: '+m.subject+'\nInstitution: '+(m.institution||'—')+'\nDate: '+fmtDate(m.date)+'\n\n'+m.message);
+  renderMessages();
+}
+function deleteMessage(id){
+  if(!confirm('Delete this message?')) return;
+  var list = getData('sardMessages').filter(function(m){return m.id!==id;});
+  setData('sardMessages', list);
+  renderMessages(); updateSidebarBadges();
+  toast('Message deleted');
 }
 
 /* ══════════════════════════════════════
