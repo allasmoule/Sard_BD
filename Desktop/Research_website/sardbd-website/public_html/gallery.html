@@ -18,8 +18,12 @@
 
     /* NAVBAR */
     .navbar-main{background:var(--green);position:sticky;top:0;z-index:1000;box-shadow:0 2px 16px rgba(1,62,55,.3);padding:0;}
-    .navbar-main .navbar-brand{color:#fff;font-weight:800;font-size:1.1rem;padding:12px 0;text-decoration:none;line-height:1.2;display:flex;flex-direction:column;}
-    .navbar-main .navbar-brand span{font-size:.65rem;font-weight:400;opacity:.65;}
+    .navbar-main .navbar-brand { padding: 6px 0; text-decoration: none; display:flex; align-items:center; gap:10px; }
+    .navbar-logo { height:44px; width:44px; object-fit:contain; flex-shrink:0; }
+    .logo-text { display:flex; flex-direction:column; line-height:1.15; }
+    .logo-main { color:#fff; font-size:.85rem; font-weight:800; letter-spacing:.3px; }
+    .logo-main .logo-bd { color:var(--butter); }
+    .logo-sub { color:rgba(255,255,255,.5); font-size:.55rem; font-weight:400; letter-spacing:.1px; }
     .navbar-main .nav-link{color:rgba(255,255,255,.82)!important;font-size:.83rem;font-weight:500;padding:20px 13px!important;transition:color .2s;}
     .navbar-main .nav-link:hover,.navbar-main .nav-link.active{color:var(--butter)!important;}
     .navbar-main .dropdown-menu{background:var(--green-dark);border:none;border-radius:8px;}
@@ -90,8 +94,12 @@
 <nav class="navbar navbar-main navbar-expand-lg">
   <div class="container">
     <a class="navbar-brand" href="index.html">
-      <span>SARD BD</span>
-      <span>Society for Applied Research &amp; Development</span>
+      <img src="assets/sardbd-logo.png" alt="SARD BD" class="navbar-logo"/>
+      <div class="logo-text">
+        <span class="logo-main">SARD <span class="logo-bd">BD</span></span>
+        <span class="logo-sub en-text">Society for Applied Research &amp; Development</span>
+        <span class="logo-sub bn-text">সার্ড বিডি</span>
+      </div>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="nav">
