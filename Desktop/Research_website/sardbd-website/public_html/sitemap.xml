@@ -62,6 +62,34 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- ── News & Blog ────────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://sardbd.org/news.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── Submission & Courses ─────────────────────────────────────────────── -->
+  <url>
+    <loc>https://sardbd.org/submit.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sardbd.org/course.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sardbd.org/enroll.html</loc>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- ── Article pages (Vol.1 No.1, 2026) ──────────────────────────────── -->
   <url>
     <loc>https://sardbd.org/article.html?id=001</loc>

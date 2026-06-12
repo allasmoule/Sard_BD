@@ -91,13 +91,12 @@
 
     /* ── NAVBAR ─────────────────────────────── */
     .navbar-main { background: var(--green); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 16px rgba(1,62,55,0.3); padding: 0; }
-    .navbar-main .navbar-brand { padding: 8px 0; text-decoration: none; }
-    .logo-wrap { display:flex; align-items:center; gap:11px; }
-    .logo-icon { width:40px; height:40px; background:var(--butter); color:var(--green); border-radius:9px; font-size:1.25rem; font-weight:900; letter-spacing:-1px; display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,.25); font-family:'Inter',sans-serif; }
-    .logo-text { display:flex; flex-direction:column; line-height:1; }
-    .logo-main { color:#fff; font-size:.95rem; font-weight:800; letter-spacing:.6px; }
+    .navbar-main .navbar-brand { padding: 6px 0; text-decoration: none; display:flex; align-items:center; gap:10px; }
+    .navbar-logo { height:45px; max-width:45px; object-fit:contain; }
+    .logo-text { display:flex; flex-direction:column; line-height:1.1; }
+    .logo-main { color:#fff; font-size:.85rem; font-weight:800; letter-spacing:.3px; }
     .logo-main .logo-bd { color:var(--butter); }
-    .logo-sub { color:rgba(255,255,255,.48); font-size:.58rem; font-weight:400; letter-spacing:.2px; margin-top:3px; }
+    .logo-sub { color:rgba(255,255,255,.5); font-size:.55rem; font-weight:400; letter-spacing:.1px; }
     .navbar-main .nav-link { color: rgba(255,255,255,0.82) !important; font-weight: 500; font-size: 0.88rem; padding: 20px 13px !important; transition: color 0.2s; position: relative; }
     .navbar-main .nav-link:hover, .navbar-main .nav-link.active { color: var(--butter) !important; }
     .navbar-main .nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 13px; right: 13px; height: 3px; background: var(--butter); border-radius: 2px 2px 0 0; }
