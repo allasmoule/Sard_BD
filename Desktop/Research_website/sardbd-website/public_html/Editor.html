@@ -175,6 +175,7 @@
       <div class="sidebar-section">
         <div class="nav-item-s active" onclick="showSection('dashboard')"><i class="bi bi-speedometer2"></i>Dashboard</div>
         <div class="nav-item-s" onclick="showSection('submissions')"><i class="bi bi-file-earmark-text"></i>Submissions <span class="nav-badge" id="badgePending">0</span></div>
+        <div class="nav-item-s" onclick="showSection('myreviews')"><i class="bi bi-clipboard2-check"></i>My Reviews <span class="nav-badge" id="badgeMyReviews" style="background:#7c3aed;">0</span></div>
         <div class="nav-item-s" onclick="showSection('published')"><i class="bi bi-journal-check"></i>Published Articles</div>
       </div>
       <span class="sidebar-section-title" style="padding-left:20px;margin-top:10px;">Account</span>
@@ -282,6 +283,22 @@
         </div>
       </div>
 
+      <!-- ── MY REVIEWS ── -->
+      <div class="section-panel" id="sec-myreviews">
+        <div class="pg-head">
+          <h4>My Reviews</h4>
+          <p>Articles assigned to you for peer review. Submit your review report directly from here.</p>
+        </div>
+        <div id="myReviewsContainer">
+          <div class="tbl-card">
+            <div class="tbl-hdr"><h6><i class="bi bi-clipboard2-check me-2"></i>Assigned Articles</h6></div>
+            <div id="myReviewsList" style="padding:16px;display:flex;flex-direction:column;gap:12px;">
+              <div class="empty-row" style="text-align:center;padding:28px;color:#9ca3af;"><i class="bi bi-clipboard2-x" style="font-size:2rem;display:block;margin-bottom:8px;"></i>No articles assigned for review yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ── PROFILE ── -->
       <div class="section-panel" id="sec-profile">
         <div class="pg-head"><h4>My Profile</h4><p>Your editor account information.</p></div>
@@ -341,6 +358,70 @@
         <div class="update-success" id="updateSuccess"><i class="bi bi-check-circle-fill me-2"></i>Status updated successfully!</div>
         <div style="margin-top:8px;font-size:.72rem;color:#9ca3af;"><i class="bi bi-info-circle me-1"></i>Only Admin can Approve, Publish, or Delete submissions.</div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── REVIEW FORM MODAL ── -->
+<div class="modal-overlay" id="reviewFormModal" style="z-index:1050;">
+  <div class="modal-box" style="max-width:680px;">
+    <div class="modal-head" style="background:linear-gradient(90deg,#4c1d95,#7c3aed);padding:16px 22px;">
+      <div>
+        <h5 style="color:#fff;margin:0;font-size:.92rem;"><i class="bi bi-clipboard2-check me-2"></i>Submit Review Report</h5>
+        <div style="font-size:.7rem;color:rgba(255,255,255,.6);margin-top:2px;" id="rfSubTitle">—</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('reviewFormModal')" style="color:#fff;"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body-inner" style="max-height:75vh;overflow-y:auto;padding:20px;">
+      <input type="hidden" id="rfSubId"/>
+
+      <!-- Recommendation -->
+      <div style="margin-bottom:18px;background:#faf5ff;border:1.5px solid #ddd6fe;border-radius:10px;padding:14px;">
+        <div style="font-size:.75rem;font-weight:800;color:#4c1d95;margin-bottom:10px;"><i class="bi bi-award me-1"></i>Overall Recommendation *</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="rfRec" value="Accept" style="accent-color:#059669;"> <span style="font-size:.82rem;font-weight:700;color:#065f46;">Accept</span> <span style="font-size:.72rem;color:#6b7280;">— Manuscript is suitable as is.</span></label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="rfRec" value="Minor Revision" style="accent-color:#d97706;"> <span style="font-size:.82rem;font-weight:700;color:#92400e;">Minor Revision</span> <span style="font-size:.72rem;color:#6b7280;">— Small changes required.</span></label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="rfRec" value="Major Revision" style="accent-color:#ea580c;"> <span style="font-size:.82rem;font-weight:700;color:#9a3412;">Major Revision</span> <span style="font-size:.72rem;color:#6b7280;">— Significant revisions needed.</span></label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="rfRec" value="Reject and Resubmit" style="accent-color:#7c3aed;"> <span style="font-size:.82rem;font-weight:700;color:#5b21b6;">Reject and Resubmit</span> <span style="font-size:.72rem;color:#6b7280;">— Invite as new submission after major revision.</span></label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="radio" name="rfRec" value="Reject" style="accent-color:#dc2626;"> <span style="font-size:.82rem;font-weight:700;color:#991b1b;">Reject</span> <span style="font-size:.72rem;color:#6b7280;">— Not suitable for publication.</span></label>
+        </div>
+      </div>
+
+      <!-- Section-wise feedback -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div>
+          <label style="font-size:.72rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Originality & Novelty</label>
+          <textarea id="rfOriginality" rows="3" placeholder="Comments on originality…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:8px;font-size:.8rem;resize:vertical;"></textarea>
+        </div>
+        <div>
+          <label style="font-size:.72rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Methodology</label>
+          <textarea id="rfMethodology" rows="3" placeholder="Research design & methods…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:8px;font-size:.8rem;resize:vertical;"></textarea>
+        </div>
+        <div>
+          <label style="font-size:.72rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Results & Analysis</label>
+          <textarea id="rfResults" rows="3" placeholder="Data, results, discussion…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:8px;font-size:.8rem;resize:vertical;"></textarea>
+        </div>
+        <div>
+          <label style="font-size:.72rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Writing & Clarity</label>
+          <textarea id="rfWriting" rows="3" placeholder="Language, structure, clarity…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:8px;font-size:.8rem;resize:vertical;"></textarea>
+        </div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:.72rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">References</label>
+        <textarea id="rfReferences" rows="2" placeholder="Quality and completeness of references…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:8px;font-size:.8rem;resize:vertical;"></textarea>
+      </div>
+      <div style="margin-bottom:12px;">
+        <label style="font-size:.72rem;font-weight:700;color:#374151;display:block;margin-bottom:4px;">Comments to Author <span style="font-weight:400;color:#6b7280;">(will be shared)</span></label>
+        <textarea id="rfComments" rows="4" placeholder="Detailed comments for the author to address…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:8px;font-size:.8rem;resize:vertical;"></textarea>
+      </div>
+      <div style="background:#fffbeb;border:1.5px solid #fde68a;border-radius:8px;padding:12px;">
+        <label style="font-size:.72rem;font-weight:700;color:#92400e;display:block;margin-bottom:4px;"><i class="bi bi-lock-fill me-1"></i>Confidential Notes to Editor <span style="font-weight:400;color:#78350f;">(not shared with author)</span></label>
+        <textarea id="rfConfidential" rows="3" placeholder="Private notes for the editorial team…" style="width:100%;border:1.5px solid #fde68a;border-radius:7px;padding:8px;font-size:.8rem;resize:vertical;background:#fffbeb;"></textarea>
+      </div>
+    </div>
+    <div style="padding:14px 20px;border-top:1.5px solid #e5e7eb;display:flex;justify-content:flex-end;gap:10px;background:#fafafa;">
+      <button onclick="closeModal('reviewFormModal')" style="background:#f3f4f6;color:#374151;border:1.5px solid #d1d5db;border-radius:8px;padding:9px 20px;font-size:.82rem;font-weight:700;cursor:pointer;">Cancel</button>
+      <button onclick="submitReviewReport()" style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.82rem;font-weight:700;cursor:pointer;"><i class="bi bi-send-fill me-1"></i>Submit Review Report</button>
     </div>
   </div>
 </div>
@@ -437,6 +518,7 @@ function initPanel(){
   renderDashboard();
   renderSubmissions();
   renderPublished();
+  renderMyReviews();
 }
 
 /* ════════════════════════════════════════
@@ -560,6 +642,118 @@ function showSection(id){
   document.getElementById('sec-'+id).classList.add('active');
   event.currentTarget.classList.add('active');
   if(window.innerWidth<=768) document.getElementById('sidebar').classList.remove('open');
+}
+
+/* ════════════════════════════════════════
+   MY REVIEWS
+════════════════════════════════════════ */
+function renderMyReviews(){
+  if(!currentEditor) return;
+  var myEmail = currentEditor.email;
+  var subs = getData('sardSubmissions') || [];
+  // Find all submissions where currentEditor is in assignedReviewers
+  var assigned = subs.filter(function(s){
+    return s.assignedReviewers && s.assignedReviewers.some(function(r){ return r.email===myEmail; });
+  });
+  var myReviews = getData('sardReviews') || [];
+  var reviewedSubIds = myReviews.filter(function(r){ return r.reviewerEmail===myEmail; }).map(function(r){ return r.subId; });
+
+  var badge = document.getElementById('badgeMyReviews');
+  var pending = assigned.filter(function(s){ return !reviewedSubIds.includes(s.subId); }).length;
+  if(pending>0){ badge.textContent=pending; badge.style.display=''; }
+  else { badge.style.display='none'; }
+
+  var el = document.getElementById('myReviewsList');
+  if(!assigned.length){
+    el.innerHTML='<div style="text-align:center;padding:28px;color:#9ca3af;"><i class="bi bi-clipboard2-x" style="font-size:2rem;display:block;margin-bottom:8px;"></i>No articles assigned for review yet.</div>';
+    return;
+  }
+  var recColors = {Accept:'#059669','Minor Revision':'#d97706','Major Revision':'#ea580c','Reject and Resubmit':'#7c3aed',Reject:'#dc2626'};
+  el.innerHTML = assigned.map(function(s){
+    var myReview = myReviews.find(function(r){ return r.subId===s.subId && r.reviewerEmail===myEmail; });
+    var rv = s.assignedReviewers.find(function(r){ return r.email===myEmail; });
+    var status = myReview ? 'Completed' : (rv ? rv.status : 'Invited');
+    var statusColor = {Invited:'#2563eb',Accepted:'#059669',Completed:'#7c3aed',Declined:'#dc2626'}[status]||'#374151';
+    return '<div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;background:#fff;">'+
+      '<div style="padding:14px 16px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:flex-start;">'+
+        '<div style="flex:1;min-width:0;padding-right:12px;">'+
+          '<div style="font-size:.85rem;font-weight:700;color:#1f2937;margin-bottom:4px;">'+escHtml(s.title||'—')+'</div>'+
+          '<div style="font-size:.72rem;color:#6b7280;"><span class="sub-id">'+escHtml(s.subId)+'</span> · '+escHtml(s.authors||'—')+'</div>'+
+          '<div style="font-size:.7rem;color:#9ca3af;margin-top:3px;">Assigned: '+fmtDate(rv?rv.assignedDate:s.date)+'</div>'+
+          (rv&&rv.note?'<div style="font-size:.7rem;color:#6b7280;margin-top:3px;background:#f3f4f6;border-radius:5px;padding:4px 8px;"><i class="bi bi-chat-left-text me-1"></i>'+escHtml(rv.note)+'</div>':'')+
+        '</div>'+
+        '<span style="font-size:.68rem;font-weight:800;padding:4px 10px;border-radius:8px;color:#fff;background:'+statusColor+';white-space:nowrap;flex-shrink:0;">'+status+'</span>'+
+      '</div>'+
+      '<div style="padding:12px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">'+
+        (s.fileLink?'<a href="'+escHtml(s.fileLink)+'" target="_blank" style="font-size:.76rem;color:#2563eb;font-weight:600;text-decoration:none;"><i class="bi bi-file-earmark-arrow-down me-1"></i>Open Manuscript</a>':'')+
+        '<div style="flex:1;"></div>'+
+        (myReview?
+          '<span style="font-size:.75rem;color:'+recColors[myReview.recommendation]+';">'+
+            '<i class="bi bi-check-circle-fill me-1"></i>Review submitted: <strong>'+escHtml(myReview.recommendation)+'</strong>'+
+          '</span>'+
+          '<button onclick="openReviewForm(\''+s.subId+'\')" style="background:#f3f4f6;color:#374151;border:1.5px solid #d1d5db;border-radius:7px;padding:6px 14px;font-size:.75rem;font-weight:700;cursor:pointer;"><i class="bi bi-eye me-1"></i>View / Edit</button>'
+        :
+          '<button onclick="openReviewForm(\''+s.subId+'\')" style="background:#7c3aed;color:#fff;border:none;border-radius:7px;padding:8px 16px;font-size:.78rem;font-weight:700;cursor:pointer;"><i class="bi bi-clipboard2-plus me-1"></i>Submit Review</button>'
+        )+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function openReviewForm(subId){
+  var subs = getData('sardSubmissions') || [];
+  var s = subs.find(function(x){ return x.subId===subId; });
+  if(!s) return;
+  document.getElementById('rfSubId').value = subId;
+  document.getElementById('rfSubTitle').textContent = s.title || subId;
+  // Pre-fill if already reviewed
+  var myReviews = getData('sardReviews') || [];
+  var existing = myReviews.find(function(r){ return r.subId===subId && r.reviewerEmail===(currentEditor&&currentEditor.email); });
+  document.querySelectorAll('input[name="rfRec"]').forEach(function(r){ r.checked = existing && r.value===existing.recommendation; });
+  document.getElementById('rfOriginality').value = existing ? (existing.originality||'') : '';
+  document.getElementById('rfMethodology').value = existing ? (existing.methodology||'') : '';
+  document.getElementById('rfResults').value = existing ? (existing.resultsAnalysis||'') : '';
+  document.getElementById('rfWriting').value = existing ? (existing.writingClarity||'') : '';
+  document.getElementById('rfReferences').value = existing ? (existing.references||'') : '';
+  document.getElementById('rfComments').value = existing ? (existing.commentsToAuthor||'') : '';
+  document.getElementById('rfConfidential').value = existing ? (existing.confidentialNotes||'') : '';
+  document.getElementById('reviewFormModal').classList.add('open');
+}
+
+function submitReviewReport(){
+  var subId = document.getElementById('rfSubId').value;
+  var rec = (document.querySelector('input[name="rfRec"]:checked')||{}).value;
+  if(!rec){ showToast('Please select a recommendation.','error'); return; }
+  var now = new Date().toISOString();
+  var reviews = getData('sardReviews') || [];
+  // Remove existing review from same reviewer for same sub
+  reviews = reviews.filter(function(r){ return !(r.subId===subId && r.reviewerEmail===(currentEditor&&currentEditor.email)); });
+  reviews.push({
+    subId: subId,
+    reviewerEmail: currentEditor.email,
+    reviewerName: currentEditor.name,
+    recommendation: rec,
+    originality: document.getElementById('rfOriginality').value.trim(),
+    methodology: document.getElementById('rfMethodology').value.trim(),
+    resultsAnalysis: document.getElementById('rfResults').value.trim(),
+    writingClarity: document.getElementById('rfWriting').value.trim(),
+    references: document.getElementById('rfReferences').value.trim(),
+    commentsToAuthor: document.getElementById('rfComments').value.trim(),
+    confidentialNotes: document.getElementById('rfConfidential').value.trim(),
+    submittedDate: now
+  });
+  setData('sardReviews', reviews);
+  // Update reviewer status in submission
+  var subs = getData('sardSubmissions') || [];
+  subs.forEach(function(s){
+    if(s.subId===subId && s.assignedReviewers){
+      s.assignedReviewers.forEach(function(r){ if(r.email===currentEditor.email) r.status='Completed'; });
+    }
+  });
+  setData('sardSubmissions', subs);
+  closeModal('reviewFormModal');
+  renderMyReviews();
+  showToast('Review report submitted successfully!','success');
 }
 
 /* ════════════════════════════════════════

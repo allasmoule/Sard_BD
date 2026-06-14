@@ -323,9 +323,6 @@
       <div class="sb-section">Journal</div>
       <div class="sb-item" onclick="switchSection('journal',this)"><i class="bi bi-journal-text"></i> Submissions <span class="sb-badge" id="sbSubs">0</span></div>
 
-      <div class="sb-section">Training</div>
-      <div class="sb-item" onclick="switchSection('training-enroll',this)"><i class="bi bi-mortarboard-fill"></i> Training Enrollments <span class="sb-badge" id="sbTraining">0</span></div>
-
       <div class="sb-section">Messages</div>
       <div class="sb-item" onclick="switchSection('messages',this)"><i class="bi bi-chat-dots-fill"></i> Contact Messages <span class="sb-badge" id="sbMsgs">0</span></div>
 
@@ -406,27 +403,60 @@
          SECTION: ENROLLMENTS
     ════════════════════════════════ -->
     <div class="section-panel" id="sec-enrollments">
-      <div class="page-hdr">
-        <h5>Enrollments</h5>
-        <p>Manage course enrollment orders.</p>
-      </div>
-      <div class="card-box">
-        <div class="card-box-hdr">
-          <h6><i class="bi bi-list-check me-2"></i>All Orders</h6>
-          <div style="display:flex;gap:8px;">
-            <button class="btn-sm-green" onclick="exportCSV()"><i class="bi bi-download me-1"></i>Export CSV</button>
-          </div>
+      <div class="page-hdr" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+        <div>
+          <h5 style="margin:0;display:flex;align-items:center;gap:10px;">
+            <span style="width:38px;height:38px;background:linear-gradient(135deg,var(--green),#036b60);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;">
+              <i class="bi bi-clipboard-check-fill" style="color:#fff;font-size:1rem;"></i>
+            </span>
+            Enrollments
+          </h5>
+          <p style="margin:4px 0 0 48px;color:#6b7280;font-size:.82rem;">Manage all course & training enrollment orders</p>
         </div>
-        <div class="fbar">
-          <input type="text" id="enSearch" placeholder="Search name, phone, course, order ID…" oninput="renderEnrollTable()"/>
-          <select id="enStatus" onchange="renderEnrollTable()">
+        <button class="btn-sm-green" onclick="exportCSV()" style="display:flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;">
+          <i class="bi bi-download"></i> Export CSV
+        </button>
+      </div>
+
+      <!-- Quick Stats -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px;">
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-people-fill" style="color:#3b82f6;font-size:.95rem;"></i></div>
+          <div><div style="font-size:1.3rem;font-weight:800;color:#111827;line-height:1;" id="enStatTotal">0</div><div style="font-size:.7rem;color:#6b7280;margin-top:2px;">Total</div></div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:#fef3c7;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-hourglass-split" style="color:#f59e0b;font-size:.95rem;"></i></div>
+          <div><div style="font-size:1.3rem;font-weight:800;color:#111827;line-height:1;" id="enStatPending">0</div><div style="font-size:.7rem;color:#6b7280;margin-top:2px;">Pending</div></div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:#d1fae5;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-check-circle-fill" style="color:#059669;font-size:.95rem;"></i></div>
+          <div><div style="font-size:1.3rem;font-weight:800;color:#111827;line-height:1;" id="enStatConfirmed">0</div><div style="font-size:.7rem;color:#6b7280;margin-top:2px;">Confirmed</div></div>
+        </div>
+        <div style="background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:#fce7f3;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-x-circle-fill" style="color:#db2777;font-size:.95rem;"></i></div>
+          <div><div style="font-size:1.3rem;font-weight:800;color:#111827;line-height:1;" id="enStatCancelled">0</div><div style="font-size:.7rem;color:#6b7280;margin-top:2px;">Cancelled</div></div>
+        </div>
+      </div>
+
+      <div class="card-box" style="border-radius:12px;">
+        <div class="card-box-hdr" style="padding:14px 18px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+          <h6 style="margin:0;font-size:.88rem;display:flex;align-items:center;gap:7px;"><i class="bi bi-list-check" style="color:var(--green);"></i> All Orders</h6>
+          <span style="font-size:.72rem;color:#9ca3af;" id="enCount"></span>
+        </div>
+        <div style="padding:12px 18px;background:#f9fafb;border-bottom:1.5px solid var(--border);display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
+          <div style="position:relative;flex:1;min-width:200px;">
+            <i class="bi bi-search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:#9ca3af;font-size:.8rem;"></i>
+            <input type="text" id="enSearch" placeholder="Search name, phone, course, order ID…" oninput="renderEnrollTable()" style="padding-left:30px;width:100%;border:1.5px solid var(--border);border-radius:7px;font-size:.82rem;padding-top:8px;padding-bottom:8px;outline:none;background:#fff;"/>
+          </div>
+          <select id="enStatus" onchange="renderEnrollTable()" style="border:1.5px solid var(--border);border-radius:7px;font-size:.82rem;padding:8px 10px;background:#fff;outline:none;color:#374151;">
             <option value="">All Status</option>
-            <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
-            <option value="Cancelled">Cancelled</option>
+            <option value="Pending">⏳ Pending</option>
+            <option value="Confirmed">✅ Confirmed</option>
+            <option value="Cancelled">❌ Cancelled</option>
           </select>
-          <button class="btn-sm-outline" onclick="document.getElementById('enSearch').value='';document.getElementById('enStatus').value='';renderEnrollTable()"><i class="bi bi-x-circle me-1"></i>Clear</button>
-          <span style="font-size:.72rem;color:#9ca3af;margin-left:auto;" id="enCount"></span>
+          <button onclick="document.getElementById('enSearch').value='';document.getElementById('enStatus').value='';renderEnrollTable()" style="border:1.5px solid var(--border);background:#fff;border-radius:7px;font-size:.8rem;padding:8px 12px;cursor:pointer;color:#6b7280;display:flex;align-items:center;gap:5px;">
+            <i class="bi bi-x-circle"></i> Clear
+          </button>
         </div>
         <div class="tbl-wrap">
           <table class="tbl">
@@ -541,7 +571,7 @@
 
       <!-- Photos Panel -->
       <div id="galPhotosPanel">
-        <div style="display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start;">
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start;">
           <div class="card-box">
             <div class="card-box-hdr"><h6><i class="bi bi-images me-2"></i>Photos</h6><span style="font-size:.72rem;color:#9ca3af;" id="photoCount"></span></div>
             <div class="card-box-body"><div class="gallery-grid" id="photoGrid"></div></div>
@@ -549,15 +579,34 @@
           <div class="card-box">
             <div class="card-box-hdr"><h6><i class="bi bi-plus-circle me-2"></i>Add Photo</h6></div>
             <div class="card-box-body">
-              <div class="form-group"><label>Image URL <span class="req">*</span></label><input type="text" id="photoUrl" placeholder="https://…"/></div>
-              <div class="form-group"><label>Title <span class="req">*</span></label><input type="text" id="photoTitle" placeholder="Photo title"/></div>
-              <div class="form-group"><label>Category</label>
-                <select id="photoCat">
-                  <option value="Event">Event</option><option value="Research">Research</option>
-                  <option value="Training">Training</option><option value="Office">Office</option>
+              <!-- Category first so user picks destination before upload -->
+              <div class="form-group">
+                <label>Category <span class="req">*</span></label>
+                <select id="photoCat" onchange="updatePhotoHint()">
+                  <option value="Home">🏠 Home Page</option>
+                  <option value="Training">🎓 Training Gallery</option>
+                  <option value="Event">📅 Event</option>
+                  <option value="Research">🔬 Research</option>
+                  <option value="Office">🏢 Office</option>
                 </select>
+                <small id="photoCatHint" style="color:var(--green);font-size:.72rem;margin-top:4px;display:block;">→ এই ছবি Home page-এ দেখাবে</small>
               </div>
-              <div class="form-actions"><button class="btn-submit" onclick="savePhoto()"><i class="bi bi-plus me-1"></i>Add Photo</button></div>
+              <div class="form-group"><label>Title <span class="req">*</span></label><input type="text" id="photoTitle" placeholder="Photo title"/></div>
+              <!-- Upload area -->
+              <div class="form-group">
+                <label>Upload Photo <span class="req">*</span></label>
+                <div id="photoDropZone" onclick="document.getElementById('photoFileInput').click()" style="border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:.2s;background:#fafafa;" onmouseover="this.style.borderColor='var(--green)'" onmouseout="this.style.borderColor='var(--border)'">
+                  <i class="bi bi-cloud-upload" style="font-size:1.6rem;color:#9ca3af;display:block;margin-bottom:6px;"></i>
+                  <div style="font-size:.8rem;color:#6b7280;font-weight:600;">Click to choose photo</div>
+                  <div style="font-size:.7rem;color:#9ca3af;margin-top:2px;">JPG, PNG, WEBP — max 5 MB</div>
+                </div>
+                <input type="file" id="photoFileInput" accept="image/*" style="display:none;" onchange="previewPhoto(this)"/>
+                <div id="photoPreviewWrap" style="display:none;margin-top:10px;position:relative;">
+                  <img id="photoPreview" src="" alt="preview" style="width:100%;border-radius:8px;max-height:160px;object-fit:cover;border:1.5px solid var(--border);"/>
+                  <button onclick="clearPhotoPreview()" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,.5);border:none;border-radius:50%;width:24px;height:24px;color:#fff;font-size:.75rem;cursor:pointer;display:flex;align-items:center;justify-content:center;"><i class="bi bi-x"></i></button>
+                </div>
+              </div>
+              <div class="form-actions"><button class="btn-submit" onclick="savePhoto()"><i class="bi bi-cloud-upload me-1"></i>Upload & Save</button></div>
             </div>
           </div>
         </div>
@@ -565,7 +614,7 @@
 
       <!-- Videos Panel -->
       <div id="galVideosPanel" style="display:none;">
-        <div style="display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start;">
+        <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start;">
           <div class="card-box">
             <div class="card-box-hdr"><h6><i class="bi bi-play-circle me-2"></i>Videos</h6><span style="font-size:.72rem;color:#9ca3af;" id="videoCount"></span></div>
             <div class="card-box-body"><div class="gallery-grid" id="videoGrid"></div></div>
@@ -573,14 +622,20 @@
           <div class="card-box">
             <div class="card-box-hdr"><h6><i class="bi bi-plus-circle me-2"></i>Add YouTube Video</h6></div>
             <div class="card-box-body">
+              <div class="form-group">
+                <label>Category <span class="req">*</span></label>
+                <select id="videoCat" onchange="updateVideoHint()">
+                  <option value="Home">🏠 Home Page (Videos & Lectures)</option>
+                  <option value="Training">🎓 Training</option>
+                  <option value="Event">📅 Event</option>
+                  <option value="Research">🔬 Research</option>
+                  <option value="Interview">🎤 Interview</option>
+                </select>
+                <small id="videoCatHint" style="color:var(--green);font-size:.72rem;margin-top:4px;display:block;">→ এই video Home page "Videos & Lectures"-এ দেখাবে</small>
+              </div>
               <div class="form-group"><label>YouTube URL <span class="req">*</span></label><input type="text" id="videoUrl" placeholder="https://youtube.com/watch?v=…"/></div>
               <div class="form-group"><label>Title <span class="req">*</span></label><input type="text" id="videoTitle" placeholder="Video title"/></div>
-              <div class="form-group"><label>Category</label>
-                <select id="videoCat">
-                  <option value="Event">Event</option><option value="Research">Research</option>
-                  <option value="Training">Training</option><option value="Interview">Interview</option>
-                </select>
-              </div>
+              <div class="form-group"><label>Type Badge</label><input type="text" id="videoBadge" placeholder="e.g. Lecture, Workshop, Training"/></div>
               <div class="form-actions"><button class="btn-submit" onclick="saveVideo()"><i class="bi bi-plus me-1"></i>Add Video</button></div>
             </div>
           </div>
@@ -685,33 +740,6 @@
     <!-- ════════════════════════════════
          SECTION: TRAINING ENROLLMENTS
     ════════════════════════════════ -->
-    <div class="section-panel" id="sec-training-enroll">
-      <div class="page-hdr">
-        <h5>Training Enrollments</h5>
-        <p>Training programs এ enrolled users এর তালিকা।</p>
-      </div>
-      <div class="card-box">
-        <div class="card-hdr" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-          <span><i class="bi bi-mortarboard-fill me-2"></i>All Enrollments</span>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <select id="teFilterStatus" class="form-ctrl" style="width:160px;" onchange="renderTrainingEnroll()">
-              <option value="">All Status</option>
-              <option value="Pending">Pending</option>
-              <option value="Confirmed">Confirmed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-            <input type="text" id="teSearch" class="form-ctrl" placeholder="Search name / course…" style="width:200px;" oninput="renderTrainingEnroll()"/>
-          </div>
-        </div>
-        <div style="overflow-x:auto;">
-          <table class="data-table">
-            <thead><tr><th>Order ID</th><th>Name</th><th>Phone</th><th>Course</th><th>Price</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
-            <tbody id="teBody"><tr><td colspan="8" class="empty-td">No enrollments yet.</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
     <!-- ════════════════════════════════
          SECTION: CONTACT MESSAGES
     ════════════════════════════════ -->
@@ -846,10 +874,13 @@
 
     <div class="modal-body" style="padding:0;">
       <!-- Tab bar -->
-      <div style="display:flex;border-bottom:2px solid #e5e7eb;background:#fafafa;">
+      <div style="display:flex;border-bottom:2px solid #e5e7eb;background:#fafafa;overflow-x:auto;scrollbar-width:none;">
         <button onclick="switchSubTab('info')" id="stab-info" class="sub-tab active-tab"><i class="bi bi-info-circle me-1"></i>Info</button>
         <button onclick="switchSubTab('abstract')" id="stab-abstract" class="sub-tab"><i class="bi bi-file-text me-1"></i>Abstract</button>
         <button onclick="switchSubTab('file')" id="stab-file" class="sub-tab"><i class="bi bi-paperclip me-1"></i>File & Links</button>
+        <button onclick="switchSubTab('reviewers')" id="stab-reviewers" class="sub-tab"><i class="bi bi-people me-1"></i>Reviewers <span id="stabRevCount" style="background:#dc3545;color:#fff;border-radius:10px;font-size:.6rem;padding:1px 5px;margin-left:3px;display:none;">0</span></button>
+        <button onclick="switchSubTab('reports')" id="stab-reports" class="sub-tab"><i class="bi bi-clipboard2-check me-1"></i>Reports <span id="stabRepCount" style="background:#059669;color:#fff;border-radius:10px;font-size:.6rem;padding:1px 5px;margin-left:3px;display:none;">0</span></button>
+        <button onclick="switchSubTab('email')" id="stab-email" class="sub-tab"><i class="bi bi-envelope me-1"></i>Email Author</button>
         <button onclick="switchSubTab('action')" id="stab-action" class="sub-tab"><i class="bi bi-gear me-1"></i>Action</button>
       </div>
 
@@ -872,6 +903,37 @@
       <div id="stab-file-panel" style="padding:20px;display:none;">
         <div id="jsFileLinks"></div>
       </div>
+      <!-- Tab: Reviewers -->
+      <div id="stab-reviewers-panel" style="padding:20px;display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <div style="font-size:.78rem;font-weight:800;color:#374151;"><i class="bi bi-people-fill me-2" style="color:#013e37;"></i>Assigned Reviewers</div>
+          <button onclick="openAssignReviewerModal()" style="background:#013e37;color:#ffefb3;border:none;border-radius:7px;padding:7px 14px;font-size:.76rem;font-weight:700;cursor:pointer;"><i class="bi bi-person-plus-fill me-1"></i>Assign Reviewer</button>
+        </div>
+        <div id="jsReviewersList" style="display:flex;flex-direction:column;gap:8px;">
+          <div style="text-align:center;padding:24px;color:#9ca3af;font-size:.8rem;"><i class="bi bi-person-x" style="font-size:2rem;display:block;margin-bottom:8px;"></i>No reviewers assigned yet</div>
+        </div>
+      </div>
+
+      <!-- Tab: Reports -->
+      <div id="stab-reports-panel" style="padding:20px;display:none;">
+        <div style="font-size:.78rem;font-weight:800;color:#374151;margin-bottom:14px;"><i class="bi bi-clipboard2-check-fill me-2" style="color:#059669;"></i>Review Reports</div>
+        <div id="jsReportsList" style="display:flex;flex-direction:column;gap:12px;">
+          <div style="text-align:center;padding:24px;color:#9ca3af;font-size:.8rem;"><i class="bi bi-clipboard2-x" style="font-size:2rem;display:block;margin-bottom:8px;"></i>No review reports submitted yet</div>
+        </div>
+      </div>
+
+      <!-- Tab: Email Author -->
+      <div id="stab-email-panel" style="padding:20px;display:none;">
+        <div style="font-size:.78rem;font-weight:800;color:#374151;margin-bottom:4px;"><i class="bi bi-envelope-fill me-2" style="color:#2563eb;"></i>Email Template for Author</div>
+        <div style="font-size:.72rem;color:#6c757d;margin-bottom:14px;">Based on review decisions. Copy and send via your email client.</div>
+        <div id="jsEmailTemplate" style="background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:10px;padding:16px;font-size:.8rem;line-height:1.8;white-space:pre-wrap;font-family:monospace;max-height:320px;overflow-y:auto;color:#0c4a6e;"></div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <button onclick="copyEmailTemplate()" style="background:#2563eb;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:.78rem;font-weight:700;cursor:pointer;"><i class="bi bi-clipboard me-1"></i>Copy Template</button>
+          <button onclick="markEmailSentBtn()" id="jsMarkEmailSentBtn" style="background:#059669;color:#fff;border:none;border-radius:7px;padding:9px 20px;font-size:.78rem;font-weight:700;cursor:pointer;"><i class="bi bi-check2-circle me-1"></i>Mark Email Sent</button>
+        </div>
+        <div id="jsEmailSentNote" style="margin-top:10px;font-size:.75rem;color:#059669;display:none;"><i class="bi bi-check-circle-fill me-1"></i>Email marked as sent.</div>
+      </div>
+
       <!-- Tab: Action -->
       <div id="stab-action-panel" style="padding:20px;display:none;" id="stab-action-panel">
         <div style="margin-bottom:14px;">
@@ -977,6 +1039,33 @@
     <div class="modal-footer">
       <button class="btn-sm-outline" onclick="closeModal('rejectModal')">Cancel</button>
       <button class="btn-sm-danger" style="padding:9px 20px;border-radius:8px;" onclick="confirmReject()">Reject Submission</button>
+    </div>
+  </div>
+</div>
+
+<!-- Assign Reviewer Modal -->
+<div class="modal-overlay" id="assignReviewerModal" style="z-index:1100;">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-hdr" style="background:linear-gradient(90deg,#1e40af,#2563eb);">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="bi bi-person-plus-fill" style="color:#fff;"></i></div>
+        <div><h6 style="color:#fff;margin:0;font-size:.88rem;">Assign Reviewer / Editor</h6><div style="font-size:.7rem;color:rgba(255,255,255,.6);">Select from registered editors</div></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('assignReviewerModal')" style="color:#fff;">×</button>
+    </div>
+    <div class="modal-body" style="padding:16px;">
+      <div style="margin-bottom:12px;">
+        <input type="text" id="reviewerSearchInput" oninput="filterReviewerList()" placeholder="Search by name or email…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:8px 12px;font-size:.82rem;"/>
+      </div>
+      <div id="reviewerPickList" style="max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;"></div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1.5px solid #e5e7eb;">
+        <label style="font-size:.72rem;font-weight:700;color:#374151;display:block;margin-bottom:6px;">Add message to reviewer (optional)</label>
+        <textarea id="reviewerNote" rows="3" placeholder="Specific instructions or deadline notes…" style="width:100%;border:1.5px solid #d1d5db;border-radius:7px;padding:8px 12px;font-size:.8rem;resize:vertical;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-sm-outline" onclick="closeModal('assignReviewerModal')">Cancel</button>
+      <button onclick="saveReviewerAssignments()" style="background:#1e40af;color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:.82rem;font-weight:700;cursor:pointer;"><i class="bi bi-person-check me-1"></i>Save Assignments</button>
     </div>
   </div>
 </div>
@@ -1177,6 +1266,16 @@ function renderEnrollTable(){
   var search  = document.getElementById('enSearch').value.toLowerCase();
   var statusF = document.getElementById('enStatus').value;
 
+  // Update quick stats
+  var sTotal = document.getElementById('enStatTotal');
+  var sPend  = document.getElementById('enStatPending');
+  var sConf  = document.getElementById('enStatConfirmed');
+  var sCanc  = document.getElementById('enStatCancelled');
+  if(sTotal) sTotal.textContent = orders.length;
+  if(sPend)  sPend.textContent  = orders.filter(function(o){return o.status==='Pending';}).length;
+  if(sConf)  sConf.textContent  = orders.filter(function(o){return o.status==='Confirmed';}).length;
+  if(sCanc)  sCanc.textContent  = orders.filter(function(o){return o.status==='Cancelled';}).length;
+
   var f = orders.filter(function(o){
     var ms = !search||(o.name||'').toLowerCase().includes(search)||(o.phone||'').includes(search)||
              (o.courseName||'').toLowerCase().includes(search)||(o.orderId||'').toLowerCase().includes(search);
@@ -1368,16 +1467,232 @@ function viewSub(subId){
   document.getElementById('qpDoi').value = '';
   document.getElementById('qpPdf').value = s.fileLink||'';
 
+  // Update reviewer/report badge counts
+  updateReviewerTabCount(s);
+
   // Show first tab
   switchSubTab('info');
   openModal('jsDetailModal');
 }
 
 function switchSubTab(name){
-  ['info','abstract','file','action'].forEach(function(t){
-    document.getElementById('stab-'+t).classList.toggle('active-tab', t===name);
-    document.getElementById('stab-'+t+'-panel').style.display = t===name ? 'block' : 'none';
+  ['info','abstract','file','reviewers','reports','email','action'].forEach(function(t){
+    var btn = document.getElementById('stab-'+t);
+    var panel = document.getElementById('stab-'+t+'-panel');
+    if(btn) btn.classList.toggle('active-tab', t===name);
+    if(panel) panel.style.display = t===name ? 'block' : 'none';
   });
+  if(name==='reviewers') renderReviewersList(_currentSubId);
+  if(name==='reports') renderReportsList(_currentSubId);
+  if(name==='email') buildEmailTemplate(_currentSubId);
+}
+
+/* ── Reviewer Assignment ── */
+var _assignReviewerSubId = null;
+
+function openAssignReviewerModal(){
+  if(!_currentSubId) return;
+  _assignReviewerSubId = _currentSubId;
+  document.getElementById('reviewerSearchInput').value = '';
+  document.getElementById('reviewerNote').value = '';
+  buildReviewerPickList('');
+  openModal('assignReviewerModal');
+}
+
+function buildReviewerPickList(filter){
+  var editors = getData('sardEditorAccounts');
+  var sub = getData('sardSubmissions').find(function(x){return x.subId===_assignReviewerSubId;});
+  var assigned = (sub && sub.assignedReviewers) ? sub.assignedReviewers.map(function(r){return r.email;}) : [];
+  var fl = filter.toLowerCase();
+  var filtered = editors.filter(function(e){
+    return !fl || e.name.toLowerCase().includes(fl) || e.email.toLowerCase().includes(fl);
+  });
+  if(!filtered.length){
+    document.getElementById('reviewerPickList').innerHTML = '<div style="text-align:center;padding:20px;color:#9ca3af;font-size:.8rem;">No editors found</div>';
+    return;
+  }
+  document.getElementById('reviewerPickList').innerHTML = filtered.map(function(e){
+    var isAssigned = assigned.includes(e.email);
+    return '<label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid '+(isAssigned?'#86efac':'#e5e7eb')+';border-radius:8px;cursor:pointer;background:'+(isAssigned?'#f0fdf4':'#fff')+';transition:all .2s;">'+
+      '<input type="checkbox" value="'+esc(e.email)+'" '+(isAssigned?'checked':'')+' style="width:15px;height:15px;accent-color:#013e37;">'+
+      '<div style="flex:1;">'+
+        '<div style="font-size:.82rem;font-weight:700;color:#1f2937;">'+esc(e.name)+'</div>'+
+        '<div style="font-size:.7rem;color:#6b7280;">'+esc(e.email)+'</div>'+
+      '</div>'+
+      (isAssigned ? '<span style="font-size:.65rem;font-weight:800;color:#166534;background:#dcfce7;padding:2px 7px;border-radius:8px;">Assigned</span>' : '')+
+      '</label>';
+  }).join('');
+}
+
+function filterReviewerList(){
+  buildReviewerPickList(document.getElementById('reviewerSearchInput').value);
+}
+
+function saveReviewerAssignments(){
+  var checked = Array.from(document.querySelectorAll('#reviewerPickList input[type=checkbox]:checked')).map(function(c){return c.value;});
+  if(!checked.length){toast('Select at least one reviewer.','error');return;}
+  var note = document.getElementById('reviewerNote').value.trim();
+  var now = new Date().toISOString();
+  var subs = getData('sardSubmissions');
+  var sub = subs.find(function(x){return x.subId===_assignReviewerSubId;});
+  if(!sub) return;
+  if(!sub.assignedReviewers) sub.assignedReviewers=[];
+  var existing = sub.assignedReviewers.map(function(r){return r.email;});
+  checked.forEach(function(email){
+    if(!existing.includes(email)){
+      var editors = getData('sardEditorAccounts');
+      var ed = editors.find(function(e){return e.email===email;});
+      sub.assignedReviewers.push({email:email, name:ed?ed.name:email, status:'Invited', assignedDate:now, note:note});
+    }
+  });
+  if(sub.status==='Submitted') sub.status='Under Review';
+  setData('sardSubmissions', subs);
+  closeModal('assignReviewerModal');
+  renderReviewersList(_assignReviewerSubId);
+  updateReviewerTabCount(sub);
+  toast('Reviewer(s) assigned successfully!','success');
+  renderJournalTable(); updateSidebarBadges();
+}
+
+function renderReviewersList(subId){
+  var sub = getData('sardSubmissions').find(function(x){return x.subId===subId;});
+  var el = document.getElementById('jsReviewersList');
+  if(!sub||!sub.assignedReviewers||!sub.assignedReviewers.length){
+    el.innerHTML='<div style="text-align:center;padding:24px;color:#9ca3af;font-size:.8rem;"><i class="bi bi-person-x" style="font-size:2rem;display:block;margin-bottom:8px;"></i>No reviewers assigned yet</div>';
+    return;
+  }
+  var revStatusColor = {Invited:'#2563eb',Accepted:'#059669',Declined:'#dc2626',Completed:'#7c3aed'};
+  el.innerHTML = sub.assignedReviewers.map(function(r,i){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:9px;background:#fff;">'+
+      '<div style="width:36px;height:36px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#1e40af;flex-shrink:0;">'+esc(r.name.charAt(0).toUpperCase())+'</div>'+
+      '<div style="flex:1;">'+
+        '<div style="font-size:.82rem;font-weight:700;color:#1f2937;">'+esc(r.name)+'</div>'+
+        '<div style="font-size:.7rem;color:#6b7280;">'+esc(r.email)+'</div>'+
+        (r.note?'<div style="font-size:.68rem;color:#9ca3af;margin-top:2px;"><i class="bi bi-chat-left-text me-1"></i>'+esc(r.note)+'</div>':'')+
+      '</div>'+
+      '<div style="text-align:right;">'+
+        '<span style="font-size:.65rem;font-weight:800;padding:3px 9px;border-radius:8px;color:#fff;background:'+(revStatusColor[r.status]||'#374151')+';">'+esc(r.status)+'</span>'+
+        '<div style="font-size:.65rem;color:#9ca3af;margin-top:4px;">'+fmtDate(r.assignedDate)+'</div>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+  updateReviewerTabCount(sub);
+}
+
+function updateReviewerTabCount(sub){
+  var revCount = document.getElementById('stabRevCount');
+  var repCount = document.getElementById('stabRepCount');
+  if(!sub){return;}
+  var rCount = (sub.assignedReviewers||[]).length;
+  if(rCount>0){revCount.style.display='inline';revCount.textContent=rCount;}else{revCount.style.display='none';}
+  var reviews = getData('sardReviews').filter(function(r){return r.subId===sub.subId;});
+  if(reviews.length>0){repCount.style.display='inline';repCount.textContent=reviews.length;}else{repCount.style.display='none';}
+}
+
+/* ── Review Reports ── */
+function renderReportsList(subId){
+  var reviews = getData('sardReviews').filter(function(r){return r.subId===subId;});
+  var el = document.getElementById('jsReportsList');
+  if(!reviews.length){
+    el.innerHTML='<div style="text-align:center;padding:24px;color:#9ca3af;font-size:.8rem;"><i class="bi bi-clipboard2-x" style="font-size:2rem;display:block;margin-bottom:8px;"></i>No review reports submitted yet</div>';
+    return;
+  }
+  var recColors = {Accept:'#059669','Minor Revision':'#d97706','Major Revision':'#ea580c','Reject and Resubmit':'#7c3aed',Reject:'#dc2626'};
+  el.innerHTML = reviews.map(function(rv,i){
+    var col = recColors[rv.recommendation]||'#374151';
+    return '<div style="border:1.5px solid #e5e7eb;border-radius:10px;overflow:hidden;">'+
+      '<div style="padding:12px 16px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center;">'+
+        '<div>'+
+          '<div style="font-size:.82rem;font-weight:700;color:#1f2937;"><i class="bi bi-person-circle me-1"></i>'+esc(rv.reviewerName||rv.reviewerEmail||'Reviewer '+(i+1))+'</div>'+
+          '<div style="font-size:.68rem;color:#6b7280;">Submitted: '+fmtDate(rv.submittedDate)+'</div>'+
+        '</div>'+
+        '<span style="font-size:.68rem;font-weight:800;padding:4px 10px;border-radius:8px;color:#fff;background:'+col+';">'+esc(rv.recommendation)+'</span>'+
+      '</div>'+
+      '<div style="padding:14px 16px;">'+
+        (rv.originality?'<div style="margin-bottom:8px;"><div style="font-size:.68rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;">Originality & Novelty</div><div style="font-size:.8rem;color:#374151;line-height:1.6;">'+esc(rv.originality)+'</div></div>':'')+
+        (rv.methodology?'<div style="margin-bottom:8px;"><div style="font-size:.68rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;">Methodology</div><div style="font-size:.8rem;color:#374151;line-height:1.6;">'+esc(rv.methodology)+'</div></div>':'')+
+        (rv.resultsAnalysis?'<div style="margin-bottom:8px;"><div style="font-size:.68rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;">Results & Analysis</div><div style="font-size:.8rem;color:#374151;line-height:1.6;">'+esc(rv.resultsAnalysis)+'</div></div>':'')+
+        (rv.writingClarity?'<div style="margin-bottom:8px;"><div style="font-size:.68rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;">Writing & Clarity</div><div style="font-size:.8rem;color:#374151;line-height:1.6;">'+esc(rv.writingClarity)+'</div></div>':'')+
+        (rv.references?'<div style="margin-bottom:8px;"><div style="font-size:.68rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;">References</div><div style="font-size:.8rem;color:#374151;line-height:1.6;">'+esc(rv.references)+'</div></div>':'')+
+        (rv.commentsToAuthor?'<div style="margin-bottom:8px;"><div style="font-size:.68rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;">Comments to Author</div><div style="font-size:.8rem;color:#374151;line-height:1.6;">'+esc(rv.commentsToAuthor)+'</div></div>':'')+
+        (rv.confidentialNotes?'<div style="background:#fef3c7;border:1px solid #fde68a;border-radius:7px;padding:10px 12px;margin-top:6px;"><div style="font-size:.68rem;font-weight:700;color:#92400e;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;"><i class="bi bi-lock-fill me-1"></i>Confidential to Editor</div><div style="font-size:.78rem;color:#78350f;line-height:1.6;">'+esc(rv.confidentialNotes)+'</div></div>':'')+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+/* ── Email Template ── */
+function buildEmailTemplate(subId){
+  var sub = getData('sardSubmissions').find(function(x){return x.subId===subId;});
+  var el = document.getElementById('jsEmailTemplate');
+  if(!sub){el.textContent='Submission not found.';return;}
+  var reviews = getData('sardReviews').filter(function(r){return r.subId===subId;});
+  var rec = reviews.length ? reviews[reviews.length-1].recommendation : null;
+  var subjectMap = {
+    Accept: 'Congratulations: Your Manuscript Has Been Accepted',
+    'Minor Revision': 'Decision: Minor Revision Required for Your Manuscript',
+    'Major Revision': 'Decision: Major Revision Required for Your Manuscript',
+    'Reject and Resubmit': 'Decision: Manuscript Rejected with Invitation to Resubmit',
+    Reject: 'Decision: Manuscript Not Accepted for Publication'
+  };
+  var bodyMap = {
+    Accept: 'We are pleased to inform you that your manuscript has been accepted for publication in the Journal of Agricultural Research and Development (JARD).\n\nOur editorial team and peer reviewers have evaluated your work and found it meets the high standards of our journal. You will receive further instructions regarding proofs and final formatting shortly.',
+    'Minor Revision': 'Thank you for submitting your manuscript to JARD. After careful peer review, the editors have decided that minor revisions are required before the manuscript can be accepted.\n\nPlease address the reviewers\' comments carefully and resubmit your revised manuscript within 14 days.',
+    'Major Revision': 'Thank you for submitting your manuscript to JARD. After careful evaluation by our peer reviewers, the editors have requested major revisions.\n\nPlease carefully address all reviewer comments and resubmit your revised manuscript within 30 days. A point-by-point response letter is required.',
+    'Reject and Resubmit': 'Thank you for submitting your manuscript. After peer review, the editors have decided that the manuscript cannot be accepted in its current form. However, we invite you to significantly revise and resubmit as a new submission, addressing all reviewer concerns thoroughly.',
+    Reject: 'Thank you for your interest in JARD. After careful consideration by our editorial board and peer reviewers, we regret to inform you that your manuscript has not been accepted for publication at this time.\n\nWe appreciate the effort you invested and encourage you to consider other suitable journals.'
+  };
+  var subject = subjectMap[rec] || 'Editorial Decision: Your Manuscript Submission';
+  var body = bodyMap[rec] || 'Thank you for your submission. The editorial board has reviewed your manuscript and will communicate a decision shortly.';
+  var comments = '';
+  if(reviews.length && reviews[reviews.length-1].commentsToAuthor){
+    comments = '\n\nReviewer Comments:\n'+reviews[reviews.length-1].commentsToAuthor;
+  }
+  var fixedUrl = sub.fixedUrl || '';
+  var template =
+    'To: '+esc(sub.email||'[Author Email]')+'\n'+
+    'Subject: [JARD] '+subject+'\n\n'+
+    'Dear '+esc(sub.authors ? sub.authors.split(',')[0].trim() : 'Author')+',\n\n'+
+    body+comments+'\n\n'+
+    'Manuscript Details:\n'+
+    '  Title: '+esc(sub.title||'—')+'\n'+
+    '  Submission ID: '+esc(sub.subId||'—')+
+    (fixedUrl?'\n  Article URL: '+fixedUrl:'')+'\n\n'+
+    'If you have any questions, please contact the editorial office.\n\n'+
+    'Best regards,\nThe Editorial Board\nJournal of Agricultural Research and Development (JARD)\nSARD BD | sardbd.info';
+  el.textContent = template;
+  var sentNote = document.getElementById('jsEmailSentNote');
+  if(sub.emailSent){
+    sentNote.style.display='block';
+    sentNote.innerHTML='<i class="bi bi-check-circle-fill me-1"></i>Email marked as sent on '+fmtDate(sub.emailSentDate)+'.';
+  } else {
+    sentNote.style.display='none';
+  }
+}
+
+function copyEmailTemplate(){
+  var text = document.getElementById('jsEmailTemplate').textContent;
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){toast('Email template copied!','success');});
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta);
+    ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    toast('Email template copied!','success');
+  }
+}
+
+function markEmailSentBtn(){
+  if(!_currentSubId) return;
+  var subs = getData('sardSubmissions');
+  subs.forEach(function(s){
+    if(s.subId===_currentSubId){s.emailSent=true;s.emailSentDate=new Date().toISOString();}
+  });
+  setData('sardSubmissions',subs);
+  var sentNote = document.getElementById('jsEmailSentNote');
+  sentNote.style.display='block';
+  sentNote.innerHTML='<i class="bi bi-check-circle-fill me-1"></i>Email marked as sent.';
+  toast('Email marked as sent!','success');
 }
 
 function changeSubStatusFromModal(status){
@@ -1561,26 +1876,76 @@ function switchGalTab(tab){
   document.getElementById('galTabPhotos').className = tab==='photos'?'btn-sm-green':'btn-sm-outline';
   document.getElementById('galTabVideos').className = tab==='videos'?'btn-sm-green':'btn-sm-outline';
 }
+function updatePhotoHint(){
+  var cat = document.getElementById('photoCat').value;
+  var hints = {
+    'Home':'→ এই ছবি Home page-এ দেখাবে',
+    'Training':'→ এই ছবি Training Gallery-তে দেখাবে',
+    'Event':'→ এই ছবি Gallery page-এ দেখাবে',
+    'Research':'→ এই ছবি Gallery page-এ দেখাবে',
+    'Office':'→ এই ছবি Gallery page-এ দেখাবে'
+  };
+  var el = document.getElementById('photoCatHint');
+  if(el) el.textContent = hints[cat] || '';
+}
+function updateVideoHint(){
+  var cat = document.getElementById('videoCat').value;
+  var hints = {
+    'Home':'→ এই video Home page "Videos & Lectures"-এ দেখাবে',
+    'Training':'→ এই video Training page-এ দেখাবে',
+    'Event':'→ এই video Gallery page-এ দেখাবে',
+    'Research':'→ এই video Gallery page-এ দেখাবে',
+    'Interview':'→ এই video Gallery page-এ দেখাবে'
+  };
+  var el = document.getElementById('videoCatHint');
+  if(el) el.textContent = hints[cat] || '';
+}
+function previewPhoto(input){
+  if(!input.files||!input.files[0]) return;
+  var file = input.files[0];
+  if(file.size > 5*1024*1024){ toast('File too large (max 5 MB).','error'); input.value=''; return; }
+  var reader = new FileReader();
+  reader.onload = function(e){
+    document.getElementById('photoPreview').src = e.target.result;
+    document.getElementById('photoPreviewWrap').style.display = 'block';
+    document.getElementById('photoDropZone').style.borderColor = 'var(--green)';
+  };
+  reader.readAsDataURL(file);
+}
+function clearPhotoPreview(){
+  document.getElementById('photoFileInput').value = '';
+  document.getElementById('photoPreview').src = '';
+  document.getElementById('photoPreviewWrap').style.display = 'none';
+  document.getElementById('photoDropZone').style.borderColor = 'var(--border)';
+}
 function renderPhotos(){
   var photos = getData('sardGallery');
+  var catColors = {Home:'#d1fae5',Training:'#dbeafe',Event:'#fef3c7',Research:'#ede9fe',Office:'#f1f5f9'};
   document.getElementById('photoCount').textContent = photos.length+' photo(s)';
   document.getElementById('photoGrid').innerHTML = photos.length ? photos.map(function(p){
+    var bg = catColors[p.category]||'#f1f5f9';
     return '<div class="gallery-item">'+
-      '<img src="'+esc(p.url)+'" alt="'+esc(p.title)+'" onerror="this.src=\'data:image/svg+xml,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;180&quot; height=&quot;130&quot;><rect fill=&quot;%23f1f3f5&quot; width=&quot;180&quot; height=&quot;130&quot;/><text x=&quot;50%&quot; y=&quot;50%&quot; dominant-baseline=&quot;middle&quot; text-anchor=&quot;middle&quot; fill=&quot;%23aaa&quot; font-size=&quot;12&quot;>No image</text></svg>\'"/>'+
-      '<div class="gallery-item-info"><div class="gi-title">'+trunc(esc(p.title),22)+'</div><div class="gi-cat">'+esc(p.category)+'</div></div>'+
+      '<img src="'+esc(p.url)+'" alt="'+esc(p.title)+'" onerror="this.parentElement.querySelector(\'img\').style.display=\'none\'"/>'+
+      '<div class="gallery-item-info">'+
+        '<div class="gi-title">'+trunc(esc(p.title),22)+'</div>'+
+        '<div class="gi-cat" style="background:'+bg+';padding:1px 7px;border-radius:10px;display:inline-block;font-size:.65rem;font-weight:700;">'+esc(p.category)+'</div>'+
+      '</div>'+
       '<div class="gallery-item-actions"><button class="act-btn del" onclick="deletePhoto(\''+esc(p.id)+'\')" style="font-size:.72rem;"><i class="bi bi-trash3"></i> Delete</button></div>'+
     '</div>';
-  }).join('') : '<p style="color:#9ca3af;font-size:.8rem;">No photos yet.</p>';
+  }).join('') : '<p style="color:#9ca3af;font-size:.8rem;padding:12px;">No photos yet.</p>';
 }
 function savePhoto(){
-  var url=document.getElementById('photoUrl').value.trim();
-  var title=document.getElementById('photoTitle').value.trim();
-  if(!url||!title){toast('URL and Title required.','error');return;}
-  var photos=getData('sardGallery');
-  photos.push({id:uid(),url:url,title:title,category:document.getElementById('photoCat').value,date:new Date().toISOString()});
-  setData('sardGallery',photos);
-  document.getElementById('photoUrl').value=''; document.getElementById('photoTitle').value='';
-  renderPhotos(); toast('Photo added!');
+  var fileInput = document.getElementById('photoFileInput');
+  var title = document.getElementById('photoTitle').value.trim();
+  var preview = document.getElementById('photoPreview').src;
+  if(!preview||!preview.startsWith('data:')){ toast('Please select an image file.','error'); return; }
+  if(!title){ toast('Title required.','error'); return; }
+  var photos = getData('sardGallery');
+  photos.push({id:uid(), url:preview, title:title, category:document.getElementById('photoCat').value, date:new Date().toISOString()});
+  setData('sardGallery', photos);
+  document.getElementById('photoTitle').value = '';
+  clearPhotoPreview();
+  renderPhotos(); toast('Photo uploaded & saved!');
 }
 function deletePhoto(id){
   if(!confirm('Delete this photo?')) return;
@@ -1612,10 +1977,11 @@ function saveVideo(){
   var title=document.getElementById('videoTitle').value.trim();
   if(!url||!title){toast('URL and Title required.','error');return;}
   if(!ytId(url)){toast('Invalid YouTube URL.','error');return;}
+  var badge=document.getElementById('videoBadge').value.trim()||'Video';
   var videos=getData('sardVideos');
-  videos.push({id:uid(),url:url,title:title,category:document.getElementById('videoCat').value,date:new Date().toISOString()});
+  videos.push({id:uid(),url:url,title:title,badge:badge,category:document.getElementById('videoCat').value,date:new Date().toISOString()});
   setData('sardVideos',videos);
-  document.getElementById('videoUrl').value=''; document.getElementById('videoTitle').value='';
+  document.getElementById('videoUrl').value=''; document.getElementById('videoTitle').value=''; document.getElementById('videoBadge').value='';
   renderVideos(); toast('Video added!');
 }
 function deleteVideo(id){
